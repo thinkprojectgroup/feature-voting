@@ -1,6 +1,5 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+require("express-async-errors") //TODO: move to logging middleware
 
 require('./startup/db')()
 const port = 3000
