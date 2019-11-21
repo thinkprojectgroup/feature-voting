@@ -1,15 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { Project } = require("../models/project")
+const { Project, validateProject } = require("../models/project")
 
-router.get("/", (req, res) => {
-    const projects = Project.find().sort
-
-    res.send("testest");
+router.get("/", async (req, res) => {
+    const projects = await Project.find().sort("dateCreated")
+    res.send(projects);
 });
 
 router.post("/", async (req, res) => {
-    // TODO: validation
+    const { error } = validateProject(req.body)
+    if (error) return res.status(400).send(error.details[0].message)
 
     const project = new Project({
         name: req.body.name || "default",
