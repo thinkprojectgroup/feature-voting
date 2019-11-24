@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const Joi = require("joi")
+const { featureSchema } = require("./feature")
 
 const User = mongoose.model("User",  new mongoose.Schema({
     _id: {
@@ -14,6 +15,9 @@ const User = mongoose.model("User",  new mongoose.Schema({
     banned: {
         type: Boolean,
         default: false
+    },
+    upvoted:{
+        type: [featureSchema]
     }
 }))
 

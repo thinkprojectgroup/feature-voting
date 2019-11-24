@@ -13,9 +13,19 @@ const featureSchema = new mongoose.Schema({
         required: false,
         maxlength: 2048,
     },
-    employeeIds: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
-    userIds: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
-    creator: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
+    employeeIds: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }],
+    userIds: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }],
+    creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
     voteCount: {
         type:Number,
         default: 0

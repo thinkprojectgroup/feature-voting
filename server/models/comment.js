@@ -3,7 +3,8 @@ const Joi = require("joi")
 
 const Comment = mongoose.model("Comment", new mongoose.Schema({
     author: {
-        type: mongoose.Schema.Types.ObjectId, // TODO: adjust to sebastians id requirements
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User", // TODO: adjust to sebastians id requirements
         required: true
     },
     flagged: {
@@ -18,6 +19,7 @@ const Comment = mongoose.model("Comment", new mongoose.Schema({
     },
     featureId: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: "feature",
         required: true
     },
     dateCreated: {
