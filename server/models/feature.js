@@ -31,7 +31,7 @@ const featureSchema = new mongoose.Schema({
     }
 })
 
-featureSchema.pre("validate", function (next) { //TODO: discuss if we want do do this
+featureSchema.pre("validate", function (next) {
     this.voteCount = this.employeeIds.length + this.userIds.length
     next()
 })
