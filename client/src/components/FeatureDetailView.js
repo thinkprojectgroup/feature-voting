@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button} from 'reactstrap';
-
+import axios from 'axios';
 import {Link} from "react-router-dom"
 import "./css/FeatureDetailView.css";
 import "./css/font-awesome-4.7.0/css/font-awesome.min.css";
@@ -27,6 +27,14 @@ class FeatureDetailView extends Component{
         }
       }
    }
+
+   componentDidMount() {
+    axios.get(`localhost:3000/api/features/1`)
+      .then(res => {
+        const projects = res.data;
+        console.log(projects);
+      })
+  }
 
    toggleDivUpvote = () => {
        const{show} = this.state;
