@@ -11,6 +11,10 @@ router.get("/:projectId", async (req, res) => {
     const project = await Project.findById(req.params.projectId)
     if (!project) return res.status(404).send("Invalid projectId")
 
+    // JUST FOR DEV
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
     res.send(project.features)
 });
 

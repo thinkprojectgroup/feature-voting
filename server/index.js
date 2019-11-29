@@ -8,6 +8,7 @@ const app = express();
 
 require('./startup/routes')(app);
 
+
 app.listen(port , () => {
     console.log(`listening on port ${port}`)
 })
