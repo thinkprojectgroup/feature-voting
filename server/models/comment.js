@@ -33,7 +33,6 @@ const Comment = mongoose.model("Comment", new mongoose.Schema({
 
 function validateComment(comment) {
     const schema = {
-        // authorId: Joi.objectId().required(),
         content: Joi.string().min(1).max(2048).required(),
         featureId: Joi.objectId().required()
     }
