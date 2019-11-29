@@ -6,7 +6,7 @@ require('./startup/joivalidation')()
 const port = 3000
 const app = express();
 
-require('./startup/routes')(app);
+require('./startup/applyMiddleware')(app);
 
 app.listen(port , () => {
     console.log(`listening on port ${port}`)
