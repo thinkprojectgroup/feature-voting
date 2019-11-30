@@ -1,9 +1,15 @@
 const express = require('express');
+const mongoose = require('mongoose')
 const router = express.Router();
 const { Comment, validateComment } = require("../models/comment")
 
 router.get("/", async (req, res) => {
-    const comments = await Comment.find().sort("dateCreated")
+    
+    if(req.body.flagged){
+        var comments = await Comment.find({flagged:true}).sort("dateCreated")
+    }
+
+    else var comments = await Comment.find().sort("dateCreated")
     res.send(comments);
 });
 
@@ -19,6 +25,17 @@ router.post("/", async (req, res) => {
     await comment.save()
 
     res.send(comment)
+})
+
+router.patch("/:id", async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("commentId doesn't fit id schema")
+
+    const comment = await Comment.findById(req.params.id)
+    if (!comment) return res.status(404).send("commentId not found")
+
+    await Comment.updateOne({ _id: req.params.id },{"$set":{"flagged":true}}).catch(err => res.status(422).json(err));
+ 
+    res.status(200).send(comment)
 })
 
 module.exports = router
