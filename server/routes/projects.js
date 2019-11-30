@@ -27,7 +27,7 @@ router.post("/", async (req, res) => {
     })
     await project.save()
 
-    res.send(project)
+    res.status(201).send(project)
 })
 
 module.exports = router;

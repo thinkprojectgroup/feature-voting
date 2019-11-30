@@ -38,5 +38,13 @@ function validateComment(comment) {
     return Joi.validate(comment, schema)
 }
 
+function validateFlaggedComment(comment){
+    const schema = {
+        flagged: Joi.bool().required()
+    }
+    return Joi.validate(comment, schema)
+}
+
 exports.Comment = Comment
 exports.validateComment = validateComment
+exports.validateFlaggedComment = validateFlaggedComment

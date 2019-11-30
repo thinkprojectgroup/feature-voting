@@ -33,7 +33,7 @@ router.post("/:projectId", async (req, res) => {
     })
     await project.save()
 
-    res.send(project)
+    res.status(201).send(project)
 })
 
 router.get("/:projectId/:featureId", async (req, res) => {

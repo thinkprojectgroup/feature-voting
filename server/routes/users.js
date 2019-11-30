@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
     })
     await user.save()
 
-    res.send(user)
+    res.status(201).send(user)
 })
 
 module.exports = router
