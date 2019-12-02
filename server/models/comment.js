@@ -22,6 +22,7 @@ const Comment = mongoose.model("Comment", new mongoose.Schema({
     },
     featureId: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: "feature",
         required: true
     },
     dateCreated: {
@@ -39,5 +40,13 @@ function validateComment(comment) {
     return Joi.validate(comment, schema)
 }
 
+function validateFlaggedComment(comment){
+    const schema = {
+        flagged: Joi.bool().required()
+    }
+    return Joi.validate(comment, schema)
+}
+
 exports.Comment = Comment
 exports.validateComment = validateComment
+exports.validateFlaggedComment = validateFlaggedComment
