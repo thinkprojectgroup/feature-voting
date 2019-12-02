@@ -52,8 +52,6 @@ router.get("/:projectId/:featureId", async (req, res) => {
 });
 
 router.delete("/:projectId/:featureId", async (req, res) => {
-    // const { error } = validateFeature(req.body)
-    // if (error) return res.status(400).send(error.details[0].message)
 
     if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) return res.status(400).send("ProjectId doesn't fit id schema")
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")
