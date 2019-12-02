@@ -4,10 +4,13 @@ const Joi = require("joi")
 const Comment = mongoose.model("Comment", new mongoose.Schema({
     author: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User", // TODO: adjust to sebastians id requirements
         required: true
     },
     flagged: {
+        type: Boolean,
+        default: false
+    },
+    accepted: {
         type: Boolean,
         default: false
     },
@@ -31,7 +34,6 @@ const Comment = mongoose.model("Comment", new mongoose.Schema({
 
 function validateComment(comment) {
     const schema = {
-        authorId: Joi.objectId().required(), // TODO: adjust to sebastians id requirements
         content: Joi.string().min(1).max(2048).required(),
         featureId: Joi.objectId().required()
     }

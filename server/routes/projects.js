@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message)
 
     const project = new Project({
-        name: req.body.name || "default",
+        name: req.body.name,
         features: []
     })
     await project.save()
