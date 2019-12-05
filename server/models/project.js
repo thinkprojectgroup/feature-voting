@@ -12,6 +12,11 @@ const Project = mongoose.model("Project", new mongoose.Schema({
     features: {
         required: true,
         type: [featureSchema]
+    },
+    deleted: {
+        type: Boolean,
+        required: false,
+        default: false,
     }
 }))
 

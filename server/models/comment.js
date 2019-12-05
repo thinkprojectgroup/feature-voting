@@ -6,10 +6,6 @@ const Comment = mongoose.model("Comment", new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
-    flagged: {
-        type: Boolean,
-        default: false
-    },
     accepted: {
         type: Boolean,
         default: false
@@ -29,6 +25,11 @@ const Comment = mongoose.model("Comment", new mongoose.Schema({
         type: Date,
         default: Date.now,
         required: true,
+    },
+    deleted: {
+        type: Boolean,
+        required: false,
+        default: false,
     }
 }))
 

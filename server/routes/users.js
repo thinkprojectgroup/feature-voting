@@ -5,7 +5,7 @@ const { User, validateUser } = require("../models/user")
 //TODO: maybe remove whole route, not sure if needed
 
 router.get("/", async (req, res) => {
-    const users = await User.find().sort("dateCreated")
+    const users = await User.find({deleted: false}).sort("dateCreated")
     res.send(users);
 });
 

@@ -38,6 +38,11 @@ const featureSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
+    },
+    deleted: {
+        type: Boolean,
+        required: false,
+        default: false,
     }
 })
 

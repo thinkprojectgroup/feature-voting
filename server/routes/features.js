@@ -40,7 +40,7 @@ router.get("/:projectId/:featureId", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) return res.status(400).send("ProjectId doesn't fit id schema")
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")
 
-    const project = await Project.findById(req.params.projectId)
+    const project = await Project.find({id: req.params.projectId, deleted: false})
     if (!project) return res.status(404).send("projectId not found")
 
     //TODO add featureID invalid response
