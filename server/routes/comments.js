@@ -4,14 +4,14 @@ const router = express.Router();
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
 
 router.get("/", async (req, res) => {
-    var comments = await Comment.find({accepted:false}).sort("dateCreated")
+    var comments = await Comment.find({accepted: false}).sort("dateCreated")
     res.send(comments);
 });
 
 router.get("/:id", async(req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("FeatureId doesn't fit id schema")
 
-    var comments = await Comment.find({featureId:req.params.id, deleted:false }).sort("dateCreated")
+    var comments = await Comment.find({featureId: req.params.id, deleted: false}).sort("dateCreated")
     if(!comments) return res.status(404).send("invalid featureId") 
 
     res.send(comments); 
