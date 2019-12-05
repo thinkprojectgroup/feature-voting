@@ -8,8 +8,8 @@ import "./css/font-awesome-4.7.0/css/font-awesome.min.css";
 
 class FeatureDetailView extends Component{
 
-   constructor(features){
-       super(features);
+   constructor(props){
+       super(props);
 
        this.state = {show : true}; 
         this.toggleDivUpvote = this.toggleDivUpvote.bind(this);
@@ -21,7 +21,6 @@ class FeatureDetailView extends Component{
         description: "",
         image: "",
         upvotes: 0
-        
       }
    }
 
@@ -35,15 +34,19 @@ class FeatureDetailView extends Component{
       })
       */
 
-    axios.get(`http://localhost:3000/api/projects/5dd5696adce5622e749805c9`)
+    
+
+    axios.get("http://localhost:3000/api/features/5dd5696adce5622e749805c9/" + this.props.match.params.featureId)
     .then(res => {
-      const projects = res.data;
-      this.setState({projectTitle: projects.name});
-      this.setState({featureTitle: projects.features[0].headline});
-      this.setState({description: projects.features[0].description});
-      this.setState({upvotes: projects.features[0].voteCount});
-      console.log(projects);
+      const feature = res.data;
+      
+      this.setState({featureTitle: feature.headline});
+      this.setState({description: feature.description});
+      this.setState({upvotes: feature.voteCount});
+      console.log(feature);
     })
+
+     
 
   }
 

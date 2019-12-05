@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import './App.css';
 import FeatureDetailView from './components/FeatureDetailView';
-import FeatureList from './components/featureList'
+import ProjectDetailView from './components/ProjectDetailView'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 class App extends Component {
 
 
   render() {
     return (
-      <div>
-      <FeatureDetailView />
-      </div>
+      <Router>
+        <Route path={"/"} exact component={ProjectDetailView}>
+        </Route>
+        
+        <Route path={"/:featureId"} component={FeatureDetailView}/>
+      </Router>
     );
   } 
   }

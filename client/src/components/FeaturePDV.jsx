@@ -1,15 +1,20 @@
 import React, { Component } from "react";
+import {BrowserRouter as Router, Link} from 'react-router-dom'
 
 //import ReadMoreAndLess from "react-read-more-less";
 
-class Feature extends Component {
+class FeaturePDV extends Component {
+
   state = {
+    id: this.props.id,
     count: this.props.count,
     title: this.props.title,
     description: this.props.description,
     commentCount: this.props.commentCount
   };
+
   render() {
+
     return (
       <div className="container">
         <div className="row">
@@ -19,7 +24,7 @@ class Feature extends Component {
           </div>
           <div className="col">
             <div className="row">
-              <h2>{this.state.title}</h2>
+              <Link to={"/"+this.state.id}><h2>{this.state.title}</h2> </Link>
             </div>
             <div className="row">{this.state.description}</div>
             <div className="row">{this.state.commentCount} comments</div>
@@ -31,4 +36,4 @@ class Feature extends Component {
   }
 }
 
-export default Feature;
+export default FeaturePDV;
