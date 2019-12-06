@@ -78,19 +78,43 @@
 .container{
   max-width: 1200px;
   margin: auto;
+  padding: 25px 0;
 }
 
-h1{}
-h2{}
-h3{}
+.header-container{
+  max-width: 1200px;
+  margin: auto;
+}
 
-p{}
+.logo img{
+  padding: 0;
+  margin: 10px;
+  width: 150px;
+}
 
-a{}
+.header{
+  background-color: #eaeaea;
+  height: 100px;
+  margin: 0 0 50px 0;
+  padding: 0;
+}
+
+h1{font-size: 2rem; }
+h2{font-size: 1.5rem;}
+h3{font-size: 1.3rem; margin: 0;}
+p{font-size: 1rem;}
+
+
 
 img {
   width: 100%;
   height: auto;
+}
+
+.feature-image{
+  height: 200px;
+  background-size: cover;
+  padding: 0;
 }
 
 button{
@@ -107,8 +131,8 @@ button{
 }
 
 /*Display feature count next to feature body on mobile devices*/
-.feature-count{width:16.66%;}
-.feature-body{width: 83.33%;}
+.feature-count{width: 25%;}
+.feature-text{width: 75%;}
 
 
 /* For desktop: */
@@ -127,11 +151,10 @@ button{
   .col-11 {width: 91.66%;}
   .col-12 {width: 100%;}
 
-  h1{}
-  h2{}
-  h3{}
-
-  p{}
+  h1{font-size: 2rem;}
+  h2{font-size: 1.5rem;}
+  h3{font-size: 1.5rem;}
+  p{font-size: 1rem;}
 
   a{}
 

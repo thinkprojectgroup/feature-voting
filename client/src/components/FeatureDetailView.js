@@ -15,7 +15,7 @@ class FeatureDetailView extends Component{
         this.toggleDivDownVote = this.toggleDivDownVote.bind(this);
 
        this.state = {
-        projectTitle: "",
+        projectTitle: "Test",
         featureTitle: "",
         description: "",
         image: "",
@@ -65,11 +65,16 @@ class FeatureDetailView extends Component{
 
 
     render(){
+
+
+        // TODO: Add real imagadata later
+        var image = require('./img/computer.png');
+
         return (
 
         <div className="feature-detail-container container">
             <div className="row feature-detail">
-                <div className="col-2 feature-count">
+                <div className="col-1 feature-count">
                     <Button onClick= {this.toggleDivUpvote} className="feature-upvote-button">
                         <i className="fas fa-angle-up"></i>
                     </Button>
@@ -78,12 +83,13 @@ class FeatureDetailView extends Component{
                         <i className="fas fa-angle-down"></i>
                     </button> : null}
                 </div>
-                <div className="col-7 feature-detail-text">
+                <div className="col-7 feature-text">
                     <h3>{this.state.featureTitle}</h3>
                     <p>{this.state.description}</p>
                 </div>
                 <div className="col-3 feature-detail-image">
-                    
+
+                    <img src={image} />
                 </div>
             </div>
         </div>
