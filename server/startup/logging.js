@@ -21,6 +21,5 @@ module.exports = function () {
         exitOnError: true
     }))
 
-    winston.info("logger set up")
     process.on("unhandledRejection", (ex) => { throw ex }) // Catch UnhandledPromiseRejections and rethrow as normal exceptions
 }
