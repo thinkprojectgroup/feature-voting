@@ -1,13 +1,42 @@
 
 import React, { Component } from "react";
 import {BrowserRouter as Router, Link} from 'react-router-dom';
-import FeaturePDV from "./FeaturePDV";
+
+
 
 class Header extends Component{
 
+
     render() {
 
-        var image = require('./img/logo.png');
+        const image = require('./img/logo.png');
+
+
+
+        // TODO: Add Back Route
+        const backroute = "/";
+
+        let backButton =(
+            <Link to={backroute}>
+                <div className="back-button fas fa-arrow-left" >
+                </div>
+            </Link>
+        );
+
+
+
+        //Trying to only load Back button when not on the root path
+        //
+        // const location = window.location.pathname;
+        // console.log("location: "+ location);
+        // if(location == "/"){
+        //     backButton = " ";
+        // }
+
+
+
+
+
 
         return (
 
@@ -17,9 +46,8 @@ class Header extends Component{
                         <img src={image} />
                     </div>
 
-                    <div className="back-button">
 
-                    </div>
+                    {backButton}
 
                 </div>
             </div>

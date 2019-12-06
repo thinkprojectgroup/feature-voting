@@ -76,27 +76,42 @@
 
 
 .container{
-  max-width: 1200px;
+  max-width: 1000px;
   margin: auto;
   padding: 25px 0;
 }
 
 .header-container{
-  max-width: 1200px;
+  max-width: 1000px;
   margin: auto;
+}
+
+.logo{
+  display: inline;
 }
 
 .logo img{
   padding: 0;
-  margin: 10px;
-  width: 150px;
+  height: 80px;
+  width: auto;
 }
 
 .header{
   background-color: #eaeaea;
-  height: 100px;
+  height: 80px;
   margin: 0 0 50px 0;
   padding: 0;
+}
+
+.back-button{
+  color: white;
+  float: right;
+  background-color: #7fba24;
+  text-align: center;
+  font-size: 2rem;
+  width: 80px;
+  height: 80px;
+  padding: 25px 0;
 }
 
 h1{font-size: 2rem; }

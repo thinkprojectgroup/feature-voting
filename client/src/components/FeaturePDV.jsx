@@ -27,12 +27,12 @@ class FeaturePDV extends Component {
           <button onClick= {this.toggleDivUpvote} className="upvote-button">
             <i className="fas fa-angle-up"></i>
           </button>
-          <p>{this.state.counts}</p>
+          <p>{this.state.count}</p>
           {this.state.show ? <button onClick={this.toggleDivDownVote} className="downvote-button">
             <i className="fas fa-angle-up"></i>
           </button> : null}
         </div>
-        <div className="col-7 feature-text">
+        <div className="col-8 feature-text">
           <div className="title">
             <Link to={"/"+this.state.id}><h3>{this.state.title}</h3> </Link>
           </div>

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Button} from 'reactstrap';
 import axios from 'axios';
 import "./css/FeatureDetailView.css";
+import Header from "./Header";
+import {BrowserRouter as Router} from "react-router-dom";
 
 
 
@@ -72,26 +74,25 @@ class FeatureDetailView extends Component{
 
         return (
 
-        <div className="feature-detail-container container">
-            <div className="row feature-detail">
-                <div className="col-1 feature-count">
-                    <Button onClick= {this.toggleDivUpvote} className="feature-upvote-button">
-                        <i className="fas fa-angle-up"></i>
-                    </Button>
-                    <p>{this.state.upvotes}</p>
-                    {this.state.show ? <button onClick={this.toggleDivDownVote} className="feature-downvote-button"> 
-                        <i className="fas fa-angle-down"></i>
-                    </button> : null}
-                </div>
-                <div className="col-7 feature-text">
-                    <h3>{this.state.featureTitle}</h3>
-                    <p>{this.state.description}</p>
-                </div>
-                <div className="col-3 feature-detail-image">
-
-                    <img src={image} />
-                </div>
+        <div className="feature-detail-container container row feature-detail">
+            <div className="col-1 feature-count">
+                <Button onClick= {this.toggleDivUpvote} className="feature-upvote-button">
+                    <i className="fas fa-angle-up"></i>
+                </Button>
+                <p>{this.state.upvotes}</p>
+                {this.state.show ? <button onClick={this.toggleDivDownVote} className="feature-downvote-button">
+                    <i className="fas fa-angle-down"></i>
+                </button> : null}
             </div>
+            <div className="col-8 feature-text">
+                <h3>{this.state.featureTitle}</h3>
+                <p>{this.state.description}</p>
+            </div>
+            <div className="col-3 feature-detail-image">
+
+                <img src={image} />
+            </div>
+
         </div>
         );  
     }  
