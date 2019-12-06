@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Button} from 'reactstrap';
 import axios from 'axios';
 import "./css/FeatureDetailView.css";
-import "./css/font-awesome-4.7.0/css/font-awesome.min.css";
 
 
 
@@ -69,22 +68,18 @@ class FeatureDetailView extends Component{
         return (
 
         <div className="feature-detail-container container">
-            <div className="row feature-detail-header">
-                <h1 className="col-8">{this.state.projectTitle}</h1>
-                <Button className="col-4" color="primary">Back</Button>
-            </div>
             <div className="row feature-detail">
-                <div className="col-2 feature-detail-vote">
+                <div className="col-2 feature-count">
                     <Button onClick= {this.toggleDivUpvote} className="feature-upvote-button">
                         <i className="fas fa-angle-up"></i>
                     </Button>
                     <p>{this.state.upvotes}</p>
                     {this.state.show ? <button onClick={this.toggleDivDownVote} className="feature-downvote-button"> 
-                        <i className="fas fa-angle-up"></i> 
+                        <i className="fas fa-angle-down"></i>
                     </button> : null}
                 </div>
                 <div className="col-7 feature-detail-text">
-                    <h4>{this.state.featureTitle}</h4>
+                    <h3>{this.state.featureTitle}</h3>
                     <p>{this.state.description}</p>
                 </div>
                 <div className="col-3 feature-detail-image">

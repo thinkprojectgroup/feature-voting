@@ -1,13 +1,139 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/*body {*/
+/*  margin: 0;*/
+/*  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",*/
+/*    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",*/
+/*    sans-serif;*/
+/*  -webkit-font-smoothing: antialiased;*/
+/*  -moz-osx-font-smoothing: grayscale;*/
+/*}*/
+
+/*code {*/
+/*  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",*/
+/*    monospace;*/
+/*}*/
+
+/* open-sans-regular - latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url('./fonts/open-sans-v17-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local('Open Sans Regular'), local('OpenSans-Regular'),
+  url('./fonts/open-sans-v17-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('./fonts/open-sans-v17-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+  url('./fonts/open-sans-v17-latin-regular.woff') format('woff'), /* Modern Browsers */
+  url('./fonts/open-sans-v17-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('./fonts/open-sans-v17-latin-regular.svg#OpenSans') format('svg'); /* Legacy iOS */
+}
+/* open-sans-600 - latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: url('./fonts/open-sans-v17-latin-600.eot'); /* IE9 Compat Modes */
+  src: local('Open Sans SemiBold'), local('OpenSans-SemiBold'),
+  url('./fonts/open-sans-v17-latin-600.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('./fonts/open-sans-v17-latin-600.woff2') format('woff2'), /* Super Modern Browsers */
+  url('./fonts/open-sans-v17-latin-600.woff') format('woff'), /* Modern Browsers */
+  url('./fonts/open-sans-v17-latin-600.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('./fonts/open-sans-v17-latin-600.svg#OpenSans') format('svg'); /* Legacy iOS */
+}
+/* open-sans-800 - latin */
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 800;
+  src: url('./fonts/open-sans-v17-latin-800.eot'); /* IE9 Compat Modes */
+  src: local('Open Sans ExtraBold'), local('OpenSans-ExtraBold'),
+  url('./fonts/open-sans-v17-latin-800.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('./fonts/open-sans-v17-latin-800.woff2') format('woff2'), /* Super Modern Browsers */
+  url('./fonts/open-sans-v17-latin-800.woff') format('woff'), /* Modern Browsers */
+  url('./fonts/open-sans-v17-latin-800.ttf') format('truetype'), /* Safari, Android, iOS */
+  url('./fonts/open-sans-v17-latin-800.svg#OpenSans') format('svg'); /* Legacy iOS */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+
+* {
+  box-sizing: border-box;
+  font-family: "Open Sans", Arial;
+  color: #003c50;
+}
+
+
+/* For mobile phones: - mobile first -*/
+[class*="col-"] {
+  width: 100%;
+  float: left;
+  padding: 15px;
+}
+
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+
+.container{
+  max-width: 1200px;
+  margin: auto;
+}
+
+h1{}
+h2{}
+h3{}
+
+p{}
+
+a{}
+
+img {
+  width: 100%;
+  height: auto;
+}
+
+button{
+  background: none;
+  width: 100%;
+  height: auto;
+  border: none;
+  font-size: 3rem;
+}
+
+
+.feature-count{
+  text-align: center;
+}
+
+/*Display feature count next to feature body on mobile devices*/
+.feature-count{width:16.66%;}
+.feature-body{width: 83.33%;}
+
+
+/* For desktop: */
+@media only screen and (min-width: 700px) {
+
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+
+  h1{}
+  h2{}
+  h3{}
+
+  p{}
+
+  a{}
+
+
 }

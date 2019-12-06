@@ -10,7 +10,7 @@ class ProjectDetailView extends Component {
   };
   render() {
     return (
-      <div className="container-fluid">
+      <div className="container">
         <h1>{this.state.name}</h1>
         {this.state.features.map(feature => (
           <FeaturePDV
