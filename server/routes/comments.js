@@ -5,6 +5,8 @@ const { Comment, validateComment, validateFlaggedComment } = require("../models/
 
 router.get("/", async (req, res) => {
     var comments = await Comment.find({accepted: false}).sort("dateCreated")
+    if(comments.length == 0) return res.send("no comments available")
+
     res.send(comments);
 });
 
@@ -12,7 +14,7 @@ router.get("/:id", async(req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("FeatureId doesn't fit id schema")
 
     var comments = await Comment.find({featureId: req.params.id, deleted: false}).sort("dateCreated")
-    if(!comments) return res.status(404).send("invalid featureId") 
+    if(comments.length == 0) return res.status(404).send("invalid featureId") 
 
     res.send(comments); 
 });
@@ -34,7 +36,7 @@ router.post("/", async (req, res) => {
 router.patch("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("commentId doesn't fit id schema")
 
-    var comment = await Comment.findById(req.params.id)
+    var comment = await Comment.findOne({_id: req.params.id, deleted: false})
     if (!comment) return res.status(404).send("commentId not found")
    
     await Comment.updateOne({ _id: req.params.id },{"$set":{"accepted": !comment.accepted }}).catch(err => res.status(422).json(err));
@@ -46,12 +48,12 @@ router.patch("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("commentId doesn't fit id schema")
 
-    var comment = await Comment.findById(req.params.id)
+    var comment = await Comment.findOne({_id: req.params.id, deleted: false})
     if (!comment) return res.status(404).send("commentId not found")
    
     await Comment.updateOne({ _id: req.params.id },{"$set":{"deleted": true }}).catch(err => res.status(422).json(err));
 
-    res.status(202).send("resource successfully marked as deleted")
+    res.status(202).send(comment)
 })
 
 module.exports = router
