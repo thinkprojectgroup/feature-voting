@@ -6,17 +6,7 @@ const { validateFeature } = require("../models/feature")
 const uploadImages = require("../middleware/imageUpload")
 
 
-/*// TODO: not sure if this is even needed
-router.get("/:projectId", async (req, res) => {
-    if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) return res.status(400).send("ProjectId doesn't fit id schema")
-
-    const project = await Project.findById(req.params.projectId)
-    if (!project) return res.status(404).send("Invalid projectId")
-
-    res.send(project.features)
-});*/
-
-router.post("/:projectId",uploadImages, async (req, res) => {
+router.post("/:projectId", uploadImages, async (req, res) => {
     const { error } = validateFeature(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
