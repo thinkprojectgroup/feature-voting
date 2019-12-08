@@ -1,4 +1,5 @@
 const express = require('express');
+const winston = require("winston")
 
 require('./startup/logging')()
 require('./startup/db')()
@@ -9,5 +10,5 @@ const app = express();
 require('./startup/applyMiddleware')(app);
 
 app.listen(port , () => {
-    console.log(`listening on port ${port}`)
+    winston.info(`listening on port ${port}`)
 })

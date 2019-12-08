@@ -26,12 +26,21 @@ const User = mongoose.model("User", new mongoose.Schema({
 // TODO: maybe remove, users should only be created internally
 function validateUser(user) {
     const schema = {
-        role: Joi.string().valid("user", "admin", "employee"),
+        role: Joi.string().valid("user", "admin", "employee").required(),
         email: Joi.string().email(),
         name: Joi.string().min(1).max(255)
     }
     return Joi.validate(user, schema)
 }
 
+function validateBanRequest(user) {
+    const schema = {
+        banned: Joi.boolean().required(),
+    }
+    return Joi.validate(user, schema)
+}
+
 exports.User = User
 exports.validateUser = validateUser
+exports.validateBanRequest = validateBanRequest
+

@@ -4,7 +4,7 @@ const router = express.Router();
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
 
 router.get("/", async (req, res) => {
-    var comments = await Comment.find({flagged:true}).sort("dateCreated")
+    var comments = await Comment.find({ flagged: true }).sort("dateCreated")
     res.send(comments);
 });
 
@@ -30,9 +30,12 @@ router.patch("/:id", async (req, res) => {
 
     const comment = await Comment.findById(req.params.id)
     if (!comment) return res.status(404).send("commentId not found")
-   
-    await Comment.updateOne({ _id: req.params.id },{"$set":{"flagged": req.body.flagged }}).catch(err => res.status(422).json(err));
- 
+
+    await Comment.updateOne(
+        { _id: req.params.id },
+        { "$set": { "flagged": req.body.flagged } }
+    )
+
     res.status(204).send()
 })
 
