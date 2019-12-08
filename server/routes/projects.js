@@ -5,8 +5,9 @@ const { Project, validateProject } = require("../models/project")
 
 router.get("/", async (req, res) => {
     // const projects = await Project.find({deleted: false}).sort("dateCreated")
-    const projects = await Project.aggregate(
-        [{ $project: {
+    const projects = await Project.aggregate([
+        { $match: {deleted: false}},
+        { $project: {
             features: {
                 $filter: {
                     input: '$features',
@@ -27,7 +28,7 @@ router.get("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("ProjectId doesn't fit id schema")
 
     const project = await Project.aggregate([
-        { $match: {_id: mongoose.Types.ObjectId(req.params.id)}},
+        { $match: {_id: mongoose.Types.ObjectId(req.params.id), deleted: false}},
         { $project: {
             features: {
                 $filter: {
@@ -43,7 +44,7 @@ router.get("/:id", async (req, res) => {
     ])
 
     //const project = await Project.findOne({_id: req.params.id, deleted: false})
-    if(!project) return res.status(404).send("Invalid projectId") 
+    if(project.length == 0) return res.status(404).send("Invalid projectId") 
 
     res.send(project);
 });
@@ -59,6 +60,17 @@ router.post("/", async (req, res) => {
     await project.save()
 
     res.status(201).send(project)
+})
+
+router.delete("/:id", async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("projectId doesn't fit id schema")
+
+    var project = await Project.findOne({_id: req.params.id, deleted: false})
+    if (!project) return res.status(404).send("projectId not found")
+   
+    await Project.updateOne({ _id: req.params.id },{"$set":{"deleted": true }}).catch(err => res.status(422).json(err));
+
+    res.status(202).send(project)
 })
 
 module.exports = router;
