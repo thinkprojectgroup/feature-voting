@@ -3,6 +3,8 @@ const router = express.Router();
 const mongoose = require("mongoose")
 const { Project } = require("../models/project")
 const { validateFeature } = require("../models/feature")
+const uploadImages = require("../middleware/imageUpload")
+
 
 /*// TODO: not sure if this is even needed
 router.get("/:projectId", async (req, res) => {
@@ -14,7 +16,7 @@ router.get("/:projectId", async (req, res) => {
     res.send(project.features)
 });*/
 
-router.post("/:projectId", async (req, res) => {
+router.post("/:projectId",uploadImages, async (req, res) => {
     const { error } = validateFeature(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
@@ -29,7 +31,8 @@ router.post("/:projectId", async (req, res) => {
         description: req.body.description,
         employeeIds: [],
         userIds: [],
-        creator: req.body.creatorId
+        creator: req.body.creatorId,
+        picturePaths: req.files.map(file => file.filename)
     })
     await project.save()
 

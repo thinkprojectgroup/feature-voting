@@ -38,7 +38,12 @@ const featureSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
-    }
+    },
+    picturePaths: [{
+        type: String,
+        minlength: 1,
+        maxlength: 1028
+    }]
 })
 
 featureSchema.pre("validate", function (next) {
