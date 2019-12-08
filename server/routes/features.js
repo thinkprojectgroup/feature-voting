@@ -21,7 +21,7 @@ router.post("/:projectId", uploadImages, async (req, res) => {
         description: req.body.description,
         employeeIds: [],
         userIds: [],
-        creator: req.body.creatorId,
+        creator: req.cookies['userId'],
         picturePaths: req.files.map(file => file.filename)
     })
     await project.save()
