@@ -64,7 +64,7 @@ router.delete("/:projectId/:featureId", async (req, res) => {
 
     await project.save()
 
-    res.status(201).send(result)
+    res.status(202).send(result)
 })
 
 module.exports = router;
