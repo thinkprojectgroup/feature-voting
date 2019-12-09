@@ -6,7 +6,7 @@ const { Comment, validateComment, validateFlaggedComment } = require("../models/
 router.get("/", async (req, res) => {
     var comments = await Comment.find({accepted: false, deleted: false}).sort("dateCreated")
     if(comments.length == 0) return res.send("no comments available")
-
+  
     res.send(comments);
 });
 
@@ -38,7 +38,7 @@ router.patch("/:id", async (req, res) => {
 
     var comment = await Comment.findOne({_id: req.params.id, deleted: false})
     if (!comment) return res.status(404).send("commentId not found")
-   
+
     await Comment.updateOne({ _id: req.params.id },{"$set":{"accepted": !comment.accepted }})
  
     comment = await Comment.findById(req.params.id)

@@ -2,12 +2,24 @@ const winston = require("winston")
 
 require("express-async-errors") // Automatically catches express async errors and passes control to error middleware function
 
+const format = winston.format.combine(
+    winston.format.colorize(),
+    winston.format.timestamp(),
+    winston.format.align(),
+    winston.format.printf(({ level, message, label, timestamp }) => {
+        return `${timestamp} ${level}: ${message}`;
+    })
+)
+
 module.exports = function () {
     // Winston setup
-    winston.exceptions.handle(
-        new winston.transports.Console({ colorize: true, prettyPrint: true })
-    )
-    process.on("unhandledRejection", (ex) => { throw ex }) // Catch UnhandledPromiseRejections and rethrow as normal exceptions
+    winston.add(winston.createLogger({
+        transports: [new winston.transports.Console({
+            format: format,
+            handleExceptions: true
+        })],
+        exitOnError: true
+    }))
 
-    // TODO: add error logging to file/db
+    process.on("unhandledRejection", (ex) => { throw ex }) // Catch UnhandledPromiseRejections and rethrow as normal exceptions
 }
