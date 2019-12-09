@@ -63,11 +63,9 @@ router.post("/", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("projectId doesn't fit id schema")
 
-    var project = await Project.findOne({_id: req.params.id, deleted: false})
+    var project = await Project.findOneAndUpdate({_id: req.params.id, deleted: false},{"$set":{"deleted": true }},{useFindAndModify: false})
     if (!project) return res.status(404).send("projectId not found")
    
-    await Project.updateOne({ _id: req.params.id },{"$set":{"deleted": true }}).catch(err => res.status(422).json(err));
-
     res.status(202).send(project)
 })
 
