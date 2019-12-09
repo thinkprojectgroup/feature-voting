@@ -4,8 +4,8 @@ const mongoose = require("mongoose")
 const { User, validateUser, validateBanRequest } = require("../models/user")
 
 router.get("/", async (req, res) => {
-    //TODO: add auth middleware
-    const users = await User.find().sort("dateCreated")
+    const users = await User.find({deleted: false}).sort("dateCreated")
+
     res.send(users);
 });
 

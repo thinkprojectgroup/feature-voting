@@ -20,6 +20,10 @@ const User = mongoose.model("User", new mongoose.Schema({
         required: false,
         minlength: 1,
         maxlength: 255
+    },
+    deleted: {
+        type: Boolean,
+        default: false,
     }
 }))
 
