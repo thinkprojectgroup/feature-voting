@@ -13,9 +13,19 @@ const featureSchema = new mongoose.Schema({
         required: false,
         maxlength: 2048,
     },
-    employeeIds: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
-    userIds: [{type: mongoose.Schema.Types.ObjectId, ref: "User"}],
-    creator: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
+    employeeIds: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }],
+    userIds: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }],
+    creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
     voteCount: {
         type:Number,
         default: 0
@@ -28,6 +38,15 @@ const featureSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
+    },
+    picturePaths: [{
+        type: String,
+        minlength: 1,
+        maxlength: 1028
+    }],
+    deleted: {
+        type: Boolean,
+        default: false,
     }
 })
 
@@ -39,8 +58,7 @@ featureSchema.pre("validate", function (next) {
 function validateFeature(feature) {
     const schema = {
         headline: Joi.string().min(1).max(255).required(),
-        description: Joi.string().max(2048),
-        creatorId: Joi.objectId().required()
+        description: Joi.string().max(2048)
     }
     return Joi.validate(feature, schema)
 }
