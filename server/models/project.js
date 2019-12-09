@@ -15,7 +15,6 @@ const Project = mongoose.model("Project", new mongoose.Schema({
     },
     deleted: {
         type: Boolean,
-        required: false,
         default: false,
     }
 }))
