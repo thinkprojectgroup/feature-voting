@@ -41,7 +41,6 @@ const featureSchema = new mongoose.Schema({
     },
     deleted: {
         type: Boolean,
-        required: false,
         default: false,
     }
 })
