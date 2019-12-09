@@ -39,7 +39,7 @@ router.patch("/:id", async (req, res) => {
     var comment = await Comment.findOne({_id: req.params.id, deleted: false})
     if (!comment) return res.status(404).send("commentId not found")
    
-    await Comment.updateOne({ _id: req.params.id },{"$set":{"accepted": !comment.accepted }}).catch(err => res.status(422).json(err));
+    await Comment.updateOne({ _id: req.params.id },{"$set":{"accepted": !comment.accepted }})
  
     comment = await Comment.findById(req.params.id)
     res.status(200).send(comment)
@@ -51,7 +51,7 @@ router.delete("/:id", async (req, res) => {
     var comment = await Comment.findOne({_id: req.params.id, deleted: false})
     if (!comment) return res.status(404).send("commentId not found")
    
-    await Comment.updateOne({ _id: req.params.id },{"$set":{"deleted": true }}).catch(err => res.status(422).json(err));
+    await Comment.updateOne({ _id: req.params.id },{"$set":{"deleted": true }})
 
     res.status(202).send(comment)
 })
