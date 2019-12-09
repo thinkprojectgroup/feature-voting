@@ -44,7 +44,7 @@ router.get("/:id", async (req, res) => {
     ])
     if(project.length == 0) return res.status(404).send("Invalid projectId") 
 
-    res.send(project);
+    res.send(project[0]);
 });
 
 router.post("/", async (req, res) => {
