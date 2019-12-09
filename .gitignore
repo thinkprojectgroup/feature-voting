@@ -1,2 +1,5 @@
 node_modules
 config
+
+server/public
+!server/public/test.jpg

@@ -3,8 +3,10 @@ const router = express.Router();
 const mongoose = require("mongoose")
 const { Project } = require("../models/project")
 const { validateFeature } = require("../models/feature")
+const uploadImages = require("../middleware/imageUpload")
 
-router.post("/:projectId", async (req, res) => {
+
+router.post("/:projectId", uploadImages, async (req, res) => {
     const { error } = validateFeature(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
@@ -19,6 +21,7 @@ router.post("/:projectId", async (req, res) => {
         description: req.body.description,
         employeeIds: [],
         userIds: [],
+        picturePaths: req.files.map(file => file.filename),
         creator: req.cookies["userId"]
     })
     await project.save()

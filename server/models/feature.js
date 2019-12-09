@@ -39,6 +39,11 @@ const featureSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
+    picturePaths: [{
+        type: String,
+        minlength: 1,
+        maxlength: 1028
+    }],
     deleted: {
         type: Boolean,
         default: false,
