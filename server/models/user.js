@@ -23,7 +23,6 @@ const User = mongoose.model("User", new mongoose.Schema({
     },
     deleted: {
         type: Boolean,
-        required: false,
         default: false,
     }
 }))
