@@ -4,7 +4,7 @@ const router = express.Router();
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
 
 router.get("/", async (req, res) => {
-    var comments = await Comment.find({accepted: false}).sort("dateCreated")
+    var comments = await Comment.find({accepted: false, deleted: false}).sort("dateCreated")
     if(comments.length == 0) return res.send("no comments available")
 
     res.send(comments);
