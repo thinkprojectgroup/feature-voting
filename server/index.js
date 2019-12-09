@@ -9,6 +9,7 @@ const app = express();
 
 require('./startup/applyMiddleware')(app);
 
+
 app.listen(port , () => {
     winston.info(`listening on port ${port}`)
 })

@@ -4,7 +4,8 @@
   "description": "a web tool to evaluate feature votes",
   "main": "server/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   "homepage": "https://github.com/featurevoting/feature-voting#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.4.1",
     "concurrently": "^5.0.0",
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
@@ -25,6 +27,8 @@
     "joi": "^14.3.1",
     "joi-objectid": "^3.0.1",
     "mongoose": "^5.7.10",
+    "react-router-dom": "^5.1.2",
+    "reactstrap": "^8.1.1",
     "multer": "^1.4.2",
     "winston": "^3.2.1"
   }
