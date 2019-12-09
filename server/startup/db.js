@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const mongoURI = require('../config/keys');
+const winston = require("winston")
 
 module.exports = function () {
-    mongoose.connect(mongoURI.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
-        console.log("connected to db..");
-    }).catch((err) => (
-        console.log(err.message)
-    ))
+    mongoose.connect(mongoURI.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, })
+        .then(() => {
+            winston.info("connected to db..");
+        })
 }
