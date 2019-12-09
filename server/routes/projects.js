@@ -42,8 +42,6 @@ router.get("/:id", async (req, res) => {
             __v: true
         }}
     ])
-
-    //const project = await Project.findOne({_id: req.params.id, deleted: false})
     if(project.length == 0) return res.status(404).send("Invalid projectId") 
 
     res.send(project);
