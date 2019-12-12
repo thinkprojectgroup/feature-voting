@@ -4,7 +4,7 @@ const winston = require("winston")
 require('./startup/logging')()
 require('./startup/db')()
 require('./startup/joivalidation')()
-const port = 3000
+const port = process.env.PORT || 3000
 const app = express();
 
 require('./startup/applyMiddleware')(app);
