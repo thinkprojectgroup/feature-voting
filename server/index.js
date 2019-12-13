@@ -1,6 +1,7 @@
 const express = require('express');
 const winston = require("winston")
 
+require('newrelic')
 require('./startup/logging')()
 require('./startup/db')()
 require('./startup/joivalidation')()
