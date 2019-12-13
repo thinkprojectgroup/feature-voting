@@ -23,7 +23,10 @@ class FeatureDetailView extends Component{
         image: "",
         upvotes: 0
       }
+
+
    }
+
 
    componentDidMount() {
     /*
@@ -37,7 +40,7 @@ class FeatureDetailView extends Component{
 
     
 
-    axios.get("http://localhost:3000/api/features/5dd5696adce5622e749805c9/" + this.props.match.params.featureId)
+    axios.get("http://localhost:3000/api/features/5debb2971c768b066eb9bca0/" + this.props.match.params.featureId)
     .then(res => {
       const feature = res.data;
       
@@ -61,7 +64,7 @@ class FeatureDetailView extends Component{
     const{show} = this.state;
     this.setState({show: !show});
     this.setState({upvotes: this.state.upvotes - 1});
-}
+    }
 
 
 

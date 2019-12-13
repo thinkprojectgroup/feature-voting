@@ -1,20 +1,31 @@
 
 import React, { Component } from "react";
-import {BrowserRouter as Router, Link} from 'react-router-dom';
+import {withRouter, Link} from 'react-router-dom';
 
 
 
 class Header extends Component{
 
+    constructor(props) {
+        super(props);
+    }
+
 
     render() {
-
-        const image = require('./img/logo.png');
-
 
 
         // TODO: Add Back Route
         const backroute = "/";
+
+
+
+        const image = require('./img/logo.png');
+        const pathname = this.props.location.pathname;
+
+        if(pathname != {backroute}){
+
+        }
+
 
         let backButton =(
             <Link to={backroute}>
@@ -23,29 +34,17 @@ class Header extends Component{
             </Link>
         );
 
-
-
-        //Trying to only load Back button when not on the root path
-        //
-        // const location = window.location.pathname;
-        // console.log("location: "+ location);
-        // if(location == "/"){
-        //     backButton = " ";
-        // }
-
-
-
-
+        if(pathname == "/"){
+            backButton = "";
+        }
 
 
         return (
-
             <div className="row col-12 header">
                 <div className="header-container">
                     <div className="logo">
                         <img src={image} />
                     </div>
-
 
                     {backButton}
 
@@ -56,4 +55,4 @@ class Header extends Component{
     }
 }
 
-export default Header;
+export default withRouter(Header);

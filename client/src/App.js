@@ -7,14 +7,17 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 class App extends Component {
 
+    constructor(props) {
+        super(props);
+    }
+
+
 
   render() {
     return (
-
-
       <Router>
         <Header/>
-        <Route path={"/"} exact component={ProjectDetailView}>
+        <Route path={"/"} exact component={ProjectDetailView} >
         </Route>
         
         <Route path={"/:featureId"} component={FeatureDetailView}/>
