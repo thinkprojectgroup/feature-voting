@@ -85,6 +85,16 @@ router.get("/:projectId/:featureId", async (req, res) => {
     res.send(feature)
 });
 
+router.get("/search/", async (req, res) => {
+    var features = await Project.find(
+        { $text: { $search: req.body.searchString } },
+        { score: { $meta: "textScore" } }
+    ).sort({ score: { $meta: "textScore" } })
+    if (features.length == 0) return res.send("no results found")
+
+    res.send(features);
+});
+
 // Delete specific feature for project & feature id
 router.delete("/:projectId/:featureId", async (req, res) => {
 

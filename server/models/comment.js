@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 const Joi = require("joi")
 
-const Comment = mongoose.model("Comment", new mongoose.Schema({
+const schema = new mongoose.Schema({
     author: {
         type: mongoose.Schema.Types.ObjectId,
         required: true
@@ -30,7 +30,10 @@ const Comment = mongoose.model("Comment", new mongoose.Schema({
         type: Boolean,
         default: false,
     }
-}))
+})
+schema.index({ content: "text" })
+
+const Comment = mongoose.model("Comment", schema)
 
 function validateComment(comment) {
     const schema = {
@@ -40,7 +43,7 @@ function validateComment(comment) {
     return Joi.validate(comment, schema)
 }
 
-function validateFlaggedComment(comment){
+function validateFlaggedComment(comment) {
     const schema = {
         flagged: Joi.bool().required()
     }

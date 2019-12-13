@@ -47,17 +47,47 @@ router.get("/:id", async (req, res) => {
     res.send(project[0]);
 });
 
+router.get("/name/:name", async (req, res) => {
+
+    const project = await Project.aggregate([
+        { $match: {name: req.params.name, deleted: false}},
+        { $project: {
+            features: {
+                $filter: {
+                    input: '$features',
+                    as: 'feature',
+                    cond: { 
+                        $cmp: ['$$feature.deleted', true]
+                    }
+            }},
+            name: true,
+            __v: true
+        }}
+    ])
+    if(project.length == 0) return res.status(404).send("Invalid project name") 
+
+    res.send(project[0]);
+});
+
 router.post("/", async (req, res) => {
     const { error } = validateProject(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
-    const project = new Project({
-        name: req.body.name,
-        features: []
-    })
-    await project.save()
+    try {
+        const project = new Project({
+            name: req.body.name,
+            features: []
+        })
+        await project.save()
 
-    res.status(201).send(project)
+        res.status(201).send(project)
+    } catch(err) {
+        if (err.code == 11000) {
+            res.status(400).send("Project name already in use")
+        } else {
+            throw err
+        }
+    }
 })
 
 router.delete("/:id", async (req, res) => {
