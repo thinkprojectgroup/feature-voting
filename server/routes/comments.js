@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose')
 const router = express.Router();
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
+const { validateSearch } = require("../models/feature")
 
 // Get all unaccepted comments
 router.get("/", async (req, res) => {
@@ -14,6 +15,9 @@ router.get("/", async (req, res) => {
 // Search for comments by searchString
 // NOTE: half written words don't return anything
 router.get("/search/", async (req, res) => {
+    const { error } = validateSearch(req.body)
+    if (error) return res.status(400).send(error.details[0].message)
+
     var comments = await Comment.find(
         { $text: { $search: req.body.searchString } },
         { score: { $meta: "textScore" } }

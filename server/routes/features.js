@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require("mongoose")
 const { Project } = require("../models/project")
-const { validateFeature } = require("../models/feature")
+const { validateFeature, validateSearch } = require("../models/feature")
 const uploadImages = require("../middleware/imageUpload")
 
 // Post new feature to given projectId. Request needs to be in form-data otherwise
@@ -89,6 +89,9 @@ router.get("/:projectId/:featureId", async (req, res) => {
 // Search for feature headline/description by searchString
 // NOTE: half written words don't return anything
 router.get("/search/", async (req, res) => {
+    const { error } = validateSearch(req.body)
+    if (error) return res.status(400).send(error.details[0].message)
+
     var features = await Project.find(
         { $text: { $search: req.body.searchString } },
         { score: { $meta: "textScore" } }

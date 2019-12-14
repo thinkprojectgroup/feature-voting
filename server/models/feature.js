@@ -65,5 +65,13 @@ function validateFeature(feature) {
     return Joi.validate(feature, schema)
 }
 
+function validateSearch(body) {
+    const schema = {
+        searchString: Joi.string().required(),
+    }
+    return Joi.validate(body, schema)
+}
+
 exports.featureSchema = featureSchema
 exports.validateFeature = validateFeature
+exports.validateSearch = validateSearch
