@@ -1,6 +1,7 @@
 node_modules
 config
 .idea/
+newrelic_agent.log
 
 server/public
 !server/public/test.jpg

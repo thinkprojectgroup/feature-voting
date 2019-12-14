@@ -5,6 +5,7 @@ const { Project, validateProject } = require("../models/project")
 
 // Get all projects
 router.get("/", async (req, res) => {
+    throw new Error("just checking")
     // const projects = await Project.find({deleted: false}).sort("dateCreated")
     const projects = await Project.aggregate([
         { $match: {deleted: false}},

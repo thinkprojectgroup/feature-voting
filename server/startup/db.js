@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const mongoURI = process.env.MONGOLAB_URI;
+const mongoURI = process.env.MONGOLAB_URI || require('../config/keys').mongoURI;
 const winston = require("winston")
 
 module.exports = function () {
