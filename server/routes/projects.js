@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const router = express.Router();
 const { Project, validateProject } = require("../models/project")
 
+// Get all projects
 router.get("/", async (req, res) => {
     // const projects = await Project.find({deleted: false}).sort("dateCreated")
     const projects = await Project.aggregate([
@@ -24,6 +25,7 @@ router.get("/", async (req, res) => {
     res.send(projects);
 });
 
+// Get project by id
 router.get("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("ProjectId doesn't fit id schema")
 
@@ -47,8 +49,9 @@ router.get("/:id", async (req, res) => {
     res.send(project[0]);
 });
 
+// Get project by name instead of id, 
+// NOTE: name is case sensitive
 router.get("/name/:name", async (req, res) => {
-
     const project = await Project.aggregate([
         { $match: {name: req.params.name, deleted: false}},
         { $project: {
@@ -69,6 +72,7 @@ router.get("/name/:name", async (req, res) => {
     res.send(project[0]);
 });
 
+// Create a new project, project names have to be unique
 router.post("/", async (req, res) => {
     const { error } = validateProject(req.body)
     if (error) return res.status(400).send(error.details[0].message)
@@ -90,6 +94,7 @@ router.post("/", async (req, res) => {
     }
 })
 
+// Delete project by id
 router.delete("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("projectId doesn't fit id schema")
 

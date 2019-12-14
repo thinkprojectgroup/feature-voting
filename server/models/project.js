@@ -18,7 +18,7 @@ const schema = new mongoose.Schema({
         default: false,
     }
 })
-schema.index({ name: "text" }, { unique: true })
+schema.index({ name: 1, }, { unique: true })
 
 const Project = mongoose.model("Project", schema)
 

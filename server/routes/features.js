@@ -86,12 +86,16 @@ router.get("/:projectId/:featureId", async (req, res) => {
     res.send(feature)
 });
 
+// Search for feature headline/description by searchString
+// NOTE: half written words don't return anything
 router.get("/search/", async (req, res) => {
     var features = await Project.find(
         { $text: { $search: req.body.searchString } },
         { score: { $meta: "textScore" } }
     ).sort({ score: { $meta: "textScore" } })
     if (features.length == 0) return res.send("no results found")
+
+    //TODO: Project.find returns Project -> return feature instead of project
 
     res.send(features);
 });

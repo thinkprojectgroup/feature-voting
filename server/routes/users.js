@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const { User, validateUser, validateBanRequest } = require("../models/user")
 
 router.get("/", async (req, res) => {
+    //TODO: add auth middleware / maybe only return users with email
     const users = await User.find({deleted: false}).sort("dateCreated")
 
     res.send(users);

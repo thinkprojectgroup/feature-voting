@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const router = express.Router();
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
 
+// Get all unaccepted comments
 router.get("/", async (req, res) => {
     var comments = await Comment.find({ accepted: false, deleted: false }).sort("dateCreated")
     if (comments.length == 0) return res.send("no comments available")
@@ -10,6 +11,8 @@ router.get("/", async (req, res) => {
     res.send(comments);
 });
 
+// Search for comments by searchString
+// NOTE: half written words don't return anything
 router.get("/search/", async (req, res) => {
     var comments = await Comment.find(
         { $text: { $search: req.body.searchString } },
@@ -20,6 +23,7 @@ router.get("/search/", async (req, res) => {
     res.send(comments);
 });
 
+// Get comments by featureId
 router.get("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("FeatureId doesn't fit id schema")
 
@@ -29,6 +33,7 @@ router.get("/:id", async (req, res) => {
     res.send(comments);
 });
 
+// Post a new comment to given featureId
 router.post("/", async (req, res) => {
     const { error } = validateComment(req.body)
     if (error) return res.status(400).send(error.details[0].message)
@@ -43,6 +48,7 @@ router.post("/", async (req, res) => {
     res.status(201).send(comment)
 })
 
+// Switch comments accepted status by it's id
 router.patch("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("commentId doesn't fit id schema")
 
@@ -55,6 +61,7 @@ router.patch("/:id", async (req, res) => {
     res.status(200).send(comment)
 })
 
+// Delete comments by id
 router.delete("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("commentId doesn't fit id schema")
 
