@@ -22,11 +22,6 @@ class Header extends Component{
         const image = require('./img/logo.png');
         const pathname = this.props.location.pathname;
 
-        if(pathname != {backroute}){
-
-        }
-
-
         let backButton =(
             <Link to={backroute}>
                 <div className="back-button fas fa-arrow-left" >
