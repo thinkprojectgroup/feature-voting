@@ -10,6 +10,10 @@ router.get("/", async (req, res) => {
     res.send(users);
 });
 
+router.post("/", async (req, res) => {
+    
+});
+
 // Assign role included in req.body to user with provided email address
 router.post("/:email", async (req, res) => {
     //TODO: add auth middleware
