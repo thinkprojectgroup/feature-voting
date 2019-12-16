@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <Router>
         <Header/>
-        <Route path={"/"} exact component={ProjectDetailView} >
+        <Route path={"/"} exact component={ProjectDetailView}/>
         </Route>
         
         <Route path={"/:featureId"} component={FeatureDetailView}/>
