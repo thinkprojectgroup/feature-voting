@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Button} from 'reactstrap';
 import axios from 'axios';
 import "./css/FeatureDetailView.css";
-import Header from "./Header";
-import {BrowserRouter as Router} from "react-router-dom";
+import Comment from './Comment';
+
 
 
 
@@ -21,7 +21,9 @@ class FeatureDetailView extends Component{
         featureTitle: "",
         description: "",
         image: "",
-        upvotes: 0
+        upvotes: 0,
+        comments: [],
+        commentCount: 0
       }
    }
 
@@ -37,17 +39,22 @@ class FeatureDetailView extends Component{
 
     
 
-    axios.get("http://localhost:3000/api/features/5dd5696adce5622e749805c9/" + this.props.match.params.featureId)
+    axios.get("http://localhost:3000/api/features/5debb2751c768b066eb9bc9f/" + this.props.match.params.featureId)
     .then(res => {
       const feature = res.data;
       
       this.setState({featureTitle: feature.headline});
       this.setState({description: feature.description});
       this.setState({upvotes: feature.voteCount});
-      console.log(feature);
     })
 
-     
+    axios.get("http://localhost:3000/api/comments/" + this.props.match.params.featureId)
+    .then(res => {
+        const comments = res.data; 
+        this.setState({comments: comments});
+        this.setState({commentCount: comments.count})
+        console.log(this.state.comments[0].author);
+    })
 
   }
 
@@ -91,6 +98,19 @@ class FeatureDetailView extends Component{
             <div className="col-3 feature-detail-image">
 
                 <img src={image} />
+            </div>
+
+            <div className="comment-section">
+            {this.state.comments.map(comment => (
+                <Comment
+                    author = {comment.author}
+                    content = {comment.content}
+                    accepted = {comment.accepted}
+                    deleted = {comment.deleted}
+                    date = {comment.dateCreated}
+                    count = {this.state.commentCount}
+                />
+        ))}
             </div>
 
         </div>

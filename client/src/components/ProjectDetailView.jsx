@@ -26,7 +26,7 @@ class ProjectDetailView extends Component {
   }
   async componentDidMount() {
     const promise = await axios.get(
-      `http://localhost:3000/api/projects/5dd5696adce5622e749805c9`
+      `http://localhost:3000/api/projects/5debb2751c768b066eb9bc9f`
       
     );
     const features = promise.data.features;
