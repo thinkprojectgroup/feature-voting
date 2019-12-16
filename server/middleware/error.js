@@ -5,6 +5,5 @@ const winston = require("winston")
 module.exports = function(err, req, res, next){
     console.log("error.js", res.role);
     winston.error(err.message, err)
-    res.status(500).send(err.message)
     process.exit()
 }
