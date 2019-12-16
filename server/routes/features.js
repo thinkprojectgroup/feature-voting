@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const authAdmin = require("../middleware/authAdmin")
 const mongoose = require("mongoose")
 const { Project } = require("../models/project")
 const { validateFeature } = require("../models/feature")
 const uploadImages = require("../middleware/imageUpload")
 
 
-router.post("/:projectId", uploadImages, async (req, res) => {
+router.post("/:projectId", authAdmin, uploadImages, async (req, res) => {
     const { error } = validateFeature(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
