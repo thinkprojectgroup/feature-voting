@@ -1,7 +1,8 @@
 
 import React, { Component } from "react";
 import {BrowserRouter as Router, Link} from 'react-router-dom';
-import Login from './Login'
+
+
 
 class Header extends Component{
 
@@ -9,6 +10,8 @@ class Header extends Component{
     render() {
 
         const image = require('./img/logo.png');
+
+
 
         // TODO: Add Back Route
         const backroute = "/";
@@ -20,6 +23,8 @@ class Header extends Component{
             </Link>
         );
 
+
+
         //Trying to only load Back button when not on the root path
         //
         // const location = window.location.pathname;
@@ -28,17 +33,22 @@ class Header extends Component{
         //     backButton = " ";
         // }
 
+
+
+
+
+
         return (
 
             <div className="row col-12 header">
-                <Login authAdmin={this.props.authAdmin} />
                 <div className="header-container">
                     <div className="logo">
                         <img src={image} />
                     </div>
 
+
                     {backButton}
-                    
+
                 </div>
             </div>
 
