@@ -17,39 +17,38 @@ class FeaturePDV extends Component {
 
   render() {
 
-      // TODO: Add real imagadata later
-      var image = require('./img/computer.png');
-
+    // TODO: Add real imagadata later
+    var image = require('./img/computer.png');
 
     return (
-      <div className="container row feature-list-item">
-        <div className="col-1 feature-count">
-          <button onClick= {this.toggleDivUpvote} className="upvote-button">
-            <i className="fas fa-angle-up"></i>
-          </button>
-          <p>{this.state.count}</p>
-          {this.state.show ? <button onClick={this.toggleDivDownVote} className="downvote-button">
-            <i className="fas fa-angle-up"></i>
-          </button> : null}
-        </div>
-        <div className="col-8 feature-text">
-          <div className="title">
-            <Link to={"/"+this.state.id}><h3>{this.state.title}</h3> </Link>
+      
+        <div className="container row feature-list-item">
+          
+          <div className="col-1 feature-count">
+            <button onClick= {this.toggleDivUpvote} className="upvote-button">
+              <i className="fas fa-angle-up"></i>
+            </button>
+            <p>{this.state.count}</p>
+            {this.state.show ? <button onClick={this.toggleDivDownVote} className="downvote-button">
+              <i className="fas fa-angle-up"></i>
+            </button> : null}
           </div>
-          <div className="description">
-              <p>{this.state.description}</p>
+          <div className="col-8 feature-text">
+            <div className="title">
+              <Link to={"/"+this.state.id}><h3>{this.state.title}</h3> </Link>
+            </div>
+            <div className="description">
+                <p>{this.state.description}</p>
+            </div>
+            <div className="comment-count">
+                <p>{this.state.commentCount} comments</p>
+            </div>
           </div>
-          <div className="comment-count">
-              <p>{this.state.commentCount} comments</p>
+
+          <div className="col-3 feature-image" style ={ { backgroundImage: "url("+ image +")" } }>
+
           </div>
         </div>
-
-
-
-        <div className="col-3 feature-image" style ={ { backgroundImage: "url("+ image +")" } }>
-
-        </div>
-      </div>
     );
   }
 }
