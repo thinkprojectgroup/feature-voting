@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const mongoURI = process.env.MONGOLAB_URI || require('../config/keys').mongoURI;
+const mongoURI = process.env.MONGOLAB_URI;
 const winston = require("winston")
 
 module.exports = function () {
@@ -7,7 +7,4 @@ module.exports = function () {
         .then(() => {
             winston.info("connected to db..");
         })
-        
-    mongoose.set("autoIndex", false)
-    mongoose.set("useCreateIndex", true)
 }

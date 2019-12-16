@@ -8,7 +8,6 @@ class ProjectDetailView extends Component {
     name: "",
     comments: ""
   };
-  
   render() {
     return (
       <div className="container">

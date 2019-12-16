@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server/index.js"
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,6 @@
     "cookie-parser": "^1.4.4",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
-    "google-auth-library": "^5.7.0",
     "joi": "^14.3.1",
     "joi-objectid": "^3.0.1",
     "mongoose": "^5.7.10",
@@ -36,9 +35,5 @@
     "react-router-dom": "^5.1.2",
     "reactstrap": "^8.1.1",
     "winston": "^3.2.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.2",
-    "prettier": "^1.19.1"
   }
 }

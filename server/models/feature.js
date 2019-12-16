@@ -1,7 +1,6 @@
 const mongoose = require("mongoose")
 const Joi = require("joi")
 
-
 const featureSchema = new mongoose.Schema({
     headline: {
         type: String,
@@ -28,7 +27,7 @@ const featureSchema = new mongoose.Schema({
         required: true
     },
     voteCount: {
-        type: Number,
+        type:Number,
         default: 0
     },
     acceptedStatus: {
@@ -50,7 +49,6 @@ const featureSchema = new mongoose.Schema({
         default: false,
     }
 })
-featureSchema.index({ headline: "text", description: "text" })
 
 featureSchema.pre("validate", function (next) {
     this.voteCount = this.employeeIds.length + this.userIds.length
@@ -65,13 +63,5 @@ function validateFeature(feature) {
     return Joi.validate(feature, schema)
 }
 
-function validateSearch(body) {
-    const schema = {
-        searchString: Joi.string().required(),
-    }
-    return Joi.validate(body, schema)
-}
-
 exports.featureSchema = featureSchema
 exports.validateFeature = validateFeature
-exports.validateSearch = validateSearch
