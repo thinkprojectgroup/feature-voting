@@ -17,7 +17,7 @@ class App extends Component {
         <Header/>
         <Route path={"/"} exact component={ProjectDetailView}>
         </Route>
-        <Route path={"/CommentReview"} component={CommentReview}/>
+        <Route path={"/commentreview"} component={CommentReview}/>
         <Route path={"/:featureId"} component={FeatureDetailView}/>
       </Router>
     );
