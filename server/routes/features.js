@@ -9,21 +9,29 @@ const uploadImages = require("../middleware/imageUpload")
 // upload middleware will throw an error.
 router.post("/:projectId", uploadImages, async (req, res) => {
     const { error } = validateFeature(req.body)
-    if (error) return res.status(400).send(error.details[0].message)
+    if (error) {
+        console.log(error.details[0].message)
+        return res.status(400).send(error.details[0].message)
+    }
 
-    if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) return res.status(400).send("ProjectId doesn't fit id schema")
-
+    if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) {
+        console.log("ProjectId doesn't fit id schema")
+        return res.status(400).send("ProjectId doesn't fit id schema")
+    }
     // Using find & save instead of update for featureSchema.pre method to work properly
     const project = await Project.findOne({ _id: req.params.projectId, deleted: false })
-    if (!project) return res.status(404).send("Invalid projectId")
+    if (!project) {
+        console.log("Invalid projectId")
+        return res.status(404).send("Invalid projectId")
+    }
 
     project.features.push({
         headline: req.body.headline,
         description: req.body.description,
         employeeIds: [],
         userIds: [],
-        picturePaths: req.files.map(file => file.filename),
-        creator: req.cookies["userId"]
+        picturePaths: req.files.map(file => file.id),
+        creator: "5df1205675aec022fc257e8f"
     })
     await project.save()
 
