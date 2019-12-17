@@ -7,6 +7,7 @@ const uploadImages = require("../middleware/imageUpload")
 
 // Post new feature to given projectId. Request needs to be in form-data otherwise
 // upload middleware will throw an error.
+// Test
 router.post("/:projectId", uploadImages, async (req, res) => {
     const { error } = validateFeature(req.body)
     if (error) return res.status(400).send(error.details[0].message)
