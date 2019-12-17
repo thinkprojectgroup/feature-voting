@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const Joi = require("joi")
 const { featureSchema } = require("./feature")
 
-const Project = mongoose.model("Project", new mongoose.Schema({
+const schema = new mongoose.Schema({
     name: {
         required: true,
         type: String,
@@ -17,7 +17,10 @@ const Project = mongoose.model("Project", new mongoose.Schema({
         type: Boolean,
         default: false,
     }
-}))
+})
+schema.index({ name: 1, }, { unique: true })
+
+const Project = mongoose.model("Project", schema)
 
 function validateProject(project) {
     const schema = {
