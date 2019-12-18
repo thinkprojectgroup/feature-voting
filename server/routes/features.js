@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require("mongoose")
 const { Project } = require("../models/project")
-const { validateFeature } = require("../models/feature")
+const { validateFeature, validateSearch } = require("../models/feature")
 const uploadImages = require("../middleware/imageUpload")
 
-
+// Post new feature to given projectId. Request needs to be in form-data otherwise
+// upload middleware will throw an error.
+// Test
 router.post("/:projectId", uploadImages, async (req, res) => {
     const { error } = validateFeature(req.body)
     if (error) return res.status(400).send(error.details[0].message)
@@ -83,6 +85,23 @@ router.get("/:projectId/:featureId", async (req, res) => {
     if (!feature || feature.deleted) return res.status(404).send("featureId not found")
 
     res.send(feature)
+});
+
+// Search for feature headline/description by searchString
+// NOTE: half written words don't return anything
+router.get("/search/", async (req, res) => {
+    const { error } = validateSearch(req.body)
+    if (error) return res.status(400).send(error.details[0].message)
+
+    var features = await Project.find(
+        { $text: { $search: req.body.searchString } },
+        { score: { $meta: "textScore" } }
+    ).sort({ score: { $meta: "textScore" } })
+    if (features.length == 0) return res.send("no results found")
+
+    //TODO: Project.find returns Project -> return feature instead of project
+
+    res.send(features);
 });
 
 // Delete specific feature for project & feature id
