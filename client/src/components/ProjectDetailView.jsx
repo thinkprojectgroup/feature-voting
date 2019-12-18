@@ -1,13 +1,18 @@
 import React, { Component } from "react";
 import FeaturePDV from "./FeaturePDV";
 import axios from "axios";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class ProjectDetailView extends Component {
-  state = {
-    features: [],
-    name: "",
-    comments: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      features: [],
+      name: "",
+      comments: "",
+      _id: ""
+    };
+  }
   render() {
     return (
       <div className="container">
@@ -19,6 +24,7 @@ class ProjectDetailView extends Component {
             title={feature.headline}
             description={feature.description}
             commentCount={0}
+            _id={this.state._id}
           />
         ))}
       </div>
@@ -26,13 +32,15 @@ class ProjectDetailView extends Component {
   }
   async componentDidMount() {
     const promise = await axios.get(
-      `http://localhost:3000/api/projects/5debb2751c768b066eb9bc9f`
-      
+      `http://localhost:3000/api/projects/` + this.props.match.params._id
     );
     const features = promise.data.features;
     const name = promise.data.name;
+    const _id = promise.data._id;
     this.setState({ features });
     this.setState({ name });
+    this.setState({ _id });
+    console.log(_id);
   }
 }
 export default ProjectDetailView;
