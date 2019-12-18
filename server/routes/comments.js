@@ -46,6 +46,7 @@ router.post("/", async (req, res) => {
         author: req.cookies['userId'],
         content: req.body.content,
         featureId: req.body.featureId,
+        name: req.body.name
     })
     await comment.save()
 
