@@ -1,59 +1,39 @@
-
 import React, { Component } from "react";
-import {BrowserRouter as Router, Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 
+class Header extends Component {
+  render() {
+    const image = require("./img/logo.png");
 
+    // TODO: Add Back Route
+    const backroute = "/";
 
-class Header extends Component{
+    let backButton = (
+      <Link to={backroute}>
+        <div className="back-button fas fa-arrow-left"></div>
+      </Link>
+    );
 
+    //Trying to only load Back button when not on the root path
+    //
+    // const location = window.location.pathname;
+    // console.log("location: "+ location);
+    // if(location == "/"){
+    //     backButton = " ";
+    // }
 
-    render() {
+    return (
+      <div className="row col-12 header">
+        <div className="header-container">
+          <div className="logo">
+            <img src={image} />
+          </div>
 
-        const image = require('./img/logo.png');
-
-
-
-        // TODO: Add Back Route
-        const backroute = "/";
-
-        let backButton =(
-            <Link to={backroute}>
-                <div className="back-button fas fa-arrow-left" >
-                </div>
-            </Link>
-        );
-
-
-
-        //Trying to only load Back button when not on the root path
-        //
-        // const location = window.location.pathname;
-        // console.log("location: "+ location);
-        // if(location == "/"){
-        //     backButton = " ";
-        // }
-
-
-
-
-
-
-        return (
-
-            <div className="row col-12 header">
-                <div className="header-container">
-                    <div className="logo">
-                        <img src={image} />
-                    </div>
-
-
-                    {backButton}
-
-                </div>
-            </div>
-
-        );
-    }
+          {backButton}
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Header;
