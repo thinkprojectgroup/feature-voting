@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Button } from "reactstrap";
 import axios from "axios";
 import "./css/FeatureDetailView.css";
+import Comment from './Comment';
+
 
 class FeatureDetailView extends Component {
   constructor(props) {
@@ -16,7 +18,9 @@ class FeatureDetailView extends Component {
       featureTitle: "",
       description: "",
       image: "",
-      upvotes: 0
+      upvotes: 0,
+      comments: [],
+      commentCount: 0
     };
   }
 
@@ -29,13 +33,20 @@ class FeatureDetailView extends Component {
         this.setState({ persons });
       })
       */
+    axios.get("http://localhost:3000/api/comments/" + this.props.match.params.featureId)
+      .then(res => {
+        const comments = res.data;
+        this.setState({ comments: comments });
+        this.setState({ commentCount: comments.count })
+        console.log(this.state.comments[0].author);
+      })
 
     axios
       .get(
         "http://localhost:3000/api/features/" +
-          this.props.match.params._id +
-          "/" +
-          this.props.match.params.featureId
+        this.props.match.params._id +
+        "/" +
+        this.props.match.params.featureId
       )
       .then(res => {
         const feature = res.data;
@@ -89,6 +100,18 @@ class FeatureDetailView extends Component {
           </div>
           <div className="col-3 feature-detail-image">
             <img src={image} />
+          </div>
+          <div className="comment-section">
+            {this.state.comments.map(comment => (
+              <Comment
+                author={comment.author}
+                content={comment.content}
+                accepted={comment.accepted}
+                deleted={comment.deleted}
+                date={comment.dateCreated}
+                count={this.state.commentCount}
+              />
+            ))}
           </div>
         </div>
       </div>
