@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import FeaturePDV from "./FeaturePDV";
 import axios from "axios";
 import { BrowserRouter as Router, Link } from "react-router-dom";
+import config from '../config';
 
 class ProjectDetailView extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class ProjectDetailView extends Component {
   }
   async componentDidMount() {
     const promise = await axios.get(
-      `http://localhost:3000/api/projects/` + this.props.match.params._id
+      config.url + `/api/projects/` + this.props.match.params._id
     );
     const features = promise.data.features;
     const name = promise.data.name;
