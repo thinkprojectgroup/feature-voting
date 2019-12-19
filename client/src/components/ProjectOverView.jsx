@@ -25,7 +25,7 @@ class ProjectOverView extends Component {
     );
   }
   async componentDidMount() {
-    const promise = await axios.get(url + `/api/projects/`);
+    const promise = await axios.get(config.url + `/api/projects/`);
     const projects = promise.data;
     //const projects = Object.values(promise);
     console.log(projects);
