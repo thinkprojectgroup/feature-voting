@@ -38,7 +38,7 @@ class FeaturePDV extends Component {
         <div className="col-8 feature-text">
           <div className="title">
             <Link
-              to={"api/features/" + this.props._id + "/" + this.state.id}
+              to={this.props._id + "/" + this.state.id}
               style={{ textDecoration: "none" }}
             >
               <h3>{this.state.title}</h3>{" "}
