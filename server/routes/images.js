@@ -2,29 +2,29 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require("mongoose")
 const uploadImages = require("../middleware/imageUpload")
-const { gfs } = require("../startup/db")
+const { Image } = require("../models/image")
 
-router.get("/:fileId", (req, res) => {
-    gfs.files.findOne({ id: req.params.fileId }, (err, file) => {
-        // Check if file
-        if (!file || file.length === 0) {
-          return res.status(404).json({
-            err: 'No file exists',
-          })
-        }
-    
-        // Check if image
-        if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
-          // Read output to browser
-          const readstream = gfs.createReadStream(file.filename)
-          readstream.pipe(res)
-        } else {
-          res.status(404).json({
-            err: 'Not an image',
-          })
-        }
-      })
-      
+router.get("/:imageId", async (req, res) => {
+  //TODO: verify id schema
+
+  const image = await Image.findById(req.params.imageId)
+  if (!image) return res.status(404).send("image not found")
+
+  res.status(200).send(image.imageData)
+})
+
+router.post("/uploadBase", async (req, res, next) => {
+  //TODO: validateImage
+  console.log(req.body.imageName)
+
+  const newImage = new Image({
+    imageName: req.body.imageName,
+    imageData: req.body.imageData
+  })
+
+  await newImage.save()
+
+  res.status(200).send(newImage)
 })
 
 module.exports = router;
