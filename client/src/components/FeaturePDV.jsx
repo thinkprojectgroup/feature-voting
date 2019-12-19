@@ -39,6 +39,7 @@ class FeaturePDV extends Component {
           <div className="title">
             <Link
               to={"/" + this.props.projectId + "/" + this.state.featureId}
+
               style={{ textDecoration: "none" }}
             >
               <h3>{this.state.title}</h3>{" "}
