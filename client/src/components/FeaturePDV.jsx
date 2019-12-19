@@ -6,18 +6,18 @@ import beispiel from "./img/computer.png";
 
 class FeaturePDV extends Component {
   state = {
-    id: this.props.id,
+    featureId: this.props.featureId,
     count: this.props.count,
     title: this.props.title,
     description: this.props.description,
     commentCount: this.props.commentCount,
-    _id: this.props._id
+    projectId: this.props.projectId
   };
 
   render() {
     // TODO: Add real imagadata later
     var image = require("./img/computer.png");
-    console.log(this.props._id);
+    console.log(this.props.projectId);
 
     return (
       <div className="container row feature-list-item">
@@ -38,7 +38,7 @@ class FeaturePDV extends Component {
         <div className="col-8 feature-text">
           <div className="title">
             <Link
-              to={"api/features/" + this.props._id + "/" + this.state.id}
+              to={"/" + this.props.projectId + "/" + this.state.featureId}
               style={{ textDecoration: "none" }}
             >
               <h3>{this.state.title}</h3>{" "}

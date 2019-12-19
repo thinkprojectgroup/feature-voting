@@ -13,7 +13,6 @@ class Comment extends Component{
 
 
     render(){
-
         return(
             <div className="comment-section-container">
                     {!this.state.deleted ?
