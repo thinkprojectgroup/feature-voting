@@ -15,11 +15,11 @@ class ProjectOverView extends Component {
       <div className="container">
         <h1>Projects</h1>
         {this.state.projects.map(project => (
-          <div className="container row feature-list-item">
-            <Link to={"/" + project._id} style={{ textDecoration: "none" }}>
-              <h3>{project.name}</h3>{" "}
-            </Link>
-          </div>
+          <Link to={"/" + project._id} >
+            <div className="container row project-list-item">
+                <h3>{project.name}</h3>{" "}
+            </div>
+          </Link>
         ))}
       </div>
     );

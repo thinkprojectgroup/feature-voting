@@ -19,29 +19,32 @@ class CommentReview extends Component{
         this.setState({commentCount: comments.count})
     });
     }
-    render(){
 
+
+    render(){
         return(
-            <div className className="comment-section col-12 row">
+            <div className className="comment-section container">
                 {this.state.comments.map(comment => (
-                    <div className="comment-section-container row col-12">
-                        {!comment.deleted ?
-                        <div className="comment-section-content col-8">
-                            <p>{comment.count}</p>
-                            <p>{comment.author}</p>
-                            <p>{comment.content}</p>
-                            <p>{comment.date}</p>
-                        <div className="comment-section-button col-4">
-                            <Button>Accept</Button>
-                            <Button>Decline</Button>
+                     !comment.deleted ?
+                    <div className="comment-section-item row col-12">
+
+                        <div className="comment-section-button col-1">
+                            <Button className="accept"><i className="fas fa-check"></i></Button>
+                            <Button className="decline"><i className="fas fa-times"></i></Button>
                         </div>
-                        </div> : null}   
+
+                        <div className="comment-section-content col-11">
+                            <p>{comment.count}</p>
+                            <p className="comment-author">{comment.author}</p>
+                            <p className="comment-content">{comment.content}</p>
+                            <p  className="comment-date">{comment.date}</p>
+                        </div>
+
                     </div>
-                ))}
+                    : null))}
             </div>                        
         );
     }
-
 }
 
-export default CommentReview
+export default CommentReview;
