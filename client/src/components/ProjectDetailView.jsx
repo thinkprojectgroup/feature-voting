@@ -10,7 +10,7 @@ class ProjectDetailView extends Component {
       features: [],
       name: "",
       comments: "",
-      _id: ""
+      projectId: ""
     };
   }
   render() {
@@ -19,12 +19,12 @@ class ProjectDetailView extends Component {
         <h1>{this.state.name}</h1>
         {this.state.features.map(feature => (
           <FeaturePDV
-            id={feature._id}
+            featureId={feature._id}
             count={feature.voteCount}
             title={feature.headline}
             description={feature.description}
             commentCount={0}
-            _id={this.state._id}
+            projectId={this.state.projectId}
           />
         ))}
       </div>
@@ -39,7 +39,7 @@ class ProjectDetailView extends Component {
     const _id = promise.data._id;
     this.setState({ features });
     this.setState({ name });
-    this.setState({ _id });
+    this.setState({ projectId: _id});
     console.log(_id);
   }
 }
