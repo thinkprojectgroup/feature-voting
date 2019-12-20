@@ -3,7 +3,7 @@ import { Button } from "reactstrap";
 import axios from "axios";
 import "./css/FeatureDetailView.css";
 import Comment from './Comment';
-
+import config from '../config';
 
 class FeatureDetailView extends Component {
   constructor(props) {
@@ -33,7 +33,7 @@ class FeatureDetailView extends Component {
         this.setState({ persons });
       })
       */
-    axios.get("http://localhost:3000/api/comments/" + this.props.match.params.featureId)
+    axios.get(config.url + "/api/comments/" + this.props.match.params.featureId)
       .then(res => {
         const comments = res.data;
         this.setState({ comments: comments });
@@ -43,7 +43,7 @@ class FeatureDetailView extends Component {
 
     axios
       .get(
-        "http://localhost:3000/api/features/" +
+        config.url + "/api/features/" +
         this.props.match.params._id +
         "/" +
         this.props.match.params.featureId

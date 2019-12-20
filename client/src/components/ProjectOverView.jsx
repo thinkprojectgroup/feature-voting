@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Link } from "react-router-dom";
+import config from '../config';
 
 class ProjectOverView extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class ProjectOverView extends Component {
     );
   }
   async componentDidMount() {
-    const promise = await axios.get(`http://localhost:3000/api/projects/`);
+    const promise = await axios.get(config.url + `/api/projects/`);
     const projects = promise.data;
     //const projects = Object.values(promise);
     console.log(projects);

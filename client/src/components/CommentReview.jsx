@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import {Button} from 'reactstrap';
+import config from '../config';
 
 
 class CommentReview extends Component{
@@ -11,7 +12,7 @@ class CommentReview extends Component{
 
 
     componentDidMount(){
-    axios.get("http://localhost:3000/api/comments/")
+    axios.get(config.url + "/api/comments/")
     .then(res => {
         const comments = res.data; 
         this.setState({comments: comments});
