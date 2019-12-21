@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import FeaturePDV from "./FeaturePDV";
+import FeaturePDV from "../Feature/FeaturePDV";
 import axios from "axios";
-import { BrowserRouter as Router, Link } from "react-router-dom";
 
 class ProjectDetailView extends Component {
   constructor(props) {
@@ -31,16 +30,18 @@ class ProjectDetailView extends Component {
     );
   }
   async componentDidMount() {
-    const promise = await axios.get(
+    
+    await axios.get(
       `http://localhost:3000/api/projects/` + this.props.match.params._id
-    );
-    const features = promise.data.features;
-    const name = promise.data.name;
-    const _id = promise.data._id;
-    this.setState({ features });
-    this.setState({ name });
-    this.setState({ projectId: _id});
-    console.log(_id);
+    )
+    .then(response => response.data)
+    .then(data => {
+      this.setState ({
+        features : data.features,
+        name: data.name,
+        projectId: data._id
+      })
+    })
   }
 }
 export default ProjectDetailView;

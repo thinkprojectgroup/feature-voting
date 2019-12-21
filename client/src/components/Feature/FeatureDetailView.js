@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
 import axios from "axios";
-import "./css/FeatureDetailView.css";
-import Comment from './Comment';
+import "../css/FeatureDetailView.css";
+import Comment from '../Comment/Comment';
 
 
 class FeatureDetailView extends Component {
@@ -25,14 +25,7 @@ class FeatureDetailView extends Component {
   }
 
   componentDidMount() {
-    /*
-    axios.get(`https://jsonplaceholder.typicode.com/users`)
-      .then(res => {
-        const persons = res.data;
-        console.log(persons);
-        this.setState({ persons });
-      })
-      */
+    
     axios.get("http://localhost:3000/api/comments/" + this.props.match.params.featureId)
       .then(res => {
         const comments = res.data;
@@ -72,7 +65,7 @@ class FeatureDetailView extends Component {
 
   render() {
     // TODO: Add real imagadata later
-    var image = require("./img/computer.png");
+    var image = require("../img/computer.png");
 
     return (
       <div className="feature-detail-container container">

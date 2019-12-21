@@ -1,5 +1,9 @@
 const express = require("express")
 const cookieParser = require("cookie-parser")
+const cors = require('cors')
+const headers = require('../middleware/headers')
+const authorize = require('../middleware/authorize')
+const auth = require('../routes/auth')
 const projects = require('../routes/projects')
 const features = require('../routes/features')
 const users = require('../routes/users')
@@ -8,12 +12,8 @@ const error = require("../middleware/error")
 const userCookies = require("../middleware/userCookies")
 
 module.exports = function (app) {
-    app.use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
-      });
-      
+    //app.use(headers);
+    app.use(cors())      
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
     app.use(cookieParser())
@@ -21,6 +21,7 @@ module.exports = function (app) {
 
     app.use("/api/public", express.static("server/public"))
 
+    app.use("/api/auth/", auth)
     app.use('/api/projects/', projects)
     app.use("/api/features/", features)
     app.use("/api/users/", users)

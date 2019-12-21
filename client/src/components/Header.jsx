@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import Login from "./Auth/Login";
 
 class Header extends Component {
+  
+  
   render() {
     const image = require("./img/logo.png");
 
@@ -24,6 +27,7 @@ class Header extends Component {
 
     return (
       <div className="row col-12 header">
+        
         <div className="header-container">
           <div className="logo">
             <img src={image} />
