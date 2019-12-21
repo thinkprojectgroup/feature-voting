@@ -14,14 +14,13 @@ class Comment extends Component{
 
     render(){
         return(
-            <div className="comment-section-container">
+            <div className="comment-container col-12 row">
                     {!this.state.deleted ?
-                    <div className="comment-section-content">
-                        <p>{this.state.count + 1}</p>
-                        <p>{this.state.author.name}</p>
-                        <p>{this.state.content}</p>
-                        <p>{this.state.date}</p>
-                    </div> : null}   
+                    <div>
+                        <p className="comment-author">{this.state.author}</p>
+                        <p className="comment-content">{this.state.content}</p>
+                        <p  className="comment-date">{this.state.date}</p>
+                    </div> : null}
             </div>
 
         );

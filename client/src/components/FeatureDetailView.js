@@ -98,10 +98,15 @@ class FeatureDetailView extends Component {
             <h3>{this.state.featureTitle}</h3>
             <p>{this.state.description}</p>
           </div>
-          <div className="col-3 feature-detail-image">
+          <div className="col-4 feature-detail-image">
             <img src={image} />
           </div>
+        </div>
+          <hr />
           <div className="comment-section">
+
+            <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
+
             {this.state.comments.map(comment => (
               <Comment
                 author={comment.author}
@@ -113,7 +118,8 @@ class FeatureDetailView extends Component {
               />
             ))}
           </div>
-        </div>
+
+
       </div>
     );
   }
