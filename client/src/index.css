@@ -66,7 +66,9 @@
 .container{
   max-width: 1000px;
   margin: auto;
-  padding: 25px 0;
+  padding: 25px 0 20vh 0;
+  margin-bottom: 50px;
+  min-height: 85vh;
 }
 
 .header-container{
@@ -184,10 +186,36 @@ button.add{
 
 .comment-author, .comment-date{
   font-weight: 600;
+  font-size: 0.8rem;
 }
 
 .comment-author{color: #7fba24;}
 .comment-date{color: #7f9da7;}
+
+footer{
+  background-color: #003c50;
+  color: white;
+  padding: 25px;
+  margin-top: 50px;
+  min-height: 10vh;
+}
+
+footer a{
+  color: white;
+}
+
+footer div{
+  max-width: 1000px;
+  margin: auto;
+}
+
+.questions, .answers{
+  margin: 80px 0;
+}
+
+.answers div{
+  margin: 50px 0;
+}
 
 /* For desktop: */
 @media only screen and (min-width: 700px) {
