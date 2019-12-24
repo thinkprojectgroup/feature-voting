@@ -1,11 +1,7 @@
 import React, { Component, Fragment } from "react";
 import "../../App.css";
-import axios from "axios";
-
-const googleConfig = {
-  clientId:
-    "815925924669-cf3cap0n8rbsj0523n4unpof4s767jf0.apps.googleusercontent.com"
-};
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
 
 class Login extends Component {
   state = {
@@ -13,7 +9,7 @@ class Login extends Component {
     signedIn: false,
     token: localStorage.getItem("token")
   };
-
+/*
   componentDidMount() {
     if (!this.state.token) {
       this.initAuth();
@@ -49,35 +45,6 @@ class Login extends Component {
     });
   };
 
-  onSuccess = async googleUser => {
-    var idToken = googleUser.getAuthResponse().id_token;
-    console.log("Logged In.");
-
-    if (idToken) {
-      axios
-        .post("http://localhost:3000/api/auth/admin", {
-          idToken: idToken
-        })
-        .then(res => {
-          if (res.status === 200) {
-            //this.props.isAuthorised(true);
-            localStorage.setItem("token", idToken);
-          }
-        })
-        .catch(error => {
-          console.log("error auth admin");
-          localStorage.removeItem("token");
-          //this.props.isAuthorised(false);
-        });
-    }
-  };
-
-  onFailure = error => {
-    // TODO: Create "Login Failed" Dialog
-    console.log("Login Failed.");
-    console.log(error);
-  };
-
   logout = () => {
     var auth2 = window.gapi.auth2.getAuthInstance();
     auth2.signOut().then(() => {
@@ -95,7 +62,7 @@ class Login extends Component {
       showLoginBtn: true,
       signedIn: true
     });
-  };
+  };*/
 
   /**
    * Conditional Rendering Login/Logout-Button
@@ -114,15 +81,10 @@ class Login extends Component {
 
   render() {
     return (
-      <React.Fragment>
-        {/* <a href="#" onClick={this.showLoginBtn}> </a> */}
-
-        <a id="loginButton">Sign In</a>
-
-        <a href="#" id="logoutButton" onClick={this.logout}>
-          Sign out
-        </a>
-      </React.Fragment>
+      <Fragment>
+        <LoginButton />
+        <LogoutButton />
+      </Fragment>
     );
   }
 }

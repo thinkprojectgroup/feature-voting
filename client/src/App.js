@@ -4,7 +4,7 @@ import FeatureDetailView from "./components/Feature/FeatureDetailView";
 import ProjectDetailView from "./components/Project/ProjectDetailView";
 import Header from "./components/Header";
 import ProjectOverView from "./components/Project/ProjectOverView";
-import { BrowserRouter as Router, Route, useHistory } from "react-router-dom";
+import { BrowserRouter as Router, Route, useHistory, useLocation } from "react-router-dom";
 import CommentReview from "./components/Comment/CommentReview";
 import Login from "./components/Auth/Login";
 import AdminOnly from "./components/Auth/AdminOnly";
