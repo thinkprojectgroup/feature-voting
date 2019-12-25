@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
 import axios from "axios";
-import "../css/FeatureDetailView.css";
-import Comment from '../Comment/Comment';
-
+import "./css/FeatureDetailView.css";
+import Comment from './Comment';
+import config from '../config';
 
 class FeatureDetailView extends Component {
   constructor(props) {
@@ -36,7 +36,7 @@ class FeatureDetailView extends Component {
 
     axios
       .get(
-        "http://localhost:3000/api/features/" +
+        config.url + "/api/features/" +
         this.props.match.params._id +
         "/" +
         this.props.match.params.featureId
@@ -91,10 +91,15 @@ class FeatureDetailView extends Component {
             <h3>{this.state.featureTitle}</h3>
             <p>{this.state.description}</p>
           </div>
-          <div className="col-3 feature-detail-image">
+          <div className="col-4 feature-detail-image">
             <img src={image} />
           </div>
+        </div>
+          <hr />
           <div className="comment-section">
+
+            <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
+
             {this.state.comments.map(comment => (
               <Comment
                 author={comment.author}
@@ -106,7 +111,8 @@ class FeatureDetailView extends Component {
               />
             ))}
           </div>
-        </div>
+
+
       </div>
     );
   }

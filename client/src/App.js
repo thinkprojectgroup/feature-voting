@@ -61,10 +61,10 @@ class App extends Component {
 
         <AdminOnly isAdmin={this.state.isAdmin} idToken={this.state.idToken}>
           <Route path={"/"} exact component={ProjectOverView} />
+          <Route path={"/commentreview"} component={CommentReview} />
         </AdminOnly>
 
         <Route path={"/:_id"} exact component={ProjectDetailView} />
-        <Route path={"/commentreview"} component={CommentReview} />
         <Route path={"/:_id/:featureId"} exact component={FeatureDetailView} />
       </Router>
     );

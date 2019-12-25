@@ -34,28 +34,26 @@ class FeaturePDV extends Component {
             </button>
           ) : null}
         </div>
-        <div className="col-8 feature-text">
-          <div className="title">
-            <Link
-              to={"/" + this.props.projectId + "/" + this.state.featureId}
+        <Link to={"/" + this.props.projectId + "/" + this.state.featureId}>
+          <div className="col-8 feature-text">
+            <div className="title">
 
-              style={{ textDecoration: "none" }}
-            >
-              <h3>{this.state.title}</h3>{" "}
-            </Link>
+                <h3>{this.state.title}</h3>{" "}
+            </div>
+            <div className="description">
+              <p>{this.state.description}</p>
+            </div>
+            <div className="comment-count">
+              <p>{this.state.commentCount} comments</p>
+            </div>
           </div>
-          <div className="description">
-            <p>{this.state.description}</p>
-          </div>
-          <div className="comment-count">
-            <p>{this.state.commentCount} comments</p>
-          </div>
-        </div>
 
-        <div
-          className="col-3 feature-image"
-          style={{ backgroundImage: "url(" + image + ")" }}
-        ></div>
+          <div
+            className="col-3 feature-image"
+            style={{backgroundImage: "url(" + image + ")"}} >
+
+          </div>
+        </Link>
       </div>
     );
   }

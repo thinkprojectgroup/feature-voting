@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import FeaturePDV from "../Feature/FeaturePDV";
 import axios from "axios";
+import { BrowserRouter as Router, Link } from "react-router-dom";
+import config from '../config';
 
 class ProjectDetailView extends Component {
   constructor(props) {

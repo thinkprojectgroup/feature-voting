@@ -1,15 +1,30 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import Login from "./Auth/Login";
+import {withRouter, Link } from "react-router-dom";
 
 class Header extends Component {
   
   
   render() {
+
+    // TODO: Add Real User Role Value
+    var isAdmin = true;
+
     const image = require("./img/logo.png");
 
-    // TODO: Add Back Route
-    const backroute = "/";
+    var rootDepth = isAdmin ? 1 : 2;
+    const pathname = this.props.location.pathname;
+    const pathnameArray = this.props.location.pathname.split('/');
+
+    var backroute = "";
+    for (var i = 1; i < pathnameArray.length - 1 ; i++) {
+      backroute += "/";
+      backroute += pathnameArray[i];
+    }
+
+    var rootPath = "/";
+    for (var i = 1; i < rootDepth ; i++) {
+      rootPath += pathnameArray[i];
+    }
 
     let backButton = (
       <Link to={backroute}>
@@ -17,13 +32,9 @@ class Header extends Component {
       </Link>
     );
 
-    //Trying to only load Back button when not on the root path
-    //
-    // const location = window.location.pathname;
-    // console.log("location: "+ location);
-    // if(location == "/"){
-    //     backButton = " ";
-    // }
+    if(pathname == rootPath){
+      backButton = "";
+    }
 
     return (
       <div className="row col-12 header">
@@ -40,4 +51,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);
