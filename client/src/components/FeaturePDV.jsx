@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import beispiel from "./img/computer.png";
-
+//import beispiel from "./img/computer.png";
 //import ReadMoreAndLess from "react-read-more-less";
 
 class FeaturePDV extends Component {
@@ -35,7 +34,7 @@ class FeaturePDV extends Component {
             </button>
           ) : null}
         </div>
-        <Link to={"/" + this.props.projectId + "/" + this.state.featureId}>
+        <Link to={"/" + this.state.projectId + "/" + this.state.featureId}>
           <div className="col-8 feature-text">
             <div className="title">
 

@@ -10,6 +10,14 @@ class ProjectOverView extends Component {
       projects: []
     };
   }
+
+  async componentDidMount() {
+    const promise = await axios.get(config.url + `/api/projects/`);
+    const projects = promise.data;
+    console.log(projects);
+    this.setState({ projects });
+  }
+
   render() {
     return (
       <div className="container">
@@ -24,13 +32,8 @@ class ProjectOverView extends Component {
       </div>
     );
   }
-  async componentDidMount() {
-    const promise = await axios.get(config.url + `/api/projects/`);
-    const projects = promise.data;
-    //const projects = Object.values(promise);
-    console.log(projects);
-    this.setState({ projects });
-  }
+  
+  
 }
 
 export default ProjectOverView;

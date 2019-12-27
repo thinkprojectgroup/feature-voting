@@ -25,14 +25,6 @@ class FeatureDetailView extends Component {
   }
 
   componentDidMount() {
-    /*
-    axios.get(`https://jsonplaceholder.typicode.com/users`)
-      .then(res => {
-        const persons = res.data;
-        console.log(persons);
-        this.setState({ persons });
-      })
-      */
     axios.get(config.url + "/api/comments/" + this.props.match.params.featureId)
       .then(res => {
         const comments = res.data;
@@ -44,7 +36,7 @@ class FeatureDetailView extends Component {
     axios
       .get(
         config.url + "/api/features/" +
-        this.props.match.params._id +
+        this.props.match.params.projectId +
         "/" +
         this.props.match.params.featureId
       )
