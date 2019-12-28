@@ -29,7 +29,7 @@ class ProjectDetailView extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container row">
         <h1>{this.state.name}</h1>
         {this.state.features.map(feature => (
           <FeaturePDV

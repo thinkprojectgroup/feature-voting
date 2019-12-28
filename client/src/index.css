@@ -198,7 +198,8 @@ footer{
   padding: 25px;
   margin-top: 50px;
   min-height: 10vh;
-  display: flow-root;
+  display: block;
+
 }
 
 footer a{
