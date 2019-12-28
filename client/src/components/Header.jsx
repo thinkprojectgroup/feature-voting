@@ -37,9 +37,11 @@ class Header extends Component {
     return (
         <div className="row col-12 header">
           <div className="header-container">
-            <div className="logo">
-              <img src={image} />
-            </div>
+            <Link to={rootPath}>
+              <div className="logo">
+                <img src={image} />
+              </div>
+            </Link>
 
             {backButton}
           </div>
