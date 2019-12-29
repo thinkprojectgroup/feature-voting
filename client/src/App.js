@@ -4,69 +4,79 @@ import FeatureDetailView from "./components/Feature/FeatureDetailView";
 import ProjectDetailView from "./components/Project/ProjectDetailView";
 import Header from "./components/Header";
 import ProjectOverView from "./components/Project/ProjectOverView";
-import { BrowserRouter as Router, Route, useHistory, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useHistory,
+  useLocation
+} from "react-router-dom";
 import CommentReview from "./components/Comment/CommentReview";
-import Login from "./components/Auth/Login";
+import SignIn from "./components/Auth/SignIn";
 import AdminOnly from "./components/Auth/AdminOnly";
-
-const googleConfig = {
-  clientId:
-    "815925924669-cf3cap0n8rbsj0523n4unpof4s767jf0.apps.googleusercontent.com"
-};
+import AppWrapper from "./components/AppWrapper";
 
 class App extends Component {
-  state = {
-    isAdmin: false,
-    idToken: null
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isAdmin: false,
+      idToken: null,
+      authIsReady: false
+    };
+  }
+
+  isReady = isReady => {
+    this.setState({
+      authIsReady: isReady
+    });
   };
 
-  isAuthorised = admin => {
+  setAuthorisation = (admin, token) => {
     this.setState({
       isAdmin: admin,
-      idToken: null
+      idToken: token
     });
   };
 
-  componentWillMount() {
-    const token = localStorage.getItem("token");
-    if (token) {
-      this.setState({
-        isAdmin: true,
-        idToken: token
-      });
-    }
-    console.log(window.gapi.load("auth2", () => console.log(this.auth2)));
-  }
-
-  componentDidUpdate() {
-    console.log("isAdmin: ", this.state.isAdmin);
-  }
-
   render() {
-    //let history = useHistory();
-    window.gapi.load("auth2", () => {
-    var auth2 = window.gapi.auth2.init({
-      client_id: googleConfig.clientId
-    });
-    console.log("auth2", this.auth2);
-  })
 
     return (
-      <Router>
-        <Header />
+      <AppWrapper isReady={this.isReady} setAuthorisation={this.setAuthorisation}>
+        {this.state.authIsReady && (
+          <Router>
+            {console.log("Router is mounting...")}
+            <Header />
 
-        <Route path={"/login"}> 
-          <Login isAuthorised={this.isAuthorised} />
-        </Route>
+            <Switch>
+              <Route
+                exact
+                path={"/login"}
+                render={props => (
+                  <SignIn setAuthorisation={this.setAuthorisation} /> // clientId={CLIENT_ID}
+                )}
+              />
 
-        <AdminOnly isAdmin={this.state.isAdmin} idToken={this.state.idToken}>
-          <Route path={"/"} exact component={ProjectOverView} />
-          <Route path={"/commentreview"} component={CommentReview} />
-        </AdminOnly>
+              <Route exact path={"/:projectId"} component={ProjectDetailView} />
+              <Route
+                exact
+                path={"/:projectId/:featureId"}
+                component={FeatureDetailView}
+              />
 
-        <Route path={"/:_id"} exact component={ProjectDetailView} />
-        <Route path={"/:_id/:featureId"} exact component={FeatureDetailView} />
-      </Router>
+              <AdminOnly
+                isAdmin={this.state.isAdmin}
+                idToken={this.state.idToken}
+              >
+                <Route exact path={"/"} component={ProjectOverView} />
+                <Route exact path={"/commentreview"} component={CommentReview} />
+              </AdminOnly>
+            </Switch>
+
+          </Router>
+        )}
+      </AppWrapper>
     );
   }
 }

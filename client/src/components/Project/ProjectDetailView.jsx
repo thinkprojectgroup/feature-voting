@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import FeaturePDV from "../Feature/FeaturePDV";
 import axios from "axios";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import config from '../config';
+import { Link } from "react-router-dom";
 
 class ProjectDetailView extends Component {
   constructor(props) {
@@ -11,10 +10,11 @@ class ProjectDetailView extends Component {
       features: [],
       name: "",
       comments: "",
-      projectId: ""
+      projectId: this.props.match.params.projectId
     };
   }
   render() {
+    
     return (
       <div className="container">
         <h1>{this.state.name}</h1>
@@ -31,19 +31,21 @@ class ProjectDetailView extends Component {
       </div>
     );
   }
+
   async componentDidMount() {
-    
-    await axios.get(
-      `http://localhost:3000/api/projects/` + this.props.match.params._id
-    )
-    .then(response => response.data)
-    .then(data => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/projects/` + this.state.projectId
+      );
+
       this.setState ({
-        features : data.features,
-        name: data.name,
-        projectId: data._id
+        features : response.data.features,
+        name: response.data.name,
+        projectId: response.data._id
       })
-    })
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 export default ProjectDetailView;

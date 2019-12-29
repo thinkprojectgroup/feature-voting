@@ -16,13 +16,13 @@ class Header extends Component {
     const pathnameArray = this.props.location.pathname.split('/');
 
     var backroute = "";
-    for (var i = 1; i < pathnameArray.length - 1 ; i++) {
+    for (let i = 1; i < pathnameArray.length - 1 ; i++) {
       backroute += "/";
       backroute += pathnameArray[i];
     }
 
     var rootPath = "/";
-    for (var i = 1; i < rootDepth ; i++) {
+    for (let i = 1; i < rootDepth ; i++) {
       rootPath += pathnameArray[i];
     }
 
@@ -32,7 +32,7 @@ class Header extends Component {
       </Link>
     );
 
-    if(pathname == rootPath){
+    if(pathname === rootPath){
       backButton = "";
     }
 
@@ -41,7 +41,7 @@ class Header extends Component {
         
         <div className="header-container">
           <div className="logo">
-            <img src={image} />
+            <img alt="" src={image} />
           </div>
 
           {backButton}

@@ -1,9 +1,10 @@
 const express = require("express");
 const { User } = require("../models/user");
-const { validateToken } = require("../models/auth");
+const { validateToken } = require("../services/validateToken");
 const router = express.Router();
 
 router.post("/admin", async (req, res) => {
+
   const tokenId = await req.body.idToken;
   if (!tokenId) return res.status(302).send("Login required."); // HTTP Status 302 - Redirect to Loginpage
 
@@ -17,15 +18,16 @@ router.post("/admin", async (req, res) => {
   }
   res.status(401).send("Unauthorized. You need admin rights to access this page");
 });
-
+ 
 router.post("/", async (req, res) => {
+  console.log("AUTH")
   const tokenId = await req.body.idToken;
 
   if (!tokenId) res.status(302).send("Login required."); // HTTP Status 302 - Redirect to Loginpage
 
   const loginTicket = await validateToken(res, tokenId);
 
-  if(loginTicket) {
+  if (loginTicket) {
     const payload = loginTicket.payload;
     let user = await User.findOne({ email: payload.email });
 

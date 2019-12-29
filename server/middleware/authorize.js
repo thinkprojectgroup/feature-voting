@@ -1,10 +1,9 @@
 const { User } = require("../models/user");
-const { validateToken } = require("../models/auth");
+const { validateToken } = require("../services/validateToken");
 
 module.exports = async (req, res, next) => {
     const tokenId = await req.body.idToken;
-    console.log("header", req);
-    console.log("MIDDLEWARE")
+    
     if(!tokenId) {
         return res.status(401).send("Token required. Please Login first.");
         //return next();

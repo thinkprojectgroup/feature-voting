@@ -1,7 +1,7 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import {Button} from 'reactstrap';
-import config from '../config';
+import config from '../../config';
 
 
 class CommentReview extends Component{
@@ -12,18 +12,18 @@ class CommentReview extends Component{
 
 
     componentDidMount(){
-    axios.get(config.url + "/api/comments/")
-    .then(res => {
-        const comments = res.data; 
-        this.setState({comments: comments});
-        this.setState({commentCount: comments.count})
-    });
+        axios.get(config.url + "/api/comments/")
+        .then(res => {
+            const comments = res.data; 
+            this.setState({comments: comments});
+            this.setState({commentCount: comments.count})
+        });
     }
 
 
     render(){
         return(
-            <div className className="comment-section container">
+            <div className="comment-section container">
                 {this.state.comments.map(comment => (
                      !comment.deleted ?
                     <div className="comment-section-item row col-12">

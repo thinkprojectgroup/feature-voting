@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import config from '../config';
+import { Link } from "react-router-dom";
+import config from "../../config";
 
 class ProjectOverView extends Component {
   constructor(props) {
@@ -15,9 +15,9 @@ class ProjectOverView extends Component {
       <div className="container">
         <h1>Projects</h1>
         {this.state.projects.map(project => (
-          <Link to={"/" + project._id} >
+          <Link to={"/" + project._id}>
             <div className="container row project-list-item">
-                <h3>{project.name}</h3>{" "}
+              <h3>{project.name}</h3>{" "}
             </div>
           </Link>
         ))}
@@ -25,11 +25,12 @@ class ProjectOverView extends Component {
     );
   }
   async componentDidMount() {
-    const promise = await axios.get(config.url + `/api/projects/`);
-    const projects = promise.data;
-    //const projects = Object.values(promise);
-    console.log(projects);
-    this.setState({ projects });
+    console.log("projoverview", this.props.isAdmin)
+      const promise = await axios.get(config.url + `/api/projects/`);
+      const projects = promise.data;
+      //const projects = Object.values(promise);
+      console.log(projects);
+      this.setState({ projects });
   }
 }
 

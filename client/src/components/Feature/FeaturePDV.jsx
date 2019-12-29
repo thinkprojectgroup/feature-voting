@@ -1,17 +1,22 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 //import ReadMoreAndLess from "react-read-more-less";
 
 class FeaturePDV extends Component {
-  state = {
-    featureId: this.props.featureId,
-    count: this.props.count,
-    title: this.props.title,
-    description: this.props.description,
-    commentCount: this.props.commentCount,
-    projectId: this.props.projectId
-  };
+  constructor(props){
+    super(props)
+
+    this.state = {
+      featureId: this.props.featureId,
+      count: this.props.count,
+      title: this.props.title,
+      description: this.props.description,
+      commentCount: this.props.commentCount,
+      projectId: this.props.projectId
+    };
+  }
+  
 
   render() {
     // TODO: Add real imagadata later
@@ -34,7 +39,7 @@ class FeaturePDV extends Component {
             </button>
           ) : null}
         </div>
-        <Link to={"/" + this.props.projectId + "/" + this.state.featureId}>
+        <Link to={"/" + this.state.projectId + "/" + this.state.featureId}>
           <div className="col-8 feature-text">
             <div className="title">
 

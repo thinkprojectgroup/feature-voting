@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Button } from "reactstrap";
 import axios from "axios";
 import "./css/FeatureDetailView.css";
-import Comment from './Comment';
-import config from '../config';
+import Comment from '../Comment/Comment';
+import config from '../../config';
 
 class FeatureDetailView extends Component {
   constructor(props) {
@@ -25,19 +25,10 @@ class FeatureDetailView extends Component {
   }
 
   componentDidMount() {
-    
-    axios.get("http://localhost:3000/api/comments/" + this.props.match.params.featureId)
-      .then(res => {
-        const comments = res.data;
-        this.setState({ comments: comments });
-        this.setState({ commentCount: comments.count })
-        console.log(this.state.comments[0].author);
-      })
-
     axios
       .get(
         config.url + "/api/features/" +
-        this.props.match.params._id +
+        this.props.match.params.projectId +
         "/" +
         this.props.match.params.featureId
       )
@@ -47,8 +38,15 @@ class FeatureDetailView extends Component {
         this.setState({ featureTitle: feature.headline });
         this.setState({ description: feature.description });
         this.setState({ upvotes: feature.voteCount });
-        console.log(feature);
       });
+
+      axios.get("http://localhost:3000/api/comments/" + this.props.match.params.featureId)
+      .then(res => {
+        const comments = res.data;
+        this.setState({ 
+          comments: comments,
+          commentCount: comments.count })
+      })
   }
 
   toggleDivUpvote = () => {
