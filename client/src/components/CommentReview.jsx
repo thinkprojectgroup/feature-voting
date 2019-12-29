@@ -20,6 +20,10 @@ class CommentReview extends Component{
     });
     }
 
+    handleAccept = (comment) => {
+        
+    }
+
 
     render(){
         return(
@@ -29,8 +33,8 @@ class CommentReview extends Component{
                     <div className="comment-section-item row col-12">
 
                         <div className="comment-section-button col-1">
-                            <Button className="accept"><i className="fas fa-check"></i></Button>
-                            <Button className="decline"><i className="fas fa-times"></i></Button>
+                            <Button className="accept" onClick={this.handleAccept}><i className="fas fa-check"></i></Button>
+                            <Button className="decline" onClick={this.handleDecline}><i className="fas fa-times"></i></Button>
                         </div>
 
                         <div className="comment-section-content col-11">
