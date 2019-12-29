@@ -54,17 +54,21 @@ class FeatureForm extends Component {
                            id="headline"
                            className="headline col-12"
                            value={headline}
-                           onChange={this.onChange}/>
+                           onChange={this.onChange}
+                           required
+                    />
 
                     <label>
                     Description:
                     </label>
-                    <input type="text"
+                    <textarea
                            name="description"
                            id="description"
                            className="description col-12"
                            value={description}
-                           onChange={this.onChange}/>
+                           onChange={this.onChange}
+                           required
+                    />
 
                    <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>

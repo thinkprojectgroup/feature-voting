@@ -175,7 +175,7 @@ label{
   font-size: 1rem;
 }
 
-input{
+input, textarea{
   margin-bottom: 25px;
 }
 
@@ -190,7 +190,7 @@ label, input{
   font-size: 1.3rem;
 }
 
-input[name="description"]{
+textarea[name="description"]{
   height: 200px;
 }
 
