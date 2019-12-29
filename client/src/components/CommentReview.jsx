@@ -23,10 +23,10 @@ class CommentReview extends Component{
 
     render(){
         return(
-            <div className className="comment-section container">
+            <div className className="comment-section container row">
                 {this.state.comments.map(comment => (
                      !comment.deleted ?
-                    <div className="comment-section-item row col-12">
+                    <div className="comment-section-item col-12">
 
                         <div className="comment-section-button col-1">
                             <Button className="accept"><i className="fas fa-check"></i></Button>

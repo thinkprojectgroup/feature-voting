@@ -10,13 +10,21 @@ class ProjectOverView extends Component {
       projects: []
     };
   }
+
+  async componentDidMount() {
+    const promise = await axios.get(config.url + `/api/projects/`);
+    const projects = promise.data;
+    console.log(projects);
+    this.setState({ projects });
+  }
+
   render() {
     return (
       <div className="container">
         <h1>Projects</h1>
         {this.state.projects.map(project => (
           <Link to={"/" + project._id} >
-            <div className="container row project-list-item">
+            <div className="row project-list-item">
                 <h3>{project.name}</h3>{" "}
             </div>
           </Link>
@@ -24,13 +32,8 @@ class ProjectOverView extends Component {
       </div>
     );
   }
-  async componentDidMount() {
-    const promise = await axios.get(config.url + `/api/projects/`);
-    const projects = promise.data;
-    //const projects = Object.values(promise);
-    console.log(projects);
-    this.setState({ projects });
-  }
+  
+  
 }
 
 export default ProjectOverView;

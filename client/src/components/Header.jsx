@@ -35,15 +35,17 @@ class Header extends Component {
     }
 
     return (
-      <div className="row col-12 header">
-        <div className="header-container">
-          <div className="logo">
-            <img src={image} />
-          </div>
+        <div className="row col-12 header">
+          <div className="header-container">
+            <Link to={rootPath}>
+              <div className="logo">
+                <img src={image} />
+              </div>
+            </Link>
 
-          {backButton}
+            {backButton}
+          </div>
         </div>
-      </div>
     );
   }
 }
