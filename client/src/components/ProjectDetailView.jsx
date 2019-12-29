@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import FeaturePDV from "./FeaturePDV";
 import FeatureForm from "./FeatureForm";
 import axios from "axios";
-import { BrowserRouter as Router, Link } from "react-router-dom";
 import config from '../config';
 import { Button } from "reactstrap";
 
 class ProjectDetailView extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       features: [],
       name: "",
@@ -26,12 +26,22 @@ class ProjectDetailView extends Component {
     this.setState({showForm: !showForm});
     console.log(this.state.showForm);
   }
-
+  
+  componentDidMount() {
+    axios.get(
+      config.url + `/api/projects/` + this.state.projectId
+    )
+    .then(response => {
+      this.setState({ 
+        features: response.data.features,
+        name: response.data.name,
+        projectId: response.data._id});
+    })
+  }
 
   render() {
     return (
-      <div className="container">
-
+      <div className="container row">
         <h1>{this.state.name}</h1>
         <Button
               onClick={this.toggleShowForm}
@@ -55,17 +65,6 @@ class ProjectDetailView extends Component {
       </div>
     );
   }
-  async componentDidMount() {
-    const promise = await axios.get(
-      config.url + `/api/projects/` + this.props.match.params._id
-    );
-    const features = promise.data.features;
-    const name = promise.data.name;
-    const _id = promise.data._id;
-    this.setState({ features });
-    this.setState({ name });
-    this.setState({ projectId: _id});
-    console.log(this.state.projectId);
-  }
+
 }
 export default ProjectDetailView;
