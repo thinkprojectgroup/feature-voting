@@ -31,12 +31,17 @@ class ProjectDetailView extends Component {
   render() {
     return (
       <div className="container">
+        <div className="row">
+          <div className="col-11">
+            <h1>{this.state.name}</h1>
+          </div>
+          <div className="col-1">
+            <button onClick={this.toggleShowForm} className="add">
+              <i className="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
 
-        <h1>{this.state.name}</h1>
-        <Button
-              onClick={this.toggleShowForm}
-              className="show-feature-form-button"
-        > Add Feature</Button>
         {this.state.showForm ? (
           <FeatureForm projectId={this.state.projectId} />
           ): null}
