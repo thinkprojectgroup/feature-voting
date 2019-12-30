@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import FeaturePDV from "./FeaturePDV";
+import FeatureForm from "./FeatureForm";
 import axios from "axios";
 import config from '../config';
+import { Button } from "reactstrap";
 
 class ProjectDetailView extends Component {
   constructor(props) {
@@ -11,13 +13,23 @@ class ProjectDetailView extends Component {
       features: [],
       name: "",
       comments: "",
-      projectId: this.props.match.params.projectId
+      projectId: "",
+      showForm: false
     };
+
+    this.toggleShowForm = this.toggleShowForm.bind(this);
+  }
+
+
+  toggleShowForm = () => {
+    this.setState({showForm: !this.state.showForm});
+    console.log(this.state.showForm);
   }
   
   componentDidMount() {
+    
     axios.get(
-      config.url + `/api/projects/` + this.state.projectId
+      config.url + `/api/projects/` + this.props.match.params.projectId
     )
     .then(response => {
       this.setState({ 
@@ -31,6 +43,15 @@ class ProjectDetailView extends Component {
     return (
       <div className="container row">
         <h1>{this.state.name}</h1>
+        <Button
+              onClick={this.toggleShowForm}
+              className="show-feature-form-button"
+        > Add Feature</Button>
+        {this.state.showForm ? (
+          <FeatureForm projectId={this.state.projectId} />
+          ): null}
+        
+
         {this.state.features.map(feature => (
           <FeaturePDV
             featureId={feature._id}
@@ -44,5 +65,6 @@ class ProjectDetailView extends Component {
       </div>
     );
   }
+
 }
 export default ProjectDetailView;

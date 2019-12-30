@@ -12,9 +12,7 @@ router.post("/:projectId", saveImages, async (req, res) => {
         headline: req.body.headline,
         description: req.body.description
     })
-    if (error) {
-        return res.status(400).send(error.details[0].message)
-    }
+    if (error) return res.status(400).send(error.details[0].message)
 
     if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) {
         return res.status(400).send("ProjectId doesn't fit id schema")
