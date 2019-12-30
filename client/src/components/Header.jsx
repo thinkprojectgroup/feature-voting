@@ -3,11 +3,10 @@ import {withRouter, Link } from "react-router-dom";
 
 class Header extends Component {
   
-  
   render() {
 
     // TODO: Add Real User Role Value
-    var isAdmin = true;
+    const isAdmin = this.props.role === 'admin' ? true : false;
 
     const image = require("./img/logo.png");
 
@@ -37,16 +36,17 @@ class Header extends Component {
     }
 
     return (
-      <div className="row col-12 header">
-        
-        <div className="header-container">
-          <div className="logo">
-            <img alt="" src={image} />
-          </div>
+        <div className="row col-12 header">
+          <div className="header-container">
+            <Link to={rootPath}>
+              <div className="logo">
+                <img alt="" src={image} />
+              </div>
+            </Link>
 
-          {backButton}
+            {backButton}
+          </div>
         </div>
-      </div>
     );
   }
 }

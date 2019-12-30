@@ -16,7 +16,7 @@ class AppWrapper extends Component {
 
   componentDidCatch(error, info) {
     this.setState({ hasError: true });
-    //TODO add error handling
+    //TODO add error handling/logging service
   }
 
   isAuthInitalized = () => {
@@ -25,26 +25,21 @@ class AppWrapper extends Component {
         clearInterval(ready);
         this.initGoogleAuth();
       }
-    }, 90);
+    }, 30);
   };
 
   initGoogleAuth = () => {
-    //var sessionStorage = sessionStorage;
-
     window.gapi.load("auth2", () => {
       window.gapi.auth2.init({  
         client_id: CLIENT_ID,
         scope: "openid email",
         fetch_basic_profile: false 
-        //hosted_domain: 'thinkproject.de' //TODO add allowed domain
+        //hosted_domain: 'thinkproject.de' //TODO add 'thinkproject.de' as only allowed domain
       })
       .then(authObject => {
         var user = authObject.currentUser.get();
         var idToken = user.getAuthResponse().id_token;
-        console.log("authUser", user);
-        console.log("authresponse", user.getAuthResponse().id_token)
-        
-        this.isAdmin(idToken);
+        this.authorise(idToken);
       })
       .catch(error => {
         console.log(error);
@@ -52,20 +47,20 @@ class AppWrapper extends Component {
     });
   }
 
-  isAdmin = (idToken) => {
+  authorise = (idToken) => {
     axios
       .post("http://localhost:3000/api/auth/admin", {
         idToken: idToken
       })
       .then(res => {
-        console.log("APPWRAPPER", res)
-        if (res.status === 200) {
-          this.props.setAuthorisation(true, idToken);
-        }
+        if (res.status === 200) this.role = 'admin'
+        if (res.status === 211) this.role = 'employee'
+        if (res.status === 212) this.role = 'user'
+
+        this.props.setAuthorisation(this.role, true, idToken)
       })
       .catch(error => {
-        console.log("error auth admin", error);
-        this.props.setAuthorisation(false, null);
+        this.props.setAuthorisation(null, false, null)
       })
       .finally(() => {
         this.props.isReady(true);

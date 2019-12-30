@@ -15,65 +15,82 @@ import CommentReview from "./components/Comment/CommentReview";
 import SignIn from "./components/Auth/SignIn";
 import AdminOnly from "./components/Auth/AdminOnly";
 import AppWrapper from "./components/AppWrapper";
+import Footer from "./components/Footer";
+import FAQ from "./components/FAQ";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    role: "user",
+    isSignedIn: false,
+    idToken: null,
+    authIsLoaded: false
+  };
 
-    this.state = {
-      isAdmin: false,
-      idToken: null,
-      authIsReady: false
-    };
-  }
-
+  // executed in <AppWrapper> after Google API and Auth is initalized
+  // otherwise problems with async
   isReady = isReady => {
     this.setState({
-      authIsReady: isReady
+      authIsLoaded: isReady
     });
   };
 
-  setAuthorisation = (admin, token) => {
+  // executed in <AppWrapper> and <SignIn>
+  // ->  after User login and/or before App loads (check for signed in User)
+  setAuthorisation = (role, isSignedIn, idToken) => {
     this.setState({
-      isAdmin: admin,
-      idToken: token
+      role: role,
+      isSignedIn: isSignedIn,
+      idToken: idToken
     });
   };
 
   render() {
-
     return (
-      <AppWrapper isReady={this.isReady} setAuthorisation={this.setAuthorisation}>
-        {this.state.authIsReady && (
+      <AppWrapper
+        isReady={this.isReady}
+        setAuthorisation={this.setAuthorisation}
+      >
+        {this.state.authIsLoaded && (
           <Router>
             {console.log("Router is mounting...")}
-            <Header />
+            <Header role={this.state.role} />
 
             <Switch>
+              
               <Route
                 exact
                 path={"/login"}
                 render={props => (
-                  <SignIn setAuthorisation={this.setAuthorisation} /> // clientId={CLIENT_ID}
+                  <SignIn setAuthorisation={this.setAuthorisation} />
                 )}
               />
 
-              <Route exact path={"/:projectId"} component={ProjectDetailView} />
+              {/* Routes only if logged in and authorised as admin  */}
+              <AdminOnly role={this.state.role} idToken={this.state.idToken}>
+                <Route
+                  exact
+                  path={"/"}
+                  render={props => <ProjectOverView {...props} />}
+                />
+                <Route
+                  exact
+                  path={"/commentreview"}
+                  component={CommentReview}
+                />
+              </AdminOnly>
+              
+              <Route exact path={"/faq"} component={FAQ} />
               <Route
-                exact
+                path={"/:projectId"}
+                render={props => <ProjectDetailView {...props} />}
+              />
+              <Route
                 path={"/:projectId/:featureId"}
                 component={FeatureDetailView}
               />
-
-              <AdminOnly
-                isAdmin={this.state.isAdmin}
-                idToken={this.state.idToken}
-              >
-                <Route exact path={"/"} component={ProjectOverView} />
-                <Route exact path={"/commentreview"} component={CommentReview} />
-              </AdminOnly>
             </Switch>
 
+            <Footer />
           </Router>
         )}
       </AppWrapper>

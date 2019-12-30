@@ -1,36 +1,39 @@
 const express = require("express");
 const { User } = require("../models/user");
-const { validateToken } = require("../services/validateToken");
+const { validateToken, checkUser } = require("../services/AuthService");
 const router = express.Router();
 
 router.post("/admin", async (req, res) => {
+  const idToken = await req.body.idToken;
+  if (!idToken) return res.status(302).send("Login required."); // HTTP Status 302 - Redirect to Loginpage
 
-  const tokenId = await req.body.idToken;
-  if (!tokenId) return res.status(302).send("Login required."); // HTTP Status 302 - Redirect to Loginpage
-
-  const loginTicket = await validateToken(res, tokenId);
-
+  const loginTicket = await validateToken(idToken);
   if (loginTicket) {
-    let user = await User.findOne({ email: loginTicket.payload.email });
+    const { user, role } = await checkUser(loginTicket.payload);
+    //let user = await User.findOne({ email: loginTicket.payload.email });
 
-    if (user.role === "admin")
-      return res.status(200).send("authorized as admin");
+    //TODO Edit Response Message
+    if (user)
+      if (role == 'admin') return res.status(200).send("authorised as admin");
+      if (role == 'employee') return res.status(211).send('authorised as employee');
+      
+      return res.status(212).send('authorised as user')
   }
-  res.status(401).send("Unauthorized. You need admin rights to access this page");
+  res.status(401).send("Unauthorised.");
 });
- 
+
 router.post("/", async (req, res) => {
-  console.log("AUTH")
-  const tokenId = await req.body.idToken;
+  const idToken = await req.body.idToken;
 
-  if (!tokenId) res.status(302).send("Login required."); // HTTP Status 302 - Redirect to Loginpage
+  if (!idToken) res.status(302).send("Login required."); // HTTP Status 302 - Redirect to Loginpage
 
-  const loginTicket = await validateToken(res, tokenId);
+  const loginTicket = await validateToken(res, idToken);
 
   if (loginTicket) {
     const payload = loginTicket.payload;
     let user = await User.findOne({ email: payload.email });
 
+    //TODO Dev Only - Every User logging in is admin
     if (!user) {
       user = new User({
         role: "admin",
@@ -39,14 +42,10 @@ router.post("/", async (req, res) => {
       });
       await user.save();
     }
-    console.log(user); //TODO delete log (dev only)
 
-    //TODO remove sending user.role (dev only)
-    return res.status(200).send({
-      role: user.role
-    });
+    return res.status(200).send("authorised");
   }
-  res.status(401).send("Unauthorized");
+  res.status(401).send("Unauthorised");
 });
 
 module.exports = router;

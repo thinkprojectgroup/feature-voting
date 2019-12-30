@@ -2,11 +2,11 @@ const express = require('express');
 const mongoose = require("mongoose")
 const router = express.Router();
 const { Project, validateProject } = require("../models/project")
-const authorise = require('../middleware/authorize')
+const authorise = require('../middleware/authorise')
 
 // Get all projects
 router.get("/", async (req, res) => {
-    
+
     const projects = await Project.aggregate([
         { $match: {deleted: false}},
         { $project: {

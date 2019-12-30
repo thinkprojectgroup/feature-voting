@@ -10,27 +10,30 @@ class ProjectOverView extends Component {
       projects: []
     };
   }
+
+  componentDidMount() {
+    //TODO add idToken to Request-Body
+    axios.get(config.url + `/api/projects/`).then(response => {
+      this.setState({
+        projects: response.data
+      })
+    })
+    .catch(error => console.log(error));
+  }
+
   render() {
     return (
       <div className="container">
         <h1>Projects</h1>
         {this.state.projects.map(project => (
-          <Link to={"/" + project._id}>
-            <div className="container row project-list-item">
-              <h3>{project.name}</h3>{" "}
+          <Link to={"/" + project._id} >
+            <div className="row project-list-item">
+                <h3>{project.name}</h3>{" "}
             </div>
           </Link>
         ))}
       </div>
     );
-  }
-  async componentDidMount() {
-    console.log("projoverview", this.props.isAdmin)
-      const promise = await axios.get(config.url + `/api/projects/`);
-      const projects = promise.data;
-      //const projects = Object.values(promise);
-      console.log(projects);
-      this.setState({ projects });
   }
 }
 

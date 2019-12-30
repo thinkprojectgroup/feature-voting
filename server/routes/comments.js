@@ -5,6 +5,7 @@ const { Comment, validateComment, validateFlaggedComment } = require("../models/
 const { validateSearch } = require("../models/feature")
 
 // Get all unaccepted comments
+// TODO add authorisation
 router.get("/", async (req, res) => {
     var comments = await Comment.find({ accepted: false, deleted: false }).sort("dateCreated")
     if (comments.length == 0) return res.send("no comments available")

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
+//import beispiel from "./img/computer.png";
 //import ReadMoreAndLess from "react-read-more-less";
 
 class FeaturePDV extends Component {
@@ -24,7 +24,7 @@ class FeaturePDV extends Component {
     console.log(this.props.projectId);
 
     return (
-      <div className="container row feature-list-item">
+      <div className="row feature-list-item">
         <div className="col-1 feature-count">
           <button onClick={this.toggleDivUpvote} className="upvote-button">
             <i className="fas fa-angle-up"></i>

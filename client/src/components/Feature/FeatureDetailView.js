@@ -25,6 +25,13 @@ class FeatureDetailView extends Component {
   }
 
   componentDidMount() {
+    axios.get(config.url + "/api/comments/" + this.props.match.params.featureId)
+      .then(res => {
+        const comments = res.data;
+        this.setState({ comments: comments });
+        this.setState({ commentCount: comments.count })
+      })
+
     axios
       .get(
         config.url + "/api/features/" +
@@ -39,14 +46,6 @@ class FeatureDetailView extends Component {
         this.setState({ description: feature.description });
         this.setState({ upvotes: feature.voteCount });
       });
-
-      axios.get("http://localhost:3000/api/comments/" + this.props.match.params.featureId)
-      .then(res => {
-        const comments = res.data;
-        this.setState({ 
-          comments: comments,
-          commentCount: comments.count })
-      })
   }
 
   toggleDivUpvote = () => {
@@ -66,21 +65,15 @@ class FeatureDetailView extends Component {
     var image = require("../img/computer.png");
 
     return (
-      <div className="feature-detail-container container">
+      <div className="container row">
         <div className="row feature-detail">
           <div className="col-1 feature-count">
-            <Button
-              onClick={this.toggleDivUpvote}
-              className="feature-upvote-button"
-            >
+            <button onClick={this.toggleDivUpvote} className="feature-upvote-button">
               <i className="fas fa-angle-up"></i>
-            </Button>
+            </button>
             <p>{this.state.upvotes}</p>
             {this.state.show ? (
-              <button
-                onClick={this.toggleDivDownVote}
-                className="feature-downvote-button"
-              >
+              <button onClick={this.toggleDivDownVote} className="feature-downvote-button">
                 <i className="fas fa-angle-down"></i>
               </button>
             ) : null}
@@ -93,24 +86,22 @@ class FeatureDetailView extends Component {
             <img src={image} />
           </div>
         </div>
-          <hr />
-          <div className="comment-section">
 
-            <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
+        <hr />
 
-            {this.state.comments.map(comment => (
-              <Comment
-                author={comment.author}
-                content={comment.content}
-                accepted={comment.accepted}
-                deleted={comment.deleted}
-                date={comment.dateCreated}
-                count={this.state.commentCount}
-              />
-            ))}
-          </div>
-
-
+        <div className="comment-section">
+          <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
+          {this.state.comments.map(comment => (
+            <Comment
+              author={comment.author}
+              content={comment.content}
+              accepted={comment.accepted}
+              deleted={comment.deleted}
+              date={comment.dateCreated}
+              count={this.state.commentCount}
+            />
+          ))}
+        </div>
       </div>
     );
   }

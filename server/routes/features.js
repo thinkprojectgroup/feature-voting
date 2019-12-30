@@ -72,6 +72,8 @@ router.patch("/vote/:featureId", async (req, res) => {
 })
 
 // Get specific feature for project & feature id
+// TODO Fix: Es wird nicht überprüft ob FeatureId zur ProjectId gehört
+// -> Feature kann über jede projectId aufgerufen werden
 router.get("/:projectId/:featureId", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) return res.status(400).send("ProjectId doesn't fit id schema")
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")

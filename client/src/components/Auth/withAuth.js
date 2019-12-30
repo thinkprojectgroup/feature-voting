@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
 
+//TODO ADD LATER if needed for Admin-Routes
+
+// NOT USED YET
+// High-Order-Component for admin authorisation
 export default function withAuth(ComponentToProtect) {
   return class extends Component {
     constructor() {
@@ -13,12 +17,11 @@ export default function withAuth(ComponentToProtect) {
     }
 
     componentDidMount() {
-      var user = window.gapi.auth2.getAuthResponse();
-      console.log("withAuth used!", user)
+      var idToken = window.gapi.auth2.getAuthResponse().id_token;
 
       axios
         .post("http://localhost:3000/api/auth/admin", {
-          //idToken: idToken
+          idToken: idToken
         })
         .then(res => {
           if (res.status === 200) {

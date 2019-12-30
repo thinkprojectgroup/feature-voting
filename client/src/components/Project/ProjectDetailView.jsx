@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import FeaturePDV from "../Feature/FeaturePDV";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import config from '../../config';
 
 class ProjectDetailView extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       features: [],
       name: "",
@@ -13,10 +14,23 @@ class ProjectDetailView extends Component {
       projectId: this.props.match.params.projectId
     };
   }
+  
+  componentDidMount() {
+    axios.get(
+      config.url + `/api/projects/` + this.state.projectId
+    )
+    .then(response => {
+      this.setState({ 
+        features: response.data.features,
+        name: response.data.name,
+        projectId: response.data._id});
+    })
+  }
+
   render() {
     
     return (
-      <div className="container">
+      <div className="container row">
         <h1>{this.state.name}</h1>
         {this.state.features.map(feature => (
           <FeaturePDV
@@ -30,22 +44,6 @@ class ProjectDetailView extends Component {
         ))}
       </div>
     );
-  }
-
-  async componentDidMount() {
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/api/projects/` + this.state.projectId
-      );
-
-      this.setState ({
-        features : response.data.features,
-        name: response.data.name,
-        projectId: response.data._id
-      })
-    } catch (error) {
-      console.log(error);
-    }
   }
 }
 export default ProjectDetailView;
