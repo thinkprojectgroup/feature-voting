@@ -7,18 +7,13 @@ const comments = require('../routes/comments')
 const error = require("../middleware/error")
 const userCookies = require("../middleware/userCookies")
 const images = require("../routes/images")
+const cors = require("cors")
 
 module.exports = function (app) {
-  app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header('Access-Control-Allow-Credentials', true);
-    res.header('Access-Control-Allow-Methods', '*');  // enables all the methods to take place
-    next();
-  });
+  app.use(cors())
 
   app.use(express.json({ limit: "10mb" }))
-  app.use(express.urlencoded({ extended: true, limit: "10mb" }))
+  app.use(express.urlencoded({ extended: true }))
   app.use(cookieParser())
   app.use(userCookies)
   app.use(express.static('client/build'))

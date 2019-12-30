@@ -3,39 +3,41 @@ const router = express.Router();
 const mongoose = require("mongoose")
 const { Project } = require("../models/project")
 const { validateFeature, validateSearch } = require("../models/feature")
-const uploadImages = require("../middleware/imageUpload")
+const saveImages = require("../middleware/saveImages")
 
 // Post new feature to given projectId. Request needs to be in form-data otherwise
 // upload middleware will throw an error.
-router.post("/:projectId", uploadImages, async (req, res) => {
-    const { error } = validateFeature(req.body)
+router.post("/:projectId", saveImages, async (req, res) => {
+    const { error } = validateFeature({
+        headline: req.body.headline,
+        description: req.body.description
+    })
     if (error) {
-        console.log(error.details[0].message)
         return res.status(400).send(error.details[0].message)
     }
 
     if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) {
-        console.log("ProjectId doesn't fit id schema")
         return res.status(400).send("ProjectId doesn't fit id schema")
     }
     // Using find & save instead of update for featureSchema.pre method to work properly
     const project = await Project.findOne({ _id: req.params.projectId, deleted: false })
     if (!project) {
-        console.log("Invalid projectId")
         return res.status(404).send("Invalid projectId")
     }
 
-    project.features.push({
+    const feature = {
         headline: req.body.headline,
         description: req.body.description,
         employeeIds: [],
         userIds: [],
-        picturePaths: req.files.map(file => file.id),
-        creator: "5df1205675aec022fc257e8f"
-    })
+        imageIds: req.imageIds,
+        creator: "5df1205675aec022fc257e8f" //adjust once frontend sends cookie correct
+    }
+
+    project.features.push(feature)
     await project.save()
 
-    res.status(201).send(project)
+    res.status(201).send(feature)
 })
 
 // Patch request to set acceptedStatus=true for given featureId
