@@ -21,8 +21,7 @@ class CommentReview extends Component{
     }
 
     handleAccept = (comment) => {
-        console.log(config.url + "/api/comments/" + comment._id);
-        axios.patch(config.url + "/api/comments/" + comment._id)
+        axios.patch("/api/comments/" + comment._id)
         .then(function (response) {
         console.log(response);
         window.location.reload(false);
@@ -34,7 +33,7 @@ class CommentReview extends Component{
 
     handleDelete = (comment) => {
         console.log(comment._id)
-        axios.delete(config.url + "/api/comments/" + comment._id)
+        axios.delete("/api/comments/" + comment._id)
         .then(function (response) {
             console.log(response);
           })
