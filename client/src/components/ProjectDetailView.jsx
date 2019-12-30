@@ -28,8 +28,9 @@ class ProjectDetailView extends Component {
   }
   
   componentDidMount() {
+    
     axios.get(
-      config.url + `/api/projects/` + this.state.projectId
+      config.url + `/api/projects/` + this.props.match.params.projectId
     )
     .then(response => {
       this.setState({ 
