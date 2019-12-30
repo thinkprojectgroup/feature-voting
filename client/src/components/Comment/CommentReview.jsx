@@ -19,6 +19,28 @@ class CommentReview extends Component{
         });
     }
 
+    handleAccept = (comment) => {
+        axios.patch("/api/comments/" + comment._id)
+        .then(function (response) {
+        console.log(response);
+        window.location.reload(false);
+        })
+        .catch(function (error) {
+        console.log(error);
+        });
+    }
+
+    handleDelete = (comment) => {
+        console.log(comment._id)
+        axios.delete("/api/comments/" + comment._id)
+        .then(function (response) {
+            console.log(response);
+          })
+        .catch(function (error) {
+            console.log(error);
+          });
+    }
+
 
     render(){
         return(
@@ -28,8 +50,8 @@ class CommentReview extends Component{
                     <div className="comment-section-item col-12">
 
                         <div className="comment-section-button col-1">
-                            <Button className="accept"><i className="fas fa-check"></i></Button>
-                            <Button className="decline"><i className="fas fa-times"></i></Button>
+                            <Button className="accept" onClick={() => this.handleAccept(comment)}><i className="fas fa-check"></i></Button>
+                            <Button className="decline" onClick={() => this.handleDelete(comment)}><i className="fas fa-times"></i></Button>
                         </div>
 
                         <div className="comment-section-content col-11">

@@ -17,6 +17,11 @@ import AdminOnly from "./components/Auth/AdminOnly";
 import AppWrapper from "./components/AppWrapper";
 import Footer from "./components/Footer";
 import FAQ from "./components/FAQ";
+import ProjectOverView from "./components/ProjectOverView";
+import { BrowserRouter as Router, Route,  Switch} from "react-router-dom";
+import CommentReview from './components/CommentReview';
+import FeatureForm from './components/FeatureForm';
+
 
 class App extends Component {
   state = {
