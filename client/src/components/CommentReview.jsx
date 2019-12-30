@@ -25,6 +25,7 @@ class CommentReview extends Component{
         axios.patch(config.url + "/api/comments/" + comment._id)
         .then(function (response) {
         console.log(response);
+        window.location.reload(false);
         })
         .catch(function (error) {
         console.log(error);
