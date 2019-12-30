@@ -29,6 +29,12 @@ const schema = new mongoose.Schema({
     deleted: {
         type: Boolean,
         default: false,
+    },
+    name: {
+        type: String,
+        required: false,
+        minlength: 1,
+        maxlength: 255
     }
 })
 schema.index({ content: "text" })
@@ -38,7 +44,8 @@ const Comment = mongoose.model("Comment", schema)
 function validateComment(comment) {
     const schema = {
         content: Joi.string().min(1).max(2048).required(),
-        featureId: Joi.objectId().required()
+        featureId: Joi.objectId().required(),
+        name: Joi.string().min(1).max(255)
     }
     return Joi.validate(comment, schema)
 }

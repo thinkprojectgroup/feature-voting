@@ -21,6 +21,9 @@ module.exports = function (app) {
   app.use(express.urlencoded({ extended: true, limit: "10mb" }))
   app.use(cookieParser())
   app.use(userCookies)
+  app.use(express.static('client/build'))
+
+  app.use("/api/public", express.static("server/public"))
 
   app.use('/api/projects/', projects)
   app.use("/api/features/", features)
