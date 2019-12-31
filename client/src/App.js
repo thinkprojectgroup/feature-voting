@@ -4,6 +4,13 @@ import FeatureDetailView from "./components/Feature/FeatureDetailView";
 import ProjectDetailView from "./components/Project/ProjectDetailView";
 import Header from "./components/Header";
 import ProjectOverView from "./components/Project/ProjectOverView";
+import CommentReview from "./components/Comment/CommentReview";
+import SignIn from "./components/Auth/SignIn";
+import AdminOnly from "./components/Auth/AdminOnly";
+import AppWrapper from "./components/AppWrapper";
+import Footer from "./components/Footer";
+import FAQ from "./components/FAQ";
+import FeatureForm from './components/FeatureForm';
 import {
   BrowserRouter as Router,
   Route,
@@ -11,16 +18,8 @@ import {
   useHistory,
   useLocation
 } from "react-router-dom";
-import CommentReview from "./components/Comment/CommentReview";
-import SignIn from "./components/Auth/SignIn";
-import AdminOnly from "./components/Auth/AdminOnly";
-import AppWrapper from "./components/AppWrapper";
-import Footer from "./components/Footer";
-import FAQ from "./components/FAQ";
-import ProjectOverView from "./components/ProjectOverView";
-import { BrowserRouter as Router, Route,  Switch} from "react-router-dom";
-import CommentReview from './components/CommentReview';
-import FeatureForm from './components/FeatureForm';
+
+
 
 
 class App extends Component {
