@@ -6,27 +6,35 @@ const users = require('../routes/users')
 const comments = require('../routes/comments')
 const error = require("../middleware/error")
 const userCookies = require("../middleware/userCookies")
+const images = require("../routes/images")
+const cors = require("cors")
 
 module.exports = function (app) {
-    app.use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
-      });
-      
-    app.use(express.json())
-    app.use(express.urlencoded({ extended: true }))
-    app.use(cookieParser())
-    app.use(userCookies)
+  app.use(cors())
 
-    app.use(express.static('client/build'))
+  app.use(express.json({ limit: "10mb" }))
+  app.use(express.urlencoded({ extended: true }))
+  app.use(cookieParser())
+  app.use(userCookies)
 
-    app.use("/api/public", express.static("server/public"))
+  app.use(express.static('client/build'))
 
-    app.use('/api/projects/', projects)
-    app.use("/api/features/", features)
-    app.use("/api/users/", users)
-    app.use("/api/comments/", comments)
-    
-    app.use(error)
+  app.use('/api/projects/', projects)
+  app.use("/api/features/", features)
+  app.use("/api/users/", users)
+  app.use("/api/comments/", comments)
+  app.use("/api/images/", images)
+  
+  app.get("/*", function(req, res) {
+    res.sendFile(
+      path.join(__dirname, "../../client/build/index.html"),
+      function(err) {
+        if (err) {
+          res.status(500).send(err);
+        }
+      }
+    );
+  });
+
+  app.use(error)
 }

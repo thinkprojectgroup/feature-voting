@@ -6,8 +6,10 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import FAQ from "./components/FAQ";
 import ProjectOverView from "./components/ProjectOverView";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import CommentReview from "./components/CommentReview";
+import { BrowserRouter as Router, Route,  Switch} from "react-router-dom";
+import CommentReview from './components/CommentReview';
+import FeatureForm from './components/FeatureForm';
+
 
 class App extends Component {
   render() {
