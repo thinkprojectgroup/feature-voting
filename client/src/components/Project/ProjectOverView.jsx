@@ -7,13 +7,16 @@ class ProjectOverView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projects: []
+      projects: [],
+      idToken: this.props.idToken
     };
   }
 
   componentDidMount() {
     //TODO add idToken to Request-Body
-    axios.get(config.url + `/api/projects/`).then(response => {
+    axios.get(config.url + `/api/projects/`, {
+      idToken: this.state.idToken
+    }).then(response => {
       this.setState({
         projects: response.data
       })

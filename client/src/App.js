@@ -10,11 +10,11 @@ import AdminOnly from "./components/Auth/AdminOnly";
 import AppWrapper from "./components/AppWrapper";
 import Footer from "./components/Footer";
 import FAQ from "./components/FAQ";
-import FeatureForm from './components/FeatureForm';
 import {
   BrowserRouter as Router,
   Route,
   Switch,
+  Redirect,
   useHistory,
   useLocation
 } from "react-router-dom";
@@ -55,47 +55,64 @@ class App extends Component {
         setAuthorisation={this.setAuthorisation}
       >
         {this.state.authIsLoaded && (
-          <Router>
-            {console.log("Router is mounting...")}
-            <Header role={this.state.role} />
+          <div>
+            <Router>
+              <Header role={this.state.role} />
 
-            <Switch>
-              
               <Route
-                exact
-                path={"/login"}
-                render={props => (
-                  <SignIn setAuthorisation={this.setAuthorisation} />
-                )}
-              />
-
-              {/* Routes only if logged in and authorised as admin  */}
-              <AdminOnly role={this.state.role} idToken={this.state.idToken}>
-                <Route
                   exact
                   path={"/"}
-                  render={props => <ProjectOverView {...props} />}
-                />
-                <Route
+                  render={props => 
+                    (this.state.role == 'admin') ? (
+                      <ProjectOverView {...props} />
+                    ) : (
+                      <Redirect to={"/login"} />
+                    )}
+              />
+
+              <Route
                   exact
                   path={"/commentreview"}
-                  component={CommentReview}
-                />
-              </AdminOnly>
-              
-              <Route exact path={"/faq"} component={FAQ} />
-              <Route
-                path={"/:projectId"}
-                render={props => <ProjectDetailView {...props} />}
+                  render={props => 
+                    (this.state.role == 'admin') ? (
+                      <CommentReview {...props} />
+                    ) : (
+                      <Redirect to={"/login"} />
+                    )}
               />
-              <Route
-                path={"/:projectId/:featureId"}
-                component={FeatureDetailView}
-              />
-            </Switch>
 
-            <Footer />
-          </Router>
+              <Switch>
+                <Route
+                  exact
+                  path={"/login"}
+                  render={props => (
+                    <SignIn setAuthorisation={this.setAuthorisation} />
+                  )}
+                />
+
+                <Route exact path={"/faq"} component={FAQ} />
+
+                <Route
+                  exact
+                  path={"/:projectId"}
+                  render={props => <ProjectDetailView {...props} />}
+                />
+                <Route
+                  path={"/:projectId/:featureId"}
+                  component={FeatureDetailView}
+                />
+
+                {/* Routes only if logged in and authorised as admin  */}
+                {/* <AdminOnly role={this.state.role} idToken={this.state.idToken}>
+                  
+                  
+                </AdminOnly> */}
+
+              </Switch>
+              <Footer />
+            </Router>
+            
+          </div>
         )}
       </AppWrapper>
     );

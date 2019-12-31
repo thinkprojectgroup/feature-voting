@@ -1,13 +1,15 @@
 import React, { Component } from "react";
-import FeaturePDV from "./FeaturePDV";
-import FeatureForm from "./FeatureForm";
+import FeaturePDV from "../Feature/FeaturePDV";
+import FeatureForm from "../FeatureForm";
 import axios from "axios";
-import config from '../config';
+import config from '../../config';
 import { Button } from "reactstrap";
 
 class ProjectDetailView extends Component {
   constructor(props) {
     super(props);
+
+    console.log("props", this.props);
 
     this.state = {
       features: [],
@@ -20,14 +22,12 @@ class ProjectDetailView extends Component {
     this.toggleShowForm = this.toggleShowForm.bind(this);
   }
 
-
   toggleShowForm = () => {
     this.setState({showForm: !this.state.showForm});
     console.log(this.state.showForm);
   }
   
   componentDidMount() {
-    
     axios.get(
       config.url + `/api/projects/` + this.props.match.params.projectId
     )

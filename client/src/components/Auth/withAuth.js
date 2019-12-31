@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import axios from 'axios';
+import axios from "axios";
 
-//TODO ADD LATER if needed for Admin-Routes
-
-// NOT USED YET
-// High-Order-Component for admin authorisation
+// UNUSED YET
+// TODO Decide whether HOC (High Order Components) or Wrapping Component is better choice regarding security
 export default function withAuth(ComponentToProtect) {
   return class extends Component {
     constructor() {
@@ -20,7 +18,7 @@ export default function withAuth(ComponentToProtect) {
       var idToken = window.gapi.auth2.getAuthResponse().id_token;
 
       axios
-        .post("http://localhost:3000/api/auth/admin", {
+        .post("http://localhost:3000/api/auth/", {
           idToken: idToken
         })
         .then(res => {

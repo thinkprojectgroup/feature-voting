@@ -37,7 +37,7 @@ class SignIn extends Component {
     console.log("Logged In.");
 
     axios
-      .post("http://localhost:3000/api/auth/admin", {
+      .post("http://localhost:3000/api/auth/", {
         idToken: idToken
       })
       .then(res => {

@@ -49,7 +49,7 @@ class AppWrapper extends Component {
 
   authorise = (idToken) => {
     axios
-      .post("http://localhost:3000/api/auth/admin", {
+      .post("http://localhost:3000/api/auth/", {
         idToken: idToken
       })
       .then(res => {
