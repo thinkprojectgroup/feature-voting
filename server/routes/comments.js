@@ -43,7 +43,7 @@ router.post("/", async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message)
 
     const comment = new Comment({
-        author: req.cookies['userId'],
+        author: req.userId,
         content: req.body.content,
         featureId: req.body.featureId,
         name: req.body.name

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const Joi = require("joi")
+const util = require("util")
 
 
 const featureSchema = new mongoose.Schema({
@@ -41,9 +42,8 @@ const featureSchema = new mongoose.Schema({
         default: Date.now
     },
     imageIds: [{
-        type: String,
-        minlength: 1,
-        maxlength: 1028
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Image"
     }],
     deleted: {
         type: Boolean,
@@ -72,6 +72,18 @@ function validateSearch(body) {
     return Joi.validate(body, schema)
 }
 
+// Remove sensitive information from features before returning them to client
+function cleanFeatures(features, userId) {
+    return features.map(feature => {
+        const userIdStrings = feature.userIds.map(obj => util.inspect(obj))
+        feature.upvoted = userIdStrings.includes(userId)
+        delete feature.userIds
+        delete feature.employeeIds
+        delete feature.creator
+    })
+}
+
 exports.featureSchema = featureSchema
 exports.validateFeature = validateFeature
 exports.validateSearch = validateSearch
+exports.cleanFeatures = cleanFeatures
