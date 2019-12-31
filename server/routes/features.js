@@ -75,8 +75,7 @@ router.patch("/vote/:featureId", async (req, res) => {
 
     await project.save()
 
-    //Turn feature to mutable object and prepare for being sent
-    feature = feature.toObject()
+    feature = feature.toObject() //Turn feature to mutable object
     cleanFeatures([feature], userId)
 
     res.send(feature)
@@ -92,8 +91,11 @@ router.get("/:projectId/:featureId", async (req, res) => {
 
     //TODO add featureID invalid response
 
-    const feature = project.features.id(req.params.featureId)
+    var feature = project.features.id(req.params.featureId)
     if (!feature || feature.deleted) return res.status(404).send("featureId not found")
+    
+    feature = feature.toObject() //Turn feature to mutable object
+    cleanFeatures([feature], req.userId)
 
     res.send(feature)
 });
