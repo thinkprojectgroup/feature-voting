@@ -40,7 +40,7 @@ const featureSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
-    picturePaths: [{
+    imageIds: [{
         type: String,
         minlength: 1,
         maxlength: 1028
