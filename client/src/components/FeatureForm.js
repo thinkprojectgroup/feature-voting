@@ -61,13 +61,12 @@ class FeatureForm extends Component {
           return true;
       }
       onChangeHandler = (event) => {
-          console.log(event.target.files);
           var files = event.target.files
           if (this.maxSelectFile(event) && this.checkMimeType(event) && this.checkFileSize(event)) {
               // if return true allow to setState
               console.log(files);
               this.setState({
-                  selectedFile: files,
+                  selectedFile: files[0],
                   loaded: 0
               })
               console.log(this.state);
@@ -99,7 +98,7 @@ class FeatureForm extends Component {
         let data = JSON.stringify({
           headline: this.state.headline,
           description: this.state.description,
-          picturePaths: this.state.selectedFile
+          file: this.state.selectedFile
         })
 
         axios.post('/api/features/' + this.props.projectId , data, config)
