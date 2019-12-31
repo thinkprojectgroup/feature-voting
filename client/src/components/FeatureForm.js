@@ -43,31 +43,41 @@ class FeatureForm extends Component {
         const {headline, description } = this.state;
 
         return(
-            
-            <div className="feature-form-container">
+
+            <div className="feature-form-container row col-12">
                 <form onSubmit={this.onSubmit} className="feature-form">
-
-                    <label className="feature-form-label">
+                    <label>
                         Title:
-                        <input type="text" 
-                        name="headline" 
-                        className="feature-form-input" 
-                        value={headline} 
-                        onChange={this.onChange}/>
                     </label>
+                    <input type="text"
+                           name="headline"
+                           id="headline"
+                           className="headline col-12"
+                           value={headline}
+                           onChange={this.onChange}
+                           required
+                    />
 
-                    <label className="feature-form-label">
-                        Description: 
-                        <input type="text" 
-                        name="description" 
-                        className="feature-form-input" 
-                        value={description} 
-                        onChange={this.onChange}/>
+                    <label>
+                        Description:
                     </label>
+                    <textarea
+                        name="description"
+                        id="description"
+                        className="description col-12"
+                        value={description}
+                        onChange={this.onChange}
+                        required
+                    />
 
-                    <button type="submit" value="Submit">Submit</button>
+                    <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>
             </div>
+
+
+
+
+
         );
     }
 

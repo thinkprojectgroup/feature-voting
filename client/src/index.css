@@ -116,6 +116,10 @@ hr{
   margin: 30px 0;
 }
 
+.active{display: block;}
+
+.inactive{display: none}
+
 img {
   width: 100%;
   height: auto;
@@ -159,6 +163,8 @@ button.accept{
 
 button.add{
   background-color: #003c50;
+    float: right;
+
 }
 
 .project-list-item{
@@ -218,6 +224,37 @@ footer div{
 .answers div{
   margin: 50px 0;
 }
+
+.feature-form-container{
+    margin-bottom: 50px;
+}
+
+label{
+    font-size: 1rem;
+}
+
+input, textarea{
+    margin-bottom: 25px;
+}
+
+label, input{
+    display: block;
+}
+
+.submit{
+    color: white;
+    background-color: #003c50;
+    float: left;
+    font-size: 1.3rem;
+}
+
+textarea[name="description"]{
+    height: 200px;
+}
+
+
+
+
 
 /* For desktop: */
 @media only screen and (min-width: 700px) {
