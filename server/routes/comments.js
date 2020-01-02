@@ -37,7 +37,6 @@ router.get("/:id", async (req, res) => {
     if (!feature || feature.deleted) return res.status(404).send("featureId not found")
 
     var comments = await Comment.find({ featureId: req.params.id, deleted: false }).sort("dateCreated")
-    if (comments.length == 0) return res.status(201).send("feature has no comments yet")
 
     res.send(comments);
 });
