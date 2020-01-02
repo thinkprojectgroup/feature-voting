@@ -50,7 +50,7 @@ router.post("/", async (req, res) => {
     if (!feature || feature.deleted) return res.status(404).send("featureId not found")
 
     const comment = new Comment({
-        author: req.cookies['userId'],
+        author: req.userId,
         content: req.body.content,
         featureId: req.body.featureId,
         name: req.body.name
