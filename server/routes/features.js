@@ -2,11 +2,10 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require("mongoose")
 const { Project } = require("../models/project")
-const { validateFeature, validateSearch } = require("../models/feature")
+const { validateFeature, validateSearch, cleanFeatures } = require("../models/feature")
 const saveImages = require("../middleware/saveImages")
 
-// Post new feature to given projectId. Request needs to be in form-data otherwise
-// upload middleware will throw an error.
+// Post new feature to given projectId. Request can include base64 imageData to save images.
 router.post("/:projectId", saveImages, async (req, res) => {
     const { error } = validateFeature({
         headline: req.body.headline,
@@ -29,7 +28,7 @@ router.post("/:projectId", saveImages, async (req, res) => {
         employeeIds: [],
         userIds: [],
         imageIds: req.imageIds,
-        creator: "5df1205675aec022fc257e8f" //adjust once frontend sends cookie correct
+        creator: req.userId
     }
 
     project.features.push(feature)
@@ -59,10 +58,10 @@ router.patch("/vote/:featureId", async (req, res) => {
     const project = await Project.findOne({ "features._id": req.params.featureId })
     if (!project) return res.status(404).send("Invalid projectId")
 
-    const feature = project.features.id(req.params.featureId)
+    var feature = project.features.id(req.params.featureId)
     if (!feature) return res.status(404).send("featureId not found")
 
-    const userId = req.cookies["userId"]
+    const userId = req.userId
     if (!userId) return res.status(400).send("userId cookie required")
 
     // TODO: decide if user or employee/admin
@@ -75,6 +74,10 @@ router.patch("/vote/:featureId", async (req, res) => {
     }
 
     await project.save()
+
+    feature = feature.toObject() //Turn feature to mutable object
+    cleanFeatures([feature], userId)
+
     res.send(feature)
 })
 
@@ -88,8 +91,11 @@ router.get("/:projectId/:featureId", async (req, res) => {
 
     //TODO add featureID invalid response
 
-    const feature = project.features.id(req.params.featureId)
+    var feature = project.features.id(req.params.featureId)
     if (!feature || feature.deleted) return res.status(404).send("featureId not found")
+    
+    feature = feature.toObject() //Turn feature to mutable object
+    cleanFeatures([feature], req.userId)
 
     res.send(feature)
 });
