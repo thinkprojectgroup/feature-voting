@@ -13,12 +13,6 @@ class Comment extends Component{
         count: this.props.count,
         formattedDate: ''
     };
-
-    if(this.state.author === 'undefined'){
-        this.setState({
-            author: "Anonymous"
-        })
-    };
     //console.log(this.state.date);
     //console.log(this.state);
 }
@@ -29,7 +23,13 @@ class Comment extends Component{
     this.setState({
        formattedDate: date
     });
-     // console.log(this.state);
+
+    if(!this.state.author){
+        this.setState({
+            author: "Anonymous"
+        })
+    };
+    // console.log(this.state);
     }
 
     render(){
