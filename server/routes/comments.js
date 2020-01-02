@@ -27,7 +27,7 @@ router.get("/search/", async (req, res) => {
     res.send(comments);
 });
 
-// Get comments by featureId
+// Get accepted comments by featureId
 router.get("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("FeatureId doesn't fit id schema")
 
