@@ -18,7 +18,7 @@ class FeatureForm extends Component {
       onSubmit = (e) => {
         e.preventDefault();
         const { headline, description} = this.state;
-        console.log(this.props.projectId);
+        
 
         const config = {     
             headers: { 
