@@ -32,7 +32,7 @@ class CommentReview extends Component{
     }
 
     handleDelete = (comment) => {
-        console.log(comment._id)
+         // console.log(comment._id)
         axios.delete("/api/comments/" + comment._id)
         .then(function (response) {
             console.log(response);
