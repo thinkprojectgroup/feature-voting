@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import FeaturePDV from "../Feature/FeaturePDV";
 import FeatureForm from "../FeatureForm";
 import axios from "axios";
-import config from '../../config';
+import config from "../../config";
 import { Button } from "reactstrap";
 
 class ProjectDetailView extends Component {
@@ -23,35 +23,38 @@ class ProjectDetailView extends Component {
   }
 
   toggleShowForm = () => {
-    this.setState({showForm: !this.state.showForm});
+    this.setState({ showForm: !this.state.showForm });
     console.log(this.state.showForm);
-  }
-  
+  };
+
   componentDidMount() {
-    axios.get(
-      config.url + `/api/projects/` + this.props.match.params.projectId
-    )
-    .then(response => {
-      this.setState({ 
-        features: response.data.features,
-        name: response.data.name,
-        projectId: response.data._id});
-    })
+    axios
+      .get(config.url + `/api/projects/` + this.props.match.params.projectId)
+      .then(response => {
+        this.setState({
+          features: response.data.features,
+          name: response.data.name,
+          projectId: response.data._id
+        });
+      });
   }
 
   render() {
-    
     return (
       <div className="container row">
-        <h1>{this.state.name}</h1>
-        <Button
-              onClick={this.toggleShowForm}
-              className="show-feature-form-button"
-        > Add Feature</Button>
+        <div className="row">
+          <div className="col-11">
+            <h1>{this.state.name}</h1>
+          </div>
+          <div className="col-1">
+            <button onClick={this.toggleShowForm} className="add">
+              <i className="fas fa-plus"></i>
+            </button>
+          </div>
+        </div>
         {this.state.showForm ? (
           <FeatureForm projectId={this.state.projectId} />
-          ): null}
-        
+        ) : null}
 
         {this.state.features.map(feature => (
           <FeaturePDV
@@ -66,6 +69,5 @@ class ProjectDetailView extends Component {
       </div>
     );
   }
-
 }
 export default ProjectDetailView;

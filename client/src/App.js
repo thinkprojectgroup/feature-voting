@@ -58,19 +58,18 @@ class App extends Component {
           <div>
             <Router>
               <Header role={this.state.role} />
-
-              <Route
-                  exact
-                  path={"/"}
-                  render={props => 
-                    (this.state.role == 'admin') ? (
-                      <ProjectOverView {...props} />
-                    ) : (
-                      <Redirect to={"/login"} />
-                    )}
-              />
-
-              <Route
+              <Switch>
+                <Route
+                    exact
+                    path={"/"}
+                    render={props => 
+                      (this.state.role == 'admin') ? (
+                        <ProjectOverView {...props} />
+                      ) : (
+                        <Redirect to={"/login"} />
+                      )}
+                />
+                <Route
                   exact
                   path={"/commentreview"}
                   render={props => 
@@ -79,9 +78,7 @@ class App extends Component {
                     ) : (
                       <Redirect to={"/login"} />
                     )}
-              />
-
-              <Switch>
+                />
                 <Route
                   exact
                   path={"/login"}
@@ -101,17 +98,9 @@ class App extends Component {
                   path={"/:projectId/:featureId"}
                   component={FeatureDetailView}
                 />
-
-                {/* Routes only if logged in and authorised as admin  */}
-                {/* <AdminOnly role={this.state.role} idToken={this.state.idToken}>
-                  
-                  
-                </AdminOnly> */}
-
               </Switch>
               <Footer />
             </Router>
-            
           </div>
         )}
       </AppWrapper>

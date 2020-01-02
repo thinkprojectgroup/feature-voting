@@ -10,6 +10,7 @@ const error = require("../middleware/error")
 const userCookies = require("../middleware/userCookies")
 const images = require("../routes/images")
 const cors = require("cors")
+const path = require("path")
 
 module.exports = function (app) {
   app.use(cors())
