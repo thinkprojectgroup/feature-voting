@@ -14,9 +14,9 @@ class FeatureForm extends Component {
             loadedImage: String,
             imageData: String
         };
-        checkMimeType = (event) => {
+        checkMimeType = (files) => {
           //getting file object
-          let files = event.target.files
+          // let files = files
           //define message container
           let err = []
           // list allow mime type
@@ -32,22 +32,22 @@ class FeatureForm extends Component {
           for (var z = 0; z < err.length; z++) {// if message not same old that mean has error 
               // discard selected file
               toast.error(err[z])
-              event.target.value = null
+              // event.target.value = null
           }
           return true;
       }
-      maxSelectFile = (event) => {
-          let files = event.target.files
+      maxSelectFile = (files) => {
+          // let files = files
           if (files.length > 3) {
               const msg = 'Only 3 images can be uploaded at a time'
-              event.target.value = null
+              // event.target.value = null
               toast.warn(msg)
               return false;
           }
           return true;
       }
-      checkFileSize = (event) => {
-          let files = event.target.files
+      checkFileSize = (files) => {
+          // let files = files
           let size = 2000000 //2MB
           let err = [];
           for (var x = 0; x < files.length; x++) {
@@ -59,7 +59,7 @@ class FeatureForm extends Component {
           for (var z = 0; z < err.length; z++) {// if message not same old that mean has error 
               // discard selected file
               toast.error(err[z])
-              event.target.value = null
+                //event.target.value = null
           }
           return true;
       }
