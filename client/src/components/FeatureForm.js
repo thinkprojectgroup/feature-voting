@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Progress } from 'reactstrap';
+import FileBase from "react-file-base64"
 
 class FeatureForm extends Component {
         state = {
             headline: "",
             description: "",
             selectedFile: null,
-            loaded: 0
+            loaded: 0,
+            baseImage: String,
+            loadedImage: String,
+            imageData: String
         };
         checkMimeType = (event) => {
           //getting file object
@@ -79,26 +82,39 @@ class FeatureForm extends Component {
         
       }  
 
+
+      getBaseFile(files) {
+        // show the 1st image as example
+        this.setState({
+            baseImage: files[0].base64
+        });
+        const imageData = files.map(file => file.base64.toString())
+        console.log(imageData)
+
+
+        this.setState({
+            imageData: imageData
+        });
+
+        console.log(this.state);
+
+    }
+
       onSubmit = (e) => {
         e.preventDefault();
-        if (!this.state.selectedFile) { //Check if selected file exists
-              // alert("nofiletoupload")
-            toast.info("No file to upload")
-            return
-        }
-        console.log(this.props.projectId);
+        //console.log(e);
+        //console.log(this.state);
+        //console.log(this.props.projectId);
 
         const config = {     
             headers: { 
               'Content-Type': 'application/json' }
         }
-        
-        const stateData = this.state;
 
         let data = JSON.stringify({
           headline: this.state.headline,
           description: this.state.description,
-          file: this.state.selectedFile
+          imageData: this.state.imageData
         })
 
         axios.post('/api/features/' + this.props.projectId , data, config)
@@ -137,7 +153,7 @@ class FeatureForm extends Component {
                     </label>
 
                     <label>Upload Your File </label>
-                    <input type="file" class="form-control" multiple onChange={this.onChangeHandler} />
+                    <FileBase type="file" multiple={true} onDone={this.getBaseFile.bind(this)} />
 
                     <button type="submit" value="Submit">Submit</button>
                 </form>
