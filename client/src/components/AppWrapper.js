@@ -1,8 +1,10 @@
 import React, { Fragment, Component } from "react";
 import axios from 'axios';
 
-const CLIENT_ID =
+const CLIENT_ID_1 =
   "815925924669-cf3cap0n8rbsj0523n4unpof4s767jf0.apps.googleusercontent.com";
+
+const CLIENT_ID_2 = "815925924669-ej19n6nq6gh5504pgos1dne996kstsil.apps.googleusercontent.com"
 
 class AppWrapper extends Component {
   constructor(props) {
@@ -31,9 +33,9 @@ class AppWrapper extends Component {
   initGoogleAuth = () => {
     window.gapi.load("auth2", () => {
       window.gapi.auth2.init({  
-        client_id: CLIENT_ID,
+        client_id: CLIENT_ID_2,
         scope: "openid email",
-        fetch_basic_profile: false 
+        //fetch_basic_profile: false 
         //hosted_domain: 'thinkproject.de' //TODO add 'thinkproject.de' as only allowed domain
       })
       .then(authObject => {

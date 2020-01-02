@@ -20,7 +20,8 @@ router.get("/", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true]
+                            $cmp: ['$$feature.deleted', true],
+                            $cmp: ['$$feature.acceptedStatus', false]
                         }
                     }
                 },
@@ -33,7 +34,7 @@ router.get("/", async (req, res) => {
     res.send(projects);
 });
 
-// Get project by id
+// Get project with accepted features by id
 router.get("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("ProjectId doesn't fit id schema")
 
@@ -46,7 +47,8 @@ router.get("/:id", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true]
+                            $cmp: ['$$feature.deleted', true],
+                            $cmp: ['$$feature.acceptedStatus', false]
                         }
                     }
                 },
@@ -63,10 +65,10 @@ router.get("/:id", async (req, res) => {
     res.send(project);
 });
 
-// Get project by name instead of id, 
+// Get project with accepted features by name instead of id, 
 // NOTE: name is case sensitive
 router.get("/name/:name", async (req, res) => {
-    const project = await Project.aggregate([
+    var project = await Project.aggregate([
         { $match: { name: req.params.name, deleted: false } },
         {
             $project: {
@@ -75,7 +77,8 @@ router.get("/name/:name", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true]
+                            $cmp: ['$$feature.deleted', true],
+                            $cmp: ['$$feature.acceptedStatus', false]
                         }
                     }
                 },
@@ -89,7 +92,39 @@ router.get("/name/:name", async (req, res) => {
 
     cleanFeatures(project.features, req.userId)
 
-    res.send(project[0]);
+    res.send(project);
+});
+
+// Get Project with all unaccepted features by name
+// NOTE: name is case sensitive
+router.get("/unaccepted/:name", async (req, res) => {
+    //TODO: authentication, only for admin
+
+    var project = await Project.aggregate([
+        { $match: { name: req.params.name, deleted: false } },
+        {
+            $project: {
+                features: {
+                    $filter: {
+                        input: '$features',
+                        as: 'feature',
+                        cond: {
+                            $cmp: ['$$feature.deleted', true],
+                            $cmp: ['$$feature.acceptedStatus', true]
+                        }
+                    }
+                },
+                name: true,
+                __v: true
+            }
+        }
+    ])
+    if (project.length == 0) return res.status(404).send("Invalid project name")
+    project = project[0]
+
+    cleanFeatures(project.features, req.userId)
+
+    res.send(project);
 });
 
 // Create a new project, project names have to be unique
