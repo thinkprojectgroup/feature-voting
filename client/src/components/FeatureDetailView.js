@@ -30,7 +30,7 @@ class FeatureDetailView extends Component {
         const comments = res.data;
         this.setState({ comments: comments });
         this.setState({ commentCount: comments.count })
-        console.log(this.state.comments[0].author);
+        // console.log(this.state.comments[0].author);
       })
 
     axios
@@ -46,7 +46,7 @@ class FeatureDetailView extends Component {
         this.setState({ featureTitle: feature.headline });
         this.setState({ description: feature.description });
         this.setState({ upvotes: feature.voteCount });
-        console.log(feature);
+        // console.log(feature);
       });
   }
 
