@@ -106,42 +106,39 @@ router.get("/search/", async (req, res) => {
     const { error } = validateSearch(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
-    var features = await Project.find(
+    const projects = await Project.find(
         { $text: { $search: req.body.searchString } },
         { score: { $meta: "textScore" } }
     ).sort({ score: { $meta: "textScore" } })
-    if (features.length == 0) return res.send("no results found")
 
-    //TODO: Project.find returns Project -> return feature instead of project
+    var features = []
+    projects.forEach(project => {
+        const fts = project.features.map(ft => ft.toObject())
+        features = features.concat(fts)
+    })
+
+    cleanFeatures(features, req.userId)
 
     res.send(features);
 });
 
 // Delete specific feature for project & feature id
 router.delete("/:projectId/:featureId", async (req, res) => {
-
+    //TODO: admin auth
     if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) return res.status(400).send("ProjectId doesn't fit id schema")
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")
 
     // Using find & save instead of update for featureSchema.pre method to work properly
-    const project = await Project.findOne({ _id: req.params.projectId, deleted: false })
-    if (!project) return res.status(404).send("Invalid projectId")
+    const project = await Project.findOne({ _id: req.params.projectId })
+    if (!project || project.deleted) return res.status(404).send("Invalid projectId")
 
-    const feature = await project.features.id(req.params.featureId)
+    var feature = await project.features.id(req.params.featureId)
     if (!feature || feature.deleted) return res.status(404).send("featureId not found")
 
-    const result = await Project.findOneAndUpdate(
-        { "_id": req.params.projectId, "features._id": req.params.featureId },
-        {
-            "$set": {
-                "features.$.deleted": true
-            }
-        },
-    );
-
+    feature.deleted = true
     await project.save()
 
-    res.status(202).send(result)
+    res.status(202).send(feature)
 })
 
 module.exports = router;
