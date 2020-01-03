@@ -14,7 +14,7 @@ class ProjectOverView extends Component {
   async componentDidMount() {
     const promise = await axios.get(config.url + `/api/projects/`);
     const projects = promise.data;
-    console.log(projects);
+    // console.log(projects);
     this.setState({ projects });
   }
 
