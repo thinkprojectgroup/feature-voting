@@ -31,10 +31,10 @@ router.get("/search/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("FeatureId doesn't fit id schema")
 
-    const feature = await Project.findOne({"features._id" : req.params.id})
+    const feature = await Project.findOne({ "features._id": req.params.id })
     if (!feature || feature.deleted) return res.status(404).send("featureId not found")
 
-    const comments = await Comment.find({ featureId: req.params.id, deleted: false, accepted: true}).sort("dateCreated")
+    const comments = await Comment.find({ featureId: req.params.id, deleted: false, accepted: true }).sort("dateCreated")
 
     res.send(comments);
 });
@@ -46,8 +46,8 @@ router.post("/:id", async (req, res) => {
     const { error } = validateComment(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
-    const feature = await Project.findOne({"features._id" : req.params.id})
-    if (!feature || feature.deleted) return res.status(404).send("featureId not found")
+    const project = await Project.findOne({ "features._id": req.params.id })
+    if (!project || project.deleted) return res.status(404).send("featureId not found")
 
     const comment = new Comment({
         author: req.userId,
@@ -55,7 +55,10 @@ router.post("/:id", async (req, res) => {
         featureId: req.params.id,
         name: req.body.name
     })
+
     await comment.save()
+    project.features.id(req.params.id).commentCount++
+    await project.save()
 
     res.status(201).send(comment)
 })
@@ -79,6 +82,12 @@ router.delete("/:id", async (req, res) => {
 
     var comment = await Comment.findOneAndUpdate({ _id: req.params.id, deleted: false }, { "$set": { "deleted": true } }, { useFindAndModify: false })
     if (!comment) return res.status(404).send("commentId not found")
+
+    const project = await Project.findOne({ "features._id": comment.featureId })
+    const feature = project.features.id(comment.featureId)
+    feature.commentCount--
+
+    await project.save()
 
     res.status(202).send(comment)
 })
