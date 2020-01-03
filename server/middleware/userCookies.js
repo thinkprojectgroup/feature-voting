@@ -16,7 +16,8 @@ module.exports = async (req, res, next) => {
         var user = await User.findOne({ deviceHash: deviceHash })
         if (!user) {
             // User not found by cookie or by id, create new user
-            user = new User({})
+            console.log("new user created")
+            user = new User({ deviceHash: deviceHash })
             await user.save()
 
             req.userId = userId
