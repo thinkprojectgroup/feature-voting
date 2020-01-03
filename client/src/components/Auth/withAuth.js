@@ -18,7 +18,7 @@ export default function withAuth(ComponentToProtect) {
       var idToken = window.gapi.auth2.getAuthResponse().id_token;
 
       axios
-        .post("http://localhost:3000/api/auth/", {
+        .post(config.url + `/api/projects/`, {
           idToken: idToken
         })
         .then(res => {

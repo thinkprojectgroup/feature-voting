@@ -1,5 +1,6 @@
 import React, { Fragment, Component } from "react";
 import axios from 'axios';
+import config from "../../config";
 
 const CLIENT_ID_1 =
   "596132698210-554c0ihpr0kp9vg13v7irajr55v8m4eq.apps.googleusercontent.com";
@@ -33,7 +34,7 @@ class AppWrapper extends Component {
       window.gapi.auth2.init({  
         client_id: CLIENT_ID_1,
         scope: "openid email",
-        //fetch_basic_profile: false 
+        fetch_basic_profile: false 
         //hosted_domain: 'thinkproject.de' //TODO add 'thinkproject.de' as only allowed domain
       })
       .then(authObject => {
@@ -49,7 +50,7 @@ class AppWrapper extends Component {
 
   authorise = (idToken) => {
     axios
-      .post("http://localhost:3000/api/auth/", {
+      .post(config.url + "/api/auth/", {
         idToken: idToken
       })
       .then(res => {
