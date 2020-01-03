@@ -13,16 +13,22 @@ class CommentCR extends Component{
         commentName: this.props.name,
         commentContent: this.props.content,
         commentDate: this.props.date,
-        clicked: false
+        clicked: false,
+        formattedDate: ''
     };
-    console.log("Hello");
     }
    
+    componentDidMount = () => {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(this.state.commentDate).toLocaleDateString('de-DE', options);
+    this.setState({
+       formattedDate: date
+    });
+    }
     
 
     
-
-    handleAccept = (comment) => {
+    handleAccept = () => {
         var self = this; 
         axios.patch("/api/comments/" + this.state.commentId)
         .then(function (response) {
@@ -36,7 +42,7 @@ class CommentCR extends Component{
         });
     }
 
-    handleDelete = (comment) => {
+    handleDelete = () => {
         var self = this; 
          // console.log(comment._id)
         axios.delete("/api/comments/" + this.state.commentId)
@@ -68,7 +74,7 @@ class CommentCR extends Component{
                         <div className="comment-section-content col-11">
                             <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
                             <p className="comment-content">{this.state.commentContent}</p>
-                            <p  className="comment-date">{this.state.date}</p>
+                            <p  className="comment-date">{this.state.formattedDate}</p>
                         </div>
 
                     </div> 

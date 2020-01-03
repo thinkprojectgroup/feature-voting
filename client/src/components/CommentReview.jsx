@@ -37,7 +37,7 @@ class CommentReview extends Component{
                         commentId={comment._id}
                         name={comment.name}
                         content={comment.content}
-                        date={comment.date}
+                        date={comment.dateCreated}
                     />
                     ))} 
                 </div>                     
