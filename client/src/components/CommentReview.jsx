@@ -31,7 +31,7 @@ class CommentReview extends Component{
     render(){
         console.log(this.state.comments);
         return(
-            <div className className="comment-section container row">
+                <div className="comment-section container row">
                     {this.state.comments.map(comment => (
                     <CommentCR 
                         commentId={comment._id}
@@ -39,8 +39,8 @@ class CommentReview extends Component{
                         content={comment.content}
                         date={comment.date}
                     />
-                    ))}
-            </div>                        
+                    ))} 
+                </div>                     
         );
     }
 }

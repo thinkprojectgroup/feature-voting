@@ -12,7 +12,8 @@ class CommentCR extends Component{
         commentId: this.props.commentId,
         commentName: this.props.name,
         commentContent: this.props.content,
-        commentDate: this.props.date
+        commentDate: this.props.date,
+        clicked: false
     };
     console.log("Hello");
     }
@@ -26,6 +27,9 @@ class CommentCR extends Component{
         axios.patch("/api/comments/" + this.state.commentId)
         .then(function (response) {
         console.log(response);
+        self.setState({
+            clicked: true
+        })
         })
         .catch(function (error) {
         console.log(error);
@@ -38,6 +42,9 @@ class CommentCR extends Component{
         axios.delete("/api/comments/" + this.state.commentId)
         .then(function (response) {
             console.log(response);
+            self.setState({
+                clicked: true
+            })
           })
         .catch(function (error) {
             console.log(error);
@@ -46,11 +53,12 @@ class CommentCR extends Component{
 
 
     render(){
-        console.log(this.state.commentId);
-        return(
-            <div className className="comment-section container row">
+        return( 
+            <div>
 
-                    <div className="comment-section-item col-12">
+                {!this.state.clicked ?
+
+                    <div className="comment-section-item col-12"> 
 
                         <div className="comment-section-button col-1">
                             <Button className="accept" onClick={() => this.handleAccept()}><i className="fas fa-check"></i></Button>
@@ -63,8 +71,11 @@ class CommentCR extends Component{
                             <p  className="comment-date">{this.state.date}</p>
                         </div>
 
-                    </div>
-            </div>                        
+                    </div> 
+
+                : null}
+
+            </div>                    
         );
     }
 }
