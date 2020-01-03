@@ -56,14 +56,11 @@ router.patch("/vote/:featureId", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")
 
     const project = await Project.findOne({ "features._id": req.params.featureId })
-    if (!project) return res.status(404).send("Invalid projectId")
+    if (!project) return res.status(404).send("Invalid featureId")
 
     var feature = project.features.id(req.params.featureId)
-    if (!feature) return res.status(404).send("featureId not found")
 
     const userId = req.userId
-    if (!userId) return res.status(400).send("userId cookie required")
-
     // TODO: decide if user or employee/admin
 
     const index = feature.userIds.indexOf(userId)
