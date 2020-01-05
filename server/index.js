@@ -1,5 +1,4 @@
-//const newrelic = require('newrelic')
-const express = require('express')
+const express = require('express');
 const winston = require("winston")
 
 require('./startup/logging')()

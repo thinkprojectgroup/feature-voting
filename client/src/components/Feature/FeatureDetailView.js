@@ -20,7 +20,8 @@ class FeatureDetailView extends Component {
       image: "",
       upvotes: 0,
       comments: [],
-      commentCount: 0
+      commentCount: 0,
+      upvoted: false
     };
   }
 
@@ -29,7 +30,11 @@ class FeatureDetailView extends Component {
       .then(res => {
         const comments = res.data;
         this.setState({ comments: comments });
-        this.setState({ commentCount: comments.count })
+        this.setState({ commentCount: comments.length})
+        // console.log(this.state.comments[0].author);
+      })
+      .catch(error => {
+        console.log(error);
       })
 
     axios
@@ -41,23 +46,47 @@ class FeatureDetailView extends Component {
       )
       .then(res => {
         const feature = res.data;
-
+        console.log(res);
         this.setState({ featureTitle: feature.headline });
         this.setState({ description: feature.description });
         this.setState({ upvotes: feature.voteCount });
+        this.setState({upvoted: feature.upvoted});
+      })
+      .catch(error => {
+        console.log(error);
       });
   }
 
   toggleDivUpvote = () => {
-    const { show } = this.state;
-    this.setState({ show: !show });
-    this.setState({ upvotes: this.state.upvotes + 1 });
+    var self = this;
+    axios.patch(config.url + "/api/features/vote/" + self.props.match.params.featureId)
+    .then(function (response) {
+      console.log(response);
+      self.setState({
+        upvoted: true,
+        upvotes : self.state.upvotes + 1
+      });
+      //console.log(self.state);
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
   };
 
   toggleDivDownVote = () => {
-    const { show } = this.state;
-    this.setState({ show: !show });
-    this.setState({ upvotes: this.state.upvotes - 1 });
+    var self = this;
+    axios.patch(config.url + "/api/features/vote/" + self.props.match.params.featureId)
+    .then(function (response) {
+      console.log(response);
+      self.setState({
+        upvoted: false,
+        upvotes : self.state.upvotes - 1
+      });
+      // console.log(self.state);
+      })
+      .catch(function (error) {
+      console.log(error);
+      });
   };
 
   render() {
@@ -68,15 +97,21 @@ class FeatureDetailView extends Component {
       <div className="container row">
         <div className="row feature-detail">
           <div className="col-1 feature-count">
+
+            {this.state.upvoted === false ? (
             <button onClick={this.toggleDivUpvote} className="feature-upvote-button">
               <i className="fas fa-angle-up"></i>
             </button>
+            ): null }
+
             <p>{this.state.upvotes}</p>
-            {this.state.show ? (
+
+            {this.state.upvoted === true ? (
               <button onClick={this.toggleDivDownVote} className="feature-downvote-button">
                 <i className="fas fa-angle-down"></i>
               </button>
             ) : null}
+
           </div>
           <div className="col-7 feature-text">
             <h3>{this.state.featureTitle}</h3>
@@ -93,7 +128,7 @@ class FeatureDetailView extends Component {
           <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
           {this.state.comments.map(comment => (
             <Comment
-              author={comment.author}
+              author={comment.name}
               content={comment.content}
               accepted={comment.accepted}
               deleted={comment.deleted}

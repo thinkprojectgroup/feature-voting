@@ -12,16 +12,11 @@ class ProjectOverView extends Component {
     };
   }
 
-  componentDidMount() {
-    //TODO add idToken to Request-Body
-    axios.get(config.url + `/api/projects/`, {
-      idToken: this.state.idToken
-    }).then(response => {
-      this.setState({
-        projects: response.data
-      })
-    })
-    .catch(error => console.log(error));
+  async componentDidMount() {
+    const promise = await axios.get(config.url + `/api/projects/`);
+    const projects = promise.data;
+    // console.log(projects);
+    this.setState({ projects });
   }
 
   render() {

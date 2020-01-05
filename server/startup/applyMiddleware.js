@@ -12,7 +12,7 @@ const images = require("../routes/images")
 const cors = require("cors")
 
 module.exports = function (app) {
-  app.use(cors())
+  app.use(cors({credentials: true}))
 
   app.use(express.json({ limit: "10mb" }))
   app.use(express.urlencoded({ extended: true }))
