@@ -30,7 +30,7 @@ class FeatureDetailView extends Component {
       .then(res => {
         const comments = res.data;
         this.setState({ comments: comments });
-        this.setState({ commentCount: comments.count })
+        this.setState({ commentCount: comments.length})
         // console.log(this.state.comments[0].author);
       })
       .catch(error => {
@@ -128,7 +128,7 @@ class FeatureDetailView extends Component {
           <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
           {this.state.comments.map(comment => (
             <Comment
-              author={comment.author}
+              author={comment.name}
               content={comment.content}
               accepted={comment.accepted}
               deleted={comment.deleted}

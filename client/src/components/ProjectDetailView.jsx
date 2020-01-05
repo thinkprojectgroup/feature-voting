@@ -23,7 +23,7 @@ class ProjectDetailView extends Component {
 
   toggleShowForm = () => {
     this.setState({showForm: !this.state.showForm});
-    console.log(this.state.showForm);
+    // console.log(this.state.showForm);
   }
 
   componentDidMount() {
