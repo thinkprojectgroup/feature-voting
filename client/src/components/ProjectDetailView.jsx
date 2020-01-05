@@ -38,7 +38,7 @@ class ProjectDetailView extends Component {
             name: response.data.name,
             projectId: response.data._id,
           });
-          console.log(this.state.features);
+          // console.log(this.state.features);
         })
   }
 
