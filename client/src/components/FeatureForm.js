@@ -10,8 +10,6 @@ class FeatureForm extends Component {
             description: "",
             selectedFile: null,
             loaded: 0,
-            baseImage: String,
-            loadedImage: String,
             imageData: String
         };
         checkMimeType = (files) => {
@@ -51,7 +49,7 @@ class FeatureForm extends Component {
           let size = 2000000 //2MB
           let err = [];
           for (var x = 0; x < files.length; x++) {
-              console.log(files[x].size)
+              // console.log(files[x].size)
               if (files[x].size > size) {
                   err[x] = files[x].type + 'is too large, please pick a smaller file\n';
               }
@@ -63,18 +61,6 @@ class FeatureForm extends Component {
           }
           return true;
       }
-      onChangeHandler = (event) => {
-          var files = event.target.files
-          if (this.maxSelectFile(event) && this.checkMimeType(event) && this.checkFileSize(event)) {
-              // if return true allow to setState
-              console.log(files);
-              this.setState({
-                  selectedFile: files[0],
-                  loaded: 0
-              })
-              console.log(this.state);
-          }
-      }
 
       onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
@@ -85,18 +71,16 @@ class FeatureForm extends Component {
 
       getBaseFile(files) {
         // show the 1st image as example
-        this.setState({
-            baseImage: files[0].base64
-        });
-        const imageData = files.map(file => file.base64.toString())
-        console.log(imageData)
-
+        var imageData = '';
+        if (this.maxSelectFile(files) && this.checkMimeType(files) && this.checkFileSize(files)){
+            imageData = files.map(file => file.base64.toString())
+        }
 
         this.setState({
             imageData: imageData
         });
 
-        console.log(this.state);
+        // console.log(this.state);
 
     }
 
