@@ -14,7 +14,7 @@ class ProjectDetailView extends Component {
       name: "",
       comments: "",
       projectId: "",
-      showForm: false
+      showForm: false,
     };
 
     this.toggleShowForm = this.toggleShowForm.bind(this);
@@ -32,10 +32,13 @@ class ProjectDetailView extends Component {
         config.url + `/api/projects/` + this.props.match.params.projectId
     )
         .then(response => {
+          console.log(response);
           this.setState({
             features: response.data.features,
             name: response.data.name,
-            projectId: response.data._id});
+            projectId: response.data._id,
+          });
+          // console.log(this.state.features);
         })
   }
 
@@ -64,8 +67,9 @@ class ProjectDetailView extends Component {
                   description={feature.description}
                   commentCount={0}
                   projectId={this.state.projectId}
+                  upvoted = {feature.upvoted}
               />
-          ))}
+              ))}
         </div>
     );
   }
