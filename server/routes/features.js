@@ -2,32 +2,39 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require("mongoose")
 const { Project } = require("../models/project")
-const { validateFeature, validateSearch } = require("../models/feature")
-const uploadImages = require("../middleware/imageUpload")
+const { validateFeature, validateSearch, cleanFeatures } = require("../models/feature")
+const saveImages = require("../middleware/saveImages")
 
-// Post new feature to given projectId. Request needs to be in form-data otherwise
-// upload middleware will throw an error.
-// Test
-router.post("/:projectId", async (req, res) => {
-    const { error } = validateFeature(req.body)
+// Post new feature to given projectId. Request can include base64 imageData to save images.
+router.post("/:projectId", saveImages, async (req, res) => {
+    const { error } = validateFeature({
+        headline: req.body.headline,
+        description: req.body.description
+    })
     if (error) return res.status(400).send(error.details[0].message)
 
-    if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) return res.status(400).send("ProjectId doesn't fit id schema")
-
+    if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) {
+        return res.status(400).send("ProjectId doesn't fit id schema")
+    }
     // Using find & save instead of update for featureSchema.pre method to work properly
     const project = await Project.findOne({ _id: req.params.projectId, deleted: false })
-    if (!project) return res.status(404).send("Invalid projectId")
+    if (!project) {
+        return res.status(404).send("Invalid projectId")
+    }
 
-    project.features.push({
+    const feature = {
         headline: req.body.headline,
         description: req.body.description,
         employeeIds: [],
         userIds: [],
-        creator: req.cookies["userId"]
-    })
+        imageIds: req.imageIds,
+        creator: req.userId
+    }
+
+    project.features.push(feature)
     await project.save()
 
-    res.status(201).send(project)
+    res.status(201).send(feature)
 })
 
 // Patch request to set acceptedStatus=true for given featureId
@@ -51,10 +58,10 @@ router.patch("/vote/:featureId", async (req, res) => {
     const project = await Project.findOne({ "features._id": req.params.featureId })
     if (!project) return res.status(404).send("Invalid projectId")
 
-    const feature = project.features.id(req.params.featureId)
+    var feature = project.features.id(req.params.featureId)
     if (!feature) return res.status(404).send("featureId not found")
 
-    const userId = req.cookies["userId"]
+    const userId = req.userId
     if (!userId) return res.status(400).send("userId cookie required")
 
     // TODO: decide if user or employee/admin
@@ -67,6 +74,10 @@ router.patch("/vote/:featureId", async (req, res) => {
     }
 
     await project.save()
+
+    feature = feature.toObject() //Turn feature to mutable object
+    cleanFeatures([feature], userId)
+
     res.send(feature)
 })
 
@@ -80,8 +91,11 @@ router.get("/:projectId/:featureId", async (req, res) => {
 
     //TODO add featureID invalid response
 
-    const feature = project.features.id(req.params.featureId)
+    var feature = project.features.id(req.params.featureId)
     if (!feature || feature.deleted) return res.status(404).send("featureId not found")
+    
+    feature = feature.toObject() //Turn feature to mutable object
+    cleanFeatures([feature], req.userId)
 
     res.send(feature)
 });

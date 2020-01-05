@@ -1,14 +1,19 @@
 import React, { Component } from "react";
 import axios from "axios";
+import config from '../config';
 
 
 class CommentForm extends Component {
-        state = {
-            headline: "",
-            description: "",
+        constructor(props){
+        super(props);
+        this.state = {
+            featureId: this.props.featureId,
+            name: String,
+            content: "",
+            config: config
         };
       
-
+      }
       onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
         //console.log(this.state)
@@ -17,8 +22,8 @@ class CommentForm extends Component {
 
       onSubmit = (e) => {
         e.preventDefault();
-        const { headline, description} = this.state;
-        console.log(this.props.projectId);
+        const { name, content} = this.state;
+        // console.log(this.props.projectId);
 
         const config = {     
             headers: { 
@@ -26,11 +31,11 @@ class CommentForm extends Component {
         }
         
         let data = JSON.stringify({
-          headline: headline,
-          description: description
+          name: name,
+          content: content
         })
 
-        axios.post('/api/features/' + this.props.projectId , data, config)
+        axios.post(this.state.config.url + "/api/comments/" + this.state.featureId, data, config)
           .then((result) => {
             console.log(result);
           })
@@ -40,7 +45,7 @@ class CommentForm extends Component {
       }
 
     render(){
-        const {headline, description } = this.state;
+        const {name, content} = this.state;
 
         return(
             
@@ -48,20 +53,20 @@ class CommentForm extends Component {
                 <form onSubmit={this.onSubmit} className="feature-form">
 
                     <label className="feature-form-label">
-                        Title:
+                        Name (optional):
                         <input type="text" 
-                        name="headline" 
+                        name="name" 
                         className="feature-form-input" 
-                        value={headline} 
+                        value={name} 
                         onChange={this.onChange}/>
                     </label>
 
                     <label className="feature-form-label">
-                        Description: 
+                        Content: 
                         <input type="text" 
-                        name="description" 
+                        name="content" 
                         className="feature-form-input" 
-                        value={description} 
+                        value={content} 
                         onChange={this.onChange}/>
                     </label>
 

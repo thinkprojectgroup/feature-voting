@@ -2,12 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose')
 const router = express.Router();
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
+const { Project, validateProject } = require("../models/project")
 const { validateSearch } = require("../models/feature")
 
 // Get all unaccepted comments
 router.get("/", async (req, res) => {
     var comments = await Comment.find({ accepted: false, deleted: false }).sort("dateCreated")
-    if (comments.length == 0) return res.send("no comments available")
 
     res.send(comments);
 });
@@ -27,25 +27,32 @@ router.get("/search/", async (req, res) => {
     res.send(comments);
 });
 
-// Get comments by featureId
+// Get accepted comments by featureId
 router.get("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("FeatureId doesn't fit id schema")
 
-    var comments = await Comment.find({ featureId: req.params.id, deleted: false }).sort("dateCreated")
-    if (comments.length == 0) return res.status(404).send("invalid featureId")
+    const feature = await Project.findOne({"features._id" : req.params.id})
+    if (!feature || feature.deleted) return res.status(404).send("featureId not found")
+
+    const comments = await Comment.find({ featureId: req.params.id, deleted: false, accepted: true}).sort("dateCreated")
 
     res.send(comments);
 });
 
 // Post a new comment to given featureId
-router.post("/", async (req, res) => {
+router.post("/:id", async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("FeatureId doesn't fit id schema")
+
     const { error } = validateComment(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
+    const feature = await Project.findOne({"features._id" : req.params.id})
+    if (!feature || feature.deleted) return res.status(404).send("featureId not found")
+
     const comment = new Comment({
-        author: req.cookies['userId'],
+        author: req.userId,
         content: req.body.content,
-        featureId: req.body.featureId,
+        featureId: req.params.id,
         name: req.body.name
     })
     await comment.save()

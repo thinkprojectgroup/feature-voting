@@ -4,6 +4,7 @@ import axios from "axios";
 import "./css/FeatureDetailView.css";
 import Comment from './Comment';
 import config from '../config';
+import CommentForm from './CommentForm';
 
 class FeatureDetailView extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class FeatureDetailView extends Component {
     this.state = { show: true };
     this.toggleDivUpvote = this.toggleDivUpvote.bind(this);
     this.toggleDivDownVote = this.toggleDivDownVote.bind(this);
+    this.toggleShowForm = this.toggleShowForm.bind(this);
 
     this.state = {
       projectTitle: "Test",
@@ -20,8 +22,14 @@ class FeatureDetailView extends Component {
       image: "",
       upvotes: 0,
       comments: [],
-      commentCount: 0
+      commentCount: 0,
+      showForm: false
     };
+  }
+
+  toggleShowForm = () => {
+    this.setState({showForm: !this.state.showForm});
+    //console.log(this.state.showForm);
   }
 
   componentDidMount() {
@@ -29,8 +37,8 @@ class FeatureDetailView extends Component {
       .then(res => {
         const comments = res.data;
         this.setState({ comments: comments });
-        this.setState({ commentCount: comments.count })
-       
+        this.setState({ commentCount: comments.length})
+        // console.log(this.state.comments[0].author);
       })
 
     axios
@@ -46,6 +54,7 @@ class FeatureDetailView extends Component {
         this.setState({ featureTitle: feature.headline });
         this.setState({ description: feature.description });
         this.setState({ upvotes: feature.voteCount });
+        // console.log(feature);
       });
   }
 
@@ -90,11 +99,22 @@ class FeatureDetailView extends Component {
 
         <hr />
 
+          <div className="col-1">
+              <button onClick={this.toggleShowForm} className="add">
+                <i className="fas fa-plus"></i>
+              </button>
+          </div>
+
+          {this.state.showForm ? (
+              <CommentForm featureId={this.props.match.params.featureId} 
+              />
+          ): null}
+
         <div className="comment-section">
           <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
           {this.state.comments.map(comment => (
             <Comment
-              author={comment.author}
+              author={comment.name}
               content={comment.content}
               accepted={comment.accepted}
               deleted={comment.deleted}

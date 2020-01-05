@@ -23,46 +23,50 @@ class ProjectDetailView extends Component {
 
   toggleShowForm = () => {
     this.setState({showForm: !this.state.showForm});
-    console.log(this.state.showForm);
+    // console.log(this.state.showForm);
   }
-  
+
   componentDidMount() {
-    
+
     axios.get(
-      config.url + `/api/projects/` + this.props.match.params.projectId
+        config.url + `/api/projects/` + this.props.match.params.projectId
     )
-    .then(response => {
-      this.setState({ 
-        features: response.data.features,
-        name: response.data.name,
-        projectId: response.data._id});
-    })
+        .then(response => {
+          this.setState({
+            features: response.data.features,
+            name: response.data.name,
+            projectId: response.data._id});
+        })
   }
 
   render() {
     return (
-      <div className="container row">
-        <h1>{this.state.name}</h1>
-        <Button
-              onClick={this.toggleShowForm}
-              className="show-feature-form-button"
-        > Add Feature</Button>
-        {this.state.showForm ? (
-          <FeatureForm projectId={this.state.projectId} />
+        <div className="container row">
+          <div className="row">
+            <div className="col-11">
+              <h1>{this.state.name}</h1>
+            </div>
+            <div className="col-1">
+              <button onClick={this.toggleShowForm} className="add">
+                <i className="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          {this.state.showForm ? (
+              <FeatureForm projectId={this.state.projectId} />
           ): null}
-        
 
-        {this.state.features.map(feature => (
-          <FeaturePDV
-            featureId={feature._id}
-            count={feature.voteCount}
-            title={feature.headline}
-            description={feature.description}
-            commentCount={0}
-            projectId={this.state.projectId}
-          />
-        ))}
-      </div>
+          {this.state.features.map(feature => (
+              <FeaturePDV
+                  featureId={feature._id}
+                  count={feature.voteCount}
+                  title={feature.headline}
+                  description={feature.description}
+                  commentCount={0}
+                  projectId={this.state.projectId}
+              />
+          ))}
+        </div>
     );
   }
 
