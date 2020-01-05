@@ -72,7 +72,6 @@ class FeatureForm extends Component {
 
       getBaseFile(files) {
         // show the 1st image as example
-
         var imageData = '';
         if (this.maxSelectFile(files) && this.checkMimeType(files) && this.checkFileSize(files)){
             imageData = files.map(file => file.base64.toString());
@@ -80,6 +79,8 @@ class FeatureForm extends Component {
             this.setState({
               imageData: imageData
           });
+
+          // TODO: FileBase Component needs to be cleared when check fails
         }
 
         // console.log(this.state);
