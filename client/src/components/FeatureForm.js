@@ -29,8 +29,9 @@ class FeatureForm extends Component {
           };
           for (var z = 0; z < err.length; z++) {// if message not same old that mean has error 
               // discard selected file
-              toast.error(err[z])
-              // event.target.value = null
+              alert("Wrong Datatype!");
+              //event.target.value = null
+              return false;
           }
           return true;
       }
@@ -39,7 +40,7 @@ class FeatureForm extends Component {
           if (files.length > 3) {
               const msg = 'Only 3 images can be uploaded at a time'
               // event.target.value = null
-              toast.warn(msg)
+              alert("Too many files!");
               return false;
           }
           return true;
@@ -56,7 +57,7 @@ class FeatureForm extends Component {
           };
           for (var z = 0; z < err.length; z++) {// if message not same old that mean has error 
               // discard selected file
-              toast.error(err[z])
+              alert("Your files are too big!");
                 //event.target.value = null
           }
           return true;
@@ -71,14 +72,15 @@ class FeatureForm extends Component {
 
       getBaseFile(files) {
         // show the 1st image as example
+
         var imageData = '';
         if (this.maxSelectFile(files) && this.checkMimeType(files) && this.checkFileSize(files)){
-            imageData = files.map(file => file.base64.toString())
-        }
+            imageData = files.map(file => file.base64.toString());
 
-        this.setState({
-            imageData: imageData
-        });
+            this.setState({
+              imageData: imageData
+          });
+        }
 
         // console.log(this.state);
 
@@ -141,7 +143,7 @@ class FeatureForm extends Component {
                         required
                     />
 
-                    <label>Upload Your File </label>
+                    <label>Upload Your Images </label>
                     <FileBase type="file" multiple={true} onDone={this.getBaseFile.bind(this)} />
 
                     <button className="submit col-2" type="submit" value="Submit">Submit</button>
