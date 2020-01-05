@@ -1,14 +1,16 @@
+const newrelic = require('newrelic')
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
+const winston = require("winston")
 
+require('./startup/logging')()
 require('./startup/db')()
-const port = 3000
+require('./startup/joivalidation')()
+const port = process.env.PORT || 3000
 const app = express();
 
-require('./startup/routes')(app);
+require('./startup/applyMiddleware')(app);
+
 
 app.listen(port , () => {
-    console.log(`listening on port ${port}`)
+    winston.info(`listening on port ${port}`)
 })
-
