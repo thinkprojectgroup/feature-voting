@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { Button } from "reactstrap";
 import axios from "axios";
 import "./css/FeatureDetailView.css";
-import Comment from './Comment';
-import config from '../config';
+import Comment from '../Comment/Comment';
+import config from '../../config';
 
 class FeatureDetailView extends Component {
   constructor(props) {
@@ -91,7 +91,7 @@ class FeatureDetailView extends Component {
 
   render() {
     // TODO: Add real imagadata later
-    var image = require("./img/computer.png");
+    var image = require("../img/computer.png");
 
     return (
       <div className="container row">
