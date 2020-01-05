@@ -16,7 +16,7 @@ class FeaturePDV extends Component {
   render() {
     // TODO: Add real imagadata later
     var image = require("./img/computer.png");
-    console.log(this.props.projectId);
+   //  console.log(this.props.projectId);
 
     return (
       <div className="row feature-list-item">

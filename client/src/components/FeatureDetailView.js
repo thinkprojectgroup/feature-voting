@@ -29,8 +29,8 @@ class FeatureDetailView extends Component {
       .then(res => {
         const comments = res.data;
         this.setState({ comments: comments });
-        this.setState({ commentCount: comments.count })
-        console.log(this.state.comments[0].author);
+        this.setState({ commentCount: comments.length})
+        // console.log(this.state.comments[0].author);
       })
 
     axios
@@ -46,7 +46,7 @@ class FeatureDetailView extends Component {
         this.setState({ featureTitle: feature.headline });
         this.setState({ description: feature.description });
         this.setState({ upvotes: feature.voteCount });
-        console.log(feature);
+        // console.log(feature);
       });
   }
 
@@ -95,7 +95,7 @@ class FeatureDetailView extends Component {
           <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
           {this.state.comments.map(comment => (
             <Comment
-              author={comment.author}
+              author={comment.name}
               content={comment.content}
               accepted={comment.accepted}
               deleted={comment.deleted}
