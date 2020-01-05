@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import axios from "axios";
+import config from '../config';
 //import beispiel from "./img/computer.png";
 //import ReadMoreAndLess from "react-read-more-less";
 
@@ -25,11 +26,11 @@ class FeaturePDV extends Component {
 
   handleUpVote = () => {
     var self = this;
-    axios.patch("api/features/vote/" + this.state.featureId)
+    axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
     .then(function (response) {
       console.log(response);
       self.setState({
-        upvoted: !self.state.upvoted,
+        upvoted: true,
         count : self.state.count + 1
       });
       // console.log(self.state);
@@ -42,11 +43,11 @@ class FeaturePDV extends Component {
 
   handleDownVote = () => {
     var self = this;
-    axios.patch("api/features/vote/" + this.state.featureId)
+    axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
     .then(function (response) {
       console.log(response);
       self.setState({
-        upvoted: !self.state.upvoted,
+        upvoted: false,
         count : self.state.count - 1
       });
      //  console.log(self.state);
@@ -62,7 +63,6 @@ class FeaturePDV extends Component {
   render() {
     // TODO: Add real imagadata later
     var image = require("./img/computer.png");
-    console.log(!this.state.upvoted);
 
     return (
       <div className="row feature-list-item">

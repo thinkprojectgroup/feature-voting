@@ -51,7 +51,6 @@ class FeatureDetailView extends Component {
         this.setState({ description: feature.description });
         this.setState({ upvotes: feature.voteCount });
         this.setState({upvoted: feature.upvoted});
-        // console.log(feature);
       })
       .catch(error => {
         console.log(error);
@@ -64,7 +63,7 @@ class FeatureDetailView extends Component {
     .then(function (response) {
       console.log(response);
       self.setState({
-        upvoted: !self.state.upvoted,
+        upvoted: true,
         upvotes : self.state.upvotes + 1
       });
       //console.log(self.state);
@@ -80,7 +79,7 @@ class FeatureDetailView extends Component {
     .then(function (response) {
       console.log(response);
       self.setState({
-        upvoted: !self.state.upvoted,
+        upvoted: false,
         upvotes : self.state.upvotes - 1
       });
       // console.log(self.state);
