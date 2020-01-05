@@ -59,7 +59,7 @@ class FeatureDetailView extends Component {
 
   toggleDivUpvote = () => {
     var self = this;
-    axios.patch(config.url + "/api/features/vote/" + self.props.match.params.featureId,{withCredentials: true})
+    axios.patch(config.url + "/api/features/vote/" + self.props.match.params.featureId)
     .then(function (response) {
       console.log(response);
       self.setState({
@@ -75,7 +75,7 @@ class FeatureDetailView extends Component {
 
   toggleDivDownVote = () => {
     var self = this;
-    axios.patch(config.url + "/api/features/vote/" + self.props.match.params.featureId, {withCredentials: true})
+    axios.patch(config.url + "/api/features/vote/" + self.props.match.params.featureId)
     .then(function (response) {
       console.log(response);
       self.setState({

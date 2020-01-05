@@ -26,7 +26,7 @@ class FeaturePDV extends Component {
 
   handleUpVote = () => {
     var self = this;
-    axios.patch(config.url + "/api/features/vote/" + this.state.featureId, {withCredentials: true})
+    axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
     .then(function (response) {
       console.log(response);
       self.setState({
@@ -43,7 +43,7 @@ class FeaturePDV extends Component {
 
   handleDownVote = () => {
     var self = this;
-    axios.patch(config.url + "/api/features/vote/" + this.state.featureId, {withCredentials: true})
+    axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
     .then(function (response) {
       console.log(response);
       self.setState({
