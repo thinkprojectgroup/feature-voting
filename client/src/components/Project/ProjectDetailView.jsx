@@ -64,6 +64,7 @@ class ProjectDetailView extends Component {
             description={feature.description}
             commentCount={0}
             projectId={this.state.projectId}
+            upvoted = {feature.upvoted}
           />
         ))}
       </div>
