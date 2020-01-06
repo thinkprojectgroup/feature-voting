@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import {withRouter, Link } from "react-router-dom";
 
 class Header extends Component {
+  
   render() {
 
     // TODO: Add Real User Role Value
-    var isAdmin = true;
+    const isAdmin = this.props.role === 'admin' ? true : false;
 
     const image = require("./img/logo.png");
 
@@ -14,13 +15,13 @@ class Header extends Component {
     const pathnameArray = this.props.location.pathname.split('/');
 
     var backroute = "";
-    for (var i = 1; i < pathnameArray.length - 1 ; i++) {
+    for (let i = 1; i < pathnameArray.length - 1 ; i++) {
       backroute += "/";
       backroute += pathnameArray[i];
     }
 
     var rootPath = "/";
-    for (var i = 1; i < rootDepth ; i++) {
+    for (let i = 1; i < rootDepth ; i++) {
       rootPath += pathnameArray[i];
     }
 
@@ -30,7 +31,7 @@ class Header extends Component {
       </Link>
     );
 
-    if(pathname == rootPath){
+    if(pathname === rootPath){
       backButton = "";
     }
 
@@ -39,7 +40,7 @@ class Header extends Component {
           <div className="header-container">
             <Link to={rootPath}>
               <div className="logo">
-                <img src={image} />
+                <img alt="" src={image} />
               </div>
             </Link>
 
