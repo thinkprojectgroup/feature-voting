@@ -75,12 +75,10 @@ class SignIn extends Component {
       //TODO add Login Dialog Window
       //TODO conditional rendering Login/Logout
       <div className="container">
-        <Fragment>
           <div id="loginButton">Login</div>
           <a href="#" id="logoutButton" onClick={this.logout}>
             Logout
           </a>
-        </Fragment>
       </div>
     );
   }
