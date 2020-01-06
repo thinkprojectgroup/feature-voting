@@ -4,6 +4,7 @@ import FeatureForm from "./FeatureForm";
 import axios from "axios";
 import config from '../config';
 import { Button } from "reactstrap";
+import update from 'react-addons-update';
 
 class ProjectDetailView extends Component {
   constructor(props) {
@@ -28,6 +29,7 @@ class ProjectDetailView extends Component {
   }
 
   sortByVoteDsc=()=>{
+    console.log(featureIndex, NewVoteCount);
 
     let sortedFeaturesDsc;
     sortedFeaturesDsc = this.state.features.sort((a,b)=>{
@@ -78,7 +80,7 @@ class ProjectDetailView extends Component {
           ): null}
 
           {this.state.features.sort((a,b) => b.voteCount - a.voteCount)
-          .map(feature => (
+          .map((feature, index) => (
               <FeaturePDV
                   featureId={feature._id}
                   count={feature.voteCount}
@@ -88,6 +90,7 @@ class ProjectDetailView extends Component {
                   projectId={this.state.projectId}
                   upvoted = {feature.upvoted}
                   reSort = {this.sortByVoteDsc}
+                  index = {index}
               />
               ))}
         </div>
