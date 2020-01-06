@@ -38,6 +38,7 @@
     "mongoose": "^5.7.10",
     "multer": "^1.4.2",
     "newrelic": "^6.2.0",
+    "react-file-base64": "^1.0.3",
     "react-router-dom": "^5.1.2",
     "reactstrap": "^8.1.1",
     "winston": "^3.2.1"
