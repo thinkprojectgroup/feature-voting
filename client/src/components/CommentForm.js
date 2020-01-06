@@ -70,7 +70,7 @@ class CommentForm extends Component {
 
       onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
-        //console.log(this.state)
+        console.log(this.state)
         
       }  
 
@@ -94,17 +94,17 @@ class CommentForm extends Component {
 
       onSubmit = (e) => {
         e.preventDefault();
-        const { name, content} = this.state;
-        // console.log(this.props.projectId);
 
         const config = {     
             headers: { 
+              'Accept': 'application/json',
               'Content-Type': 'application/json' }
         }
         
         let data = JSON.stringify({
-          name: this.state.name,
           content: this.state.content,
+          featureId: this.state.featureId,
+          name: this.state.name,
           imageData: this.state.imageData
         })
 
