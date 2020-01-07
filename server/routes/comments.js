@@ -48,7 +48,9 @@ router.post("/:id", async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message)
 
     const project = await Project.findOne({ "features._id": req.params.id })
-    if (!project || project.deleted) return res.status(404).send("featureId not found")
+    if (!project || project.deleted || project.features.id(req.params.id).deleted) {
+        return res.status(404).send("featureId not found")
+    }
 
     const comment = new Comment({
         author: req.userId,
@@ -81,7 +83,10 @@ router.patch("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("commentId doesn't fit id schema")
 
-    var comment = await Comment.findOneAndUpdate({ _id: req.params.id, deleted: false }, { "$set": { "deleted": true } }, { useFindAndModify: false })
+    var comment = await Comment.findOneAndUpdate(
+        { _id: req.params.id, deleted: false },
+        { "$set": { "deleted": true } },
+        { new: true, useFindAndModify: false })
     if (!comment) return res.status(404).send("commentId not found")
 
     const project = await Project.findOne({ "features._id": comment.featureId })
