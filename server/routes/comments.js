@@ -45,7 +45,10 @@ router.get("/:id", async (req, res) => {
 router.post("/:id", saveImages, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("FeatureId doesn't fit id schema")
 
-    const { error } = validateComment(req.body)
+    const { error } = validateComment({
+        content: req.body.content,
+        name: req.body.name
+    })
     if (error) return res.status(400).send(error.details[0].message)
 
     const feature = await Project.findOne({"features._id" : req.params.id})
