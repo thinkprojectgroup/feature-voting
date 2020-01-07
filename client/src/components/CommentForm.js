@@ -70,7 +70,7 @@ class CommentForm extends Component {
 
       onChange = (e) => {
         this.setState({ [e.target.name]: e.target.value });
-        console.log(this.state)
+        //console.log(this.state)
         
       }  
 
@@ -96,17 +96,17 @@ class CommentForm extends Component {
         e.preventDefault();
 
         const config = {     
-            headers: { 
-              'Accept': 'application/json',
+            headers: {
               'Content-Type': 'application/json' }
         }
         
         let data = JSON.stringify({
           content: this.state.content,
-          featureId: this.state.featureId,
           name: this.state.name,
           imageData: this.state.imageData
         })
+
+        console.log(data);
 
         axios.post(this.state.config.url + "/api/comments/" + this.state.featureId, data, config)
           .then((result) => {
@@ -114,6 +114,7 @@ class CommentForm extends Component {
           })
           .catch(error => {
             console.log(error);
+            console.log(error.response.data.message);
         });
       }
 
