@@ -5,6 +5,7 @@ import "./css/FeatureDetailView.css";
 import Comment from '../Comment/Comment';
 import config from '../../config';
 import CommentForm from '../CommentForm';
+import Gallery from 'react-grid-gallery';
 
 class FeatureDetailView extends Component {
   constructor(props) {
@@ -119,7 +120,6 @@ class FeatureDetailView extends Component {
 
   render() {
     // TODO: Add real imagadata later
-    var image = this.state.images;
 
     return (
       <div className="container row">
@@ -146,7 +146,9 @@ class FeatureDetailView extends Component {
             <p>{this.state.description}</p>
           </div>
           <div className="col-4 feature-detail-image">
-            <img src={image} />
+            {this.state.images.map(image => (
+              <img src={image} />
+            ))}
           </div>
         </div>
 
