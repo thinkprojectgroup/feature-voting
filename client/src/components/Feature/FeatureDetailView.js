@@ -31,6 +31,7 @@ class FeatureDetailView extends Component {
   toggleShowForm = () => {
     this.setState({showForm: !this.state.showForm});
     //console.log(this.state.showForm);
+    document.getElementById("form-button").classList.toggle("cross");
   }
 
   componentDidMount() {
@@ -107,7 +108,7 @@ class FeatureDetailView extends Component {
           <div className="col-1 feature-count">
 
             {this.state.upvoted === false ? (
-            <button onClick={this.toggleDivUpvote} className="feature-upvote-button">
+            <button onClick={this.toggleDivUpvote} className="feature-upvote-button" title="upvote">
               <i className="fas fa-angle-up"></i>
             </button>
             ): null }
@@ -133,7 +134,7 @@ class FeatureDetailView extends Component {
         <hr />
 
           <div className="col-1">
-              <button onClick={this.toggleShowForm} className="add">
+              <button onClick={this.toggleShowForm} className="add" id="form-button" title="create a new comment">
                 <i className="fas fa-plus"></i>
               </button>
           </div>
