@@ -23,26 +23,10 @@ class ProjectDetailView extends Component {
 
 
   toggleShowForm = () => {
-    this.setState({showForm: !this.state.showForm});
-    // console.log(this.state.showForm);
+    this.setState({ showForm: !this.state.showForm });
+    console.log(this.state.showForm);
     document.getElementById("form-button").classList.toggle("cross");
-  }
-
-/*   sortByVoteDsc=()=>{
-
-    let sortedFeaturesDsc;
-    sortedFeaturesDsc = this.state.features.sort((a,b)=>{
-       return parseInt(b.voteCount) - parseInt(a.voteCount);
-    }) 
-
-    this.setState({
-        features: sortedFeaturesDsc
-    })
-    console.log(this.state.features);
-
-  }
-*/
-
+  };
 
   componentDidMount() {
     //console.log(this.props.match.params);

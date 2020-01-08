@@ -31,11 +31,7 @@ class FeatureDetailView extends Component {
   toggleShowForm = () => {
     this.setState({showForm: !this.state.showForm});
     //console.log(this.state.showForm);
-
-
     document.getElementById("form-button").classList.toggle("cross");
-
-
   }
 
   componentDidMount() {
@@ -137,10 +133,10 @@ class FeatureDetailView extends Component {
 
         <hr />
 
+          
 
         <div className="comment-section">
-
-
+          
           <div className="row">
             <div className="col-11">
               <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
@@ -155,8 +151,6 @@ class FeatureDetailView extends Component {
               <CommentForm featureId={this.props.match.params.featureId}
               />
           ): null}
-
-
 
           {this.state.comments.map(comment => (
             <Comment
