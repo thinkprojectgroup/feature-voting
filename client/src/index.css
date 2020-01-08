@@ -1,4 +1,6 @@
 
+body{margin: 0;}
+
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
@@ -107,7 +109,8 @@
 h1{font-size: 2rem; }
 h2{font-size: 1.5rem;}
 h3{font-size: 1.3rem; margin: 0;}
-h4{font-size: 1.1rem}
+h4{font-size: 1.1rem; }
+h5{font-size: 1.0rem; margin: 0;}
 p{font-size: 1rem;}
 a{ text-decoration: none; }
 
@@ -137,6 +140,7 @@ button{
   height: auto;
   border: none;
   font-size: 2.5rem;
+  cursor: pointer;
 }
 
 button.decline i, button.accept i, button.add i{
@@ -165,6 +169,10 @@ button.add{
   background-color: #003c50;
     float: right;
 
+}
+
+.cross{
+  transform: rotate(45deg);
 }
 
 .project-list-item{
@@ -225,20 +233,24 @@ footer div{
   margin: 50px 0;
 }
 
-.feature-form-container{
+.form{
     margin-bottom: 50px;
 }
 
 label{
     font-size: 1rem;
+
 }
 
 input, textarea{
-    margin-bottom: 25px;
+    margin-bottom: 5px;
+    padding: 15px;
 }
 
 label, input{
     display: block;
+    width: 100%;
+
 }
 
 .submit{
@@ -246,10 +258,12 @@ label, input{
     background-color: #003c50;
     float: left;
     font-size: 1.3rem;
+    margin: 15px;
 }
 
 textarea[name="description"]{
-    height: 200px;
+    height: 150px;
+    width: 100%;
 }
 
 
