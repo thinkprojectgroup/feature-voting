@@ -19,7 +19,6 @@ class ProjectDetailView extends Component {
     };
 
     this.toggleShowForm = this.toggleShowForm.bind(this);
-    this.sortByVoteDsc = this.sortByVoteDsc.bind(this);
   }
 
 
@@ -29,21 +28,20 @@ class ProjectDetailView extends Component {
     document.getElementById("form-button").classList.toggle("cross");
   }
 
-  sortByVoteDsc=()=>{
+/*   sortByVoteDsc=()=>{
 
     let sortedFeaturesDsc;
     sortedFeaturesDsc = this.state.features.sort((a,b)=>{
        return parseInt(b.voteCount) - parseInt(a.voteCount);
-    })
+    }) 
 
     this.setState({
         features: sortedFeaturesDsc
     })
-
     console.log(this.state.features);
 
   }
-
+*/
 
 
   componentDidMount() {
@@ -81,7 +79,7 @@ class ProjectDetailView extends Component {
           ): null}
 
           {this.state.features.sort((a,b) => b.voteCount - a.voteCount)
-          .map((feature, index) => (
+          .map((feature) => (
               <FeaturePDV
                   featureId={feature._id}
                   count={feature.voteCount}
