@@ -19,12 +19,13 @@ class FeatureDetailView extends Component {
       projectTitle: "Test",
       featureTitle: "",
       description: "",
-      image: "",
+      imageIds: [],
       upvotes: 0,
       comments: [],
       commentCount: 0,
       showForm: false,
-      upvoted: false
+      upvoted: false,
+      images: []
     };
   }
 
@@ -59,10 +60,29 @@ class FeatureDetailView extends Component {
         this.setState({ description: feature.description });
         this.setState({ upvotes: feature.voteCount });
         this.setState({upvoted: feature.upvoted});
+        this.setState({imageIds: feature.imageIds});
+        console.log(this.state);
+
+        if(this.state.imageIds != 0){
+          for(var z = 0; z < this.state.imageIds.length; z++){
+            axios.get(config.url + "/api/images/" + this.state.imageIds[z])
+            .then(res =>{
+              console.log(res);
+              this.setState({
+                images: [...this.state.images, res.data]
+              })
+            })
+            .catch(error => {
+              console.log(error);
+            });
+          }
+        }
+
       })
       .catch(error => {
         console.log(error);
       });
+      
   }
 
   toggleDivUpvote = () => {
@@ -99,7 +119,7 @@ class FeatureDetailView extends Component {
 
   render() {
     // TODO: Add real imagadata later
-    var image = require("../img/computer.png");
+    var image = this.state.images;
 
     return (
       <div className="container row">
