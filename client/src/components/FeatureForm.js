@@ -116,39 +116,38 @@ class FeatureForm extends Component {
 
         return(
 
-            <div className="feature-form-container row col-12">
-                <form onSubmit={this.onSubmit} className="feature-form">
-                    <label>
-                        Title:
-                    </label>
-                    <input type="text"
-                           name="headline"
-                           id="headline"
-                           className="headline col-12"
-                           value={headline}
-                           onChange={this.onChange}
-                           required
+            <div className="comment-section">
+
+
+                  <div className="row">
+                    <div className="col-11">
+                      <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
+                    </div>
+                    <div className="col-1">
+                      <button onClick={this.toggleShowForm} className="add" id="form-button" title="create a new comment">
+                        <i className="fas fa-plus"></i>
+                      </button>
+                    </div>
+                  </div>
+                  {this.state.showForm ? (
+                      <CommentForm featureId={this.props.match.params.featureId}
+                      />
+                  ): null}
+
+
+
+                  {this.state.comments.map(comment => (
+                    <Comment
+                      author={comment.name}
+                      content={comment.content}
+                      accepted={comment.accepted}
+                      deleted={comment.deleted}
+                      date={comment.dateCreated}
+                      count={this.state.commentCount}
                     />
-
-                    <label>
-                        Description:
-                    </label>
-                    <textarea
-                        name="description"
-                        id="description"
-                        className="description col-12"
-                        value={description}
-                        onChange={this.onChange}
-                        required
-                    />
-
-                    <label>Upload Your Images </label>
-                    <FileBase type="file" multiple={true} onDone={this.getBaseFile.bind(this)} />
-
-                    <button className="submit col-2" type="submit" value="Submit">Submit</button>
-                </form>
-            </div>
-
+                  ))}
+                </div>
+              </div>
 
 
 
