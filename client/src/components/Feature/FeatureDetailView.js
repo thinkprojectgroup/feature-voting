@@ -112,7 +112,7 @@ class FeatureDetailView extends Component {
           <div className="col-1 feature-count">
 
             {this.state.upvoted === false ? (
-            <button onClick={this.toggleDivUpvote} className="feature-upvote-button">
+            <button onClick={this.toggleDivUpvote} className="feature-upvote-button" title="upvote">
               <i className="fas fa-angle-up"></i>
             </button>
             ): null }
@@ -120,7 +120,7 @@ class FeatureDetailView extends Component {
             <p>{this.state.upvotes}</p>
 
             {this.state.upvoted === true ? (
-              <button onClick={this.toggleDivDownVote} className="feature-downvote-button">
+              <button onClick={this.toggleDivDownVote} className="feature-downvote-button" title="remove upvote">
                 <i className="fas fa-angle-down"></i>
               </button>
             ) : null}
@@ -146,7 +146,7 @@ class FeatureDetailView extends Component {
               <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
             </div>
             <div className="col-1">
-              <button onClick={this.toggleShowForm} className="add" id="form-button">
+              <button onClick={this.toggleShowForm} className="add" id="form-button" title="create a new comment">
                 <i className="fas fa-plus"></i>
               </button>
             </div>

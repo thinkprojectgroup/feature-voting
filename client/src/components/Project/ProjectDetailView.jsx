@@ -49,7 +49,7 @@ class ProjectDetailView extends Component {
             <h1>{this.state.name}</h1>
           </div>
           <div className="col-1">
-            <button onClick={this.toggleShowForm} className="add" id="form-button">
+            <button onClick={this.toggleShowForm} className="add" id="form-button" title="create a new feature">
               <i className="fas fa-plus"></i>
             </button>
           </div>
