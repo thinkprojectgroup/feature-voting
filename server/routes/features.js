@@ -84,12 +84,11 @@ router.patch("/vote/:featureId", async (req, res) => {
 // Get specific feature for project & feature id
 // TODO Fix: Es wird nicht überprüft ob FeatureId zur ProjectId gehört
 // -> Feature kann über jede projectId aufgerufen werden
-router.get("/:projectId/:featureId", async (req, res) => {
-    if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) return res.status(400).send("ProjectId doesn't fit id schema")
+router.get("/:projectName/:featureId", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")
 
-    const project = await Project.findOne({ _id: req.params.projectId, deleted: false })
-    if (!project) return res.status(404).send("projectId not found")
+    const project = await Project.findOne({ name: req.params.projectName, deleted: false })
+    if (!project) return res.status(404).send("projectName not found")
 
     //TODO add featureID invalid response
 

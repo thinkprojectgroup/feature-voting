@@ -24,7 +24,7 @@ class ProjectOverView extends Component {
       <div className="container">
         <h1>Projects</h1>
         {this.state.projects.map(project => (
-          <Link to={"/" + project._id} >
+          <Link to={"/" + project.name.toString().split(" ").join("-")} >
             <div className="row project-list-item">
                 <h3>{project.name}</h3>{" "}
             </div>
