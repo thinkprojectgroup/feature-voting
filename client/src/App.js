@@ -91,11 +91,11 @@ class App extends Component {
 
                 <Route
                   exact
-                  path={"/:projectId"}
+                  path={"/:projectName"}
                   render={props => <ProjectDetailView {...props} />}
                 />
                 <Route
-                  path={"/:projectId/:featureId"}
+                  path={"/:projectName/:featureId"}
                   component={FeatureDetailView}
                 />
               </Switch>

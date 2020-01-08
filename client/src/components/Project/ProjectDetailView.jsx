@@ -46,22 +46,24 @@ class ProjectDetailView extends Component {
 
 
   componentDidMount() {
-
-    axios.get(
-        config.url + `/api/projects/` + this.props.match.params.projectId
-    )
-        .then(response => {
-          console.log(response);
-          this.setState({
-            features: response.data.features,
-            name: response.data.name,
-            projectId: response.data._id,
-          });
-          // console.log(this.state.features);
-        })
+    //console.log(this.props.match.params);
+    axios
+      .get(config.url + `/api/projects/name/` + this.props.match.params.projectName.toString().split("-").join(" "))
+      .then(response => {
+        console.log(response);
+        this.setState({
+          features: response.data.features,
+          name: response.data.name,
+          projectId: response.data._id
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
+    console.log(this.state);
     return (
         <div className="container row">
           <div className="row">
@@ -88,8 +90,7 @@ class ProjectDetailView extends Component {
                   commentCount={0}
                   projectId={this.state.projectId}
                   upvoted = {feature.upvoted}
-                  reSort = {this.sortByVoteDsc}
-                  index = {index}
+                  projectName = {this.props.match.params.projectName.toString().split("-").join(" ")}
               />
               ))}
         </div>
