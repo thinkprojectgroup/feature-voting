@@ -116,34 +116,42 @@ class FeatureForm extends Component {
 
         return(
 
-            <div className="feature-form-container row col-12">
+            <div className="row form">
                 <form onSubmit={this.onSubmit} className="feature-form">
-                    <label>
-                        Title:
-                    </label>
-                    <input type="text"
-                           name="headline"
-                           id="headline"
-                           className="headline col-12"
-                           value={headline}
-                           onChange={this.onChange}
-                           required
-                    />
 
-                    <label>
-                        Description:
-                    </label>
-                    <textarea
-                        name="description"
-                        id="description"
-                        className="description col-12"
-                        value={description}
-                        onChange={this.onChange}
-                        required
-                    />
+                    <h5 className="col-12">Create a new feature:</h5>
+                    <div className="col-6 name">
+                        <label>
+                            Title:
+                        </label>
+                        <input type="text"
+                               name="headline"
+                               id="headline"
+                               className="headline"
+                               value={headline}
+                               onChange={this.onChange}
+                               required
+                        />
+                    </div>
 
-                    <label>Upload Your Images </label>
-                    <FileBase type="file" multiple={true} onDone={this.getBaseFile.bind(this)} />
+
+                    <div className="col-6 filepicker">
+                        <label>Upload Your Images </label>
+                        <FileBase type="file" multiple={true} onDone={this.getBaseFile.bind(this)} />
+                    </div>
+
+                    <div className="col-12 content">
+                        <label>
+                            Description:
+                        </label>
+                        <textarea type="text"
+                               name="description"
+                               className="description"
+                               value={description}
+                               onChange={this.onChange}/>
+                    </div>
+
+
 
                     <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>

@@ -123,31 +123,39 @@ class CommentForm extends Component {
 
         return(
             
-            <div className="feature-form-container">
+            <div>
                 <form onSubmit={this.onSubmit} className="feature-form">
 
-                    <label className="feature-form-label">
-                        Name (optional):
-                        <input type="text" 
-                        name="name" 
-                        className="feature-form-input" 
-                        value={name} 
-                        onChange={this.onChange}/>
+                    <h5 className="col-12">Create a new comment:</h5>
+                    <div className="col-6 name">
+                        <label>
+                            Name (optional):
+                        </label>
+                        <input type="text"
+                               name="name"
+                               className="headline"
+                               value={name}
+                               onChange={this.onChange}/>
+                    </div>
+
+                    <div className="col-6 filepicker">
+                        <label>Upload Your Images </label>
+                        <FileBase type="file" multiple={true} onDone={this.getBaseFile.bind(this)} />
+                    </div>
+
+                    <div className="col-12 content">
+                    <label>
+                        Content:
                     </label>
+                    <input type="text"
+                           name="content"
+                           className="description"
+                           value={content}
+                           onChange={this.onChange}/>
+                    </div>
 
-                    <label className="feature-form-label">
-                        Content: 
-                        <input type="text" 
-                        name="content" 
-                        className="feature-form-input" 
-                        value={content} 
-                        onChange={this.onChange}/>
-                    </label>
 
-                    <label>Upload Your Images </label>
-                    <FileBase type="file" multiple={true} onDone={this.getBaseFile.bind(this)} />
-
-                    <button type="submit" value="Submit">Submit</button>
+                    <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>
             </div>
         );
