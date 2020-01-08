@@ -6,7 +6,7 @@ import config from '../../config';
 //import ReadMoreAndLess from "react-read-more-less";
 
 class FeaturePDV extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -22,21 +22,21 @@ class FeaturePDV extends Component {
     this.handleUpVote = this.handleUpVote.bind(this);
     this.handleDownVote = this.handleDownVote.bind(this);
   }
-  
+
 
   handleUpVote = () => {
     var self = this;
     axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
-    .then(function (response) {
-      console.log(response);
-      self.setState({
-        upvoted: true,
-        count : self.state.count + 1
-      });
-      // console.log(self.state);
+      .then(function (response) {
+        console.log(response);
+        self.setState({
+          upvoted: true,
+          count: self.state.count + 1
+        });
+        // console.log(self.state);
       })
       .catch(function (error) {
-      console.log(error);
+        console.log(error);
       });
 
   };
@@ -44,16 +44,16 @@ class FeaturePDV extends Component {
   handleDownVote = () => {
     var self = this;
     axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
-    .then(function (response) {
-      console.log(response);
-      self.setState({
-        upvoted: false,
-        count : self.state.count - 1
-      });
-     //  console.log(self.state);
+      .then(function (response) {
+        console.log(response);
+        self.setState({
+          upvoted: false,
+          count: self.state.count - 1
+        });
+        //  console.log(self.state);
       })
       .catch(function (error) {
-      console.log(error);
+        console.log(error);
       });
 
   };
@@ -63,28 +63,28 @@ class FeaturePDV extends Component {
   render() {
     // TODO: Add real imagadata later
     var image = require("../img/computer.png");
-   //  console.log(this.props.projectId);
+    //  console.log(this.props.projectId);
 
     return (
       <div className="row feature-list-item">
         <div className="col-1 feature-count">
 
-          {this.state.upvoted === false ? 
-          <button 
-            onClick={this.handleUpVote.bind(this)} 
-            className="upvote-button">
+          {this.state.upvoted === false ?
+            <button
+              onClick={this.handleUpVote.bind(this)}
+              className="upvote-button">
 
-            <i className="fas fa-angle-up"></i>
+              <i className="fas fa-angle-up"></i>
 
-          </button> : null }
+            </button> : null}
 
           <p>{this.state.count}</p>
 
-          {this.state.upvoted === true ? 
-          <button
+          {this.state.upvoted === true ?
+            <button
               onClick={this.handleDownVote.bind(this)}
               className="downvote-button">
-            
+
               <i className="fas fa-angle-down"></i>
             </button> : null}
 
@@ -94,7 +94,7 @@ class FeaturePDV extends Component {
           <div className="col-8 feature-text">
             <div className="title">
 
-                <h3>{this.state.title}</h3>{" "}
+              <h3>{this.state.title}</h3>{" "}
             </div>
             <div className="description">
               <p>{this.state.description}</p>
@@ -106,7 +106,7 @@ class FeaturePDV extends Component {
 
           <div
             className="col-3 feature-image"
-            style={{backgroundImage: "url(" + image + ")"}} >
+            style={{ backgroundImage: "url(" + image + ")" }} >
 
           </div>
         </Link>

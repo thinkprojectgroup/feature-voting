@@ -31,7 +31,7 @@ class FeatureDetailView extends Component {
   }
 
   toggleShowForm = () => {
-    this.setState({showForm: !this.state.showForm});
+    this.setState({ showForm: !this.state.showForm });
     //console.log(this.state.showForm);
   }
 
@@ -40,7 +40,7 @@ class FeatureDetailView extends Component {
       .then(res => {
         const comments = res.data;
         this.setState({ comments: comments });
-        this.setState({ commentCount: comments.length})
+        this.setState({ commentCount: comments.length })
         // console.log(this.state.comments[0].author);
       })
       .catch(error => {
@@ -60,61 +60,73 @@ class FeatureDetailView extends Component {
         this.setState({ featureTitle: feature.headline });
         this.setState({ description: feature.description });
         this.setState({ upvotes: feature.voteCount });
-        this.setState({upvoted: feature.upvoted});
-        this.setState({imageIds: feature.imageIds});
+        this.setState({ upvoted: feature.upvoted });
+        this.setState({ imageIds: feature.imageIds });
         // console.log(this.state);
 
-        if(this.state.imageIds != 0){
-          for(var z = 0; z < this.state.imageIds.length; z++){
-            axios.get(config.url + "/api/images/" + this.state.imageIds[z])
-            .then(res =>{
-              console.log(res);
-              this.setState({
-                images: [...this.state.images, res.data]
+        if (this.state.imageIds != 0) {
+          // for(var z = 0; z < this.state.imageIds.length; z++){
+          //   axios.get(config.url + "/api/images/" + this.state.imageIds[z])
+          //   .then(res =>{
+          //     console.log(res);
+          //     this.setState({
+          //       images: [...this.state.images, res.data]
+          //     })
+          //   })
+          //   .catch(error => {
+          //     console.log(error);
+          //   });
+          // }
+          this.state.imageIds.map(async (imageId) => {
+            axios.get(config.url + "/api/images/" + imageId)
+              .then(res => {
+                console.log(res);
+                this.setState({
+                  images: [...this.state.images, res.data]
+                })
               })
-            })
-            .catch(error => {
-              console.log(error);
-            });
-          }
+              .catch(error => {
+                console.log(error);
+              });
+          })
         }
 
       })
       .catch(error => {
         console.log(error);
       });
-      
+
   }
 
   toggleDivUpvote = () => {
     var self = this;
     axios.patch(config.url + "/api/features/vote/" + self.props.match.params.featureId)
-    .then(function (response) {
-      console.log(response);
-      self.setState({
-        upvoted: true,
-        upvotes : self.state.upvotes + 1
-      });
-      //console.log(self.state);
+      .then(function (response) {
+        console.log(response);
+        self.setState({
+          upvoted: true,
+          upvotes: self.state.upvotes + 1
+        });
+        //console.log(self.state);
       })
       .catch(function (error) {
-      console.log(error);
+        console.log(error);
       });
   };
 
   toggleDivDownVote = () => {
     var self = this;
     axios.patch(config.url + "/api/features/vote/" + self.props.match.params.featureId)
-    .then(function (response) {
-      console.log(response);
-      self.setState({
-        upvoted: false,
-        upvotes : self.state.upvotes - 1
-      });
-      // console.log(self.state);
+      .then(function (response) {
+        console.log(response);
+        self.setState({
+          upvoted: false,
+          upvotes: self.state.upvotes - 1
+        });
+        // console.log(self.state);
       })
       .catch(function (error) {
-      console.log(error);
+        console.log(error);
       });
   };
 
@@ -127,10 +139,10 @@ class FeatureDetailView extends Component {
           <div className="col-1 feature-count">
 
             {this.state.upvoted === false ? (
-            <button onClick={this.toggleDivUpvote} className="feature-upvote-button">
-              <i className="fas fa-angle-up"></i>
-            </button>
-            ): null }
+              <button onClick={this.toggleDivUpvote} className="feature-upvote-button">
+                <i className="fas fa-angle-up"></i>
+              </button>
+            ) : null}
 
             <p>{this.state.upvotes}</p>
 
@@ -154,16 +166,16 @@ class FeatureDetailView extends Component {
 
         <hr />
 
-          <div className="col-1">
-              <button onClick={this.toggleShowForm} className="add">
-                <i className="fas fa-plus"></i>
-              </button>
-          </div>
+        <div className="col-1">
+          <button onClick={this.toggleShowForm} className="add">
+            <i className="fas fa-plus"></i>
+          </button>
+        </div>
 
-          {this.state.showForm ? (
-              <CommentForm featureId={this.props.match.params.featureId} 
-              />
-          ): null}
+        {this.state.showForm ? (
+          <CommentForm featureId={this.props.match.params.featureId}
+          />
+        ) : null}
 
         <div className="comment-section">
           <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
