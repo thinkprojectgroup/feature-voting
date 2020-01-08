@@ -85,7 +85,6 @@ router.patch("/:id", async (req, res) => {
         await session.commitTransaction();
         res.status(200).send(comment)
     } catch (err) {
-        console.log(err)
         await session.abortTransaction();
         throw err
     } finally {
