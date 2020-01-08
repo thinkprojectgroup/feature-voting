@@ -6,3 +6,4 @@ error-log.txt
 
 server/public
 !server/public/test.jpg
+server/config/keys.js
