@@ -116,7 +116,7 @@ router.delete("/:id", async (req, res) => {
         await project.save()
         await session.commitTransaction();
 
-        res.status(201).send(comment)
+        res.status(200).send(comment)
     } catch (err) {
         await session.abortTransaction();
         throw err
