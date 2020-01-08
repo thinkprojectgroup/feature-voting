@@ -133,19 +133,25 @@ class FeatureDetailView extends Component {
 
         <hr />
 
-          <div className="col-1">
+          
+
+        <div className="comment-section">
+          
+          <div className="row">
+            <div className="col-11">
+              <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
+            </div>
+            <div className="col-1">
               <button onClick={this.toggleShowForm} className="add" id="form-button" title="create a new comment">
                 <i className="fas fa-plus"></i>
               </button>
+            </div>
           </div>
-
           {this.state.showForm ? (
-              <CommentForm featureId={this.props.match.params.featureId} 
+              <CommentForm featureId={this.props.match.params.featureId}
               />
           ): null}
 
-        <div className="comment-section">
-          <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
           {this.state.comments.map(comment => (
             <Comment
               author={comment.name}
