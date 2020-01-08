@@ -47,51 +47,50 @@ router.post("/:id", async (req, res) => {
     const { error } = validateComment(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
-    const session = await mongoose.startSession();
-    session.startTransaction();
+    const feature = await Project.findOne({ "features._id": req.params.id })
+    if (!feature || feature.deleted) return res.status(404).send("featureId not found")
 
-    try {
-        const project = await Project.findOne(
-            { "features._id": req.params.id })
-            .session(session)
-        if (!project || project.deleted || project.features.id(req.params.id).deleted) {
-            return res.status(404).send("featureId not found")
-        }
+    const comment = new Comment({
+        author: req.userId,
+        content: req.body.content,
+        featureId: req.params.id,
+        name: req.body.name
+    })
+    await comment.save()
 
-        const comment = (await Comment.create(
-            [{
-                author: req.userId,
-                content: req.body.content,
-                featureId: req.params.id,
-                name: req.body.name
-            }], { session }
-        ))[0]
-
-        await comment.save()
-        project.features.id(req.params.id).commentCount++
-        await project.save()
-
-        await session.commitTransaction();
-        res.status(201).send(comment)
-    } catch (err) {
-        await session.abortTransaction();
-        throw err
-    } finally {
-        session.endSession();
-    }
+    res.status(201).send(comment)
 })
 
 // Switch comments accepted status by it's id
 router.patch("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("commentId doesn't fit id schema")
 
-    var comment = await Comment.findOne({ _id: req.params.id, deleted: false })
-    if (!comment) return res.status(404).send("commentId not found")
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
-    await Comment.updateOne({ _id: req.params.id }, { "$set": { "accepted": !comment.accepted } })
+    try {
+        var comment = await Comment.findOneAndUpdate(
+            { _id: req.params.id, deleted: false },
+            { "$set": { "accepted": true } },
+            { new: true, useFindAndModify: false })
+            .session(session)
+        if (!comment) return res.status(404).send("commentId not found")
 
-    comment = await Comment.findById(req.params.id)
-    res.status(200).send(comment)
+        const project = await Project.findOne(
+            { "features._id": comment.featureId })
+            .session(session)
+        const feature = project.features.id(comment.featureId).commentCount++
+        await project.save()
+
+        await session.commitTransaction();
+        res.status(200).send(comment)
+    } catch (err) {
+        console.log(err)
+        await session.abortTransaction();
+        throw err
+    } finally {
+        session.endSession();
+    }
 })
 
 // Delete comments by id
