@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
 import axios from 'axios';
-import config from '../config';
+import config from '../../config';
 import CommentCR from './CommentCR';
 
 
@@ -12,7 +12,6 @@ class CommentReview extends Component{
         comments: [],
     };
     }
-
 
     componentDidMount(){
     axios.get(config.url + "/api/comments/")

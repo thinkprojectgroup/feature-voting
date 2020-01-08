@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { BrowserRouter as Router, Link } from "react-router-dom";
-import config from '../config';
+import { Link } from "react-router-dom";
+import config from "../../config";
 
 class ProjectOverView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      projects: []
+      projects: [],
+      idToken: this.props.idToken
     };
   }
 
@@ -32,8 +33,6 @@ class ProjectOverView extends Component {
       </div>
     );
   }
-  
-  
 }
 
 export default ProjectOverView;

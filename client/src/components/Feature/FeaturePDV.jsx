@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import axios from "axios";
-import config from '../config';
+import config from '../../config';
 //import beispiel from "./img/computer.png";
 //import ReadMoreAndLess from "react-read-more-less";
 
@@ -64,7 +64,7 @@ class FeaturePDV extends Component {
 
   render() {
     // TODO: Add real imagadata later
-    var image = require("./img/computer.png");
+    var image = require("../img/computer.png");
    //  console.log(this.props.projectId);
 
     return (

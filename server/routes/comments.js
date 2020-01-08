@@ -6,6 +6,7 @@ const { Project, validateProject } = require("../models/project")
 const { validateSearch } = require("../models/feature")
 
 // Get all unaccepted comments
+// TODO add authorisation
 router.get("/", async (req, res) => {
     var comments = await Comment.find({ accepted: false, deleted: false }).sort("dateCreated")
 
