@@ -62,7 +62,7 @@ class FeatureDetailView extends Component {
         this.setState({ upvotes: feature.voteCount });
         this.setState({upvoted: feature.upvoted});
         this.setState({imageIds: feature.imageIds});
-        console.log(this.state);
+        // console.log(this.state);
 
         if(this.state.imageIds != 0){
           for(var z = 0; z < this.state.imageIds.length; z++){
