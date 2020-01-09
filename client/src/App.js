@@ -18,9 +18,7 @@ import {
   useHistory,
   useLocation
 } from "react-router-dom";
-
-
-
+import AdminRights from "./components/User/AdminRights";
 
 class App extends Component {
   state = {
@@ -60,24 +58,37 @@ class App extends Component {
               <Header role={this.state.role} />
               <Switch>
                 <Route
-                    exact
-                    path={"/"}
-                    render={props => 
-                      (this.state.role == 'admin') ? (
-                        <ProjectOverView {...props} />
-                      ) : (
-                        <Redirect to={"/login"} />
-                      )}
+                  exact
+                  path={"/"}
+                  render={props =>
+                    this.state.role == "admin" ? (
+                      <ProjectOverView {...props} />
+                    ) : (
+                      <Redirect to={"/login"} />
+                    )
+                  }
                 />
                 <Route
                   exact
                   path={"/commentreview"}
-                  render={props => 
-                    (this.state.role == 'admin') ? (
+                  render={props =>
+                    this.state.role == "admin" ? (
                       <CommentReview {...props} />
                     ) : (
                       <Redirect to={"/login"} />
-                    )}
+                    )
+                  }
+                />
+                <Route
+                  exact
+                  path={"/adminrights"}
+                  render={props =>
+                    this.state.role == "admin" ? (
+                      <AdminRights {...props} />
+                    ) : (
+                      <Redirect to={"/login"} />
+                    )
+                  }
                 />
                 <Route
                   exact
