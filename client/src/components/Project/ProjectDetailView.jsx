@@ -85,6 +85,7 @@ class ProjectDetailView extends Component {
         {this.state.features
           .sort((a, b) => b.voteCount - a.voteCount)
           .map((feature, index) => (
+<<<<<<< HEAD
             <FeaturePDV
               featureId={feature._id}
               count={feature.voteCount}
@@ -101,6 +102,19 @@ class ProjectDetailView extends Component {
           ))}
         <div>
           <FeatureReview projectId={this.props.match.params.projectId} />
+=======
+              <FeaturePDV
+                  featureId={feature._id}
+                  count={feature.voteCount}
+                  title={feature.headline}
+                  description={feature.description}
+                  commentCount={feature.commentCount}
+                  projectId={this.state.projectId}
+                  upvoted = {feature.upvoted}
+                  projectName = {this.props.match.params.projectName.toString().split("-").join(" ")}
+              />
+              ))}
+>>>>>>> dev
         </div>
       </div>
     );
