@@ -1,5 +1,5 @@
 node_modules
-config
+server/config
 .idea/
 newrelic_agent.log
 error-log.txt
