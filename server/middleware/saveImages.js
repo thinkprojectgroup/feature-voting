@@ -7,17 +7,9 @@ module.exports = async (req, res, next) => {
     return next()
   }
 
-  const imageIds = []
-  const images = req.body.imageData
-
   // Save each image in the db and save their ids
-  await Promise.all(images.map(async (image) => {
-    const dbImage = new Image({
-      imageData: image
-    })
-    await dbImage.save()
-    imageIds.push(dbImage._id)
-  }))
+  const dbImages = await Image.create(req.body.imageData.map(image => { imageData: image }))
+  const imageIds = dbImages.map(img => img._id)
 
   // Add the image ids to the request
   req.imageIds = imageIds
