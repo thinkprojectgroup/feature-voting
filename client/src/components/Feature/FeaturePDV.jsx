@@ -16,7 +16,8 @@ class FeaturePDV extends Component {
       description: this.props.description,
       commentCount: this.props.commentCount,
       projectId: this.props.projectId,
-      upvoted: this.props.upvoted
+      upvoted: this.props.upvoted,
+      projectName: this.props.projectName
     };
 
     this.handleUpVote = this.handleUpVote.bind(this);
@@ -90,7 +91,7 @@ class FeaturePDV extends Component {
 
 
         </div>
-        <Link to={"/" + this.state.projectId + "/" + this.state.featureId}>
+        <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
           <div className="col-8 feature-text">
             <div className="title">
 
