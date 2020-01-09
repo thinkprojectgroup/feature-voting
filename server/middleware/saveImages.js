@@ -8,7 +8,10 @@ module.exports = async (req, res, next) => {
   }
 
   // Save each image in the db and save their ids
-  const dbImages = await Image.create(req.body.imageData.map(image => { imageData: image }))
+  const reqImages = req.body.imageData.map(function (image) {
+    return { imageData: image }
+  })
+  const dbImages = await Image.create(reqImages)
   const imageIds = dbImages.map(img => img._id)
 
   // Add the image ids to the request
