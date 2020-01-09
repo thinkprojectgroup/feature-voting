@@ -6,7 +6,7 @@ const { validateFeature, validateSearch, cleanFeatures } = require("../models/fe
 const saveImages = require("../middleware/saveImages")
 
 // Post new feature to given projectId. Request can include base64 imageData to save images.
-router.post("/:projectId", saveImages, async (req, res) => {
+router.post("/:projectId", async (req, res) => {
     const { error } = validateFeature({
         headline: req.body.headline,
         description: req.body.description
@@ -27,7 +27,7 @@ router.post("/:projectId", saveImages, async (req, res) => {
         description: req.body.description,
         employeeIds: [],
         userIds: [],
-        imageIds: req.imageIds,
+        imageUrls: req.imageUrls,
         creator: req.userId
     }
 
