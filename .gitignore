@@ -1,5 +1,4 @@
 node_modules
-config
 .idea/
 newrelic_agent.log
 error-log.txt
@@ -7,3 +6,4 @@ error-log.txt
 server/public
 !server/public/test.jpg
 client/src/firebase-config.js
+server/config
