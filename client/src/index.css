@@ -104,6 +104,28 @@
   padding: 25px 0;
 }
 
+.comment-review-button{
+  color: white;
+  float: right;
+  background-color: #f15a24;
+  text-align: center;
+  font-size: 2rem;
+  width: 80px;
+  height: 80px;
+  padding: 25px 0;
+}
+
+.login-button, .logout-button{
+  color: white;
+  float: right;
+  background-color: #7f9da7;
+  text-align: center;
+  font-size: 2rem;
+  width: 80px;
+  height: 80px;
+  padding: 25px 0;
+}
+
 h1{font-size: 2rem; }
 h2{font-size: 1.5rem;}
 h3{font-size: 1.3rem; margin: 0;}
