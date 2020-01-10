@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 
+import './components/css/carousel.css';
+
 import './components/css/fontawesome-free-5.11.2-web/css/all.css';
 
 

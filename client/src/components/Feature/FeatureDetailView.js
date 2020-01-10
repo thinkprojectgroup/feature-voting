@@ -5,7 +5,6 @@ import "./css/FeatureDetailView.css";
 import Comment from '../Comment/Comment';
 import config from '../../config';
 import CommentForm from '../CommentForm';
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-responsive-carousel';
 
 class FeatureDetailView extends Component {
@@ -107,7 +106,6 @@ class FeatureDetailView extends Component {
   };
 
   render() {
-    // TODO: Add real imagadata later
     
     return (
       <div className="container row">
@@ -133,18 +131,18 @@ class FeatureDetailView extends Component {
             <h3>{this.state.featureTitle}</h3>
             <p>{this.state.description}</p>
           </div>
-          <div className="col-4 feature-detail-image">
-              {this.state.imageUrls.length > 0 ? 
-              <Carousel>
-                {this.state.imageUrls.map(imageUrl => (
-                  <div>
-                  <img src={imageUrl}/>
-                  </div>
-                ))}
-              </Carousel>
+            {this.state.imageUrls.length > 0 ?
+                    <div className="col-4 feature-detail-image">
+                      <Carousel>
+                        {this.state.imageUrls.map(imageUrl => (
+                          <div>
+                          <img src={imageUrl}/>
+                          </div>
+                        ))}
+                      </Carousel>
+                    </div>
               : null
               }
-          </div>
         </div>
 
         <hr />

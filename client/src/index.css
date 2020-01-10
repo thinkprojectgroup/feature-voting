@@ -283,16 +283,4 @@ textarea[name="description"]{
 
   a{ text-decoration: none; }
 
-
-  .feature-detail-image{
-    transition: transform 0.25s ease;
-    cursor: zoom-in;
-  }
-
-  .feature-detail-image img:active, .feature-detail-image img:focus{
-    -webkit-transform: scale(2);
-    transform: scale(2);
-    cursor: zoom-out;
-  }
-
 }
