@@ -2,10 +2,15 @@ const express = require('express');
 const mongoose = require("mongoose")
 const router = express.Router();
 const { Project, validateProject } = require("../models/project")
+const { validateToken, userCheck } = require('../services/AuthService')
 const { cleanFeatures } = require("../models/feature")
 
 // Get all projects
 router.get("/", async (req, res) => {
+    const idToken = req.body.idToken;
+
+    const loginTicket = validateToken(idToken);
+
     const projects = await Project.aggregate([
         { $match: { deleted: false } },
         {
@@ -25,6 +30,10 @@ router.get("/", async (req, res) => {
             }
         }
     ])
+
+    projects.forEach(project => {
+        cleanFeatures(project.features, req.userId)
+    })
 
     res.send(projects);
 });
@@ -117,8 +126,6 @@ router.get("/unaccepted/:name", async (req, res) => {
     if (project.length == 0) return res.status(404).send("Invalid project name")
     project = project[0]
 
-    cleanFeatures(project.features, req.userId)
-
     res.send(project);
 });
 
@@ -146,9 +153,14 @@ router.post("/", async (req, res) => {
 
 // Delete project by id
 router.delete("/:id", async (req, res) => {
+    //TODO: authentication, only for admin
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("projectId doesn't fit id schema")
 
-    var project = await Project.findOneAndUpdate({ _id: req.params.id, deleted: false }, { "$set": { "deleted": true } }, { useFindAndModify: false })
+    var project = await Project.findOneAndUpdate(
+        { _id: req.params.id, deleted: false },
+        { "$set": { "deleted": true } },
+        { useFindAndModify: false, new: true }
+    )
     if (!project) return res.status(404).send("projectId not found")
 
     res.status(202).send(project)

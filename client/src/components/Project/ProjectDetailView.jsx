@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import FeaturePDV from "./FeaturePDV";
-import FeatureForm from "./FeatureForm";
+import FeaturePDV from "../Feature/FeaturePDV";
+import FeatureForm from "../FeatureForm";
 import axios from "axios";
-import config from '../config';
+import config from '../../config';
 import { Button } from "reactstrap";
+
 
 class ProjectDetailView extends Component {
   constructor(props) {
@@ -14,10 +15,11 @@ class ProjectDetailView extends Component {
       name: "",
       comments: "",
       projectId: "",
-      showForm: false
+      showForm: false,
     };
 
     this.toggleShowForm = this.toggleShowForm.bind(this);
+    this.sortByVoteDsc = this.sortByVoteDsc.bind(this);
   }
 
 
@@ -26,20 +28,42 @@ class ProjectDetailView extends Component {
     // console.log(this.state.showForm);
   }
 
-  componentDidMount() {
+  sortByVoteDsc=()=>{
 
-    axios.get(
-        config.url + `/api/projects/` + this.props.match.params.projectId
-    )
-        .then(response => {
-          this.setState({
-            features: response.data.features,
-            name: response.data.name,
-            projectId: response.data._id});
-        })
+    let sortedFeaturesDsc;
+    sortedFeaturesDsc = this.state.features.sort((a,b)=>{
+       return parseInt(b.voteCount) - parseInt(a.voteCount);
+    })
+
+    this.setState({
+        features: sortedFeaturesDsc
+    })
+
+    console.log(this.state.features);
+
+  }
+
+
+
+  componentDidMount() {
+    //console.log(this.props.match.params);
+    axios
+      .get(config.url + `/api/projects/name/` + this.props.match.params.projectName.toString().split("-").join(" "))
+      .then(response => {
+        console.log(response);
+        this.setState({
+          features: response.data.features,
+          name: response.data.name,
+          projectId: response.data._id
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   render() {
+    console.log(this.state);
     return (
         <div className="container row">
           <div className="row">
@@ -56,7 +80,8 @@ class ProjectDetailView extends Component {
               <FeatureForm projectId={this.state.projectId} />
           ): null}
 
-          {this.state.features.map(feature => (
+          {this.state.features.sort((a,b) => b.voteCount - a.voteCount)
+          .map((feature, index) => (
               <FeaturePDV
                   featureId={feature._id}
                   count={feature.voteCount}
@@ -64,8 +89,10 @@ class ProjectDetailView extends Component {
                   description={feature.description}
                   commentCount={0}
                   projectId={this.state.projectId}
+                  upvoted = {feature.upvoted}
+                  projectName = {this.props.match.params.projectName.toString().split("-").join(" ")}
               />
-          ))}
+              ))}
         </div>
     );
   }
