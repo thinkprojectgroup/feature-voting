@@ -252,7 +252,10 @@ textarea[name="description"]{
     height: 200px;
 }
 
-
+.read-more{
+  color: #7fba24;
+  font-size: 0.9rem;
+}
 
 
 
