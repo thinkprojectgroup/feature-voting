@@ -9,7 +9,7 @@ class FeatureForm extends Component {
         description: "",
         selectedFile: null,
         loaded: 0,
-        firebaseImage: [],
+        firebaseUrls: [],
         currentImageName: []
     };
     checkMimeType = (files) => {
@@ -89,7 +89,7 @@ class FeatureForm extends Component {
             () => {
                 storage.ref('images').child(currentImageName).getDownloadURL().then(url => {
                     this.setState(prevState =>({
-                        firebaseImage: this.state.firebaseImage.concat([url]),
+                        firebaseUrls: this.state.firebaseUrls.concat([url]),
                         currentImageName: this.state.currentImageName.concat([currentImageName])
                     }));
                 })
@@ -113,7 +113,7 @@ class FeatureForm extends Component {
         let data = JSON.stringify({
             headline: this.state.headline,
             description: this.state.description,
-            imageUrls: this.state.firebaseImage
+            imageUrls: this.state.firebaseUrls
         })
 
         axios.post('/api/features/' + this.props.projectName, data, config)

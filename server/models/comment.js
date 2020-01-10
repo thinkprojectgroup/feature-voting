@@ -36,9 +36,10 @@ const schema = new mongoose.Schema({
         minlength: 1,
         maxlength: 255
     },
-    imageIds: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Image"
+    imageUrls: [{
+        type: String,
+        minlength: 0,
+        maxlength: 1024
     }]
 })
 schema.index({ content: "text" })

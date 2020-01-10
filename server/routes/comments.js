@@ -4,7 +4,6 @@ const router = express.Router();
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
 const { Project, validateProject } = require("../models/project")
 const { validateSearch } = require("../models/feature")
-const saveImages = require("../middleware/saveImages")
 
 // Get all unaccepted comments
 // TODO add authorisation
@@ -42,7 +41,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // Post a new comment to given featureId
-router.post("/:id", saveImages, async (req, res) => {
+router.post("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("FeatureId doesn't fit id schema")
 
     const { error } = validateComment({
@@ -59,7 +58,7 @@ router.post("/:id", saveImages, async (req, res) => {
         content: req.body.content,
         featureId: req.params.id,
         name: req.body.name,
-        imageIds: req.imageIds
+        imageUrls: req.body.imageUrls
     })
     await comment.save()
 
