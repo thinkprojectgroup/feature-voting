@@ -93,38 +93,32 @@
   padding: 0;
 }
 
-.back-button{
+.login-button, .logout-button, .comment-review-button, .back-button{
   color: white;
   float: right;
-  background-color: #7fba24;
   text-align: center;
   font-size: 2rem;
   width: 80px;
   height: 80px;
   padding: 25px 0;
+}
+
+.back-button{
+  background-color: #7fba24;
 }
 
 .comment-review-button{
-  color: white;
-  float: right;
   background-color: #f15a24;
-  text-align: center;
-  font-size: 2rem;
-  width: 80px;
-  height: 80px;
-  padding: 25px 0;
 }
 
-.login-button, .logout-button{
-  color: white;
-  float: right;
-  background-color: #7f9da7;
-  text-align: center;
-  font-size: 2rem;
-  width: 80px;
-  height: 80px;
-  padding: 25px 0;
+.login-button{
+  background-color: #003c50;
 }
+
+.logout-button{
+  background-color: #7f9da7;
+}
+
 
 h1{font-size: 2rem; }
 h2{font-size: 1.5rem;}
