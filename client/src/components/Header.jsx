@@ -38,17 +38,7 @@ class Header extends Component {
     }
 
 
-    //* COMMENT REVIEW BUTTON*//
 
-    //initializing the Comment Review Button and only show it for Admins
-    let commentReviewButton = "";
-    if(isAdmin){
-      commentReviewButton = (
-          <Link to={"/commentreview"}>
-            <div className="comment-review-button fas fa-comments"></div>
-          </Link>
-      );
-    }
 
 
     //* BACK BUTTON*//
@@ -77,14 +67,24 @@ class Header extends Component {
     //check if backroute is deeper than rootpath, if then don't show backbutton
     if(!(pathname === rootPath)){
       backButton = (
-        <Link to={backroute}>
-        <div className="back-button fas fa-arrow-left"></div>
-      </Link>
-    );
+          <Link to={backroute}>
+            <button className="back-button fas fa-arrow-left"></button>
+          </Link>
+      );
     }
 
 
+    //* COMMENT REVIEW BUTTON*//
 
+    //initializing the Comment Review Button and only show it for Admins
+    let commentReviewButton = "";
+    if(isAdmin && pathname == "/"){
+      commentReviewButton = (
+          <Link to={"/commentreview"}>
+            <button className="comment-review-button fas fa-comments" title="Link to Comment Review Page"></button>
+          </Link>
+      );
+    }
 
     return (
         <div className="row col-12 header">
