@@ -69,9 +69,9 @@ class FeaturePDV extends Component {
 
     let description = this.state.description;
 
-    let readMoreButton = (description.length > 51) ? <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId} className="read-more">read more</Link> : null;
+    let readMoreButton = (description.length > 151) ? <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId} className="read-more">read more</Link> : null;
 
-    description = (description.length > 51) ? description.slice(0, 51) + " (...)" : description;
+    description = (description.length > 151) ? description.slice(0, 151) + " (...)" : description;
 
     return (
       <div className="row feature-list-item">
