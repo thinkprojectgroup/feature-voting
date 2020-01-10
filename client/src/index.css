@@ -122,6 +122,7 @@ button.inactive{cursor: default;}
 
 button.inactive i{
   color:#eaeaea;
+  transition: 0.4s;
 }
 
 img {
