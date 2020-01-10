@@ -41,7 +41,11 @@ const featureSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
-    imageUrls: [String],
+    imageUrls: [{
+        type: String,
+        minlength: 0,
+        maxlength: 1024
+    }],
     deleted: {
         type: Boolean,
         default: false,

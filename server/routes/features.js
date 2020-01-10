@@ -3,7 +3,6 @@ const router = express.Router();
 const mongoose = require("mongoose")
 const { Project } = require("../models/project")
 const { validateFeature, validateSearch, cleanFeatures } = require("../models/feature")
-const saveImages = require("../middleware/saveImages")
 
 // Post new feature to given projectId. Request can include base64 imageData to save images.
 router.post("/:projectName", async (req, res) => {
@@ -24,7 +23,7 @@ router.post("/:projectName", async (req, res) => {
         description: req.body.description,
         employeeIds: [],
         userIds: [],
-        imageUrls: req.imageUrls,
+        imageUrls: req.body.imageUrls,
         creator: req.userId
     }
 

@@ -9,7 +9,7 @@ class FeatureForm extends Component {
         description: "",
         selectedFile: null,
         loaded: 0,
-        firebaseImage: String,
+        firebaseUrls: [],
         currentImageName: String
     };
     checkMimeType = (files) => {
@@ -107,7 +107,7 @@ class FeatureForm extends Component {
         let data = JSON.stringify({
             headline: this.state.headline,
             description: this.state.description,
-            imageUrls: this.state.firebaseImage
+            imageUrls: this.state.firebaseUrls
         })
 
         axios.post('/api/features/' + this.props.projectName, data, config)
