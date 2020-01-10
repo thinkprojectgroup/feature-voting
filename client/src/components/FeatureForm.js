@@ -9,8 +9,8 @@ class FeatureForm extends Component {
         description: "",
         selectedFile: null,
         loaded: 0,
-        firebaseImage: String,
-        currentImageName: String
+        firebaseImage: [],
+        currentImageName: []
     };
     checkMimeType = (files) => {
         //getting file object
@@ -69,27 +69,33 @@ class FeatureForm extends Component {
 
     }
 
+    onChangeImage = (e) => {
+        for(var z = 0; z < e.target.files.length; z++){
+            this.uploadImage(e.target.files[z])
+        }
+    }
 
-    uploadImage(event) {
+
+
+
+    uploadImage(file) {
         // show the 1st image as example
-        var imageData = ''
-        let currentImageName = "firebase-image-" + Date.now()
-
-        let uploadImage = storage.ref(`images/${currentImageName}`).put(event.target.files[0])
-
-        uploadImage.on('state_changed',
+        let currentImageName = "firebase-image-" + Date.now();
+        storage.ref(`images/${currentImageName}`).put(file).on('state_changed',
             (snapshot) => { },
             (error) => {
                 alert(error);
             },
             () => {
                 storage.ref('images').child(currentImageName).getDownloadURL().then(url => {
-                    this.setState({
-                        firebaseImage: url,
-                        currentImageName: currentImageName
-                    });
+                    this.setState(prevState =>({
+                        firebaseImage: this.state.firebaseImage.concat([url]),
+                        currentImageName: this.state.currentImageName.concat([currentImageName])
+                    }));
                 })
+
             })
+
     }
 
     onSubmit = (e) => {
@@ -151,7 +157,7 @@ class FeatureForm extends Component {
                     />
 
                     <label>Upload Your Images </label>
-                    <input type="file" className="process__upload-btn" onChange={(event) => this.uploadImage(event)} />
+                    <input type="file" multiple className="process__upload-btn" onChange={(e) => this.onChangeImage(e)} />
 
                     <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>
