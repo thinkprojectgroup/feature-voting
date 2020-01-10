@@ -25,7 +25,11 @@ const User = mongoose.model("User", new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    deviceHash: String
+    deviceHash: {
+        type: String,
+        minlength: 1,
+        maxlength: 1024
+    }
 }))
 
 function validateUser(user) {

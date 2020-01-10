@@ -28,15 +28,17 @@ class App extends Component {
       role: 'user',
       isSignedIn: false,
       idToken: null,
-      authIsLoaded: false
+      authIsLoaded: false,
     }
 
     this.createFingerPrint()
   }
-  
 
+  // Helper function to await a timeout
+  timeout = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+  
   createFingerPrint = () => {
-    setTimeout(function () {
+    this.timeout(500).then(
       Fingerprint2.get(function (components) {
         // an array of: {key: ..., value: ...} pairs
         // only keep the values
@@ -44,9 +46,8 @@ class App extends Component {
         // hash the values
         const hashedFingerprint = Fingerprint2.x64hash128(values.join(''), 31)
         axios.defaults.headers.common['Hash'] = hashedFingerprint
-        console.log(hashedFingerprint) // <= send this
       })
-    }, 500)
+    )
   }
 
   // executed in <AppWrapper> after Google API and Auth is initalized
@@ -67,7 +68,7 @@ class App extends Component {
     })
   }
 
-  render () {
+  render() {
     return (
       <AppWrapper
         isReady={this.isReady}
@@ -85,8 +86,8 @@ class App extends Component {
                     this.state.role == 'admin' ? (
                       <ProjectOverView {...props} />
                     ) : (
-                      <Redirect to={'/login'} />
-                    )
+                        <Redirect to={'/login'} />
+                      )
                   }
                 />
                 <Route
@@ -96,8 +97,8 @@ class App extends Component {
                     this.state.role == 'admin' ? (
                       <CommentReview {...props} />
                     ) : (
-                      <Redirect to={'/login'} />
-                    )
+                        <Redirect to={'/login'} />
+                      )
                   }
                 />
                 <Route

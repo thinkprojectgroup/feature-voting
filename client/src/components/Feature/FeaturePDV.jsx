@@ -34,7 +34,6 @@ class FeaturePDV extends Component {
         upvoted: true,
         count : self.state.count + 1
       });
-      self.props.reSort();
       // console.log(self.state);
       })
       .catch(function (error) {
@@ -52,7 +51,6 @@ class FeaturePDV extends Component {
         upvoted: false,
         count : self.state.count - 1
       });
-      self.props.reSort();
      //  console.log(self.state);
       })
       .catch(function (error) {
