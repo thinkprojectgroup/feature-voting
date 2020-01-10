@@ -5,7 +5,8 @@ import "./css/FeatureDetailView.css";
 import Comment from '../Comment/Comment';
 import config from '../../config';
 import CommentForm from '../CommentForm';
-import Gallery from 'react-grid-gallery';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
 
 class FeatureDetailView extends Component {
   constructor(props) {
@@ -20,13 +21,12 @@ class FeatureDetailView extends Component {
       projectTitle: "Test",
       featureTitle: "",
       description: "",
-      imageIds: [],
+      imageUrls: [],
       upvotes: 0,
       comments: [],
       commentCount: 0,
       showForm: false,
       upvoted: false,
-      images: []
     };
   }
 
@@ -41,7 +41,6 @@ class FeatureDetailView extends Component {
         const comments = res.data;
         this.setState({ comments: comments });
         this.setState({ commentCount: comments.length })
-        // console.log(this.state.comments[0].author);
       })
       .catch(error => {
         console.log(error);
@@ -57,41 +56,18 @@ class FeatureDetailView extends Component {
       .then(res => {
         const feature = res.data;
         console.log(res);
-        this.setState({ featureTitle: feature.headline });
-        this.setState({ description: feature.description });
-        this.setState({ upvotes: feature.voteCount });
-        this.setState({ upvoted: feature.upvoted });
-        this.setState({ imageIds: feature.imageIds });
-        // console.log(this.state);
-
-        if (this.state.imageIds != 0) {
-          // for(var z = 0; z < this.state.imageIds.length; z++){
-          //   axios.get(config.url + "/api/images/" + this.state.imageIds[z])
-          //   .then(res =>{
-          //     console.log(res);
-          //     this.setState({
-          //       images: [...this.state.images, res.data]
-          //     })
-          //   })
-          //   .catch(error => {
-          //     console.log(error);
-          //   });
-          // }
-          this.state.imageIds.map(async (imageId) => {
-            axios.get(config.url + "/api/images/" + imageId)
-              .then(res => {
-                console.log(res);
-                this.setState({
-                  images: [...this.state.images, res.data]
-                })
-              })
-              .catch(error => {
-                console.log(error);
-              });
-          })
-        }
-
-      })
+        
+        this.setState({ 
+                        imageUrls: feature.imageUrls,
+                        featureTitle: feature.headline, 
+                        description: feature.description, 
+                        upvotes: feature.voteCount,
+                        upvoted: feature.upvoted
+                      },
+                      () => {
+                        
+                      });
+                    })
       .catch(error => {
         console.log(error);
       });
@@ -132,7 +108,7 @@ class FeatureDetailView extends Component {
 
   render() {
     // TODO: Add real imagadata later
-
+    
     return (
       <div className="container row">
         <div className="row feature-detail">
@@ -158,9 +134,16 @@ class FeatureDetailView extends Component {
             <p>{this.state.description}</p>
           </div>
           <div className="col-4 feature-detail-image">
-            {this.state.images.map(image => (
-              <img src={image} />
-            ))}
+              {this.state.imageUrls.length > 0 ? 
+              <Carousel>
+                {this.state.imageUrls.map(imageUrl => (
+                  <div>
+                  <img src={imageUrl}/>
+                  </div>
+                ))}
+              </Carousel>
+              : null
+              }
           </div>
         </div>
 
