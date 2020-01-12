@@ -21,6 +21,10 @@ const schema = new mongoose.Schema({
         ref: "feature",
         required: true
     },
+    featureName: {
+        type: String,
+        required: true
+    },
     dateCreated: {
         type: Date,
         default: Date.now,

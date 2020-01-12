@@ -54,6 +54,7 @@ router.post("/:id", async (req, res) => {
         author: req.userId,
         content: req.body.content,
         featureId: req.params.id,
+        featureName: feature.name,
         name: req.body.name
     })
     await comment.save()
