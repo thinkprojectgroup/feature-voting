@@ -47,20 +47,21 @@ router.post("/:id", async (req, res) => {
     const { error } = validateComment(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
-    const feature = await Project.findOne({ "features._id": req.params.id })
-    if (!feature || feature.deleted) return res.status(404).send("featureId not found")
+    const project = await Project.findOne({ "features._id": req.params.id }, {"features.$." : 1, name: 1 })
+    if (!project || project.features[0].deleted) return res.status(404).send("featureId not found")
 
     const comment = new Comment({
         author: req.userId,
         content: req.body.content,
         featureId: req.params.id,
-        featureName: feature.name,
+        projectName: project.name,
+        featureName: project.features[0].headline,
         name: req.body.name
     })
     await comment.save()
 
-    res.status(201).send(comment)
-})
+    res.status(201).send(project.features[0])
+}) 
 
 // Switch comments accepted status by it's id
 router.patch("/:id", async (req, res) => {

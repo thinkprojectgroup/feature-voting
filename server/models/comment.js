@@ -21,7 +21,7 @@ const schema = new mongoose.Schema({
         ref: "feature",
         required: true
     },
-    featureName: {
+    projectName: {
         type: String,
         required: true
     },
