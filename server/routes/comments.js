@@ -29,13 +29,29 @@ router.get("/search/", async (req, res) => {
 });
 
 // Get accepted comments by featureId
-router.get("/:id", async (req, res) => {
+router.get("/feature/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("FeatureId doesn't fit id schema")
 
     const feature = await Project.findOne({ "features._id": req.params.id })
     if (!feature || feature.deleted) return res.status(404).send("featureId not found")
 
     const comments = await Comment.find({ featureId: req.params.id, deleted: false, accepted: true }).sort("dateCreated")
+
+    res.send(comments);
+});
+
+// Get accepted comments by projectId
+router.get("/project/:id", async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("ProjectId doesn't fit id schema")
+
+    const project = await Project.findById(req.params.id)
+    if (!project || project.deleted) return res.status(404).send("ProjectId not found")
+
+    const comments = new Array()
+    for(var feature of project.features){
+        var tempComments = await Comment.find({ featureId: feature.id, deleted: false, accepted: true }).sort("dateCreated")
+        tempComments.forEach(comment => comments.push(comment))
+    }
 
     res.send(comments);
 });
