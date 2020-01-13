@@ -60,7 +60,7 @@ router.post("/:id", async (req, res) => {
     })
     await comment.save()
 
-    res.status(201).send(project.features[0])
+    res.status(201).send(comment)
 }) 
 
 // Switch comments accepted status by it's id
