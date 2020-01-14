@@ -69,7 +69,7 @@ class ProjectDetailView extends Component {
                   count={feature.voteCount}
                   title={feature.headline}
                   description={feature.description}
-                  commentCount={0}
+                  commentCount={feature.commentCount}
                   projectId={this.state.projectId}
                   upvoted = {feature.upvoted}
                   projectName = {this.props.match.params.projectName.toString().split("-").join(" ")}

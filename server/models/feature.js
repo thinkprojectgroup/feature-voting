@@ -48,6 +48,11 @@ const featureSchema = new mongoose.Schema({
     deleted: {
         type: Boolean,
         default: false,
+    },
+    commentCount: {
+        type: Number,
+        min: 0,
+        default: 0
     }
 })
 featureSchema.index({ headline: "text", description: "text" })
