@@ -118,7 +118,12 @@ hr{
 
 .active{display: block;}
 
-.inactive{display: none}
+button.inactive{cursor: default;}
+
+button.inactive i{
+  color:#eaeaea;
+  transition: 0.4s;
+}
 
 img {
   width: 100%;
@@ -137,6 +142,7 @@ button{
   height: auto;
   border: none;
   font-size: 2.5rem;
+  cursor: pointer;
 }
 
 button.decline i, button.accept i, button.add i{
@@ -164,7 +170,10 @@ button.accept{
 button.add{
   background-color: #003c50;
     float: right;
-
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 
 .project-list-item{
@@ -174,11 +183,18 @@ button.add{
 
 .project-list-item:hover, .feature-list-item:hover{
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: 0.5s;
 }
 
 .feature-count, .comment-section-button{
   text-align: center;
 }
+
+.feature-count > button{
+  height: 60px;
+}
+
+.feature-text{padding: 35px;}
 
 /*Display feature count next to feature body on mobile devices*/
 .feature-count, .comment-section-button{width: 25%;}
