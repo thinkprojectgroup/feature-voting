@@ -41,11 +41,9 @@ router.get("/feature/:id", async (req, res) => {
 });
 
 // Get accepted comments by projectId
-router.get("/project/:id", async (req, res) => {
-    if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("ProjectId doesn't fit id schema")
-
-    const project = await Project.findById(req.params.id)
-    if (!project || project.deleted) return res.status(404).send("ProjectId not found")
+router.get("/project/:name", async (req, res) => {
+    const project = await Project.findOne({name: req.params.name})
+    if (!project || project.deleted) return res.status(404).send("Project name not found")
 
     const comments = new Array()
     for(var feature of project.features){
