@@ -70,11 +70,11 @@ router.patch("/:id", async (req, res) => {
 
     try {
         var comment = await Comment.findOneAndUpdate(
-            { _id: req.params.id, deleted: false },
+            { _id: req.params.id, deleted: false, accepted: false },
             { "$set": { "accepted": true } },
             { new: true, useFindAndModify: false })
             .session(session)
-        if (!comment) return res.status(404).send("commentId not found")
+        if (!comment) return res.status(404).send("commentId not found (or already accepted)")
 
         const project = await Project.findOne(
             { "features._id": comment.featureId })
