@@ -13,10 +13,15 @@ router.post("/", async (req, res) => {
     const deviceHash = req.get('Hash') || ""
 
     let user = await User.findOne({ email: payload.email });
-    
+    const cookieOptions = {
+      httpOnly: true,
+      expires: new Date('Tue Jul 01 2050 06:01:11 GMT-0400 (EDT)'),
+      overwrite: true
+    }
+
     //TODO Edit Response Message, so role is not visible (just for testing)
     if (user) {
-      res.cookie('userId', user._id, { overwrite: true }); // Set the correct userId
+      res.cookie('userId', user._id, cookieOptions); // Set the correct userId
       if (user.deviceHash !== deviceHash) { // If user has logged in with different deviceHash, update it.
         user.deviceHash = deviceHash
         await user.save()
@@ -30,7 +35,7 @@ router.post("/", async (req, res) => {
       }
     } else { // User not found via email, update current one or create new
       user = await User.findById(req.userId)
-      if(user) {
+      if (user) {
         user.role = "admin"
         user.email = payload.email
         user.name = payload.email
@@ -43,7 +48,7 @@ router.post("/", async (req, res) => {
           name: payload.email,
           deviceHash: deviceHash
         });
-        res.cookie('userId', user._id, { overwrite: true }); // Set the correct userId
+        res.cookie('userId', user._id, cookieOptions); // Set the correct userId
         await user.save();
       }
       return res.status(200).send('authorised as admin')
