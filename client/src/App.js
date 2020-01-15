@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Fingerprint2 from "fingerprintjs2";
+import axios from "axios";
 import "./App.css";
 import FeatureDetailView from "./components/Feature/FeatureDetailView";
 import ProjectDetailView from "./components/Project/ProjectDetailView";
@@ -6,10 +8,10 @@ import Header from "./components/Header";
 import ProjectOverView from "./components/Project/ProjectOverView";
 import CommentReview from "./components/Comment/CommentReview";
 import SignIn from "./components/Auth/SignIn";
-import AdminOnly from "./components/Auth/AdminOnly";
 import AppWrapper from "./components/AppWrapper";
 import Footer from "./components/Footer";
 import FAQ from "./components/FAQ";
+import AdminRights from "./components/User/AdminRights";
 import {
   BrowserRouter as Router,
   Route,
@@ -18,14 +20,34 @@ import {
   useHistory,
   useLocation
 } from "react-router-dom";
-import AdminRights from "./components/User/AdminRights";
 
 class App extends Component {
-  state = {
-    role: "user",
-    isSignedIn: false,
-    idToken: null,
-    authIsLoaded: false
+  constructor(props) {
+    super(props);
+    this.state = {
+      role: "user",
+      isSignedIn: false,
+      idToken: null,
+      authIsLoaded: false
+    };
+
+    this.createFingerPrint();
+  }
+
+  // Helper function to await a timeout
+  timeout = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+  createFingerPrint = () => {
+    this.timeout(500).then(
+      Fingerprint2.get(function(components) {
+        // an array of: {key: ..., value: ...} pairs
+        // only keep the values
+        const values = components.map(component => component.value);
+        // hash the values
+        const hashedFingerprint = Fingerprint2.x64hash128(values.join(""), 31);
+        axios.defaults.headers.common["Hash"] = hashedFingerprint;
+      })
+    );
   };
 
   // executed in <AppWrapper> after Google API and Auth is initalized
@@ -97,9 +119,7 @@ class App extends Component {
                     <SignIn setAuthorisation={this.setAuthorisation} />
                   )}
                 />
-
                 <Route exact path={"/faq"} component={FAQ} />
-
                 <Route
                   exact
                   path={"/:projectName"}

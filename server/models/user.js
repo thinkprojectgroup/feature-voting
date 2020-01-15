@@ -24,10 +24,14 @@ const User = mongoose.model("User", new mongoose.Schema({
     deleted: {
         type: Boolean,
         default: false,
+    },
+    deviceHash: {
+        type: String,
+        minlength: 1,
+        maxlength: 1024
     }
 }))
 
-// TODO: maybe remove, users should only be created internally
 function validateUser(user) {
     const schema = {
         role: Joi.string().valid("user", "admin", "employee").required(),
