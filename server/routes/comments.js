@@ -40,7 +40,7 @@ router.get("/feature/:id", async (req, res) => {
     res.send(comments);
 });
 
-// Get accepted comments by projectId
+// Get accepted comments by projectName
 router.get("/project/:name", async (req, res) => {
     const project = await Project.findOne({name: req.params.name})
     if (!project || project.deleted) return res.status(404).send("Project name not found")
