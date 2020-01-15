@@ -125,6 +125,8 @@ button.inactive i{
   transition: 0.4s;
 }
 
+span.active{display: inline}
+
 img {
   width: 100%;
   height: auto;
@@ -197,8 +199,8 @@ button.add{
 .feature-text{padding: 35px;}
 
 /*Display feature count next to feature body on mobile devices*/
-.feature-count, .comment-section-button{width: 25%;}
-.feature-text, .comment-section-content{width: 75%;}
+.feature-count, .comment-section-button, .add-button{width: 25%;}
+.feature-text, .comment-section-content, .project-name{width: 75%;}
 
 
 
@@ -268,9 +270,22 @@ textarea[name="description"]{
     height: 200px;
 }
 
+.readMoreText{
+  color: #7fba24 !important;
+  display: block;
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
 
+.short-text{
+  display: block;
+  padding: 15px 0;
+}
 
-
+.feature-list-item{
+  margin-bottom: 50px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
 
 /* For desktop: */
 @media only screen and (min-width: 700px) {
@@ -311,4 +326,9 @@ textarea[name="description"]{
     cursor: zoom-out;
   }
 
+
+  .feature-list-item{
+    margin-bottom: 0;
+    box-shadow: none;
+  }
 }
