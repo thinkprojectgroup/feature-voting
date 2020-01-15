@@ -169,7 +169,6 @@ router.delete("/:id", async (req, res) => {
     for(var feature of project.features){
         feature.deleted = true
         var tempComments = await Comment.find({ featureId: feature.id, deleted: false})
-        console.log("length: " + tempComments.length)
         for(var comment of tempComments){
             comment.deleted = true
             await comment.save()
