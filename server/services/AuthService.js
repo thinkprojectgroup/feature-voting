@@ -1,29 +1,45 @@
 const { OAuth2Client } = require("google-auth-library");
 
-const CLIENT_ID = process.env.CLIENT_ID_1 || require("../config/keys").client_id_1;
+const config = require("../config/keys");
+
+const CLIENT_ID = config.client_id_1;
 const client = new OAuth2Client(CLIENT_ID);
 const { User } = require("../models/user");
 
 const validateToken = async idToken => {
-  const ticket = await client
-    .verifyIdToken({
-      idToken: idToken,
-      audience: CLIENT_ID //multiple clients: [CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
-    })
-    //.then(resp => console.log("resp", resp))
-    .catch(err => null);
-  //res.status(401).send("Verifing the token failed.").end()
+  const ticket = await client.verifyIdToken({
+    idToken: idToken,
+    audience: CLIENT_ID //multiple clients as array: [CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+  });
 
-  console.log(ticket);
-  if (
-    ticket &&
-    ticket.payload.email_verified && //TODO add check for hd (hosted domain) for production
-    /*&& payload.hd === 'thinkproject.de')*/ ticket.payload.aud === CLIENT_ID
-  ) {
+  if (ticket &&
+      ticket.payload.email_verified && 
+    /*&& payload.hd === 'thinkproject.de')*/ //TODO add check for hd (hosted domain) for production
+      ticket.payload.aud === CLIENT_ID) {
     return ticket;
   }
-  //res.status(401).send("Invalid Token.");
   return null;
 };
 
+const isAdmin = async email => {
+  var role = await getUserRole(email);
+
+  if (role == "admin") {
+    return role;
+  }
+};
+
+const getUserRole = async email => {
+  let user = await User.findOne({ email: email });
+
+  if (user) return user.role
+
+  user = new User({ role: "admin", email: email, name: email });
+  await user.save();
+
+  return user.role;
+};
+
 exports.validateToken = validateToken;
+exports.getUserRole = getUserRole;
+exports.isAdmin = isAdmin;
