@@ -1,10 +1,7 @@
 const { OAuth2Client } = require("google-auth-library");
-
-const config = require("../config/keys");
-
-const CLIENT_ID = config.client_id_1;
-const client = new OAuth2Client(CLIENT_ID);
 const { User } = require("../models/user");
+const CLIENT_ID = process.env.CLIENT_ID_1 || require("../config/keys").client_id_1;
+const client = new OAuth2Client(CLIENT_ID);
 
 const validateToken = async idToken => {
   const ticket = await client.verifyIdToken({
