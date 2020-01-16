@@ -4,14 +4,19 @@ import FileBase from "react-file-base64"
 import { storage } from '../firebase-config';
 
 class FeatureForm extends Component {
-    state = {
-        headline: "",
-        description: "",
-        selectedFile: null,
-        loaded: 0,
-        firebaseUrls: [],
-        currentImageName: []
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            headline: "",
+            description: "",
+            firebaseUrls: [],
+            currentImageName: [],
+            images: []
+        };
+
+    }
+
+
     checkMimeType = (files) => {
         //getting file object
         // let files = files
@@ -59,6 +64,7 @@ class FeatureForm extends Component {
             // discard selected file
             alert("Your files are too big!");
             //event.target.value = null
+            return false;
         }
         return true;
     }
@@ -70,39 +76,43 @@ class FeatureForm extends Component {
     }
 
     onChangeImage = (e) => {
-        for(var z = 0; z < e.target.files.length; z++){
-            this.uploadImage(e.target.files[z])
-        }
-    }
-
-
-
-
-    uploadImage(file) {
-        // show the 1st image as example
-        let currentImageName = "firebase-image-" + Date.now();
-        storage.ref(`images/${currentImageName}`).put(file).on('state_changed',
-            (snapshot) => { },
-            (error) => {
-                alert(error);
-            },
-            () => {
-                storage.ref('images').child(currentImageName).getDownloadURL().then(url => {
-                    this.setState(prevState =>({
-                        firebaseUrls: this.state.firebaseUrls.concat([url]),
-                        currentImageName: this.state.currentImageName.concat([currentImageName])
-                    }));
-                })
-
+        const files = e.target.files
+        if(this.checkFileSize(files) && this.checkMimeType(files) && this.maxSelectFile(files)){
+            this.setState({
+                images: files
             })
-
+        }
+        
     }
 
-    onSubmit = (e) => {
+
+    uploadImage = () => {
+        return Promise.all(Array.from(this.state.images).map(file =>
+            new Promise((resolve, reject) => {
+                let currentImageName = "firebase-image-" + Date.now();
+                storage.ref(`images/${currentImageName}`)
+                    .put(file)
+                    .on('state_changed',
+                        (snapshot) => { },
+                        (error) => {
+                            alert(error);
+                        },
+                        () => {
+                            storage.ref('images')
+                                .child(currentImageName)
+                                .getDownloadURL()
+                                .then(url => {
+                                    console.log(url)
+                                    resolve(url)
+                                })
+                        })
+            })))
+    }
+
+
+    onSubmit = async (e) => {
         e.preventDefault();
         //console.log(e);
-        console.log(this.state);
-        //console.log(this.props.projectId);
 
         const config = {
             headers: {
@@ -110,11 +120,16 @@ class FeatureForm extends Component {
             }
         }
 
+
+        const imageUrls = await this.uploadImage()
+
+
         let data = JSON.stringify({
             headline: this.state.headline,
             description: this.state.description,
-            imageUrls: this.state.firebaseUrls
+            imageUrls: imageUrls
         })
+
 
         axios.post('/api/features/' + this.props.projectName, data, config)
             .then((result) => {
