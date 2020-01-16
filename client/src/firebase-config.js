@@ -1,10 +1,10 @@
 import firebase from 'firebase/app';
 import 'firebase/storage';
 
-const apiKey = process.env.APIKEY || require("../src/firebase-keys").apiKey
-const appId = process.env.APPID || require("../src/firebase-keys").appId
-const messagingSenderId = process.env.MESSAGINGSENDERID || require("../src/firebase-keys").messagingSenderId
-const measurementId = process.env.MEASUREMENTID || require("../src/firebase-keys").measurementId
+const apiKey = process.env.REACT_APP_APIKEY || require("../src/firebase-keys").apiKey
+const appId = process.env.REACT_APP_APPID || require("../src/firebase-keys").appId
+const messagingSenderId = process.env.REACT_APP_MESSAGINGSENDERID || require("../src/firebase-keys").messagingSenderId
+const measurementId = process.env.REACT_APP_MEASUREMENTID || require("../src/firebase-keys").measurementId
 
 var firebaseConfig = {
     apiKey: apiKey,
