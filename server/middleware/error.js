@@ -7,14 +7,6 @@ module.exports = async function (err, req, res, next) {
     winston.error(err.message)
     res.status(500).send("Something failed")
 
-    // Delete images if a request has saved images but then failed completing
-    if (req.imageIds) {
-        await Image.deleteMany({
-            _id: {
-                "$in": req.imageIds
-            }
-        })
-    }
-
+    //TODO: discuss if we should keep this
     process.exit()
 }
