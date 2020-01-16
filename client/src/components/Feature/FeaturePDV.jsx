@@ -5,6 +5,7 @@ import config from '../../config';
 //import beispiel from "./img/computer.png";
 import ReadMoreAndLess from 'react-read-more-less';
 
+
 class FeaturePDV extends Component {
   constructor(props){
     super(props);
@@ -17,7 +18,8 @@ class FeaturePDV extends Component {
       commentCount: this.props.commentCount,
       projectId: this.props.projectId,
       upvoted: this.props.upvoted,
-      projectName: this.props.projectName
+      projectName: this.props.projectName,
+      imageUrls: this.props.imageUrls
     };
 
     this.handleUpVote = this.handleUpVote.bind(this);
@@ -66,7 +68,13 @@ class FeaturePDV extends Component {
 
   render() {
     // TODO: Add real imagadata later
-    var image = require("../img/computer.png");
+    var image
+    if(!this.state.imageUrls){
+        image = require("../img/computer.png");
+    }
+    else{
+      image = this.state.imageUrls[0]
+    }
    //  console.log(this.props.projectId);
 
     let description = this.state.description;
@@ -133,7 +141,6 @@ class FeaturePDV extends Component {
           <div
             className="col-3 feature-image"
             style={{backgroundImage: "url(" + image + ")"}} >
-
           </div>
         </Link>
       </div>

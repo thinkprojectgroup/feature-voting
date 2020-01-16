@@ -91,6 +91,7 @@ class ProjectDetailView extends Component {
                   projectId={this.state.projectId}
                   upvoted = {feature.upvoted}
                   projectName = {this.props.match.params.projectName.toString().split("-").join(" ")}
+                  imageUrls = {feature.imageUrls}
               />
               ))}
         </div>
