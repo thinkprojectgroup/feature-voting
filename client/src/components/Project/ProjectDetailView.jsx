@@ -67,10 +67,10 @@ class ProjectDetailView extends Component {
     return (
         <div className="container row">
           <div className="row">
-            <div className="col-11">
+            <div className="col-11 project-name">
               <h1>{this.state.name}</h1>
             </div>
-            <div className="col-1">
+            <div className="col-1 add-button">
               <button onClick={this.toggleShowForm} className="add">
                 <i className="fas fa-plus"></i>
               </button>

@@ -50,20 +50,22 @@ router.post("/:id", async (req, res) => {
     })
     if (error) return res.status(400).send(error.details[0].message)
 
-    const feature = await Project.findOne({ "features._id": req.params.id })
-    if (!feature || feature.deleted) return res.status(404).send("featureId not found")
+    const project = await Project.findOne({ "features._id": req.params.id }, {"features.$." : 1, name: 1 })
+    if (!project || project.features[0].deleted) return res.status(404).send("featureId not found")
 
     const comment = new Comment({
         author: req.userId,
         content: req.body.content,
         featureId: req.params.id,
         name: req.body.name,
-        imageUrls: req.body.imageUrls
+        imageUrls: req.body.imageUrls,
+        projectName: project.name,
+        featureName: project.features[0].headline
     })
     await comment.save()
 
     res.status(201).send(comment)
-})
+}) 
 
 // Switch comments accepted status by it's id
 router.patch("/:id", async (req, res) => {
@@ -74,11 +76,11 @@ router.patch("/:id", async (req, res) => {
 
     try {
         var comment = await Comment.findOneAndUpdate(
-            { _id: req.params.id, deleted: false },
+            { _id: req.params.id, deleted: false, accepted: false },
             { "$set": { "accepted": true } },
             { new: true, useFindAndModify: false })
             .session(session)
-        if (!comment) return res.status(404).send("commentId not found")
+        if (!comment) return res.status(404).send("commentId not found (or already accepted)")
 
         const project = await Project.findOne(
             { "features._id": comment.featureId })

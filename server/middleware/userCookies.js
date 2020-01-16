@@ -5,12 +5,30 @@ const mongoose = require("mongoose")
 module.exports = async (req, res, next) => {
     var userId = req.cookies["userId"];
     if (!userId || !mongoose.Types.ObjectId.isValid(userId)) {
-        // TODO: only create new user if cookie permission is given
-        user = new User({})
-        await user.save()
-        res.cookie('userId', user._id, { httpOnly: true });
-        req.userId = user._id
-        return next()
+        const cookieOptions = {
+            httpOnly: true,
+            expires: new Date('Tue Jul 01 2050 06:01:11 GMT-0400 (EDT)')
+        }
+
+        const deviceHash = req.get('Hash')
+        // Try finding userId by deviceHash instead
+        const user = await User.findOne({ deviceHash: deviceHash })
+        if (!user) {
+            // User not found by cookie or by id, create new user
+            const newUser = new User({ deviceHash: deviceHash })
+            await newUser.save()
+
+            req.userId = newUser.userId
+            res.cookie('userId', newUser._id, cookieOptions);
+
+            return next()
+        } else {
+            // User found by deviceHash
+            req.userId = user.userId
+            res.cookie('userId', user._id, cookieOptions);
+
+            return next()
+        }
     }
     req.userId = userId
     next()
