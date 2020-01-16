@@ -28,13 +28,10 @@ const isAdmin = async email => {
 
 const getUserRole = async email => {
   let user = await User.findOne({ email: email });
-
+  
   if (user) return user.role
 
-  user = new User({ role: "admin", email: email, name: email });
-  await user.save();
-
-  return user.role;
+  return null;
 };
 
 exports.validateToken = validateToken;
