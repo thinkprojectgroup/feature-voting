@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose")
 const { Project } = require("../models/project")
 const { validateFeature, validateSearch, cleanFeatures } = require("../models/feature")
+const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
 
 // Post new feature to given projectId. Request can include base64 imageData to save images.
 router.post("/:projectName", async (req, res) => {
@@ -131,6 +132,12 @@ router.delete("/:projectId/:featureId", async (req, res) => {
 
     feature.deleted = true
     await project.save()
+
+    var tempComments = await Comment.find({ featureId: req.params.featureId, deleted: false})
+        for(var comment of tempComments){
+            comment.deleted = true
+            await comment.save()
+        }
 
     res.status(202).send(feature)
 })
