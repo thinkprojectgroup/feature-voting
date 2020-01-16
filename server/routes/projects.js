@@ -21,10 +21,12 @@ router.get("/", async (req, res) => {
                     $filter: {
                         input: '$features',
                         as: 'feature',
+                        cond: {
                         $and: [
                             { $ne: ['$$feature.deleted', true] },
                             { $eq: ['$$feature.acceptedStatus', true] }
                         ]
+                    }
                     }
                 },
                 name: true,
@@ -52,10 +54,12 @@ router.get("/:id", async (req, res) => {
                     $filter: {
                         input: '$features',
                         as: 'feature',
-                        $and: [
-                            { $ne: ['$$feature.deleted', true] },
-                            { $eq: ['$$feature.acceptedStatus', true] }
-                        ]
+                        cond: {
+                            $and: [
+                                { $ne: ['$$feature.deleted', true] },
+                                { $eq: ['$$feature.acceptedStatus', true] }
+                            ]
+                        }
                     }
                 },
                 name: true,
@@ -82,10 +86,12 @@ router.get("/name/:name", async (req, res) => {
                     $filter: {
                         input: '$features',
                         as: 'feature',
-                        $and: [
-                            { $ne: ['$$feature.deleted', true] },
-                            { $eq: ['$$feature.acceptedStatus', true] }
-                        ]
+                        cond: {
+                            $and: [
+                                { $ne: ['$$feature.deleted', true] },
+                                { $eq: ['$$feature.acceptedStatus', true] }
+                            ]
+                        }
                     }
                 },
                 name: true,
@@ -114,10 +120,12 @@ router.get("/unaccepted/:name", async (req, res) => {
                     $filter: {
                         input: '$features',
                         as: 'feature',
-                        $and: [
-                            { $ne: ['$$feature.deleted', true] },
-                            { $eq: ['$$feature.acceptedStatus', true] }
-                        ]
+                        cond: {
+                            $and: [
+                                { $ne: ['$$feature.deleted', true] },
+                                { $eq: ['$$feature.acceptedStatus', true] }
+                            ]
+                        }
                     }
                 },
                 name: true,
