@@ -113,13 +113,17 @@ router.delete("/:id", async (req, res) => {
             .session(session)
         if (!comment) return res.status(404).send("commentId not found")
 
-        const project = await Project.findOne(
-            { "features._id": comment.featureId })
-            .session(session)
-        const feature = project.features.id(comment.featureId)
-        feature.commentCount--
-
-        await project.save()
+        // Only adjust commentCount in feature if comment has been accepted before.
+        if(comment.accepted === true) { 
+            const project = await Project.findOne(
+                { "features._id": comment.featureId })
+                .session(session)
+            const feature = project.features.id(comment.featureId)
+            feature.commentCount--
+    
+            await project.save()
+        }
+        
         await session.commitTransaction();
 
         res.status(200).send(comment)
