@@ -56,6 +56,12 @@ class CommentReview extends Component{
     handleProject = (e) => {
         e.preventDefault()
         let selectedName = e.target.value
+        if(selectedName === ""){
+            this.setState({
+                outputComments: []
+            }, () => this.setState({ outputComments: this.state.comments }))
+            return;
+        }
         let selectedComments = this.state.comments.filter(comment => {
             return comment.projectName === selectedName
         })
@@ -74,9 +80,10 @@ class CommentReview extends Component{
         return(
             <div>
                 <form>
+                    <label>Filter Comments by Project</label>
                     <select onChange={this.handleProject.bind(this)}>
-                        <option>
-                            Filter by Project
+                        <option value="">
+                            Show all Comments
                         </option>
                         {this.state.filteredProjectNames.map(name => (
                             <option value={name}> 
