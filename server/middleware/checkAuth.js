@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
   if (!idToken) return res.status(302).send('Login Required.')
 
   const loginTicket = await validateToken(idToken)
-  if (!loginTicket) return res.status(401).send('Login Not Valid')
+  if (!loginTicket) return res.status(401).send('Login Invalid.')
 
   const authorised = await isAdmin(loginTicket.payload.email);
   if (!authorised) return res.status(401).send("Unauthorised.");
