@@ -5,6 +5,7 @@ const { Project, validateProject } = require("../models/project")
 const { validateToken, userCheck } = require('../services/AuthService')
 const { cleanFeatures } = require("../models/feature")
 const checkAuth = require('../middleware/checkAuth')
+const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
 
 // Get all projects
 router.get("/", checkAuth, async (req, res) => {
@@ -159,7 +160,18 @@ router.delete("/:id", async (req, res) => {
         { "$set": { "deleted": true } },
         { useFindAndModify: false, new: true }
     )
+
     if (!project) return res.status(404).send("projectId not found")
+
+    for(var feature of project.features){
+        feature.deleted = true
+        var tempComments = await Comment.find({ featureId: feature.id, deleted: false})
+        for(var comment of tempComments){
+            comment.deleted = true
+            await comment.save()
+        }
+    }
+    await project.save()
 
     res.status(202).send(project)
 })
