@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
                         as: 'feature',
                         cond: {
                         $and: [
-                            { $ne: ['$$feature.deleted', true] },
+                            { $eq: ['$$feature.deleted', false] },
                             { $eq: ['$$feature.acceptedStatus', true] }
                         ]
                     }
@@ -56,7 +56,7 @@ router.get("/:id", async (req, res) => {
                         as: 'feature',
                         cond: {
                             $and: [
-                                { $ne: ['$$feature.deleted', true] },
+                                { $eq: ['$$feature.deleted', false] },
                                 { $eq: ['$$feature.acceptedStatus', true] }
                             ]
                         }
@@ -88,7 +88,7 @@ router.get("/name/:name", async (req, res) => {
                         as: 'feature',
                         cond: {
                             $and: [
-                                { $ne: ['$$feature.deleted', true] },
+                                { $eq: ['$$feature.deleted', false] },
                                 { $eq: ['$$feature.acceptedStatus', true] }
                             ]
                         }
@@ -122,8 +122,8 @@ router.get("/unaccepted/:name", async (req, res) => {
                         as: 'feature',
                         cond: {
                             $and: [
-                                { $ne: ['$$feature.deleted', true] },
-                                { $eq: ['$$feature.acceptedStatus', true] }
+                                { $eq: ['$$feature.deleted', false] },
+                                { $eq: ['$$feature.acceptedStatus', false] }
                             ]
                         }
                     }
