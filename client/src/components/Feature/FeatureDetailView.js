@@ -99,18 +99,26 @@ class FeatureDetailView extends Component {
           <div className="col-1 feature-count">
 
             {this.state.upvoted === false ? (
-            <button onClick={this.toggleDivUpvote} className="feature-upvote-button">
+            <button onClick={this.toggleDivUpvote}>
               <i className="fas fa-angle-up"></i>
             </button>
-            ): null }
+            ):
+                <button className="inactive">
+                  <i className="fas fa-angle-up"></i>
+                </button>
+            }
 
             <p>{this.state.upvotes}</p>
 
             {this.state.upvoted === true ? (
-              <button onClick={this.toggleDivDownVote} className="feature-downvote-button">
+              <button onClick={this.toggleDivDownVote}>
                 <i className="fas fa-angle-down"></i>
               </button>
-            ) : null}
+            ) :
+                <button className="inactive">
+                  <i className="fas fa-angle-down"></i>
+                </button>
+            }
 
           </div>
           <div className="col-7 feature-text">

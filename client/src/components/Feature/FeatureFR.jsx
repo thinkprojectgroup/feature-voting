@@ -19,6 +19,7 @@ class FeatureFR extends Component {
 
   handleAccept = () => {
     var self = this;
+    //this.props.reRender(this.state.title, this.state.description);
     axios
       .patch("/api/features/accept/" + this.state.featureId)
       .then(function(response) {

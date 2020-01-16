@@ -39,6 +39,23 @@ class ProjectDetailView extends Component {
 
     console.log(this.state.features);
   };
+  /*reRender = (title, description) => {
+    if (role == "admin") {
+      var newUser = this.state.employees.filter(
+        employee => employee.email == email
+      );
+      this.setState({
+        admins: this.state.admins.concat(newUser)
+      });
+    }
+
+    if (role == "employee") {
+      var newUser = this.state.admins.filter(admin => admin.email == email);
+      this.setState({
+        employees: this.state.employees.concat(newUser)
+      });
+    }
+  };*/
 
   componentDidMount() {
     //console.log(this.props.match.params);
@@ -78,7 +95,7 @@ class ProjectDetailView extends Component {
           </div>
         </div>
         {this.state.showForm ? (
-          <FeatureForm projectId={this.state.projectId} />
+          <FeatureForm projectId={this.state.projectId} submited={false} />
         ) : null}
 
         {this.state.features

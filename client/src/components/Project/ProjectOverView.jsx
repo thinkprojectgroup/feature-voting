@@ -19,6 +19,7 @@ class ProjectOverView extends Component {
     this.setState({ show: !this.state.show });
     // console.log(this.state.show);
   };
+
   async componentDidMount() {
     const promise = await axios.get(config.url + `/api/projects/`);
     const projects = promise.data;
@@ -28,14 +29,15 @@ class ProjectOverView extends Component {
 
   handleDelete = id => {
     var self = this;
+    var newState = self.state.projects.filter(project => project._id != id);
+    self.setState({
+      projects: newState
+    });
     // console.log(comment._id)
     axios
       .delete("/api/projects/" + id)
       .then(function(response) {
         console.log(response);
-        self.setState({
-          clicked: true
-        });
       })
       .catch(function(error) {
         console.log(error);
