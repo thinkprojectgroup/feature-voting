@@ -44,7 +44,10 @@ router.get("/:id", async (req, res) => {
 router.post("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("FeatureId doesn't fit id schema")
 
-    const { error } = validateComment(req.body)
+    const { error } = validateComment({
+        content: req.body.content,
+        name: req.body.name
+    })
     if (error) return res.status(400).send(error.details[0].message)
 
     const project = await Project.findOne({ "features._id": req.params.id }, {"features.$." : 1, name: 1 })
@@ -54,9 +57,10 @@ router.post("/:id", async (req, res) => {
         author: req.userId,
         content: req.body.content,
         featureId: req.params.id,
+        name: req.body.name,
+        imageUrls: req.body.imageUrls,
         projectName: project.name,
-        featureName: project.features[0].headline,
-        name: req.body.name
+        featureName: project.features[0].headline
     })
     await comment.save()
 

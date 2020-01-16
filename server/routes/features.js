@@ -3,23 +3,19 @@ const router = express.Router();
 const mongoose = require("mongoose")
 const { Project } = require("../models/project")
 const { validateFeature, validateSearch, cleanFeatures } = require("../models/feature")
-const saveImages = require("../middleware/saveImages")
 
 // Post new feature to given projectId. Request can include base64 imageData to save images.
-router.post("/:projectId", saveImages, async (req, res) => {
+router.post("/:projectName", async (req, res) => {
     const { error } = validateFeature({
         headline: req.body.headline,
         description: req.body.description
     })
     if (error) return res.status(400).send(error.details[0].message)
 
-    if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) {
-        return res.status(400).send("ProjectId doesn't fit id schema")
-    }
     // Using find & save instead of update for featureSchema.pre method to work properly
-    const project = await Project.findOne({ _id: req.params.projectId, deleted: false })
+    const project = await Project.findOne({ name: req.params.projectName, deleted: false })
     if (!project) {
-        return res.status(404).send("Invalid projectId")
+        return res.status(404).send("Invalid projectName")
     }
 
     const feature = {
@@ -27,7 +23,7 @@ router.post("/:projectId", saveImages, async (req, res) => {
         description: req.body.description,
         employeeIds: [],
         userIds: [],
-        imageIds: req.imageIds,
+        imageUrls: req.body.imageUrls,
         creator: req.userId
     }
 
