@@ -31,11 +31,7 @@ const getUserRole = async email => {
   
   if (user) return user.role
 
-<<<<<<< HEAD
   return null
-=======
-  return null;
->>>>>>> 130da52035b7fc33fb44fe00424fd0dedef067fa
 };
 
 exports.validateToken = validateToken;
