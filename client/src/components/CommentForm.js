@@ -13,8 +13,16 @@ class CommentForm extends Component {
             firebaseUrls: [],
             currentImageName: [],
             images: [],
-            featureId: this.props.featureId
+            featureId: this.props.featureId,
+            showResponse: false
         };
+    }
+
+    handleResponseButton = () => {
+            this.setState({
+                showResponse: false
+            })
+            this.props.toggleShowForm()
     }
 
 
@@ -129,6 +137,9 @@ class CommentForm extends Component {
         axios.post('/api/comments/' + this.state.featureId, data, config)
             .then((result) => {
                 console.log(result);
+                this.setState({
+                    showResponse: true
+                })
             })
             .catch(error => {
                 console.log(error.response);
@@ -141,6 +152,7 @@ class CommentForm extends Component {
         return (
 
             <div className="feature-form-container row col-12">
+                {!this.state.showResponse ? (
                 <form onSubmit={this.onSubmit} className="feature-form">
                     <label>
                         Name (optional):
@@ -171,6 +183,16 @@ class CommentForm extends Component {
 
                     <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>
+                ) : 
+                    <div className="comment-form-response">
+                         <p>
+                            Thank you for submitting a comment! Your comment will be reviewed by an admin before you can see it here.
+                        </p>
+                         <button className="comment-form-response-button" onClick={this.handleResponseButton.bind(this)}>
+                            Ok, great!
+                        </button>
+                    </div>
+                }
             </div>
         );
     }
