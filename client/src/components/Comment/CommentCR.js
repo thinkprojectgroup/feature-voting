@@ -4,9 +4,11 @@ import {Button} from 'reactstrap';
 import {Link} from 'react-router-dom';
 import config from '../../config';
 
-class CommentCR extends Component {
-  constructor (props) {
-    super(props)
+
+
+class CommentCR extends Component{
+    constructor(props){
+    super(props);
 
     this.state = {
         commentId: this.props.commentId,
@@ -19,30 +21,29 @@ class CommentCR extends Component {
         projectName: this.props.projectName,
         featureName: this.props.featureName
     };
-   }
- }
-
-  componentDidMount = () => {
-    const options = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
     }
-
+   
+    componentDidMount = () => {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(this.state.commentDate).toLocaleDateString('de-DE', options);
+    this.setState({
+       formattedDate: date
+    });
+    }
+    
     handleAccept = () => {
         var self = this; 
         axios.patch("/api/comments/" + this.state.commentId)
         .then(function (response) {
         console.log(response);
         self.setState({
-          clicked: true
+            clicked: true
         })
-      })
-      .catch(function (error) {
-        console.log(error)
-      })
-  }
+        })
+        .catch(function (error) {
+        console.log(error);
+        });
+    }
 
     handleDelete = () => {
         var self = this; 
@@ -94,4 +95,4 @@ class CommentCR extends Component {
     }
 }
 
-export default CommentCR
+export default CommentCR;
