@@ -12,13 +12,8 @@ class ProjectOverView extends Component {
   }
 
   componentDidMount () {
-    console.log('projectOverView', this.props.idToken)
     axios
-      .get(config.url + `/api/projects/`, {
-        headers: {
-          Authentication: 'Bearer ' + this.props.idToken
-        }
-      })
+      .get(config.url + `/api/projects/`)
       .then(response => {
         this.setState({
           projects: response.data

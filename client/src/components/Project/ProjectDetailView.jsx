@@ -76,7 +76,7 @@ class ProjectDetailView extends Component {
             </div>
           </div>
           {this.state.showForm ? (
-              <FeatureForm projectId={this.state.projectId} />
+              <FeatureForm projectName={this.props.match.params.projectName.toString().split("-").join(" ")} />
           ): null}
 
           {this.state.features.sort((a,b) => b.voteCount - a.voteCount)
@@ -90,6 +90,7 @@ class ProjectDetailView extends Component {
                   projectId={this.state.projectId}
                   upvoted = {feature.upvoted}
                   projectName = {this.props.match.params.projectName.toString().split("-").join(" ")}
+                  imageUrls = {feature.imageUrls}
               />
               ))}
         </div>

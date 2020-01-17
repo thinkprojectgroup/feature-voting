@@ -2,16 +2,18 @@ import React, { Component } from "react";
 import axios from "axios";
 import FileBase from "react-file-base64"
 import { storage } from '../firebase-config';
+import config from '../config'
 
-class FeatureForm extends Component {
+class CommentForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            headline: "",
-            description: "",
+            name: "",
+            content: "",
             firebaseUrls: [],
             currentImageName: [],
-            images: []
+            images: [],
+            featureId: this.props.featureId
         };
     }
 
@@ -118,13 +120,13 @@ class FeatureForm extends Component {
 
 
         let data = JSON.stringify({
-            headline: this.state.headline,
-            description: this.state.description,
+            name: this.state.name,
+            content: this.state.content,
             imageUrls: imageUrls
         })
 
 
-        axios.post('/api/features/' + this.props.projectName, data, config)
+        axios.post('/api/comments/' + this.state.featureId, data, config)
             .then((result) => {
                 console.log(result);
             })
@@ -134,32 +136,32 @@ class FeatureForm extends Component {
     }
 
     render() {
-        const { headline, description } = this.state;
+        const { name, content } = this.state;
 
         return (
 
             <div className="feature-form-container row col-12">
                 <form onSubmit={this.onSubmit} className="feature-form">
                     <label>
-                        Title:
+                        Name (optional):
                     </label>
                     <input type="text"
-                        name="headline"
-                        id="headline"
+                        name="name"
+                        id="name"
                         className="headline col-12"
-                        value={headline}
+                        value={name}
                         onChange={this.onChange}
                         required
                     />
 
                     <label>
-                        Description:
+                        Content:
                     </label>
                     <textarea
-                        name="description"
-                        id="description"
+                        name="content"
+                        id="content"
                         className="description col-12"
-                        value={description}
+                        value={content}
                         onChange={this.onChange}
                         required
                     />
@@ -175,4 +177,4 @@ class FeatureForm extends Component {
 
 }
 
-export default FeatureForm;
+export default CommentForm;
