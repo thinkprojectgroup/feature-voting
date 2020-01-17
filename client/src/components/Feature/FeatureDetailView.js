@@ -5,6 +5,7 @@ import "./css/FeatureDetailView.css";
 import Comment from '../Comment/Comment';
 import config from '../../config';
 import { Carousel } from 'react-responsive-carousel';
+import CommentForm from '../CommentForm';
 
 class FeatureDetailView extends Component {
   constructor(props) {
@@ -154,6 +155,19 @@ class FeatureDetailView extends Component {
 
         <hr />
 
+        <div className="col-1 add-button">
+            <button onClick={this.toggleShowForm} className="add">
+                <i className="fas fa-plus"></i>
+            </button>
+        </div>
+        
+        <div>
+        {this.state.showForm ? (
+            <CommentForm featureId={this.props.match.params.featureId} />
+        ): null}
+        </div>
+
+
         <div className="comment-section">
           <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
           {this.state.comments.map(comment => (
@@ -164,6 +178,7 @@ class FeatureDetailView extends Component {
               deleted={comment.deleted}
               date={comment.dateCreated}
               count={this.state.commentCount}
+              imageUrls={comment.imageUrls}
             />
           ))}
         </div>

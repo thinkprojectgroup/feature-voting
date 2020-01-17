@@ -19,9 +19,11 @@ router.get("/", checkAuth, async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true],
-                            $cmp: ['$$feature.acceptedStatus', false]
-                        }
+                        $and: [
+                            { $eq: ['$$feature.deleted', false] },
+                            { $eq: ['$$feature.acceptedStatus', true] }
+                        ]
+                    }
                     }
                 },
                 name: true,
@@ -50,8 +52,10 @@ router.get("/:id", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true],
-                            $cmp: ['$$feature.acceptedStatus', false]
+                            $and: [
+                                { $eq: ['$$feature.deleted', false] },
+                                { $eq: ['$$feature.acceptedStatus', true] }
+                            ]
                         }
                     }
                 },
@@ -80,8 +84,10 @@ router.get("/name/:name", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true],
-                            $cmp: ['$$feature.acceptedStatus', false]
+                            $and: [
+                                { $eq: ['$$feature.deleted', false] },
+                                { $eq: ['$$feature.acceptedStatus', true] }
+                            ]
                         }
                     }
                 },
@@ -112,8 +118,10 @@ router.get("/unaccepted/:name", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true],
-                            $cmp: ['$$feature.acceptedStatus', true]
+                            $and: [
+                                { $eq: ['$$feature.deleted', false] },
+                                { $eq: ['$$feature.acceptedStatus', false] }
+                            ]
                         }
                     }
                 },
