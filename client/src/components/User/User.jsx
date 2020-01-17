@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Button } from "reactstrap";
 
 class User extends Component {
   constructor(props) {
@@ -47,19 +46,20 @@ class User extends Component {
         {!this.state.clicked ? (
           <div>
             {this.props.newRole == "admin" ? (
-              <div>
-                <p>{this.state.email}</p>{" "}
-                <button onClick={() => this.handlePromote()} className="Submit">
-                  Promote to Admin
-                </button>
+              <div className="row">
+                <div className="col-1">
+                  <button className="accept" onClick={() => this.handlePromote()}><i className="fas fa-plus"></i></button>
+                </div>
+                <div className="col-11">
+                  <p>{this.state.email}</p>{" "}
+                </div>
               </div>
             ) : (
-              <div>
-                <Button onClick={() => this.handlePromote()}>
-                  <i className="fas fa-times"></i>
-                </Button>
-
-                <div>
+              <div className="row">
+                <div className="col-1">
+                  <button className="decline" onClick={() => this.handlePromote()}><i className="fas fa-times"></i></button>
+                </div>
+                <div className="col-11">
                   <p>{this.state.email}</p>{" "}
                 </div>
               </div>

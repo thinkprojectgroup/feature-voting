@@ -34,13 +34,20 @@ class AdminRights extends Component {
   };
 
   render() {
-    var image = require("../img/computer.png");
 
     return (
       <div className="container">
+
+
+          <div className="row">
+            <h1>Admin Rights</h1>
+          </div>
+
+
         <div>
-          <h3>{"Users"}</h3>
+
           {this.state.employees.map(employee => (
+
             <User
               email={employee.email}
               newRole="admin"
