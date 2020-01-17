@@ -68,12 +68,12 @@ class FeaturePDV extends Component {
 
   render() {
     // TODO: Add real imagadata later
-    var image
+    let image;
     if(!this.state.imageUrls){
-        image = require("../img/computer.png");
+        image = null;
     }
     else{
-      image = this.state.imageUrls[0]
+      image = this.state.imageUrls[0];
     }
    //  console.log(this.props.projectId);
 
@@ -113,36 +113,68 @@ class FeaturePDV extends Component {
 
         </div>
 
-          <div className="col-8 feature-text">
-            <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
-              <div className="title">
+        {image === null
+
+            ?(
+            <div className="col-10 feature-text">
+              <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                <div className="title">
 
                   <h3>{this.state.title}</h3>{" "}
+                </div>
+              </Link>
+              <div className="description">
+
+                <ReadMoreAndLess
+                    ref={this.ReadMore}
+                    className="read-more-content"
+                    charLimit={151}
+                    readMoreText="Read more"
+                    readLessText="Read less"
+                >
+                  {description}
+                </ReadMoreAndLess>
               </div>
-            </Link>
-            <div className="description">
 
-              <ReadMoreAndLess
-                  ref={this.ReadMore}
-                  className="read-more-content"
-                  charLimit={151}
-                  readMoreText="Read more"
-                  readLessText="Read less"
-              >
-                {description}
-              </ReadMoreAndLess>
-            </div>
+              <div className="comment-count">
+                <p>{this.state.commentCount} comments</p>
+              </div>
+            </div>)
 
-            <div className="comment-count">
-              <p>{this.state.commentCount} comments</p>
+            :(
+             <div >
+                <div className="col-8 feature-text">
+                  <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                    <div className="title">
+
+                        <h3>{this.state.title}</h3>{" "}
+                    </div>
+                  </Link>
+                  <div className="description">
+
+                    <ReadMoreAndLess
+                        ref={this.ReadMore}
+                        className="read-more-content"
+                        charLimit={151}
+                        readMoreText="Read more"
+                        readLessText="Read less"
+                    >
+                      {description}
+                    </ReadMoreAndLess>
+                  </div>
+
+                  <div className="comment-count">
+                    <p>{this.state.commentCount} comments</p>
+                  </div>
+                </div>
+              <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                <div
+                  className="col-3 feature-image"
+                  style={{backgroundImage: "url(" + image + ")"}} >
+                </div>
+              </Link>
             </div>
-          </div>
-        <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
-          <div
-            className="col-3 feature-image"
-            style={{backgroundImage: "url(" + image + ")"}} >
-          </div>
-        </Link>
+          )}
       </div>
     );
   }
