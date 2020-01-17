@@ -59,14 +59,12 @@ class FeatureFR extends Component {
       <div>
         {!this.state.clicked ? (
           <div className="row feature-list-item">
-            <div className="col-1 feature-count">
-              <Button className="accept" onClick={this.handleAccept}>
-                <i className="fas fa-check"></i>
-              </Button>
-              <Button className="decline" onClick={this.handleDelete}>
-                <i className="fas fa-times"></i>
-              </Button>
+            <div className="comment-section-button col-1">
+              <Button className="accept" onClick={() => this.handleAccept()}><i className="fas fa-check"></i></Button>
+              <Button className="decline" onClick={() => this.handleDelete()}><i className="fas fa-times"></i></Button>
             </div>
+
+
             <div className="col-8 feature-text">
               <div className="title">
                 <h3>{this.state.title}</h3>{" "}

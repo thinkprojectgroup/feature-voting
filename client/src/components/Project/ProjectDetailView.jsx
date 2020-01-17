@@ -101,6 +101,7 @@ class ProjectDetailView extends Component {
             />
           ))}
         <div>
+          < hr />
           <FeatureReview
             projectName={this.props.match.params.projectName
               .toString()
