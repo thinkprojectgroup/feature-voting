@@ -23,6 +23,7 @@ class CommentForm extends Component {
                 showResponse: false
             })
             this.props.toggleShowForm()
+        document.getElementById("form-button").classList.toggle("cross");
     }
 
 
@@ -183,15 +184,17 @@ class CommentForm extends Component {
 
                     <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>
-                ) : 
-                    <div className="comment-form-response">
-                         <p>
-                            Thank you for submitting a comment! Your comment will be reviewed by an admin before you can see it here.
+                ) :
+                    <div className="form-response">
+                        <p className="col-10">
+                            Thank you for submitting a comment! <br />Your comment will be reviewed by an admin before you can see it here.
                         </p>
-                         <button className="comment-form-response-button" onClick={this.handleResponseButton.bind(this)}>
+                        <button className="submit col-2" onClick={this.handleResponseButton.bind(this)}>
                             Ok, great!
                         </button>
                     </div>
+
+
                 }
             </div>
         );

@@ -21,6 +21,8 @@ class FeatureForm extends Component {
             showResponse: false
         })
         this.props.toggleShowForm()
+
+        document.getElementById("form-button").classList.toggle("cross");
     }
 
 
@@ -183,11 +185,11 @@ class FeatureForm extends Component {
                 </form>
                 
                 ) : 
-                    <div className="feature-form-response">
-                         <p>
-                            Thank you for submitting a feature! Your feature will be reviewed by an admin before you can see it here.
+                    <div className="form-response">
+                         <p className="col-10">
+                            Thank you for submitting a feature! <br />Your feature will be reviewed by an admin before you can see it here.
                         </p>
-                         <button className="feature-form-response-button" onClick={this.handleResponseButton.bind(this)}>
+                         <button className="submit col-2" onClick={this.handleResponseButton.bind(this)}>
                             Ok, great!
                         </button>
                     </div>
