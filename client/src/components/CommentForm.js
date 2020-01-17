@@ -142,32 +142,35 @@ class CommentForm extends Component {
 
             <div className="feature-form-container row col-12">
                 <form onSubmit={this.onSubmit} className="feature-form">
-                    <label>
-                        Name (optional):
-                    </label>
-                    <input type="text"
-                        name="name"
-                        id="name"
-                        className="headline col-12"
-                        value={name}
-                        onChange={this.onChange}
-                        required
-                    />
+                    <h5 className="col-12">Create a new comment:</h5>
+                    <div className="col-6 name">
+                        <label>
+                            Name (optional):
+                        </label>
+                        <input type="text"
+                               name="name"
+                               className="headline"
+                               value={name}
+                               onChange={this.onChange}/>
+                    </div>
 
-                    <label>
-                        Content:
-                    </label>
-                    <textarea
-                        name="content"
-                        id="content"
-                        className="description col-12"
-                        value={content}
-                        onChange={this.onChange}
-                        required
-                    />
+                    <div className="col-6 filepicker">
+                        <label>Upload Your Images </label>
+                        <input type="file" multiple className="process__upload-btn" onChange={(e) => this.onChangeImage(e)} />
+                    </div>
 
-                    <label>Upload Your Images </label>
-                    <input type="file" multiple className="process__upload-btn" onChange={(e) => this.onChangeImage(e)} />
+                    <div className="col-12 content">
+                        <label>
+                            Content:
+                        </label>
+                        <input type="text"
+                               name="content"
+                               className="description"
+                               value={content}
+                               onChange={this.onChange}/>
+                    </div>
+
+
 
                     <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>
