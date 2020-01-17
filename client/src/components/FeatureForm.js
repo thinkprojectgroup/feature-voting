@@ -11,8 +11,16 @@ class FeatureForm extends Component {
             description: "",
             firebaseUrls: [],
             currentImageName: [],
-            images: []
+            images: [],
+            showResponse: false
         };
+    }
+
+    handleResponseButton = () => {
+        this.setState({
+            showResponse: false
+        })
+        this.props.toggleShowForm()
     }
 
 
@@ -127,6 +135,9 @@ class FeatureForm extends Component {
         axios.post('/api/features/' + this.props.projectName, data, config)
             .then((result) => {
                 console.log(result);
+                this.setState({
+                    showResponse: true
+                })
             })
             .catch(error => {
                 console.log(error.response);
@@ -139,6 +150,7 @@ class FeatureForm extends Component {
         return (
 
             <div className="feature-form-container row col-12">
+                {!this.state.showResponse ? (
                 <form onSubmit={this.onSubmit} className="feature-form">
                     <label>
                         Title:
@@ -169,6 +181,17 @@ class FeatureForm extends Component {
 
                     <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>
+                
+                ) : 
+                    <div className="feature-form-response">
+                         <p>
+                            Thank you for submitting a feature! Your feature will be reviewed by an admin before you can see it here.
+                        </p>
+                         <button className="feature-form-response-button" onClick={this.handleResponseButton.bind(this)}>
+                            Ok, great!
+                        </button>
+                    </div>
+                }
             </div>
         );
     }
