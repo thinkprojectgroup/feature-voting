@@ -4,40 +4,20 @@ import axios from 'axios'
 import config from '../../config'
 import { withRouter } from 'react-router-dom'
 import { Button } from 'reactstrap'
-import AlreadySignedIn from './AlreadySignedIn'
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 class SignIn extends Component {
   constructor (props) {
     super(props)
 
     this.role = this.props.role ? this.props.role : null
-  }
-
-  componentDidMount () {
-    if (this.props.isSignedIn)
-      this.props.history.push('/')
-      // setTimeout(() => this.redirectTo('/'), 5000)
-
-    window.gapi.load('auth2', () => {
-      var opts = {
-        onSuccess: this.onSuccess,
-        onFailure: this.onFailure
-      }
-
-      window.gapi.signin2.render('loginButton', opts)
-    })
-
-    window.gapi.load('signin2', () => {
-      var opts = {
-        width: 200,
-        height: 50
-      }
-      window.gapi.signin2.render('loginButton', opts)
-    })
+    this.state = {
+      signInSucesss: false
+    }
   }
 
   onSuccess = googleUser => {
-    var idToken = googleUser.getAuthResponse().id_token
+    var idToken = googleUser.tokenId;
     console.log('Logged In.')
 
     axios
@@ -77,13 +57,28 @@ class SignIn extends Component {
 
   render () {
     //if (this.props.isSignedIn) return <AlreadySignedIn logout={this.logout} />
-
+    console.log(this.props.isSignedIn);
     return (      
       <div className='container'>
-        <div id='loginButton'>Login</div>
-        <Button href='' id='logoutButton' onClick={this.logout}>
-          Logout
-        </Button>
+        {/* <div id='loginButton' data-onsucess={this.onSuccess}>Login</div> */}
+
+        {!this.props.isSignedIn ? (
+          <GoogleLogin
+            clientId="596132698210-554c0ihpr0kp9vg13v7irajr55v8m4eq.apps.googleusercontent.com"
+            buttonText="Login"
+            scope="openid email"
+            onSuccess={this.onSuccess}
+            onFailure={this.onFailure}
+            cookiePolicy={'single_host_origin'}
+          />
+        ) : (
+          <GoogleLogout 
+            clientId="596132698210-554c0ihpr0kp9vg13v7irajr55v8m4eq.apps.googleusercontent.com"
+            onLogoutSuccess={this.logout}
+          />
+        )}
+        
+        
       </div>
     )
   }

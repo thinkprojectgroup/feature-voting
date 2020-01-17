@@ -110,7 +110,7 @@ class App extends Component {
                   )}
                 />
                 <Route exact path={'/faq'} component={FAQ} />
-                <Route path={'/:projectName'} component={ProjectDetailView} />
+                <Route exact path={'/:projectName'} component={ProjectDetailView} />
                 <Route path={'/:projectName/:featureId'} component={FeatureDetailView} />
               </Switch>
               <Footer />

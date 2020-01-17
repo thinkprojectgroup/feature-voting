@@ -31,10 +31,7 @@ const getUserRole = async email => {
 
   if (user) return user.role
 
-  user = new User({ role: "admin", email: email, name: email });
-  await user.save();
-
-  return user.role;
+  return null
 };
 
 exports.validateToken = validateToken;
