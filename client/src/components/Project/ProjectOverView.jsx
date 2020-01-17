@@ -69,26 +69,15 @@ class ProjectOverView extends Component {
 
         {this.state.projects.map(project => (
           <div>
-            <Link
-              to={
-                "/" +
-                project.name
-                  .toString()
-                  .split(" ")
-                  .join("-")
-              }
-            >
+            <Link to={"/" + project.name.toString().split(" ").join("-")}>
               <div className="row project-list-item col-11">
                 <h3>{project.name}</h3>{" "}
               </div>
             </Link>
-            <div className="col-1">
-              <button
-                onClick={() => this.handleDelete(project._id)}
-                className="decline"
-              >
-                <i className="fas fa-times"></i>
-              </button>
+            <div className="col-1 delete-project">
+              <button onClick={() => this.handleDelete(project._id)} className="decline" >
+              <i className="fas fa-times"></i>
+            </button>
             </div>
           </div>
         ))}

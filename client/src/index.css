@@ -165,6 +165,14 @@ button.decline{
   background-color: #f15a24;
 }
 
+.delete-project button.decline, .delete-project{
+  float:right;
+}
+
+.delete-project{
+  padding: 10px 15px;
+}
+
 button.accept{
   background-color: #7fba24;
 }
