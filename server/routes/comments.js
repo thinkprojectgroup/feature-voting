@@ -44,7 +44,10 @@ router.get("/:id", async (req, res) => {
 router.post("/:id", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("FeatureId doesn't fit id schema")
 
-    const { error } = validateComment(req.body)
+    const { error } = validateComment({
+        content: req.body.content,
+        name: req.body.name
+    })
     if (error) return res.status(400).send(error.details[0].message)
 
     const project = await Project.findOne({ "features._id": req.params.id }, {"features.$." : 1, name: 1 })
@@ -54,9 +57,10 @@ router.post("/:id", async (req, res) => {
         author: req.userId,
         content: req.body.content,
         featureId: req.params.id,
+        name: req.body.name,
+        imageUrls: req.body.imageUrls,
         projectName: project.name,
-        featureName: project.features[0].headline,
-        name: req.body.name
+        featureName: project.features[0].headline
     })
     await comment.save()
 
@@ -72,11 +76,11 @@ router.patch("/:id", async (req, res) => {
 
     try {
         var comment = await Comment.findOneAndUpdate(
-            { _id: req.params.id, deleted: false },
+            { _id: req.params.id, deleted: false, accepted: false },
             { "$set": { "accepted": true } },
             { new: true, useFindAndModify: false })
             .session(session)
-        if (!comment) return res.status(404).send("commentId not found")
+        if (!comment) return res.status(404).send("commentId not found (or already accepted)")
 
         const project = await Project.findOne(
             { "features._id": comment.featureId })
@@ -109,13 +113,17 @@ router.delete("/:id", async (req, res) => {
             .session(session)
         if (!comment) return res.status(404).send("commentId not found")
 
-        const project = await Project.findOne(
-            { "features._id": comment.featureId })
-            .session(session)
-        const feature = project.features.id(comment.featureId)
-        feature.commentCount--
-
-        await project.save()
+        // Only adjust commentCount in feature if comment has been accepted before.
+        if(comment.accepted === true) { 
+            const project = await Project.findOne(
+                { "features._id": comment.featureId })
+                .session(session)
+            const feature = project.features.id(comment.featureId)
+            feature.commentCount--
+    
+            await project.save()
+        }
+        
         await session.commitTransaction();
 
         res.status(200).send(comment)

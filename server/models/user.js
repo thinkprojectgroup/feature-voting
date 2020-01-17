@@ -27,7 +27,7 @@ const User = mongoose.model("User", new mongoose.Schema({
     },
     deviceHash: {
         type: String,
-        minlength: 1,
+        minlength: 0,
         maxlength: 1024
     }
 }))

@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import {Button} from 'reactstrap';
+import {Link} from 'react-router-dom';
+import config from '../../config';
 
 
 
@@ -14,7 +16,10 @@ class CommentCR extends Component{
         commentContent: this.props.content,
         commentDate: this.props.date,
         clicked: false,
-        formattedDate: ''
+        formattedDate: '',
+        featureId: this.props.featureId,
+        projectName: this.props.projectName,
+        featureName: this.props.featureName
     };
     }
    
@@ -25,8 +30,6 @@ class CommentCR extends Component{
        formattedDate: date
     });
     }
-    
-
     
     handleAccept = () => {
         var self = this; 
@@ -74,7 +77,13 @@ class CommentCR extends Component{
                         <div className="comment-section-content col-11">
                             <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
                             <p className="comment-content">{this.state.commentContent}</p>
-                            <p  className="comment-date">{this.state.formattedDate}</p>
+                            <p className="comment-date">{this.state.formattedDate}</p>
+                            <Link to={"/" + this.state.projectName.split(" ").join("-")}>
+                                <p className="comment-project-link">Projekt: {this.state.projectName}</p>
+                            </Link>
+                            <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                                <p className="comment-feature-link">Feature: {this.state.featureName}</p>
+                            </Link>
                         </div>
 
                     </div> 

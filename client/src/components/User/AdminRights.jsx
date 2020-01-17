@@ -11,15 +11,9 @@ class AdminRights extends Component {
     super(props);
     this.state = {
       employees: [],
-      admins: [],
-      show: false
+      admins: []
     };
-    this.toggleShow = this.toggleShow.bind(this);
   }
-  toggleShow = () => {
-    this.setState({ show: !this.state.show });
-    // console.log(this.state.show);
-  };
 
   reRender = (email, role) => {
     if (role == "admin") {
@@ -45,22 +39,16 @@ class AdminRights extends Component {
     return (
       <div className="container">
         <div>
-          <button onClick={this.toggleShow} className="add">
-            <i className="fas fa-plus"></i>
-          </button>
+          <h3>{"Users"}</h3>
+          {this.state.employees.map(employee => (
+            <User
+              email={employee.email}
+              newRole="admin"
+              reRender={this.reRender.bind(this)}
+            />
+          ))}
         </div>
-        {this.state.show ? (
-          <div>
-            <h3>{"Users"}</h3>
-            {this.state.employees.map(employee => (
-              <User
-                email={employee.email}
-                newRole="admin"
-                reRender={this.reRender.bind(this)}
-              />
-            ))}
-          </div>
-        ) : null}
+
         <div className="container">
           <h3>{"Admins"}</h3>
 

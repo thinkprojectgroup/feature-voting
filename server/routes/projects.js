@@ -4,6 +4,8 @@ const router = express.Router();
 const { Project, validateProject } = require("../models/project")
 const { validateToken, userCheck } = require('../services/AuthService')
 const { cleanFeatures } = require("../models/feature")
+const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
+
 
 // Get all projects
 router.get("/", async (req, res) => {
@@ -20,9 +22,11 @@ router.get("/", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true],
-                            $cmp: ['$$feature.acceptedStatus', false]
-                        }
+                        $and: [
+                            { $eq: ['$$feature.deleted', false] },
+                            { $eq: ['$$feature.acceptedStatus', true] }
+                        ]
+                    }
                     }
                 },
                 name: true,
@@ -51,8 +55,10 @@ router.get("/:id", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true],
-                            $cmp: ['$$feature.acceptedStatus', false]
+                            $and: [
+                                { $eq: ['$$feature.deleted', false] },
+                                { $eq: ['$$feature.acceptedStatus', true] }
+                            ]
                         }
                     }
                 },
@@ -81,8 +87,10 @@ router.get("/name/:name", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true],
-                            $cmp: ['$$feature.acceptedStatus', false]
+                            $and: [
+                                { $eq: ['$$feature.deleted', false] },
+                                { $eq: ['$$feature.acceptedStatus', true] }
+                            ]
                         }
                     }
                 },
@@ -113,8 +121,10 @@ router.get("/unaccepted/:name", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true],
-                            $cmp: ['$$feature.acceptedStatus', true]
+                            $and: [
+                                { $eq: ['$$feature.deleted', false] },
+                                { $eq: ['$$feature.acceptedStatus', false] }
+                            ]
                         }
                     }
                 },
@@ -161,7 +171,18 @@ router.delete("/:id", async (req, res) => {
         { "$set": { "deleted": true } },
         { useFindAndModify: false, new: true }
     )
+
     if (!project) return res.status(404).send("projectId not found")
+
+    for(var feature of project.features){
+        feature.deleted = true
+        var tempComments = await Comment.find({ featureId: feature.id, deleted: false})
+        for(var comment of tempComments){
+            comment.deleted = true
+            await comment.save()
+        }
+    }
+    await project.save()
 
     res.status(202).send(project)
 })

@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import FileBase from "react-file-base64";
+import { storage } from "../firebase-config";
 
 class FeatureForm extends Component {
-  state = {
-    headline: "",
-    description: "",
-    selectedFile: null,
-    loaded: 0,
-    imageData: String
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      headline: "",
+      description: "",
+      firebaseUrls: [],
+      currentImageName: [],
+      images: []
+    };
+  }
+
   checkMimeType = files => {
     //getting file object
     // let files = files
@@ -51,7 +54,6 @@ class FeatureForm extends Component {
     let size = 2000000; //2MB
     let err = [];
     for (var x = 0; x < files.length; x++) {
-      // console.log(files[x].size)
       if (files[x].size > size) {
         err[x] = files[x].type + "is too large, please pick a smaller file\n";
       }
@@ -61,40 +63,60 @@ class FeatureForm extends Component {
       // discard selected file
       alert("Your files are too big!");
       //event.target.value = null
+      return false;
     }
     return true;
   };
 
   onChange = e => {
     this.setState({ [e.target.name]: e.target.value });
-    //console.log(this.state)
   };
 
-  getBaseFile(files) {
-    // show the 1st image as example
-    var imageData = "";
+  onChangeImage = e => {
+    const files = e.target.files;
     if (
-      this.maxSelectFile(files) &&
+      this.checkFileSize(files) &&
       this.checkMimeType(files) &&
-      this.checkFileSize(files)
+      this.maxSelectFile(files)
     ) {
-      imageData = files.map(file => file.base64.toString());
-
       this.setState({
-        imageData: imageData
+        images: files
       });
-
-      // TODO: FileBase Component needs to be cleared when check fails
     }
+  };
 
-    // console.log(this.state);
-  }
+  uploadImage = () => {
+    return Promise.all(
+      Array.from(this.state.images).map(
+        file =>
+          new Promise((resolve, reject) => {
+            let currentImageName = "firebase-image-" + Date.now();
+            storage
+              .ref(`images/${currentImageName}`)
+              .put(file)
+              .on(
+                "state_changed",
+                snapshot => {},
+                error => {
+                  reject(error);
+                },
+                () => {
+                  storage
+                    .ref("images")
+                    .child(currentImageName)
+                    .getDownloadURL()
+                    .then(url => {
+                      resolve(url);
+                    });
+                }
+              );
+          })
+      )
+    );
+  };
 
-  onSubmit = e => {
+  onSubmit = async e => {
     e.preventDefault();
-    //console.log(e);
-    //console.log(this.state);
-    //console.log(this.props.projectId);
 
     const config = {
       headers: {
@@ -102,21 +124,66 @@ class FeatureForm extends Component {
       }
     };
 
+    const imageUrls = await this.uploadImage();
+
     let data = JSON.stringify({
       headline: this.state.headline,
       description: this.state.description,
-      imageData: this.state.imageData
+      imageUrls: imageUrls
     });
 
     axios
-      .post("/api/features/" + this.props.projectId, data, config)
+      .post("/api/features/" + this.props.projectName, data, config)
       .then(result => {
         console.log(result);
       })
       .catch(error => {
-        console.log(error);
+        console.log(error.response);
       });
   };
+
+  render() {
+    const { headline, description } = this.state;
+
+    return (
+      <div className="feature-form-container row col-12">
+        <form onSubmit={this.onSubmit} className="feature-form">
+          <label>Title:</label>
+          <input
+            type="text"
+            name="headline"
+            id="headline"
+            className="headline col-12"
+            value={headline}
+            onChange={this.onChange}
+            required
+          />
+
+          <label>Description:</label>
+          <textarea
+            name="description"
+            id="description"
+            className="description col-12"
+            value={description}
+            onChange={this.onChange}
+            required
+          />
+
+          <label>Upload Your Images </label>
+          <input
+            type="file"
+            multiple
+            className="process__upload-btn"
+            onChange={e => this.onChangeImage(e)}
+          />
+
+          <button className="submit col-2" type="submit" value="Submit">
+            Submit
+          </button>
+        </form>
+      </div>
+    );
+  }
 
   render() {
     const { headline, description } = this.state;
