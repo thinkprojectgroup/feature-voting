@@ -132,11 +132,7 @@ img {
   height: auto;
 }
 
-.feature-image{
-  height: 200px;
-  background-size: cover;
-  padding: 0;
-}
+
 
 button{
   background: none;
@@ -197,6 +193,13 @@ button.add{
 }
 
 .feature-text{padding: 35px;}
+
+.feature-image{
+  height: 210px;
+  background-size: cover;
+  background-position: center center;
+  padding: 0;
+}
 
 /*Display feature count next to feature body on mobile devices*/
 .feature-count, .comment-section-button, .add-button{width: 25%;}
@@ -325,20 +328,8 @@ textarea[name="description"]{
   a{ text-decoration: none; }
 
 
-  .feature-detail-image{
-    transition: transform 0.25s ease;
-    cursor: zoom-in;
-  }
-
-  .feature-detail-image img:active, .feature-detail-image img:focus{
-    -webkit-transform: scale(2);
-    transform: scale(2);
-    cursor: zoom-out;
-  }
-
-
   .feature-list-item{
-    margin-bottom: 0;
+    margin-bottom: 25px;
     box-shadow: none;
   }
 }

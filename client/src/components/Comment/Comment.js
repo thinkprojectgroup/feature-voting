@@ -34,31 +34,50 @@ class Comment extends Component{
     }
 
     render(){
-        var images
+        let images
         if(!this.state.imageUrls){
-            images = require("../img/computer.png");
+            images = null;
         }
         else{
             images = this.state.imageUrls
         }
         return(
             <div className="comment-container col-12 row">
-                    <div>
-                        <p className="comment-author">{this.state.author}</p>
-                        <p className="comment-content">{this.state.content}</p>
-                        <p  className="comment-date">
-                            {this.state.formattedDate}
-                        </p>
-                        <div className="comment-images">
-                            <Carousel showThumbs={false}>
-                                {images.map(imageUrl => (
-                                    <div>
-                                        <img src={imageUrl}/>
-                                    </div>
-                                ))}
-                            </Carousel>
+
+                {images === null
+                    ? (
+                        <div>
+                            <div className="col-12">
+                                <p className="comment-author">{this.state.author}</p>
+                                <p className="comment-content">{this.state.content}</p>
+                                <p  className="comment-date">
+                                    {this.state.formattedDate}
+                                </p>
+                            </div>
+
+                        </div>)
+
+                    :(
+                        <div>
+                            <div className="col-9">
+                                <p className="comment-author">{this.state.author}</p>
+                                <p className="comment-content">{this.state.content}</p>
+                                <p  className="comment-date">
+                                    {this.state.formattedDate}
+                                </p>
+                            </div>
+                            <div className="comment-images col-3">
+                                <Carousel showThumbs={false}>
+                                    {images.map(imageUrl => (
+                                        <div>
+                                            <img src={imageUrl}/>
+                                        </div>
+                                    ))}
+                                </Carousel>
+                            </div>
                         </div>
-                    </div>
+                    )}
+
             </div>
 
         );
