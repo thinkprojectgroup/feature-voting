@@ -16,8 +16,6 @@ import {
   Route,
   Switch,
   Redirect,
-  useHistory,
-  useLocation
 } from 'react-router-dom'
 
 class App extends Component {
@@ -75,22 +73,22 @@ class App extends Component {
         setAuthorisation={this.setAuthorisation}
       >
         {this.state.authIsLoaded && (
-          <div>
+          <>
             <Router>
               <Header role={this.state.role} />
               <Switch>
-                <Route
+                <Route //Admin - ProjectOverview
                   exact
                   path={'/'}
                   render={props =>
                     this.state.role == 'admin' ? (
-                      <ProjectOverView {...props} />
+                      <ProjectOverView idToken={this.state.idToken} {...props} />
                     ) : (
                         <Redirect to={'/login'} />
                       )
                   }
                 />
-                <Route
+                <Route //Admin - CommentReview
                   exact
                   path={'/commentreview'}
                   render={props =>
@@ -101,27 +99,23 @@ class App extends Component {
                       )
                   }
                 />
-                <Route
+                <Route //Login
                   exact
                   path={'/login'}
                   render={props => (
-                    <SignIn setAuthorisation={this.setAuthorisation} />
+                    <SignIn 
+                      role={this.props.role}
+                      isSignedIn={this.state.isSignedIn} 
+                      setAuthorisation={this.setAuthorisation} />
                   )}
                 />
                 <Route exact path={'/faq'} component={FAQ} />
-                <Route
-                  exact
-                  path={'/:projectName'}
-                  render={props => <ProjectDetailView {...props} />}
-                />
-                <Route
-                  path={'/:projectName/:featureId'}
-                  component={FeatureDetailView}
-                />
+                <Route exact path={'/:projectName'} component={ProjectDetailView} />
+                <Route path={'/:projectName/:featureId'} component={FeatureDetailView} />
               </Switch>
               <Footer />
             </Router>
-          </div>
+          </>
         )}
       </AppWrapper>
     )

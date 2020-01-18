@@ -5,7 +5,6 @@ import axios from "axios";
 import config from '../../config';
 import { Button } from "reactstrap";
 
-
 class ProjectDetailView extends Component {
   constructor(props) {
     super(props);
@@ -77,7 +76,10 @@ class ProjectDetailView extends Component {
             </div>
           </div>
           {this.state.showForm ? (
-              <FeatureForm projectName={this.props.match.params.projectName.toString().split("-").join(" ")} />
+              <FeatureForm 
+              projectName={this.props.match.params.projectName.toString().split("-").join(" ")} 
+              toggleShowForm={this.toggleShowForm}
+              />
           ): null}
 
           {this.state.features.sort((a,b) => b.voteCount - a.voteCount)
