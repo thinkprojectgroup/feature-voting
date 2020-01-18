@@ -25,7 +25,6 @@ class FeatureReview extends Component {
                             title={feature.headline}
                             description={feature.description}
                             projectName={this.props.projectName}
-                            projectId ={this.state.projectId}
                         />
                     ) : null
                 )}
