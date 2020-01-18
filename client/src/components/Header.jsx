@@ -73,13 +73,6 @@ class Header extends Component {
       rootPath += pathnameArray[i];
     }
 
-<<<<<<< HEAD
-    let backButton = (
-      <Link to={backroute}>
-        <div className="back-button fas fa-arrow-left" title="Go back!"></div>
-      </Link>
-    );
-=======
     let backButton = "";
     //check if backroute is deeper than rootpath, if then don't show backbutton
     if(!(pathname === rootPath)){
@@ -90,7 +83,6 @@ class Header extends Component {
       );
     }
 
->>>>>>> 7addb53a317e04efaf58a52f22659b941a56d332
 
     //* COMMENT REVIEW BUTTON*//
 
