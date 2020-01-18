@@ -13,6 +13,7 @@ class FeatureFR extends Component {
             title: this.props.title,
             description: this.props.description,
             projectName: this.props.projectName,
+            projectId: this.props.projectId,
             clicked: false
         };
     }
@@ -38,7 +39,7 @@ class FeatureFR extends Component {
         // console.log(comment._id)
         axios
             .delete(
-                "/api/features/" + this.state.projectName + "/" + this.state.featureId
+                "/api/features/" + this.state.projectId + "/" + this.state.featureId
             )
             .then(function(response) {
                 console.log(response);
