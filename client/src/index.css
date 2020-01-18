@@ -270,6 +270,16 @@ textarea[name="description"]{
     height: 200px;
 }
 
+.form-response{
+  padding: 25px;
+  border: 3px solid #003c50;
+  min-height: 120px;
+}
+
+.form-response > p{
+  margin: 0;
+}
+
 .readMoreText{
   color: #7fba24 !important;
   display: block;
