@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import config from "../../config";
 import ProjectForm from "./ProjectForm";
 
+
 class ProjectOverView extends Component {
   constructor (props) {
     super(props)
@@ -34,7 +35,19 @@ class ProjectOverView extends Component {
         console.log(error)
       })
   }
-
+  reRender = (name) => {
+    var self = this;
+    //var newProjects = [...self.state.projects]
+    var duplicate = this.state.projects.pop()
+    duplicate.name = name
+    //newProjects.concat(duplicate)
+    self.setState({
+      projects: this.state.projects.concat(duplicate)
+    });
+    console.log(self.state.projects.length);
+    console.log(duplicate);
+     
+  };
   handleDelete = id => {
     var self = this;
     var newState = self.state.projects.filter(project => project._id != id);
@@ -68,7 +81,7 @@ class ProjectOverView extends Component {
               </button>
             </div>
           </div>
-          {this.state.show ? <ProjectForm /> : null}
+          {this.state.show ? <ProjectForm reRender={this.reRender.bind(this)}/> : null}
         {this.state.projects.map(project => (
             <div>
               <Link to={"/" + project.name.toString().split(" ").join("-")}>

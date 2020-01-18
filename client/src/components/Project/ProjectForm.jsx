@@ -15,7 +15,7 @@ class ProjectForm extends Component {
     };
     onSubmit = e => {
         e.preventDefault();
-
+        this.props.reRender(this.state.headline);
         const config = {
             headers: {
                 "Content-Type": "application/json"
