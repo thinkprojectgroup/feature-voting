@@ -210,7 +210,7 @@ button.add{
 
 /*Display feature count next to feature body on mobile devices*/
 .feature-count, .comment-section-button, .add-button{width: 25%;}
-.feature-text, .comment-section-content, .project-name{width: 75%;}
+.feature-text, .comment-section-content, .project-name,  .comment-section .comment-count{width: 75%;}
 
 
 

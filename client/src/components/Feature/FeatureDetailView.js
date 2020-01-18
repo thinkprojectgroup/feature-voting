@@ -159,10 +159,10 @@ class FeatureDetailView extends Component {
         <div className="comment-section">
 
             <div className="row">
-                <div className="col-11">
+                <div className="col-11 comment-count">
                     <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
                 </div>
-                <div className="col-1">
+                <div className="col-1 add-button">
                     <button onClick={this.toggleShowForm} className="add" id="form-button">
                         <i className="fas fa-plus"></i>
                     </button>
