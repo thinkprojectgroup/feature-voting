@@ -218,7 +218,7 @@ button.add{
 
 /*Display feature count next to feature body on mobile devices*/
 .feature-count, .comment-section-button, .add-button, .delete-project{width: 25%;}
-.feature-text, .comment-section-content, .project-name,  .comment-section .comment-count, .project-list-item{width: 75%;}
+.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .project-list-item{width: 75%;}
 
 
 
