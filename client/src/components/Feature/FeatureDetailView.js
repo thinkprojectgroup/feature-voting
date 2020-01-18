@@ -159,7 +159,7 @@ class FeatureDetailView extends Component {
         <div className="comment-section">
 
             <div className="row">
-                <div className="col-11 project-name">
+                <div className="col-11 comment-count">
                     <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
                 </div>
                 <div className="col-1 add-button">
