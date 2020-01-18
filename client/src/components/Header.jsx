@@ -27,7 +27,7 @@ class Header extends Component {
 
     let backButton = (
       <Link to={backroute}>
-        <div className="back-button fas fa-arrow-left"></div>
+        <div className="back-button fas fa-arrow-left" title="Go back!"></div>
       </Link>
     );
 
@@ -39,7 +39,7 @@ class Header extends Component {
         <div className="row col-12 header">
           <div className="header-container">
             <Link to={rootPath}>
-              <div className="logo">
+              <div className="logo" title="Home">
                 <img alt="" src={image} />
               </div>
             </Link>
