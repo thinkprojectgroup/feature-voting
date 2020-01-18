@@ -104,7 +104,7 @@ class FeatureForm extends Component {
             imageData: this.state.imageData
         })
 
-        axios.post('/api/features/' + this.props.projectId , data, config)
+        axios.post('/api/features/' + this.props.projectName , data, config)
             .then((result) => {
                 console.log(result);
             })
