@@ -23,7 +23,7 @@ class ProjectDetailView extends Component {
   }
 
   toggleShowForm = () => {
-    this.setState({ showForm: !this.state.showForm });
+    this.setState({showForm: !this.state.showForm});
     // console.log(this.state.showForm);
   };
 
@@ -44,76 +44,77 @@ class ProjectDetailView extends Component {
   componentDidMount() {
     //console.log(this.props.match.params);
     axios
-      .get(
-        config.url +
-          `/api/projects/name/` +
-          this.props.match.params.projectName
-            .toString()
-            .split("-")
-            .join(" ")
-      )
-      .then(response => {
-        console.log(response);
-        this.setState({
-          features: response.data.features,
-          name: response.data.name,
-          projectId: response.data._id
+        .get(
+            config.url +
+            `/api/projects/name/` +
+            this.props.match.params.projectName
+                .toString()
+                .split("-")
+                .join(" ")
+        )
+        .then(response => {
+          console.log(response);
+          this.setState({
+            features: response.data.features,
+            name: response.data.name,
+            projectId: response.data._id
+          });
+        })
+        .catch(error => {
+          console.log(error);
         });
-      })
-      .catch(error => {
-        console.log(error);
-      });
   }
 
   render() {
     return (
-      <div className="container row">
-        <div className="row">
-          <div className="col-11">
-            <h1>{this.state.name}</h1>
-          </div>
-          <div className="col-1">
-            <button onClick={this.toggleShowForm} className="add">
-              <i className="fas fa-plus"></i>
-            </button>
+        <div className="container row">
+          <div className="row">
+            <div className="col-11">
+              <h1>{this.state.name}</h1>
+            </div>
+            <div className="col-1">
+              <button onClick={this.toggleShowForm} className="add">
+                <i className="fas fa-plus"></i>
+              </button>
+            </div>
           </div>
 
           {this.state.showForm ? (
-              <FeatureForm 
-              projectName={this.props.match.params.projectName.toString().split("-").join(" ")} 
-              toggleShowForm={this.toggleShowForm}
+              <FeatureForm
+                  projectName={this.props.match.params.projectName.toString().split("-").join(" ")}
+                  toggleShowForm={this.toggleShowForm}
               />
-          ): null}
+          ) : null}
 
-        {this.state.features
-          .sort((a, b) => b.voteCount - a.voteCount)
-          .map((feature, index) => (
-            <FeaturePDV
-              featureId={feature._id}
-              count={feature.voteCount}
-              title={feature.headline}
-              description={feature.description}
-              commentCount={feature.commentCount}
-              projectId={this.state.projectId}
-              upvoted={feature.upvoted}
-              projectName={this.props.match.params.projectName
-                .toString()
-                .split("-")
-                .join(" ")}
-              imageUrls={feature.imageUrls}
-            />
-          ))}
-        <div>
-          < hr />
+          {this.state.features
+              .sort((a, b) => b.voteCount - a.voteCount)
+              .map((feature, index) => (
+                  <FeaturePDV
+                      featureId={feature._id}
+                      count={feature.voteCount}
+                      title={feature.headline}
+                      description={feature.description}
+                      commentCount={feature.commentCount}
+                      projectId={this.state.projectId}
+                      upvoted={feature.upvoted}
+                      projectName={this.props.match.params.projectName
+                          .toString()
+                          .split("-")
+                          .join(" ")}
+                      imageUrls={feature.imageUrls}
+                  />
+              ))}
+
+
+          < hr/>
           <FeatureReview
-            projectName={this.props.match.params.projectName
-              .toString()
-              .split("-")
-              .join(" ")}
-            projectId={this.state.projectId}
+              projectName={this.props.match.params.projectName
+                  .toString()
+                  .split("-")
+                  .join(" ")}
+              projectId={this.state.projectId}
           />
         </div>
-      </div>
     );
   }
 }
