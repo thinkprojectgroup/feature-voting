@@ -24,6 +24,7 @@ class ProjectDetailView extends Component {
 
   toggleShowForm = () => {
     this.setState({showForm: !this.state.showForm});
+    document.getElementById("form-button").classList.toggle("cross");
     // console.log(this.state.showForm);
   }
 
@@ -69,7 +70,7 @@ class ProjectDetailView extends Component {
             <div className="col-11 project-name">
               <h1>{this.state.name}</h1>
             </div>
-            <div className="col-1 add-button">
+            <div className="col-1 add-button" id="form-button">
               <button onClick={this.toggleShowForm} className="add">
                 <i className="fas fa-plus"></i>
               </button>
