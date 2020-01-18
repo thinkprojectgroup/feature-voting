@@ -19,7 +19,8 @@ class FeaturePDV extends Component {
       projectId: this.props.projectId,
       upvoted: this.props.upvoted,
       projectName: this.props.projectName,
-      imageUrls: this.props.imageUrls
+      imageUrls: this.props.imageUrls,
+      deleted: false
     };
 
     this.handleUpVote = this.handleUpVote.bind(this);
@@ -61,6 +62,24 @@ class FeaturePDV extends Component {
 
   };
 
+  handleDelete = () => {
+    var self = this;
+    // console.log(comment._id)
+    axios
+      .delete(
+        "/api/features/" + this.state.projectName + "/" + this.state.featureId
+      )
+      .then(function(response) {
+        console.log(response);
+        self.setState({
+          deleted: true
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+
 
 
 
@@ -80,9 +99,11 @@ class FeaturePDV extends Component {
     let description = this.state.description;
 
     return (
+    <div>
+    {this.state.deleted === false ? (
       <div className="row feature-list-item">
         <div className="col-1 feature-count">
-
+        
           {this.state.upvoted === false ? 
           <button 
             onClick={this.handleUpVote.bind(this)} >
@@ -123,6 +144,11 @@ class FeaturePDV extends Component {
                   <h3>{this.state.title}</h3>{" "}
                 </div>
               </Link>
+              <div className="col-3 delete-project">
+                <button onClick={() => this.handleDelete()} className="decline" >
+                  <i className="fas fa-times"></i>
+                </button>
+              </div>
               <div className="description">
 
                 <ReadMoreAndLess
@@ -149,6 +175,11 @@ class FeaturePDV extends Component {
                         <h3>{this.state.title}</h3>{" "}
                     </div>
                   </Link>
+                  <div className="col-3 delete-project">
+                <button onClick={() => this.handleDelete()} className="decline" >
+                  <i className="fas fa-times"></i>
+                </button>
+              </div>
                   <div className="description">
 
                     <ReadMoreAndLess
@@ -174,9 +205,12 @@ class FeaturePDV extends Component {
                   style={{backgroundImage: "url(" + image + ")"}} >
                 </div>
               </Link>
+              
             </div>
           )}
       </div>
+    ):null}
+    </div>
     );
   }
 
