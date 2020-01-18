@@ -83,31 +83,41 @@ class CommentCR extends Component{
                         </div>
                         {images === null ?(
                                 <div className="comment-section-content col-11">
-                                    <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
+                                    <div className="row">
+                                        <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
+                                        <p className="comment-project-link">Project: {" "}
+                                            <Link to={"/" + this.state.projectName.split(" ").join("-")} >
+                                                {" " + this.state.projectName}
+                                            </Link>
+                                        </p>
+                                        <p className="comment-feature-link"> Feature: {" "}
+                                            <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId} >
+                                                {this.state.featureName}
+                                            </Link>
+                                        </p>
+                                    </div>
                                     <p className="comment-content">{this.state.commentContent}</p>
                                     <p className="comment-date">{this.state.formattedDate}</p>
-                                    <Link to={"/" + this.state.projectName.split(" ").join("-")}>
-                                        <p className="comment-project-link">Projekt: {this.state.projectName}</p>
-                                    </Link>
-                                    <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
-                                        <p className="comment-feature-link">Feature: {this.state.featureName}</p>
-                                    </Link>
                                 </div>
                             )
                             :(
-                                <div>
+                                <div  className="row">
                                     <div className="comment-section-content col-8">
-                                        <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
+                                        <div className="row">
+                                            <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
+                                            <p className="comment-project-link">Project: {" "}
+                                                <Link to={"/" + this.state.projectName.split(" ").join("-")} >
+                                                    {" " + this.state.projectName}
+                                                </Link>
+                                            </p>
+                                            <p className="comment-feature-link"> Feature: {" "}
+                                                <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId} >
+                                                    {this.state.featureName}
+                                                </Link>
+                                            </p>
+                                        </div>
                                         <p className="comment-content">{this.state.commentContent}</p>
                                         <p className="comment-date">{this.state.formattedDate}</p>
-                                        <Link to={"/" + this.state.projectName.split(" ").join("-")}>
-                                            <p className="comment-project-link">Projekt: {this.state.projectName}</p>
-                                        </Link>
-                                        <Link
-                                            to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
-                                            <p className="comment-feature-link">Feature: {this.state.featureName}</p>
-                                        </Link>
-
                                     </div>
                                     <div className="col-3">
                                         <Carousel showThumbs={false}>

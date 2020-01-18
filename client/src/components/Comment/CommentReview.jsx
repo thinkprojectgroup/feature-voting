@@ -78,21 +78,28 @@ class CommentReview extends Component{
     render(){
         // console.log(this.state.outputComments)
         return(
-            <div>
-                <form>
-                    <label>Filter Comments by Project</label>
-                    <select onChange={this.handleProject.bind(this)}>
-                        <option value="">
-                            Show all Comments
-                        </option>
-                        {this.state.filteredProjectNames.map(name => (
-                            <option value={name}>
-                                {name}
-                            </option>
-                        ))}
-                    </select>
-                </form>
-                <div className="comment-section container row">
+            <div className="comment-section container row">
+                <div className="row">
+                    <div className="col-9">
+                        <h1>Comment Review</h1>
+                    </div>
+                    <div className="col-3">
+                        <form>
+                            <select onChange={this.handleProject.bind(this)}>
+                                <option value="">
+                                    Show all
+                                </option>
+                                {this.state.filteredProjectNames.map(name => (
+                                    <option value={name}>
+                                        {name}
+                                    </option>
+                                ))}
+                            </select>
+                        </form>
+                    </div>
+
+                </div>
+
                     {this.state.outputComments.map(comment => {
                         return ( <CommentCR
                                 commentId={comment._id}
@@ -106,7 +113,6 @@ class CommentReview extends Component{
                             />
                         )
                     })}
-                </div>
             </div>
         );
     }
