@@ -156,7 +156,6 @@ class FeatureDetailView extends Component {
 
         <hr />
 
-
         <div className="comment-section">
 
             <div className="row">

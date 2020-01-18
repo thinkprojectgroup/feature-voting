@@ -13,8 +13,17 @@ class CommentForm extends Component {
             firebaseUrls: [],
             currentImageName: [],
             images: [],
-            featureId: this.props.featureId
+            featureId: this.props.featureId,
+            showResponse: false
         };
+    }
+
+    handleResponseButton = () => {
+            this.setState({
+                showResponse: false
+            })
+            this.props.toggleShowForm()
+        document.getElementById("form-button").classList.toggle("cross");
     }
 
 
@@ -129,6 +138,9 @@ class CommentForm extends Component {
         axios.post('/api/comments/' + this.state.featureId, data, config)
             .then((result) => {
                 console.log(result);
+                this.setState({
+                    showResponse: true
+                })
             })
             .catch(error => {
                 console.log(error.response);
@@ -141,6 +153,7 @@ class CommentForm extends Component {
         return (
 
             <div className="feature-form-container row col-12">
+                {!this.state.showResponse ? (
                 <form onSubmit={this.onSubmit} className="feature-form">
                     <h5 className="col-12">Create a new comment:</h5>
                     <div className="col-6 name">
@@ -174,6 +187,18 @@ class CommentForm extends Component {
 
                     <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>
+                ) :
+                    <div className="form-response">
+                        <p className="col-10">
+                            Thank you for submitting a comment! <br />Your comment will be reviewed by an admin before you can see it here.
+                        </p>
+                        <button className="submit col-2" onClick={this.handleResponseButton.bind(this)}>
+                            Ok, great!
+                        </button>
+                    </div>
+
+
+                }
             </div>
         );
     }
