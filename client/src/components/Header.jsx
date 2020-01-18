@@ -5,10 +5,20 @@ import config from "../config";
 
 class Header extends Component {
 
+  redirectToLogin = () => {
+    this.props.history.push("/login");
+  }
 
+  logout = () => {
+    var auth2 = window.gapi.auth2.getAuthInstance()
+    auth2.signOut().then(() => {
+      this.props.setAuthorisation(null, false, null)
+      auth2.disconnect()
+      this.props.history.push('/login')
+    })
+  }
   
   render() {
-
 
     //Logo Image on the left side
     const image = require("./img/logo.png");
@@ -21,19 +31,19 @@ class Header extends Component {
     //* LOGIN /LOGOUT BUTTON*//
 
     // TODO: Add Real Login/Logout Logic
-    const loggedIn = false;
+    const loggedIn = this.props.isSignedIn;
 
     //initializing LOGIN/LOGOUT Buttons
     let loginButton = "";
-    if(loggedIn){
+    if (loggedIn) {
       loginButton = (
           //TODO: Add Functionality
-          <button className="logout-button fas fa-sign-out-alt"></button>
+          <button className="logout-button fas fa-sign-out-alt" onClick={this.logout}></button>
       );
     } else if(!loggedIn){
       loginButton = (
           //TODO: Add Functionality
-          <button className="login-button fas fa-sign-in-alt" ></button>
+          <button className="login-button fas fa-sign-in-alt" onClick={this.redirectToLogin}></button>
       );
     }
 
@@ -78,7 +88,7 @@ class Header extends Component {
 
     //initializing the Comment Review Button and only show it for Admins
     let commentReviewButton = "";
-    if(isAdmin && pathname == "/"){
+    if(isAdmin && pathname == "/") {
       commentReviewButton = (
           <Link to={"/commentreview"}>
             <button className="comment-review-button fas fa-comments" title="Link to Comment Review Page"></button>
@@ -95,7 +105,7 @@ class Header extends Component {
               </div>
             </Link>
             {backButton}
-            {loginButton}
+            { this.props.location.pathname !== '/login' && loginButton}
             {commentReviewButton}
           </div>
         </div>

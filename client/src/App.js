@@ -76,7 +76,11 @@ class App extends Component {
         {this.state.authIsLoaded && (
           <>
             <Router>
-              <Header role={this.state.role} />
+              <Header 
+                role={this.state.role} 
+                isSignedIn={this.state.isSignedIn}
+                setAuthorisation={this.setAuthorisation}
+              />
               <Switch>
                 <Route //Admin - ProjectOverview
                   exact
