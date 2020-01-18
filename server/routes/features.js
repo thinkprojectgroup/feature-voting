@@ -118,28 +118,21 @@ router.get("/search/", async (req, res) => {
 });
 
 // Delete specific feature for project & feature id
-router.delete("/:projectId/:featureId", async (req, res) => {
+router.delete("/:projectName/:featureId", async (req, res) => {
     //TODO: admin auth
-    if (!mongoose.Types.ObjectId.isValid(req.params.projectId)) return res.status(400).send("ProjectId doesn't fit id schema")
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")
 
     // Using find & save instead of update for featureSchema.pre method to work properly
-    const project = await Project.findOne({ _id: req.params.projectId })
-    if (!project || project.deleted) return res.status(404).send("Invalid projectId")
+    const project = await Project.findOne({ name: req.params.projectName });
+    if (!project || project.deleted) return res.status(404).send("Invalid projectName");
 
-    var feature = await project.features.id(req.params.featureId)
-    if (!feature || feature.deleted) return res.status(404).send("featureId not found")
+    var feature = project.features.id(req.params.featureId);
+    if (!feature || feature.deleted) return res.status(404).send("featureId not found");
 
-    feature.deleted = true
-    await project.save()
+    feature.deleted = true;
+    await project.save();
 
-    var tempComments = await Comment.find({ featureId: req.params.featureId, deleted: false})
-        for(var comment of tempComments){
-            comment.deleted = true
-            await comment.save()
-        }
-
-    res.status(202).send(feature)
+    res.status(202).send(feature);
 })
 
 module.exports = router;
