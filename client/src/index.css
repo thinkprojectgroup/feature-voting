@@ -211,13 +211,27 @@ button.add{
   margin: 0 20px;
 }
 
-.comment-author, .comment-date{
+.comment-section-content{
+  padding: 35px 25px;
+}
+
+
+.comment-author, .comment-date, .comment-project-link, .comment-feature-link{
   font-weight: 600;
   font-size: 0.8rem;
+  margin: 0 0 0 0;
+  padding: 0 15px 0 0;
+  float: left;
+}
+
+.comment-project-link a, .comment-feature-link a{
+  text-decoration: underline;
 }
 
 .comment-author{color: #7fba24;}
 .comment-date{color: #7f9da7;}
+
+
 
 footer{
   background-color: #003c50;
@@ -271,6 +285,14 @@ label, input{
 
 textarea[name="description"]{
     height: 200px;
+}
+
+select{
+  padding: 10px;
+  margin: 22px 0;
+  border: 2px solid #003c50;
+  float: right;
+  width:100%;
 }
 
 .form-response{
