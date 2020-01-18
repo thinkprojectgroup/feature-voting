@@ -186,6 +186,14 @@ button.add{
   padding: 25px 25px;
 }
 
+.delete-project button.decline, .delete-project{
+  float:right;
+}
+
+.delete-project{
+  padding: 10px 15px;
+}
+
 .project-list-item:hover, .feature-list-item:hover{
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: 0.5s;
@@ -209,8 +217,8 @@ button.add{
 }
 
 /*Display feature count next to feature body on mobile devices*/
-.feature-count, .comment-section-button, .add-button{width: 25%;}
-.feature-text, .comment-section-content, .project-name,  .comment-section .comment-count{width: 75%;}
+.feature-count, .comment-section-button, .add-button, .delete-project{width: 25%;}
+.feature-text, .comment-section-content, .project-name,  .comment-section .comment-count, .project-list-item{width: 75%;}
 
 
 
