@@ -38,12 +38,12 @@ class Header extends Component {
     if (loggedIn) {
       loginButton = (
           //TODO: Add Functionality
-          <button className="logout-button fas fa-sign-out-alt" onClick={this.logout}></button>
+          <button className="logout-button fas fa-sign-out-alt" onClick={this.logout} title="Logout"></button>
       );
     } else if(!loggedIn){
       loginButton = (
           //TODO: Add Functionality
-          <button className="login-button fas fa-sign-in-alt" onClick={this.redirectToLogin}></button>
+          <button className="login-button fas fa-sign-in-alt" onClick={this.redirectToLogin} title="Login"></button>
       );
     }
 
