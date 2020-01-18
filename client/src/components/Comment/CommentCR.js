@@ -81,7 +81,7 @@ class CommentCR extends Component{
                             <Button className="accept" onClick={() => this.handleAccept()}><i className="fas fa-check"></i></Button>
                             <Button className="decline" onClick={() => this.handleDelete()}><i className="fas fa-times"></i></Button>
                         </div>
-                        {images == null ?(
+                        {images === null ?(
                                 <div className="comment-section-content col-11">
                                     <div className="row">
                                         <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
