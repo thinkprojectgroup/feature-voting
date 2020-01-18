@@ -231,7 +231,7 @@ button.add{
 }
 
 
-.comment-author, .comment-date, .comment-project-link, .comment-feature-link{
+.comment-section-content .comment-author, .comment-section-content .comment-date, .comment-project-link, .comment-feature-link{
   font-weight: 600;
   font-size: 0.8rem;
   margin: 0 0 0 0;
@@ -243,8 +243,16 @@ button.add{
   text-decoration: underline;
 }
 
-.comment-author{color: #7fba24;}
-.comment-date{color: #7f9da7;}
+.comment-author{
+  color: #7fba24;
+  font-weight: 600;
+  font-size: 0.8rem;}
+
+.comment-date{
+  color: #7f9da7;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
 
 
 
