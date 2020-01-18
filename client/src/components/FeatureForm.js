@@ -192,7 +192,7 @@ class FeatureForm extends Component {
                 </form>
                 
                 ) : 
-                    <div className="form-response">
+                    <div className="form-response row">
                          <p className="col-10">
                             Thank you for submitting a feature! <br />Your feature will be reviewed by an admin before you can see it here.
                         </p>
