@@ -11,6 +11,7 @@ import SignIn from './components/Auth/SignIn'
 import AppWrapper from './components/AppWrapper'
 import Footer from './components/Footer'
 import FAQ from './components/FAQ'
+import AdminRights from "./components/User/AdminRights";
 import {
   BrowserRouter as Router,
   Route,
@@ -98,6 +99,17 @@ class App extends Component {
                         <Redirect to={'/login'} />
                       )
                   }
+                />
+                <Route //Admin - AdminRights
+                    exact
+                    path={"/adminrights"}
+                    render={props =>
+                        this.state.role == "admin" ? (
+                            <AdminRights {...props} />
+                        ) : (
+                            <Redirect to={"/login"} />
+                        )
+                    }
                 />
                 <Route //Login
                   exact
