@@ -77,10 +77,13 @@ class ProjectDetailView extends Component {
               <i className="fas fa-plus"></i>
             </button>
           </div>
-        </div>
-        {this.state.showForm ? (
-          <FeatureForm projectId={this.state.projectId} submited={false} />
-        ) : null}
+
+          {this.state.showForm ? (
+              <FeatureForm 
+              projectName={this.props.match.params.projectName.toString().split("-").join(" ")} 
+              toggleShowForm={this.toggleShowForm}
+              />
+          ): null}
 
         {this.state.features
           .sort((a, b) => b.voteCount - a.voteCount)

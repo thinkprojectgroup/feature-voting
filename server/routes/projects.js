@@ -4,14 +4,11 @@ const router = express.Router();
 const { Project, validateProject } = require("../models/project")
 const { validateToken, userCheck } = require('../services/AuthService')
 const { cleanFeatures } = require("../models/feature")
+const checkAuth = require('../middleware/checkAuth')
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
 
-
 // Get all projects
-router.get("/", async (req, res) => {
-    const idToken = req.body.idToken;
-
-    const loginTicket = validateToken(idToken);
+router.get("/", checkAuth, async (req, res) => {
 
     const projects = await Project.aggregate([
         { $match: { deleted: false } },

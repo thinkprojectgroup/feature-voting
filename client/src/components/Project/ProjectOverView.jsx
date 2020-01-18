@@ -1,31 +1,42 @@
+
 import React, { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import config from "../../config";
 import ProjectForm from "./ProjectForm";
 
+
 class ProjectOverView extends Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
     this.state = {
+
       projects: [],
       idToken: this.props.idToken,
       show: false
     };
     this.toggleShow = this.toggleShow.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+
   }
   toggleShow = () => {
     this.setState({ show: !this.state.show });
     // console.log(this.state.show);
   };
 
-  async componentDidMount() {
-    const promise = await axios.get(config.url + `/api/projects/`);
-    const projects = promise.data;
-    // console.log(projects);
-    this.setState({ projects });
+  componentDidMount () {
+    axios
+      .get(config.url + `/api/projects/`)
+      .then(response => {
+        this.setState({
+          projects: response.data
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
+
 
   handleDelete = id => {
     var self = this;
@@ -46,14 +57,7 @@ class ProjectOverView extends Component {
 
   render() {
     return (
-      /*<div className="container">
-        <h1>Projects</h1>
-        <div>
-          <button onClick={this.toggleShow} className="add">
-            <i className="fas fa-plus"></i>
-          </button>
-          {this.state.show ? <ProjectForm /> : null}
-        </div>*/
+    
       <div className="container row">
         <div className="row">
           <div className="col-11">
@@ -78,12 +82,13 @@ class ProjectOverView extends Component {
               <button onClick={() => this.handleDelete(project._id)} className="decline" >
               <i className="fas fa-times"></i>
             </button>
+
             </div>
           </div>
         ))}
       </div>
-    );
+    )
   }
 }
 
-export default ProjectOverView;
+export default ProjectOverView
