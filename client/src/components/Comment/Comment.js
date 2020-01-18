@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-
+import { Carousel } from 'react-responsive-carousel';
 
 class Comment extends Component{
     constructor(props){
@@ -11,7 +11,8 @@ class Comment extends Component{
         deleted: this.props.deleted,
         date: this.props.date,
         count: this.props.count,
-        formattedDate: ''
+        formattedDate: '',
+        imageUrls: this.props.imageUrls
     };
     //console.log(this.state.date);
     //console.log(this.state);
@@ -33,16 +34,50 @@ class Comment extends Component{
     }
 
     render(){
+        let images
+        if(!this.state.imageUrls){
+            images = null;
+        }
+        else{
+            images = this.state.imageUrls
+        }
         return(
             <div className="comment-container col-12 row">
-                    {!this.state.deleted ?
-                    <div>
-                        <p className="comment-author">{this.state.author}</p>
-                        <p className="comment-content">{this.state.content}</p>
-                        <p  className="comment-date">
-                            {this.state.formattedDate}
-                        </p>
-                    </div> : null}
+
+                {images === null
+                    ? (
+                        <div>
+                            <div className="col-12">
+                                <p className="comment-author">{this.state.author}</p>
+                                <p className="comment-content">{this.state.content}</p>
+                                <p  className="comment-date">
+                                    {this.state.formattedDate}
+                                </p>
+                            </div>
+
+                        </div>)
+
+                    :(
+                        <div>
+                            <div className="col-9">
+                                <p className="comment-author">{this.state.author}</p>
+                                <p className="comment-content">{this.state.content}</p>
+                                <p  className="comment-date">
+                                    {this.state.formattedDate}
+                                </p>
+                            </div>
+                            <div className="comment-images col-3">
+                                <Carousel showThumbs={false}>
+                                    {images.map(imageUrl => (
+                                        <div>
+                                            <img src={imageUrl}/>
+                                        </div>
+                                    ))}
+                                </Carousel>
+                            </div>
+                        </div>
+                    )}
+
             </div>
 
         );

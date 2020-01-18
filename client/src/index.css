@@ -55,6 +55,10 @@
   padding: 15px;
 }
 
+body{
+  margin: 0;
+}
+
 
 .row::after {
   content: "";
@@ -124,6 +128,7 @@ h1{font-size: 2rem; }
 h2{font-size: 1.5rem;}
 h3{font-size: 1.3rem; margin: 0;}
 h4{font-size: 1.1rem}
+h5{font-size: 1.0rem; margin: 0;}
 p{font-size: 1rem;}
 a{ text-decoration: none; }
 
@@ -134,18 +139,21 @@ hr{
 
 .active{display: block;}
 
-.inactive{display: none}
+button.inactive{cursor: default;}
+
+button.inactive i{
+  color:#eaeaea;
+  transition: 0.4s;
+}
+
+span.active{display: inline}
 
 img {
   width: 100%;
   height: auto;
 }
 
-.feature-image{
-  height: 200px;
-  background-size: cover;
-  padding: 0;
-}
+
 
 button{
   background: none;
@@ -153,6 +161,7 @@ button{
   height: auto;
   border: none;
   font-size: 2.5rem;
+  cursor: pointer;
 }
 
 button.decline i, button.accept i, button.add i{
@@ -179,8 +188,13 @@ button.accept{
 
 button.add{
   background-color: #003c50;
-    float: right;
+  float: right;
+  transition: 0.4s;
+}
 
+.cross i{
+  transform: rotate(45deg);
+  transition: 0.3s;
 }
 
 .project-list-item{
@@ -188,31 +202,71 @@ button.add{
   padding: 25px 25px;
 }
 
+.delete-project button.decline, .delete-project{
+  float:right;
+}
+
+.delete-project{
+  padding: 10px 15px;
+}
+
 .project-list-item:hover, .feature-list-item:hover{
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+  transition: 0.5s;
 }
 
 .feature-count, .comment-section-button{
   text-align: center;
 }
 
-/*Display feature count next to feature body on mobile devices*/
-.feature-count, .comment-section-button{width: 25%;}
-.feature-text, .comment-section-content{width: 75%;}
-
-
-
-.comment-container{
-  margin: 0 20px;
+.feature-count > button{
+  height: 60px;
 }
 
-.comment-author, .comment-date{
+.feature-text{padding: 35px;}
+
+.feature-image{
+  height: 210px;
+  background-size: cover;
+  background-position: center center;
+  padding: 0;
+}
+
+/*Display feature count next to feature body on mobile devices*/
+.feature-count, .comment-section-button, .add-button, .delete-project{width: 25%;}
+.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .project-list-item{width: 75%;}
+
+
+
+.comment-section-content{
+  padding: 35px 25px;
+}
+
+
+.comment-section-content .comment-author, .comment-section-content .comment-date, .comment-project-link, .comment-feature-link{
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin: 0 0 0 0;
+  padding: 0 15px 0 0;
+  float: left;
+}
+
+.comment-project-link a, .comment-feature-link a{
+  text-decoration: underline;
+}
+
+.comment-author{
+  color: #7fba24;
+  font-weight: 600;
+  font-size: 0.8rem;}
+
+.comment-date{
+  color: #7f9da7;
   font-weight: 600;
   font-size: 0.8rem;
 }
 
-.comment-author{color: #7fba24;}
-.comment-date{color: #7f9da7;}
+
 
 footer{
   background-color: #003c50;
@@ -240,37 +294,74 @@ footer div{
 .answers div{
   margin: 50px 0;
 }
-
-.feature-form-container{
-    margin-bottom: 50px;
+.form{
+  margin-bottom: 50px;
 }
 
 label{
-    font-size: 1rem;
+  font-size: 1rem;
+
 }
 
 input, textarea{
-    margin-bottom: 25px;
+  margin-bottom: 5px;
+  padding: 15px;
 }
 
 label, input{
-    display: block;
+  display: block;
+  width: 100%;
+
 }
 
 .submit{
-    color: white;
-    background-color: #003c50;
-    float: left;
-    font-size: 1.3rem;
+  color: white;
+  background-color: #003c50;
+  float: left;
+  font-size: 1.3rem;
+  margin: 15px;
 }
 
 textarea[name="description"]{
-    height: 200px;
+  height: 150px;
+  width: 100%;
+}
+
+select{
+  padding: 10px;
+  margin: 22px 0;
+  border: 2px solid #003c50;
+  float: right;
+  width:100%;
+}
+
+.form-response{
+  padding: 25px;
+  border: 3px solid #003c50;
+  min-height: 120px;
+}
+
+.form-response > p{
+  margin: 0;
 }
 
 
+.readMoreText{
+  color: #7fba24 !important;
+  display: block;
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
 
+.short-text{
+  display: block;
+  padding: 15px 0;
+}
 
+.feature-list-item{
+  margin-bottom: 50px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
 
 /* For desktop: */
 @media only screen and (min-width: 700px) {
@@ -300,15 +391,8 @@ textarea[name="description"]{
   a{ text-decoration: none; }
 
 
-  .feature-detail-image{
-    transition: transform 0.25s ease;
-    cursor: zoom-in;
+  .feature-list-item{
+    margin-bottom: 25px;
+    box-shadow: none;
   }
-
-  .feature-detail-image img:active, .feature-detail-image img:focus{
-    -webkit-transform: scale(2);
-    transform: scale(2);
-    cursor: zoom-out;
-  }
-
 }

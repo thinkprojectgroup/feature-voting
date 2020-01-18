@@ -2,26 +2,27 @@ import React, { Component } from "react";
 import axios from "axios";
 import FileBase from "react-file-base64"
 import { storage } from '../firebase-config';
+import config from '../config'
 
-class FeatureForm extends Component {
+class CommentForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            headline: "",
-            description: "",
+            name: "",
+            content: "",
             firebaseUrls: [],
             currentImageName: [],
             images: [],
+            featureId: this.props.featureId,
             showResponse: false
         };
     }
 
     handleResponseButton = () => {
-        this.setState({
-            showResponse: false
-        })
-        this.props.toggleShowForm()
-
+            this.setState({
+                showResponse: false
+            })
+            this.props.toggleShowForm()
         document.getElementById("form-button").classList.toggle("cross");
     }
 
@@ -128,13 +129,13 @@ class FeatureForm extends Component {
 
 
         let data = JSON.stringify({
-            headline: this.state.headline,
-            description: this.state.description,
+            name: this.state.name,
+            content: this.state.content,
             imageUrls: imageUrls
         })
 
 
-        axios.post('/api/features/' + this.props.projectName, data, config)
+        axios.post('/api/comments/' + this.state.featureId, data, config)
             .then((result) => {
                 console.log(result);
                 this.setState({
@@ -147,26 +148,23 @@ class FeatureForm extends Component {
     }
 
     render() {
-        const { headline, description } = this.state;
+        const { name, content } = this.state;
 
         return (
-            <div className="row form">
+
+            <div className="feature-form-container row col-12">
                 {!this.state.showResponse ? (
                 <form onSubmit={this.onSubmit} className="feature-form">
-
-                    <h5 className="col-12">Create a new feature:</h5>
+                    <h5 className="col-12">Create a new comment:</h5>
                     <div className="col-6 name">
                         <label>
-                            Title:
+                            Name (optional):
                         </label>
                         <input type="text"
-                               name="headline"
-                               id="headline"
+                               name="name"
                                className="headline"
-                               value={headline}
-                               onChange={this.onChange}
-                               required
-                        />
+                               value={name}
+                               onChange={this.onChange}/>
                     </div>
 
                     <div className="col-6 filepicker">
@@ -174,32 +172,32 @@ class FeatureForm extends Component {
                         <input type="file" multiple className="process__upload-btn" onChange={(e) => this.onChangeImage(e)} />
                     </div>
 
-
                     <div className="col-12 content">
                         <label>
-                            Description:
+                            Content:
                         </label>
-                        <textarea type="text"
-                                  name="description"
-                                  className="description"
-                                  value={description}
-                                  onChange={this.onChange}/>
+                        <input type="text"
+                               name="content"
+                               className="description"
+                               value={content}
+                               onChange={this.onChange}/>
                     </div>
 
 
 
                     <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>
-                
-                ) : 
+                ) :
                     <div className="form-response">
-                         <p className="col-10">
-                            Thank you for submitting a feature! <br />Your feature will be reviewed by an admin before you can see it here.
+                        <p className="col-10">
+                            Thank you for submitting a comment! <br />Your comment will be reviewed by an admin before you can see it here.
                         </p>
-                         <button className="submit col-2" onClick={this.handleResponseButton.bind(this)}>
+                        <button className="submit col-2" onClick={this.handleResponseButton.bind(this)}>
                             Ok, great!
                         </button>
                     </div>
+
+
                 }
             </div>
         );
@@ -207,4 +205,4 @@ class FeatureForm extends Component {
 
 }
 
-export default FeatureForm;
+export default CommentForm;

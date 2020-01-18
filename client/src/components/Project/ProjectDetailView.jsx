@@ -3,8 +3,7 @@ import FeaturePDV from "../Feature/FeaturePDV";
 import FeatureForm from "../FeatureForm";
 import axios from "axios";
 import config from '../../config';
-import { Button } from "reactstrap";
-
+import FeatureReview from "../Feature/FeatureReview";
 
 class ProjectDetailView extends Component {
   constructor(props) {
@@ -25,6 +24,7 @@ class ProjectDetailView extends Component {
 
   toggleShowForm = () => {
     this.setState({showForm: !this.state.showForm});
+    document.getElementById("form-button").classList.toggle("cross");
     // console.log(this.state.showForm);
   }
 
@@ -67,17 +67,20 @@ class ProjectDetailView extends Component {
     return (
         <div className="container row">
           <div className="row">
-            <div className="col-11">
+            <div className="col-11 project-name">
               <h1>{this.state.name}</h1>
             </div>
-            <div className="col-1">
+            <div className="col-1 add-button" id="form-button">
               <button onClick={this.toggleShowForm} className="add">
                 <i className="fas fa-plus"></i>
               </button>
             </div>
           </div>
           {this.state.showForm ? (
-              <FeatureForm projectId={this.state.projectId} />
+              <FeatureForm 
+              projectName={this.props.match.params.projectName.toString().split("-").join(" ")} 
+              toggleShowForm={this.toggleShowForm}
+              />
           ): null}
 
           {this.state.features.sort((a,b) => b.voteCount - a.voteCount)
@@ -91,8 +94,19 @@ class ProjectDetailView extends Component {
                   projectId={this.state.projectId}
                   upvoted = {feature.upvoted}
                   projectName = {this.props.match.params.projectName.toString().split("-").join(" ")}
+                  imageUrls = {feature.imageUrls}
               />
               ))}
+
+
+          < hr/>
+          <FeatureReview
+              projectName={this.props.match.params.projectName
+                  .toString()
+                  .split("-")
+                  .join(" ")}
+              projectId={this.state.projectId}
+          />
         </div>
     );
   }
