@@ -78,8 +78,8 @@ class CommentCR extends Component{
                     <div className="comment-section-item col-12 row">
 
                         <div className="comment-section-button col-1">
-                            <Button className="accept" onClick={() => this.handleAccept()} title="accept"><i className="fas fa-check"></i></Button>
-                            <Button className="decline" onClick={() => this.handleDelete()} title="decline"><i className="fas fa-times"></i></Button>
+                            <Button className="accept" onClick={() => this.handleAccept()} title="Accept"><i className="fas fa-check"></i></Button>
+                            <Button className="decline" onClick={() => this.handleDelete()} title="Decline"><i className="fas fa-times"></i></Button>
                         </div>
                         {images === null ?(
                                 <div className="comment-section-content col-11">
