@@ -218,20 +218,16 @@ button.add{
 
 /*Display feature count next to feature body on mobile devices*/
 .feature-count, .comment-section-button, .add-button, .delete-project{width: 25%;}
-.feature-text, .comment-section-content, .project-name,  .comment-section .comment-count, .project-list-item{width: 75%;}
+.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .project-list-item{width: 75%;}
 
 
-
-.comment-container{
-  margin: 0 20px;
-}
 
 .comment-section-content{
   padding: 35px 25px;
 }
 
 
-.comment-author, .comment-date, .comment-project-link, .comment-feature-link{
+.comment-section-content .comment-author, .comment-section-content .comment-date, .comment-project-link, .comment-feature-link{
   font-weight: 600;
   font-size: 0.8rem;
   margin: 0 0 0 0;
@@ -243,8 +239,16 @@ button.add{
   text-decoration: underline;
 }
 
-.comment-author{color: #7fba24;}
-.comment-date{color: #7f9da7;}
+.comment-author{
+  color: #7fba24;
+  font-weight: 600;
+  font-size: 0.8rem;}
+
+.comment-date{
+  color: #7f9da7;
+  font-weight: 600;
+  font-size: 0.8rem;
+}
 
 
 
