@@ -37,10 +37,8 @@ class ProjectOverView extends Component {
   }
   reRender = (name) => {
     var self = this;
-    //var newProjects = [...self.state.projects]
     var duplicate = this.state.projects.pop()
     duplicate.name = name
-    //newProjects.concat(duplicate)
     self.setState({
       projects: this.state.projects.concat(duplicate)
     });
