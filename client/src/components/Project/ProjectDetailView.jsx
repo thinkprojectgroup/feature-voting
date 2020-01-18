@@ -3,7 +3,7 @@ import FeaturePDV from "../Feature/FeaturePDV";
 import FeatureForm from "../FeatureForm";
 import axios from "axios";
 import config from '../../config';
-import { Button } from "reactstrap";
+import FeatureReview from "../Feature/FeatureReview";
 
 class ProjectDetailView extends Component {
   constructor(props) {
@@ -97,6 +97,16 @@ class ProjectDetailView extends Component {
                   imageUrls = {feature.imageUrls}
               />
               ))}
+
+
+          < hr/>
+          <FeatureReview
+              projectName={this.props.match.params.projectName
+                  .toString()
+                  .split("-")
+                  .join(" ")}
+              projectId={this.state.projectId}
+          />
         </div>
     );
   }
