@@ -5,7 +5,6 @@ import axios from "axios";
 import config from '../../config';
 import { Button } from "reactstrap";
 
-
 class ProjectDetailView extends Component {
   constructor(props) {
     super(props);
