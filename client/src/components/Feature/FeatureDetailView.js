@@ -162,7 +162,7 @@ class FeatureDetailView extends Component {
                 <div className="col-11 project-name">
                     <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
                 </div>
-                <div className="col-1 add-button" id="form-button">
+                <div className="col-1 add-button">
                     <button onClick={this.toggleShowForm} className="add" id="form-button">
                         <i className="fas fa-plus"></i>
                     </button>
