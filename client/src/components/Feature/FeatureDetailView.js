@@ -31,7 +31,6 @@ class FeatureDetailView extends Component {
 
   toggleShowForm = () => {
     this.setState({ showForm: !this.state.showForm });
-      document.getElementById("form-button").classList.toggle("cross");
     //console.log(this.state.showForm);
   }
 
@@ -156,23 +155,24 @@ class FeatureDetailView extends Component {
 
         <hr />
 
+        <div className="col-1 add-button">
+            <button onClick={this.toggleShowForm} className="add">
+                <i className="fas fa-plus"></i>
+            </button>
+        </div>
+        
+        <div>
+        {this.state.showForm ? (
+            <CommentForm 
+              featureId={this.props.match.params.featureId} 
+              toggleShowForm={this.toggleShowForm}
+            />
+        ): null}
+        </div>
+
+
         <div className="comment-section">
-
-            <div className="row">
-                <div className="col-11">
-                    <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
-                </div>
-                <div className="col-1">
-                    <button onClick={this.toggleShowForm} className="add" id="form-button">
-                        <i className="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            {this.state.showForm ? (
-                <CommentForm featureId={this.props.match.params.featureId}
-                />
-            ): null}
-
+          <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
           {this.state.comments.map(comment => (
             <Comment
               author={comment.name}
