@@ -55,10 +55,6 @@
   padding: 15px;
 }
 
-body{
-  margin: 0;
-}
-
 
 .row::after {
   content: "";
@@ -112,7 +108,6 @@ h1{font-size: 2rem; }
 h2{font-size: 1.5rem;}
 h3{font-size: 1.3rem; margin: 0;}
 h4{font-size: 1.1rem}
-h5{font-size: 1.0rem; margin: 0;}
 p{font-size: 1rem;}
 a{ text-decoration: none; }
 
@@ -180,13 +175,11 @@ button.accept{
 
 button.add{
   background-color: #003c50;
-  float: right;
-  transition: 0.4s;
-}
-
-.cross i{
-  transform: rotate(45deg);
-  transition: 0.3s;
+    float: right;
+  margin-block-start: 0.67em;
+  margin-block-end: 0.67em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
 }
 
 .project-list-item{
@@ -274,37 +267,32 @@ footer div{
 .answers div{
   margin: 50px 0;
 }
-.form{
-  margin-bottom: 50px;
+
+.feature-form-container{
+    margin-bottom: 50px;
 }
 
 label{
-  font-size: 1rem;
-
+    font-size: 1rem;
 }
 
 input, textarea{
-  margin-bottom: 5px;
-  padding: 15px;
+    margin-bottom: 25px;
 }
 
 label, input{
-  display: block;
-  width: 100%;
-
+    display: block;
 }
 
 .submit{
-  color: white;
-  background-color: #003c50;
-  float: left;
-  font-size: 1.3rem;
-  margin: 15px;
+    color: white;
+    background-color: #003c50;
+    float: left;
+    font-size: 1.3rem;
 }
 
 textarea[name="description"]{
-  height: 150px;
-  width: 100%;
+    height: 200px;
 }
 
 select{
@@ -324,7 +312,6 @@ select{
 .form-response > p{
   margin: 0;
 }
-
 
 .readMoreText{
   color: #7fba24 !important;

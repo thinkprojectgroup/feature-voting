@@ -116,59 +116,45 @@ class FeatureForm extends Component {
     render(){
         const {headline, description } = this.state;
 
-        return (
-            <div className="row form">
-                {!this.state.showResponse ? (
+        return(
+
+            <div className="feature-form-container row col-12">
                 <form onSubmit={this.onSubmit} className="feature-form">
+                    <label>
+                        Title:
+                    </label>
+                    <input type="text"
+                           name="headline"
+                           id="headline"
+                           className="headline col-12"
+                           value={headline}
+                           onChange={this.onChange}
+                           required
+                    />
 
-                    <h5 className="col-12">Create a new feature:</h5>
-                    <div className="col-6 name">
-                        <label>
-                            Title:
-                        </label>
-                        <input type="text"
-                               name="headline"
-                               id="headline"
-                               className="headline"
-                               value={headline}
-                               onChange={this.onChange}
-                               required
-                        />
-                    </div>
+                    <label>
+                        Description:
+                    </label>
+                    <textarea
+                        name="description"
+                        id="description"
+                        className="description col-12"
+                        value={description}
+                        onChange={this.onChange}
+                        required
+                    />
 
-                    <div className="col-6 filepicker">
-                        <label>Upload Your Images </label>
-                        <input type="file" multiple className="process__upload-btn" onChange={(e) => this.onChangeImage(e)} />
-                    </div>
-
-
-                    <div className="col-12 content">
-                        <label>
-                            Description:
-                        </label>
-                        <textarea type="text"
-                                  name="description"
-                                  className="description"
-                                  value={description}
-                                  onChange={this.onChange}/>
-                    </div>
-
-
+                    <label>Upload Your Images </label>
+                    <FileBase type="file" multiple={true} onDone={this.getBaseFile.bind(this)} />
 
                     <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>
-                
-                ) : 
-                    <div className="form-response">
-                         <p className="col-10">
-                            Thank you for submitting a feature! <br />Your feature will be reviewed by an admin before you can see it here.
-                        </p>
-                         <button className="submit col-2" onClick={this.handleResponseButton.bind(this)}>
-                            Ok, great!
-                        </button>
-                    </div>
-                }
             </div>
+
+
+
+
+
         );
     }
 
