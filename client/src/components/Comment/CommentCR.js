@@ -84,18 +84,20 @@ class CommentCR extends Component{
                         {images == null ?(
                                 <div className="comment-section-content col-11">
                                     <div className="row">
-                                        <p className="comment-author col-3">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
-                                        <Link to={"/" + this.state.projectName.split(" ").join("-")} >
-                                            <p className="comment-project-link col-3">Projekt: {this.state.projectName}</p>
-                                        </Link>
-                                        <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId} className="comment-author">
-                                            <p className="comment-feature-link col-3">Feature: {this.state.featureName}</p>
-                                        </Link>
+                                        <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
+                                        <p className="comment-project-link">Project: {" "}
+                                            <Link to={"/" + this.state.projectName.split(" ").join("-")} >
+                                                {" " + this.state.projectName}
+                                            </Link>
+                                        </p>
+                                        <p className="comment-feature-link"> Feature: {" "}
+                                            <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId} >
+                                                {this.state.featureName}
+                                            </Link>
+                                        </p>
                                     </div>
                                     <p className="comment-content">{this.state.commentContent}</p>
                                     <p className="comment-date">{this.state.formattedDate}</p>
-
-
                                 </div>
                             )
                             :(
