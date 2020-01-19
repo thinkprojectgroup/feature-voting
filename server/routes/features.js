@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const { Project } = require("../models/project")
 const { validateFeature, validateSearch, cleanFeatures } = require("../models/feature")
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
+const checkAuth = require('../middleware/checkAuth')
 
 // Post new feature to given projectId. Request can include base64 imageData to save images.
 router.post("/:projectName", async (req, res) => {
@@ -35,7 +36,7 @@ router.post("/:projectName", async (req, res) => {
 })
 
 // Patch request to set acceptedStatus=true for given featureId
-router.patch("/accept/:featureId", async (req, res) => {
+router.patch("/accept/:featureId", checkAuth, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")
 
     const result = await Project
@@ -101,7 +102,7 @@ router.get("/search/", async (req, res) => {
     const { error } = validateSearch(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
-    const projects = await Project.find(
+    const projects = await Project.find (
         { $text: { $search: req.body.searchString } },
         { score: { $meta: "textScore" } }
     ).sort({ score: { $meta: "textScore" } })
@@ -118,7 +119,7 @@ router.get("/search/", async (req, res) => {
 });
 
 // Delete specific feature for project & feature id
-router.delete("/:projectName/:featureId", async (req, res) => {
+router.delete("/:projectName/:featureId", checkAuth, async (req, res) => {
     //TODO: admin auth
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import config from '../../config';
 
 class ProjectForm extends Component {
     state = {
@@ -34,7 +35,10 @@ class ProjectForm extends Component {
             })
             .catch(error => {
                 console.log(error);
-                this.setState({ errorMessage: error.value }, { error: true });
+                this.setState({ 
+                    errorMessage: error.value, 
+                    error: true 
+                });
             });
     };
 

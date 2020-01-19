@@ -106,7 +106,7 @@ router.get("/name/:name", async (req, res) => {
 
 // Get Project with all unaccepted features by name
 // NOTE: name is case sensitive
-router.get("/unaccepted/:name", async (req, res) => {
+router.get("/unaccepted/:name", checkAuth, async (req, res) => {
     //TODO: authentication, only for admin
 
     var project = await Project.aggregate([
@@ -159,7 +159,7 @@ router.post("/", async (req, res) => {
 })
 
 // Delete project by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
     //TODO: authentication, only for admin
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("projectId doesn't fit id schema")
 

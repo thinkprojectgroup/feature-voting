@@ -8,6 +8,7 @@ import FeatureReview from "../Feature/FeatureReview";
 class ProjectDetailView extends Component {
   constructor(props) {
     super(props);
+    console.log("state" ,props.state)
 
     this.state = {
       features: [],
@@ -43,8 +44,6 @@ class ProjectDetailView extends Component {
 
   }
 
-
-
   componentDidMount() {
     //console.log(this.props.match.params);
     axios
@@ -58,7 +57,7 @@ class ProjectDetailView extends Component {
         });
       })
       .catch(error => {
-        console.log(error);
+        console.log(error.response);
       });
   }
 

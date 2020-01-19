@@ -11,31 +11,31 @@ import SignIn from './components/Auth/SignIn'
 import AppWrapper from './components/AppWrapper'
 import Footer from './components/Footer'
 import FAQ from './components/FAQ'
-import AdminRights from "./components/User/AdminRights";
+import AdminRights from './components/User/AdminRights'
 import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect,
+  Redirect
 } from 'react-router-dom'
+import AdminRoute from './components/Auth/AdminRoute'
 
 class App extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       role: 'user',
       isSignedIn: false,
       idToken: null,
-      authIsLoaded: false,
+      authIsLoaded: false
     }
 
     this.createFingerPrint()
   }
 
   // Helper function to await a timeout
-  timeout = (ms) => new Promise(resolve => setTimeout(resolve, ms))
-  
+  timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+
   createFingerPrint = () => {
     this.timeout(500).then(
       Fingerprint2.get(function (components) {
@@ -67,7 +67,7 @@ class App extends Component {
     })
   }
 
-  render() {
+  render () {
     return (
       <AppWrapper
         isReady={this.isReady}
@@ -76,58 +76,40 @@ class App extends Component {
         {this.state.authIsLoaded && (
           <>
             <Router>
-              <Header 
-                role={this.state.role} 
+              <Header
+                role={this.state.role}
                 isSignedIn={this.state.isSignedIn}
                 setAuthorisation={this.setAuthorisation}
               />
               <Switch>
-                <Route //Admin - ProjectOverview
-                  exact
-                  path={'/'}
-                  render={props =>
-                    this.state.role == 'admin' ? (
-                      <ProjectOverView idToken={this.state.idToken} {...props} />
-                    ) : (
-                        <Redirect to={'/login'} />
-                      )
-                  }
-                />
-                <Route //Admin - CommentReview
-                  exact
-                  path={'/commentreview'}
-                  render={props =>
-                    this.state.role == 'admin' ? (
-                      <CommentReview {...props} />
-                    ) : (
-                        <Redirect to={'/login'} />
-                      )
-                  }
-                />
-                <Route //Admin - AdminRights
-                    exact
-                    path={"/adminrights"}
-                    render={props =>
-                        this.state.role == "admin" ? (
-                            <AdminRights {...props} />
-                        ) : (
-                            <Redirect to={"/login"} />
-                        )
-                    }
-                />
-                <Route //Login
-                  exact
-                  path={'/login'}
-                  render={props => (
-                    <SignIn 
-                      role={this.props.role}
-                      isSignedIn={this.state.isSignedIn} 
-                      setAuthorisation={this.setAuthorisation} />
-                  )}
-                />
+                <Route exact path={'/login'}>
+                  <SignIn
+                    role={this.props.role}
+                    isSignedIn={this.state.isSignedIn}
+                    setAuthorisation={this.setAuthorisation}
+                  />
+                </Route>
+
                 <Route exact path={'/faq'} component={FAQ} />
-                <Route exact path={'/:projectName'} component={ProjectDetailView} />
-                <Route path={'/:projectName/:featureId'} component={FeatureDetailView} />
+                <AdminRoute exact path='/' role={this.state.role}>
+                  <ProjectOverView idToken={this.state.idToken} />
+                </AdminRoute>
+                <AdminRoute exact path='/commentreview' role={this.state.role}>
+                  <CommentReview />
+                </AdminRoute>
+                <AdminRoute exact path='/adminrights' role={this.state.role}>
+                  <AdminRights />
+                </AdminRoute>
+
+                <Route
+                  exact
+                  path={'/:projectName'}
+                  component={ProjectDetailView}
+                />
+                <Route
+                  path={'/:projectName/:featureId'}
+                  component={FeatureDetailView}
+                />
               </Switch>
               <Footer />
             </Router>
