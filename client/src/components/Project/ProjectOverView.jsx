@@ -5,18 +5,24 @@ import config from "../../config";
 import ProjectForm from "./ProjectForm";
 
 
+
 class ProjectOverView extends Component {
   constructor (props) {
     super(props)
     this.state = {
       projects: [],
       idToken: this.props.idToken,
-      show: false
+      show: false,
+      showResponse: false
     };
     this.toggleShow = this.toggleShow.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
 
   }
+  openDialog = () => this.setState({ showResponse: true })
+ 
+  handleClose = () => this.setState({ showResponse: false })
+
   toggleShow = () => {
     this.setState({ show: !this.state.show });
     document.getElementById("form-button").classList.toggle("cross");
@@ -38,6 +44,8 @@ class ProjectOverView extends Component {
   reRender = (name) => {
     var self = this;
     var duplicate = this.state.projects.pop()
+    var back = JSON.parse(JSON.stringify((duplicate)))
+    this.state.projects.push(back)
     duplicate.name = name
     self.setState({
       projects: this.state.projects.concat(duplicate)
@@ -49,6 +57,7 @@ class ProjectOverView extends Component {
   handleDelete = id => {
     var self = this;
     var newState = self.state.projects.filter(project => project._id != id);
+    self.setState({ showResponse: true })
     self.setState({
       projects: newState
     });
@@ -80,6 +89,27 @@ class ProjectOverView extends Component {
             </div>
           </div>
           {this.state.show ? <ProjectForm reRender={this.reRender.bind(this)}/> : null}
+    
+                
+                {this.state.showResponse ?
+                <div className="form-response">
+                 <p className="col-10">
+                            Are you sure you want to delete the feature 
+                        </p>
+                         <button className="submit col-2" onClick={() => this.handleClose()}>
+                            Yes
+                        </button>
+                        <button className="submit col-2" onClick={() => this.handleClose()}>
+                            No
+                        </button>
+                        
+                    }>
+                     
+              
+                </div>:null
+                
+            }
+    
         {this.state.projects.map(project => (
             <div>
               <Link to={"/" + project.name.toString().split(" ").join("-")}>
@@ -91,6 +121,8 @@ class ProjectOverView extends Component {
                 <button onClick={() => this.handleDelete(project._id)} className="decline" >
                   <i className="fas fa-times"></i>
                 </button>
+               
+
               </div>
             </div>
         ))}
