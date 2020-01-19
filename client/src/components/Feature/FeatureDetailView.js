@@ -182,6 +182,7 @@ class FeatureDetailView extends Component {
               date={comment.dateCreated}
               count={this.state.commentCount}
               imageUrls={comment.imageUrls}
+              commentId={comment._id}
             />
           ))}
         </div>

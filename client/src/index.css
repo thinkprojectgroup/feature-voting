@@ -321,6 +321,14 @@ label, input{
   font-size: 1.3rem;
   margin: 15px;
 }
+.submit-small{
+  color: white;
+  background-color: #003c50;
+  float: left;
+  font-size: 1.0rem;
+  margin: 10px;
+}
+
 
 textarea[name="description"]{
   height: 150px;
