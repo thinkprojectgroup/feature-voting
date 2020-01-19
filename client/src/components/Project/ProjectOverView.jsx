@@ -13,14 +13,19 @@ class ProjectOverView extends Component {
       projects: [],
       idToken: this.props.idToken,
       show: false,
-      showResponse: false
+      showResponse: false,
+      featureToDelete :""
     };
     this.toggleShow = this.toggleShow.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
 
   }
-  openDialog = () => this.setState({ showResponse: true })
- 
+  openDialog  = id => {
+     var self = this;
+     self.setState({ showResponse: true } );
+     self.setState({ featureToDelete: id } )
+     console.log(self.state.featureToDelete)
+  }
   handleClose = () => this.setState({ showResponse: false })
 
   toggleShow = () => {
@@ -47,6 +52,7 @@ class ProjectOverView extends Component {
     var back = JSON.parse(JSON.stringify((duplicate)))
     this.state.projects.push(back)
     duplicate.name = name
+    duplicate._id = ""
     self.setState({
       projects: this.state.projects.concat(duplicate)
     });
@@ -61,6 +67,7 @@ class ProjectOverView extends Component {
     self.setState({
       projects: newState
     });
+    
     // console.log(comment._id)
     axios
         .delete("/api/projects/" + id)
@@ -70,6 +77,7 @@ class ProjectOverView extends Component {
         .catch(function(error) {
           console.log(error);
         });
+    this.handleClose();
   };
 
 
@@ -91,24 +99,7 @@ class ProjectOverView extends Component {
           {this.state.show ? <ProjectForm reRender={this.reRender.bind(this)}/> : null}
     
                 
-                {this.state.showResponse ?
-                <div className="form-response">
-                 <p className="col-10">
-                            Are you sure you want to delete the feature 
-                        </p>
-                         <button className="submit col-2" onClick={() => this.handleClose()}>
-                            Yes
-                        </button>
-                        <button className="submit col-2" onClick={() => this.handleClose()}>
-                            No
-                        </button>
-                        
-                    }>
-                     
               
-                </div>:null
-                
-            }
     
         {this.state.projects.map(project => (
             <div>
@@ -118,12 +109,30 @@ class ProjectOverView extends Component {
                 </div>
               </Link>
               <div className="col-1 delete-project">
-                <button onClick={() => this.handleDelete(project._id)} className="decline" >
+                <button onClick={() => this.openDialog(project._id)} className="decline" >
                   <i className="fas fa-times"></i>
                 </button>
                
 
               </div>
+              {this.state.showResponse && this.state.featureToDelete == project._id?
+                <div className="form-response-delete">
+                 <p className="col-10">
+                            Are you sure you want to delete the project 
+                        </p>
+                         <button className="submit col-2" onClick={() => this.handleDelete(this.state.featureToDelete)}>
+                            Yes
+                        </button>
+                        <button className="submit col-2" onClick={() => this.handleClose()}>
+                            No
+                        </button>
+                        
+                    
+                     
+              
+                </div>:null
+                
+            }
             </div>
         ))}
       </div>

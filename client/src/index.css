@@ -329,6 +329,15 @@ select{
   margin: 0;
 }
 
+.form-response-delete{
+  padding: 25px;
+  min-height: 120px;
+}
+
+.form-response-delete > p{
+  margin: 0;
+}
+
 
 .readMoreText{
   color: #7fba24 !important;

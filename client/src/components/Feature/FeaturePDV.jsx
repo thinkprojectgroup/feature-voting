@@ -20,7 +20,9 @@ class FeaturePDV extends Component {
       upvoted: this.props.upvoted,
       projectName: this.props.projectName,
       imageUrls: this.props.imageUrls,
-      deleted: false
+      deleted: false,
+      showResponse: false,
+
     };
 
     this.handleUpVote = this.handleUpVote.bind(this);
@@ -61,6 +63,12 @@ class FeaturePDV extends Component {
       });
 
   };
+
+  openDialog  = () => {
+    var self = this;
+    self.setState({ showResponse: true } );
+ }
+  handleClose = () => this.setState({ showResponse: false })
 
   handleDelete = () => {
     var self = this;
@@ -145,7 +153,7 @@ class FeaturePDV extends Component {
                 </div>
               </Link>
               <div className="col-3 delete-project">
-                <button onClick={() => this.handleDelete()} className="decline" >
+                <button onClick={() => this.openDialog()} className="decline" >
                   <i className="fas fa-times"></i>
                 </button>
               </div>
@@ -176,7 +184,7 @@ class FeaturePDV extends Component {
                     </div>
                   </Link>
                   <div className="col-3 delete-project">
-                <button onClick={() => this.handleDelete()} className="decline" >
+                <button onClick={() => this.openDialog()} className="decline" >
                   <i className="fas fa-times"></i>
                 </button>
               </div>
@@ -208,8 +216,27 @@ class FeaturePDV extends Component {
               
             </div>
           )}
+          {this.state.showResponse ?
+                <div className="form-response-delete">
+                 <p className="col-10">
+                            Are you sure you want to delete the feature 
+                        </p>
+                         <button className="submit col-2" onClick={() => this.handleDelete()}>
+                            Yes
+                        </button>
+                        <button className="submit col-2" onClick={() => this.handleClose()}>
+                            No
+                        </button>
+                        
+                    
+                     
+              
+                </div>:null
+                
+            }
       </div>
     ):null}
+    
     </div>
     );
   }
