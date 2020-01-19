@@ -85,7 +85,7 @@ class FeaturePDV extends Component {
 
           {this.state.upvoted === false ? 
           <button 
-            onClick={this.handleUpVote.bind(this)} >
+            onClick={this.handleUpVote.bind(this)} title="upvote">
 
             <i className="fas fa-angle-up"></i>
 
@@ -100,7 +100,7 @@ class FeaturePDV extends Component {
 
           {this.state.upvoted === true ? 
           <button
-              onClick={this.handleDownVote.bind(this)}>
+              onClick={this.handleDownVote.bind(this)} title="downvote">
             
               <i className="fas fa-angle-down"></i>
             </button>

@@ -85,7 +85,7 @@ class CommentReview extends Component{
                     </div>
                     <div className="col-3">
                         <form>
-                            <select onChange={this.handleProject.bind(this)}>
+                            <select onChange={this.handleProject.bind(this)} title="Select project">
                                 <option value="">
                                     Show all
                                 </option>

@@ -78,19 +78,19 @@ class CommentCR extends Component{
                     <div className="comment-section-item col-12 row">
 
                         <div className="comment-section-button col-1">
-                            <Button className="accept" onClick={() => this.handleAccept()}><i className="fas fa-check"></i></Button>
-                            <Button className="decline" onClick={() => this.handleDelete()}><i className="fas fa-times"></i></Button>
+                            <Button className="accept" onClick={() => this.handleAccept()} title="Accept"><i className="fas fa-check"></i></Button>
+                            <Button className="decline" onClick={() => this.handleDelete()} title="Decline"><i className="fas fa-times"></i></Button>
                         </div>
                         {images === null ?(
                                 <div className="comment-section-content col-11">
                                     <div className="row">
                                         <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
-                                        <p className="comment-project-link">Project: {" "}
+                                        <p className="comment-project-link" title="Show project">Project: {" "}
                                             <Link to={"/" + this.state.projectName.split(" ").join("-")} >
                                                 {" " + this.state.projectName}
                                             </Link>
                                         </p>
-                                        <p className="comment-feature-link"> Feature: {" "}
+                                        <p className="comment-feature-link" title="Show feature"> Feature: {" "}
                                             <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId} >
                                                 {this.state.featureName}
                                             </Link>
