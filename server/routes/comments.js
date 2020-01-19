@@ -4,10 +4,11 @@ const router = express.Router();
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
 const { Project, validateProject } = require("../models/project")
 const { validateSearch } = require("../models/feature")
+const checkAuth = require("../middleware/checkAuth")
 
 // Get all unaccepted comments
 // TODO add authorisation
-router.get("/", async (req, res) => {
+router.get("/", checkAuth, async (req, res) => {
     var comments = await Comment.find({ accepted: false, deleted: false }).sort("dateCreated")
 
     res.send(comments);
@@ -68,7 +69,7 @@ router.post("/:id", async (req, res) => {
 }) 
 
 // Switch comments accepted status by it's id
-router.patch("/:id", async (req, res) => {
+router.patch("/:id", checkAuth, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("commentId doesn't fit id schema")
 
     const session = await mongoose.startSession();
@@ -99,7 +100,7 @@ router.patch("/:id", async (req, res) => {
 })
 
 // Delete comments by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("commentId doesn't fit id schema")
 
     const session = await mongoose.startSession();
