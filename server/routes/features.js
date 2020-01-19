@@ -4,6 +4,7 @@ const mongoose = require("mongoose")
 const { Project } = require("../models/project")
 const { validateFeature, validateSearch, cleanFeatures } = require("../models/feature")
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
+const { User } = require("../models/user")
 
 // Post new feature to given projectId. Request can include base64 imageData to save images.
 router.post("/:projectName", async (req, res) => {
@@ -59,12 +60,23 @@ router.patch("/vote/:featureId", async (req, res) => {
 
     const userId = req.userId
     // TODO: decide if user or employee/admin
+    const user = await User.findById(userId)
+    if (!user) return res.status(404).send("User id not found")
 
-    const index = feature.userIds.indexOf(userId)
-    if (index === -1) {
-        feature.userIds.push(userId)
+    if (user.role === "admin" || user.role === "employee") {
+        const index = feature.employeeIds.indexOf(userId)
+        if (index === -1) {
+            feature.employeeIds.push(userId)
+        } else {
+            feature.employeeIds.splice(index, 1)
+        }
     } else {
-        feature.userIds.splice(index, 1)
+        const index = feature.userIds.indexOf(userId)
+        if (index === -1) {
+            feature.userIds.push(userId)
+        } else {
+            feature.userIds.splice(index, 1)
+        }
     }
 
     await project.save()
@@ -76,8 +88,6 @@ router.patch("/vote/:featureId", async (req, res) => {
 })
 
 // Get specific feature for project & feature id
-// TODO Fix: Es wird nicht überprüft ob FeatureId zur ProjectId gehört
-// -> Feature kann über jede projectId aufgerufen werden
 router.get("/:projectName/:featureId", async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")
 
@@ -88,7 +98,7 @@ router.get("/:projectName/:featureId", async (req, res) => {
 
     var feature = project.features.id(req.params.featureId)
     if (!feature || feature.deleted) return res.status(404).send("featureId not found")
-    
+
     feature = feature.toObject() //Turn feature to mutable object
     cleanFeatures([feature], req.userId)
 
