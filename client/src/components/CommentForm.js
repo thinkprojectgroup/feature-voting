@@ -188,7 +188,7 @@ class CommentForm extends Component {
                     <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>
                 ) :
-                    <div className="form-response">
+                    <div className="form-response row">
                         <p className="col-10">
                             Thank you for submitting a comment! <br />Your comment will be reviewed by an admin before you can see it here.
                         </p>
