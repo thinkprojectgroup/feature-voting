@@ -91,7 +91,7 @@ class ProjectOverView extends Component {
               <h1>Projects</h1>
             </div>
             <div className="col-1 add-button">
-              <button onClick={this.toggleShow} className="add" id="form-button">
+              <button onClick={this.toggleShow} className="add" id="form-button" title="Add project">
                 <i className="fas fa-plus"></i>
               </button>
             </div>
@@ -109,7 +109,7 @@ class ProjectOverView extends Component {
                 </div>
               </Link>
               <div className="col-1 delete-project">
-                <button onClick={() => this.openDialog(project._id)} className="decline" >
+                <button onClick={() => this.openDialog(project._id)} className="decline" title="Delete project">
                   <i className="fas fa-times"></i>
                 </button>
                
