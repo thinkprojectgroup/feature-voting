@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import FileBase from "react-file-base64"
 import { storage } from '../firebase-config';
-import config from '../config'
+import config from '../config';
+import { ClipLoader } from "react-spinners";
 
 class CommentForm extends Component {
     constructor(props) {
@@ -14,7 +15,8 @@ class CommentForm extends Component {
             currentImageName: [],
             images: [],
             featureId: this.props.featureId,
-            showResponse: false
+            showResponse: false,
+            loading: false
         };
     }
 
@@ -118,6 +120,10 @@ class CommentForm extends Component {
     onSubmit = async (e) => {
         e.preventDefault();
 
+        this.setState({
+            loading: true
+        })
+
         const config = {
             headers: {
                 'Content-Type': 'application/json'
@@ -139,7 +145,8 @@ class CommentForm extends Component {
             .then((result) => {
                 console.log(result);
                 this.setState({
-                    showResponse: true
+                    showResponse: true,
+                    loading: false
                 })
             })
             .catch(error => {
@@ -185,7 +192,10 @@ class CommentForm extends Component {
 
 
 
-                    <button className="submit col-2" type="submit" value="Submit">Submit</button>
+                    {this.state.loading ? 
+                    <ClipLoader loading={this.state.loading}/>
+                    :<button className="submit col-2" type="submit" value="Submit">Submit</button>}
+
                 </form>
                 ) :
                     <div className="form-response row">

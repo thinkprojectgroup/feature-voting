@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import FileBase from "react-file-base64"
 import { storage } from '../firebase-config';
+import { ClipLoader } from "react-spinners";
 
 class FeatureForm extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ class FeatureForm extends Component {
             firebaseUrls: [],
             currentImageName: [],
             images: [],
-            showResponse: false
+            showResponse: false,
+            loading : false
         };
     }
 
@@ -116,6 +118,9 @@ class FeatureForm extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
+        this.setState({
+            loading: true
+        })
 
         const config = {
             headers: {
@@ -138,7 +143,8 @@ class FeatureForm extends Component {
             .then((result) => {
                 console.log(result);
                 this.setState({
-                    showResponse: true
+                    showResponse: true,
+                    loading: false
                 })
             })
             .catch(error => {
@@ -187,8 +193,10 @@ class FeatureForm extends Component {
                     </div>
 
 
+                    {this.state.loading ? 
+                    <ClipLoader loading={this.state.loading}/>
+                    :<button className="submit col-2" type="submit" value="Submit">Submit</button>}
 
-                    <button className="submit col-2" type="submit" value="Submit">Submit</button>
                 </form>
                 
                 ) : 
