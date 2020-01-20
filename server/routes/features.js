@@ -59,7 +59,6 @@ router.patch("/vote/:featureId", async (req, res) => {
     var feature = project.features.id(req.params.featureId)
 
     const userId = req.userId
-    // TODO: decide if user or employee/admin
     const user = await User.findById(userId)
     if (!user) return res.status(404).send("User id not found")
 
@@ -93,8 +92,6 @@ router.get("/:projectName/:featureId", async (req, res) => {
 
     const project = await Project.findOne({ name: req.params.projectName, deleted: false })
     if (!project) return res.status(404).send("projectName not found")
-
-    //TODO add featureID invalid response
 
     var feature = project.features.id(req.params.featureId)
     if (!feature || feature.deleted) return res.status(404).send("featureId not found")
