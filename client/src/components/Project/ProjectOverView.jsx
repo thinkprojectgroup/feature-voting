@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import config from "../../config";
 import ProjectForm from "./ProjectForm";
+import ReactGA from 'react-ga';
 
 class ProjectOverView extends Component {
   constructor (props) {
@@ -15,6 +16,7 @@ class ProjectOverView extends Component {
     this.toggleShow = this.toggleShow.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
 
+    ReactGA.pageview(window.location.pathname + window.location.search );
   }
   toggleShow = () => {
     this.setState({ show: !this.state.show });

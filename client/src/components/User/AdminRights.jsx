@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Link } from "react-router-dom";
 import config from "../../config";
+import ReactGA from 'react-ga';
 
 import User from "./User";
 import { Button } from "reactstrap";
@@ -13,6 +14,7 @@ class AdminRights extends Component {
       employees: [],
       admins: []
     };
+    ReactGA.pageview(window.location.pathname + window.location.search );
   }
 
   reRender = (email, role) => {

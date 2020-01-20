@@ -6,6 +6,7 @@ import Comment from '../Comment/Comment';
 import config from '../../config';
 import { Carousel } from 'react-responsive-carousel';
 import CommentForm from '../CommentForm';
+import ReactGA from 'react-ga';
 
 class FeatureDetailView extends Component {
   constructor(props) {
@@ -27,6 +28,8 @@ class FeatureDetailView extends Component {
       showForm: false,
       upvoted: false,
     };
+
+    ReactGA.pageview(window.location.pathname + window.location.search );
   }
 
   toggleShowForm = () => {

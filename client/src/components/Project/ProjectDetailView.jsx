@@ -4,6 +4,7 @@ import FeatureForm from "../FeatureForm";
 import axios from "axios";
 import config from '../../config';
 import FeatureReview from "../Feature/FeatureReview";
+import ReactGA from 'react-ga';
 
 class ProjectDetailView extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class ProjectDetailView extends Component {
 
     this.toggleShowForm = this.toggleShowForm.bind(this);
     this.sortByVoteDsc = this.sortByVoteDsc.bind(this);
+    ReactGA.pageview(window.location.pathname + window.location.search );
   }
 
 
