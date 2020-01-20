@@ -93,7 +93,7 @@ body{
 .header{
   background-color: #eaeaea;
   height: 60px;
-  margin: 0 0 50px 0;
+  margin: 0 0 0 0;
   padding: 0;
 }
 
@@ -104,7 +104,7 @@ body{
   font-size: 2rem;
   width: 60px;
   height: 60px;
-  padding: 25px 0;
+  padding: 15px 0;
 }
 
 .back-button{
@@ -238,8 +238,8 @@ button.add{
 }
 
 /*Display feature count next to feature body on mobile devices*/
-.feature-count, .comment-section-button, .add-button, .delete-project{width: 25%;}
-.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .project-list-item{width: 75%;}
+.feature-count, .comment-section-button, .add-button, .delete-project, .decline-admin-button{width: 25%;}
+.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .project-list-item, .user-name{width: 75%;}
 
 
 
@@ -412,5 +412,6 @@ select{
   .login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
     width: 80px;
     height: 80px;
+    padding: 25px 0;
   }
 }
