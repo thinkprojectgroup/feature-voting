@@ -86,25 +86,25 @@ body{
 
 .logo img{
   padding: 0;
-  height: 80px;
+  height: 60px;
   width: auto;
 }
 
 .header{
   background-color: #eaeaea;
-  height: 80px;
-  margin: 0 0 50px 0;
+  height: 60px;
+  margin: 0 0 0 0;
   padding: 0;
 }
 
-.login-button, .logout-button, .comment-review-button, .back-button{
+.login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
   color: white;
   float: right;
   text-align: center;
   font-size: 2rem;
-  width: 80px;
-  height: 80px;
-  padding: 25px 0;
+  width: 60px;
+  height: 60px;
+  padding: 15px 0;
 }
 
 .back-button{
@@ -123,6 +123,11 @@ body{
   background-color: #7f9da7;
 }
 
+
+.user-settings-button{
+  background-color: #fff;
+  color: #003c50;
+}
 
 h1{font-size: 2rem; }
 h2{font-size: 1.5rem;}
@@ -233,8 +238,8 @@ button.add{
 }
 
 /*Display feature count next to feature body on mobile devices*/
-.feature-count, .comment-section-button, .add-button, .delete-project{width: 25%;}
-.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .project-list-item{width: 75%;}
+.feature-count, .comment-section-button, .add-button, .delete-project, .decline-admin-button{width: 25%;}
+.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .project-list-item, .user-name{width: 75%;}
 
 
 
@@ -394,5 +399,19 @@ select{
   .feature-list-item{
     margin-bottom: 25px;
     box-shadow: none;
+  }
+
+  .header{
+    height: 80px;
+  }
+
+  .logo img{
+    height: 80px;
+  }
+
+  .login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
+    width: 80px;
+    height: 80px;
+    padding: 25px 0;
   }
 }
