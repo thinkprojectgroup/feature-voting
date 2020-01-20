@@ -86,24 +86,24 @@ body{
 
 .logo img{
   padding: 0;
-  height: 80px;
+  height: 60px;
   width: auto;
 }
 
 .header{
   background-color: #eaeaea;
-  height: 80px;
+  height: 60px;
   margin: 0 0 50px 0;
   padding: 0;
 }
 
-.login-button, .logout-button, .comment-review-button, .back-button{
+.login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
   color: white;
   float: right;
   text-align: center;
   font-size: 2rem;
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   padding: 25px 0;
 }
 
@@ -123,6 +123,11 @@ body{
   background-color: #7f9da7;
 }
 
+
+.user-settings-button{
+  background-color: #fff;
+  color: #003c50;
+}
 
 h1{font-size: 2rem; }
 h2{font-size: 1.5rem;}
@@ -394,5 +399,18 @@ select{
   .feature-list-item{
     margin-bottom: 25px;
     box-shadow: none;
+  }
+
+  .header{
+    height: 80px;
+  }
+
+  .logo img{
+    height: 80px;
+  }
+
+  .login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
+    width: 80px;
+    height: 80px;
   }
 }
