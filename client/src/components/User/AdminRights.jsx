@@ -39,7 +39,7 @@ class AdminRights extends Component {
       <div className="container">
 
 
-          <div className="row">
+          <div className="row col-12">
             <h1>Admin Rights</h1>
           </div>
 
