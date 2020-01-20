@@ -12,7 +12,6 @@ import AppWrapper from './components/AppWrapper'
 import Footer from './components/Footer'
 import FAQ from './components/FAQ'
 import AdminRights from "./components/User/AdminRights";
-import ReactGA from 'react-ga';
 import {
   BrowserRouter as Router,
   Route,
@@ -32,12 +31,7 @@ class App extends Component {
     }
 
     this.createFingerPrint()
-    ReactGA.initialize("UA-156449230-1");
-    ReactGA.pageview(window.location.pathname + window.location.search );
   }
-
-
-
 
   // Helper function to await a timeout
   timeout = (ms) => new Promise(resolve => setTimeout(resolve, ms))
