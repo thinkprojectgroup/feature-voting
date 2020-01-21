@@ -53,6 +53,18 @@ class CommentReview extends Component{
         return outputArray;
     }
 
+    removeComment = (id) => {
+        let interactedComment = this.state.comments.filter(comment => {
+            return comment._id !== id
+        })
+
+        console.log(interactedComment)
+
+        this.setState({
+            comments: interactedComment
+        })
+    }
+
     handleProject = (e) => {
         e.preventDefault()
         let selectedName = e.target.value
@@ -110,6 +122,7 @@ class CommentReview extends Component{
                                 projectName={comment.projectName}
                                 featureId={comment.featureId}
                                 imageUrls={comment.imageUrls}
+                                removeComment={this.removeComment}
                             />
                         )
                     })}

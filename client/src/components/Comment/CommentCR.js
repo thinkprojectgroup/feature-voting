@@ -40,6 +40,7 @@ class CommentCR extends Component{
                 self.setState({
                     clicked: true
                 })
+                self.props.removeComment(self.state.commentId)
             })
             .catch(function (error) {
                 console.log(error);
@@ -55,6 +56,7 @@ class CommentCR extends Component{
                 self.setState({
                     clicked: true
                 })
+                self.props.removeComment(self.state.commentId)
             })
             .catch(function (error) {
                 console.log(error);
