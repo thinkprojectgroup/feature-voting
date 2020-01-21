@@ -169,7 +169,9 @@ class FeatureDetailView extends Component {
                 </div>
             </div>
             {this.state.showForm ? (
-                <CommentForm featureId={this.props.match.params.featureId}
+                <CommentForm 
+                featureId={this.props.match.params.featureId}
+                toggleShowForm={this.toggleShowForm}
                 />
             ): null}
 
