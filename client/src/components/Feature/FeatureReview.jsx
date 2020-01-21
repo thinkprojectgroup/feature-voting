@@ -25,6 +25,7 @@ class FeatureReview extends Component {
                             title={feature.headline}
                             description={feature.description}
                             projectName={this.props.projectName}
+                            imageUrls={feature.imageUrls}
                         />
                     ) : null
                 )}
