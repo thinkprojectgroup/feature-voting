@@ -70,7 +70,7 @@ body{
 .container{
   max-width: 1000px;
   margin: auto;
-  padding: 25px 0 20vh 0;
+  padding: 25px 10px 20vh 10px;
   margin-bottom: 50px;
   min-height: 85vh;
 }
@@ -324,7 +324,6 @@ label, input{
   background-color: #003c50;
   float: left;
   font-size: 1.3rem;
-  margin: 15px;
 }
 
 textarea[name="description"]{
@@ -387,6 +386,16 @@ select{
   .col-11 {width: 91.66%;}
   .col-12 {width: 100%;}
 
+
+  .container{
+    max-width: 1000px;
+    margin: auto;
+    padding: 25px 0 20vh 0;
+    margin-bottom: 50px;
+    min-height: 85vh;
+  }
+
+
   h1{font-size: 2rem;}
   h2{font-size: 1.5rem;}
   h3{font-size: 1.5rem;}
@@ -413,5 +422,9 @@ select{
     width: 80px;
     height: 80px;
     padding: 25px 0;
+  }
+
+  .submit{
+    margin-left: 15px;
   }
 }
