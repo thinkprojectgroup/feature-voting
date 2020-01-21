@@ -120,7 +120,6 @@ router.get("/search/", async (req, res) => {
 
 // Delete specific feature for project & feature id
 router.delete("/:projectName/:featureId", checkAuth, async (req, res) => {
-    //TODO: admin auth
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")
 
     // Using find & save instead of update for featureSchema.pre method to work properly
