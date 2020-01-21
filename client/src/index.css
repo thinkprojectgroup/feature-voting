@@ -325,6 +325,14 @@ label, input{
   float: left;
   font-size: 1.3rem;
 }
+.submit-small{
+  color: white;
+  background-color: #003c50;
+  float: left;
+  font-size: 1.0rem;
+  margin: 10px;
+}
+
 
 textarea[name="description"]{
   height: 150px;
@@ -346,6 +354,15 @@ select{
 }
 
 .form-response > p{
+  margin: 0;
+}
+
+.form-response-delete{
+  padding: 25px;
+  min-height: 120px;
+}
+
+.form-response-delete > p{
   margin: 0;
 }
 

@@ -15,7 +15,7 @@ class ProjectForm extends Component {
     };
     onSubmit = e => {
         e.preventDefault();
-
+        
         const config = {
             headers: {
                 "Content-Type": "application/json"
@@ -29,6 +29,7 @@ class ProjectForm extends Component {
         axios
             .post("/api/projects/", data, config)
             .then(result => {
+                this.props.reRender(this.state.headline);
                 console.log(result);
                 this.setState({ submited: true });
             })
