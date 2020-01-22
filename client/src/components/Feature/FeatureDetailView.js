@@ -26,7 +26,9 @@ class FeatureDetailView extends Component {
       commentCount: 0,
       showForm: false,
       upvoted: false,
+      role: this.props.role
     };
+    console.log(this.state)
   }
 
   toggleShowForm = () => {
@@ -104,6 +106,8 @@ class FeatureDetailView extends Component {
       .catch(function (error) {
         console.log(error);
       });
+
+      console.log(this.props.role)
   };
 
   render() {
@@ -185,6 +189,7 @@ class FeatureDetailView extends Component {
               count={this.state.commentCount}
               imageUrls={comment.imageUrls}
               commentId={comment._id}
+              role={this.state.role}
             />
           ))}
         </div>

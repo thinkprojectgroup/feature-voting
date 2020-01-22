@@ -15,7 +15,8 @@ class Comment extends Component{
         formattedDate: '',
         imageUrls: this.props.imageUrls,
         commentId: this.props.commentId,
-        showResponse: false
+        showResponse: false,
+        role: this.props.role
     };
     //console.log(this.state.date);
     //console.log(this.state);
@@ -106,10 +107,13 @@ class Comment extends Component{
                             </div>
                         </div>
                     )}
-                    <div className="col-3 delete-project">
-                         <button onClick={() => this.openDialog()} className="decline" >
-                          <i className="fas fa-times"></i>
+
+                <div className="col-3 delete-project">
+                {this.state.role === "admin" ? 
+                    <button onClick={() => this.openDialog()} className="decline" >
+                        <i className="fas fa-times"></i>
                     </button>
+                 : null}
                     
               </div>
               {this.state.showResponse ?
@@ -124,9 +128,6 @@ class Comment extends Component{
                             No
                         </button>
                         
-                    
-                     
-              
                 </div>:null}
                 </div>
                 ) :null}
