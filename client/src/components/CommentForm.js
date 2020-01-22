@@ -216,10 +216,8 @@ class CommentForm extends Component {
                                 />
                         </div>
 
-
-
                         {this.state.loading ?
-                            <ClipLoader loading={this.state.loading} />
+                            <div className="col-2"><ClipLoader loading={this.state.loading} /></div>
                             : <button className="submit col-2" type="submit" value="Submit">Submit</button>}
 
                     </form>
