@@ -22,6 +22,7 @@ class FeaturePDV extends Component {
       imageUrls: this.props.imageUrls,
       deleted: false,
       showResponse: false,
+      role: this.props.role
 
     };
 
@@ -152,11 +153,15 @@ class FeaturePDV extends Component {
                   <h3>{this.state.title}</h3>{" "}
                 </div>
               </Link>
+
               <div className="col-3 delete-project">
+                {this.state.role === "admin" ? 
                 <button onClick={() => this.openDialog()} className="decline" >
                   <i className="fas fa-times"></i>
                 </button>
+                :null}
               </div>
+
               <div className="description">
 
                 <ReadMoreAndLess
@@ -183,11 +188,15 @@ class FeaturePDV extends Component {
                         <h3>{this.state.title}</h3>{" "}
                     </div>
                   </Link>
+
                   <div className="col-3 delete-project">
-                <button onClick={() => this.openDialog()} className="decline" >
-                  <i className="fas fa-times"></i>
-                </button>
-              </div>
+                    {this.state.role === "admin" ? 
+                    <button onClick={() => this.openDialog()} className="decline" >
+                      <i className="fas fa-times"></i>
+                    </button>
+                    :null}
+                  </div>
+
                   <div className="description">
 
                     <ReadMoreAndLess

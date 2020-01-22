@@ -126,7 +126,11 @@ class App extends Component {
                   )}
                 />
                 <Route exact path={'/faq'} component={FAQ} />
-                <Route exact path={'/:projectName'} component={ProjectDetailView} />
+                
+                <Route exact 
+                  path={'/:projectName'} 
+                  render={(props) => <ProjectDetailView {...props} role={this.state.role}/>} 
+                />
 
                 <Route
                   path={'/:projectName/:featureId'}

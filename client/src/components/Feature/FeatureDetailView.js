@@ -28,7 +28,7 @@ class FeatureDetailView extends Component {
       upvoted: false,
       role: this.props.role
     };
-    console.log(this.state)
+    // console.log(this.state)
   }
 
   toggleShowForm = () => {
@@ -106,8 +106,6 @@ class FeatureDetailView extends Component {
       .catch(function (error) {
         console.log(error);
       });
-
-      console.log(this.props.role)
   };
 
   render() {
