@@ -25,7 +25,7 @@ class FeatureForm extends Component {
         })
         this.props.toggleShowForm()
 
-        document.getElementById("form-button").classList.toggle("cross");
+        document.getElementById("form-button").classList.remove("cross");
     }
 
 

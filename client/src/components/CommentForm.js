@@ -26,7 +26,7 @@ class CommentForm extends Component {
             showResponse: false
         })
         this.props.toggleShowForm()
-        document.getElementById("form-button").classList.toggle("cross");
+        document.getElementById("form-button").classList.remove("cross");
     }
 
 
