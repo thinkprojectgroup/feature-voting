@@ -73,6 +73,7 @@ body{
   padding: 25px 10px 20vh 10px;
   margin-bottom: 50px;
   min-height: 85vh;
+  position: relative;
 }
 
 .header-container{
@@ -204,16 +205,38 @@ button.add{
 
 .project-list-item{
   border: 1px solid #eaeaea;
-  padding: 25px 25px;
+  padding: 0;
+  position: relative;
 }
 
-.delete-project button.decline, .delete-project{
+.comment-container{
+  position: relative;
+}
+
+.delete{
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 999;
+}
+
+.delete button{
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+}
+
+.delete button i{
   float:right;
+  color: #f15a24;
+  font-size: 1.5rem;
+  margin: 0 1px;
 }
 
-.delete-project{
-  padding: 10px 15px;
+.delete button:hover{
+  background-color: rgba(127, 157, 167, 0.2);
 }
+
 
 .project-list-item:hover, .feature-list-item:hover{
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -380,6 +403,7 @@ select{
 }
 
 .feature-list-item{
+  position: relative;
   margin-bottom: 50px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
 }
@@ -445,3 +469,28 @@ select{
     margin-left: 15px;
   }
 }
+
+
+/* The Modal (background) */
+.modal {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+

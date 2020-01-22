@@ -145,18 +145,13 @@ class FeaturePDV extends Component {
         {image === null
 
             ?(
-            <div className="col-10 feature-text">
+            <div className="col-8 feature-text">
               <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
                 <div className="title">
 
                   <h3>{this.state.title}</h3>{" "}
                 </div>
               </Link>
-              <div className="col-3 delete-project">
-                <button onClick={() => this.openDialog()} className="decline" >
-                  <i className="fas fa-times"></i>
-                </button>
-              </div>
               <div className="description">
 
                 <ReadMoreAndLess
@@ -183,11 +178,6 @@ class FeaturePDV extends Component {
                         <h3>{this.state.title}</h3>{" "}
                     </div>
                   </Link>
-                  <div className="col-3 delete-project">
-                <button onClick={() => this.openDialog()} className="decline" >
-                  <i className="fas fa-times"></i>
-                </button>
-              </div>
                   <div className="description">
 
                     <ReadMoreAndLess
@@ -216,6 +206,12 @@ class FeaturePDV extends Component {
               
             </div>
           )}
+
+        <div className="delete">
+          <button onClick={() => this.openDialog()} >
+            <i className="fas fa-times"></i>
+          </button>
+        </div>
           {this.state.showResponse ?
                 <div className="form-response-delete">
                  <p className="col-10">
