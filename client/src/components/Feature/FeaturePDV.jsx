@@ -19,7 +19,10 @@ class FeaturePDV extends Component {
       projectId: this.props.projectId,
       upvoted: this.props.upvoted,
       projectName: this.props.projectName,
-      imageUrls: this.props.imageUrls
+      imageUrls: this.props.imageUrls,
+      deleted: false,
+      showResponse: false,
+
     };
 
     this.handleUpVote = this.handleUpVote.bind(this);
@@ -61,6 +64,30 @@ class FeaturePDV extends Component {
 
   };
 
+  openDialog  = () => {
+    var self = this;
+    self.setState({ showResponse: true } );
+ }
+  handleClose = () => this.setState({ showResponse: false })
+
+  handleDelete = () => {
+    var self = this;
+    // console.log(comment._id)
+    axios
+      .delete(
+        "/api/features/" + this.state.projectName + "/" + this.state.featureId
+      )
+      .then(function(response) {
+        console.log(response);
+        self.setState({
+          deleted: true
+        });
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+  };
+
 
 
 
@@ -80,9 +107,11 @@ class FeaturePDV extends Component {
     let description = this.state.description;
 
     return (
+    <div>
+    {this.state.deleted === false ? (
       <div className="row feature-list-item">
         <div className="col-1 feature-count">
-
+        
           {this.state.upvoted === false ? 
           <button 
             onClick={this.handleUpVote.bind(this)} title="upvote">
@@ -123,6 +152,11 @@ class FeaturePDV extends Component {
                   <h3>{this.state.title}</h3>{" "}
                 </div>
               </Link>
+              <div className="col-3 delete-project">
+                <button onClick={() => this.openDialog()} className="decline" >
+                  <i className="fas fa-times"></i>
+                </button>
+              </div>
               <div className="description">
 
                 <ReadMoreAndLess
@@ -149,6 +183,11 @@ class FeaturePDV extends Component {
                         <h3>{this.state.title}</h3>{" "}
                     </div>
                   </Link>
+                  <div className="col-3 delete-project">
+                <button onClick={() => this.openDialog()} className="decline" >
+                  <i className="fas fa-times"></i>
+                </button>
+              </div>
                   <div className="description">
 
                     <ReadMoreAndLess
@@ -174,9 +213,31 @@ class FeaturePDV extends Component {
                   style={{backgroundImage: "url(" + image + ")"}} >
                 </div>
               </Link>
+              
             </div>
           )}
+          {this.state.showResponse ?
+                <div className="form-response-delete">
+                 <p className="col-10">
+                            Are you sure you want to delete the feature 
+                        </p>
+                         <button className="submit col-2" onClick={() => this.handleDelete()}>
+                            Yes
+                        </button>
+                        <button className="submit col-2" onClick={() => this.handleClose()}>
+                            No
+                        </button>
+                        
+                    
+                     
+              
+                </div>:null
+                
+            }
       </div>
+    ):null}
+    
+    </div>
     );
   }
 

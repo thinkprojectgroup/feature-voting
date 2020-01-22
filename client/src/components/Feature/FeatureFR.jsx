@@ -13,7 +13,8 @@ class FeatureFR extends Component {
             title: this.props.title,
             description: this.props.description,
             projectName: this.props.projectName,
-            clicked: false
+            clicked: false,
+            imageUrls: this.props.imageUrls
         };
     }
 
@@ -75,7 +76,7 @@ class FeatureFR extends Component {
                         </div>
                         <div
                             className="col-3 feature-image"
-                            style={{ backgroundImage: "url(" + image + ")" }}
+                            style={{ backgroundImage: "url(" + this.state.imageUrls[0] + ")" }}
                         ></div>
                     </div>
                 ) : null}

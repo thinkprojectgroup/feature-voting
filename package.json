@@ -46,6 +46,7 @@
     "react-file-base64": "^1.0.3",
     "react-ga": "^2.7.0",
     "react-router-dom": "^5.1.2",
+    "react-spinners": "^0.8.0",
     "react-toastify": "^5.5.0",
     "reactstrap": "^8.1.1",
     "winston": "^3.2.1"

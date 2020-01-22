@@ -2,17 +2,17 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require("mongoose")
 const { User, validateUser, validateBanRequest } = require("../models/user")
+const checkAuth = require("../middleware/checkAuth")
 
-router.get("/", async (req, res) => {
-    //TODO: add auth middleware / maybe only return users with email
+router.get("/", checkAuth, async (req, res) => {
+    //TODO: maybe only return users with email
     const users = await User.find({deleted: false}).sort("dateCreated")
 
     res.send(users);
 });
 
 // Assign role included in req.body to user with provided email address
-router.post("/:email", async (req, res) => {
-    //TODO: add auth middleware
+router.post("/:email", checkAuth, async (req, res) => {
     const { error } = validateUser(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
@@ -27,8 +27,7 @@ router.post("/:email", async (req, res) => {
 })
 
 // Set banned status of given user id to req.body.banned value
-router.post("/ban/:id", async (req, res) => {
-    //TODO: add auth middleware
+router.post("/ban/:id", checkAuth, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("UserId doesn't fit id schema")
 
     const { error } = validateBanRequest(req.body)
