@@ -157,7 +157,7 @@ class FeaturePDV extends Component {
                 <ReadMoreAndLess
                     ref={this.ReadMore}
                     className="read-more-content"
-                    charLimit={200}
+                    charLimit={160}
                     readMoreText="Read more"
                     readLessText="Read less"
                 >
@@ -183,7 +183,7 @@ class FeaturePDV extends Component {
                     <ReadMoreAndLess
                         ref={this.ReadMore}
                         className="read-more-content"
-                        charLimit={200}
+                        charLimit={160}
                         readMoreText="Read more"
                         readLessText="Read less"
                     >
