@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import FileBase from "react-file-base64"
 import { storage } from '../firebase-config';
+import { ClipLoader } from "react-spinners";
 
 class FeatureForm extends Component {
     constructor(props) {
@@ -12,7 +13,9 @@ class FeatureForm extends Component {
             firebaseUrls: [],
             currentImageName: [],
             images: [],
-            showResponse: false
+            showResponse: false,
+            loading: false,
+            fileError: ""
         };
     }
 
@@ -43,8 +46,11 @@ class FeatureForm extends Component {
         };
         for (var z = 0; z < err.length; z++) {// if message not same old that mean has error 
             // discard selected file
-            alert("Wrong Datatype!");
+            //alert("Wrong Datatype!");
             //event.target.value = null
+            this.setState({
+                fileError: "You can only upload images with the datatype PNG or JPEG."
+            })
             return false;
         }
         return true;
@@ -54,7 +60,10 @@ class FeatureForm extends Component {
         if (files.length > 3) {
             const msg = 'Only 3 images can be uploaded at a time'
             // event.target.value = null
-            alert("Too many files!");
+            // alert("Too many files!");
+            this.setState({
+                fileError: "You can only upload 3 images."
+            })
             return false;
         }
         return true;
@@ -70,7 +79,10 @@ class FeatureForm extends Component {
         };
         for (var z = 0; z < err.length; z++) {// if message not same old that mean has error 
             // discard selected file
-            alert("Your files are too big!");
+            // alert("Your files are too big!");
+            this.setState({
+                fileError: "You can only upload images, that are smaller than 2MB."
+            })
             //event.target.value = null
             return false;
         }
@@ -83,10 +95,14 @@ class FeatureForm extends Component {
 
     onChangeImage = (e) => {
         const files = e.target.files
-        if(this.checkFileSize(files) && this.checkMimeType(files) && this.maxSelectFile(files)){
+        if (this.checkFileSize(files) && this.checkMimeType(files) && this.maxSelectFile(files)) {
             this.setState({
-                images: files
+                images: files,
+                fileError: ""
             })
+        }
+        else {
+            e.target.value = null
         }
     }
 
@@ -116,6 +132,9 @@ class FeatureForm extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
+        this.setState({
+            loading: true
+        })
 
         const config = {
             headers: {
@@ -128,8 +147,8 @@ class FeatureForm extends Component {
 
 
         let data = JSON.stringify({
-            headline: this.state.headline,
-            description: this.state.description,
+            headline: this.state.headline.trim(),
+            description: this.state.description.trim(),
             imageUrls: imageUrls
         })
 
@@ -138,7 +157,8 @@ class FeatureForm extends Component {
             .then((result) => {
                 console.log(result);
                 this.setState({
-                    showResponse: true
+                    showResponse: true,
+                    loading: false
                 })
             })
             .catch(error => {
@@ -152,51 +172,65 @@ class FeatureForm extends Component {
         return (
             <div className="row form">
                 {!this.state.showResponse ? (
-                <form onSubmit={this.onSubmit} className="feature-form">
+                    <form onSubmit={this.onSubmit} className="feature-form">
 
-                    <h5 className="col-12">Create a new feature:</h5>
-                    <div className="col-6 name">
-                        <label>
-                            Title:
+                        <h5 className="col-12">Create a new feature:</h5>
+                        <div className="col-6 name">
+                            <label>
+                                Title:
                         </label>
-                        <input type="text"
-                               name="headline"
-                               id="headline"
-                               className="headline"
-                               value={headline}
-                               onChange={this.onChange}
-                               required
-                        />
-                    </div>
+                            <input type="text"
+                                name="headline"
+                                id="headline"
+                                className="headline"
+                                value={headline}
+                                onChange={this.onChange}
+                                required
+                                maxLength="255"
+                            />
+                        </div>
 
-                    <div className="col-6 filepicker">
-                        <label>Upload Your Images </label>
-                        <input type="file" multiple className="process__upload-btn" onChange={(e) => this.onChangeImage(e)} />
-                    </div>
+                        <div className="col-6 filepicker">
+                            <label>Upload Your Images </label>
+                            <input
+                                type="file"
+                                multiple className="process__upload-btn"
+                                onChange={(e) => this.onChangeImage(e)}
+                            />
+                        </div>
+
+                        <div className="error">
+                            <p>{this.state.fileError}</p>
+                        </div>
 
 
-                    <div className="col-12 content">
-                        <label>
-                            Description:
+                        <div className="col-12 content">
+                            <label>
+                                Description:
                         </label>
-                        <textarea type="text"
-                                  name="description"
-                                  className="description"
-                                  value={description}
-                                  onChange={this.onChange}/>
-                    </div>
+                            <textarea type="text"
+                                name="description"
+                                className="description"
+                                value={description}
+                                onChange={this.onChange}
+                                maxLength="2048"
+                            />
+
+                        </div>
 
 
+                        {this.state.loading ?
+                            <ClipLoader loading={this.state.loading} />
+                            : <button className="submit col-2" type="submit" value="Submit">Submit</button>}
 
-                    <button className="submit col-2" type="submit" value="Submit">Submit</button>
-                </form>
-                
-                ) : 
+                    </form>
+
+                ) :
                     <div className="form-response row">
-                         <p className="col-10">
+                        <p className="col-10">
                             Thank you for submitting a feature! <br />Your feature will be reviewed by an admin before you can see it here.
                         </p>
-                         <button className="submit col-2" onClick={this.handleResponseButton.bind(this)}>
+                        <button className="submit col-2" onClick={this.handleResponseButton.bind(this)}>
                             Ok, great!
                         </button>
                     </div>

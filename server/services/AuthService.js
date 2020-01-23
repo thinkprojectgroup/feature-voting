@@ -7,6 +7,9 @@ const validateToken = async idToken => {
   const ticket = await client.verifyIdToken({
     idToken: idToken,
     audience: CLIENT_ID //multiple clients as array: [CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+  })
+  .catch(error => {
+    console.log("token not verified")
   });
 
   if (ticket &&

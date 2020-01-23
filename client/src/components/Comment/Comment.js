@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import { Carousel } from 'react-responsive-carousel';
+import axios from "axios";
 
 class Comment extends Component{
     constructor(props){
@@ -12,7 +13,9 @@ class Comment extends Component{
         date: this.props.date,
         count: this.props.count,
         formattedDate: '',
-        imageUrls: this.props.imageUrls
+        imageUrls: this.props.imageUrls,
+        commentId: this.props.commentId,
+        showResponse: false
     };
     //console.log(this.state.date);
     //console.log(this.state);
@@ -33,6 +36,30 @@ class Comment extends Component{
     // console.log(this.state);
     }
 
+    handleDelete = () => {
+        var self = this;
+        // console.log(comment._id)
+        axios
+          .delete(
+            "/api/comments/" + this.state.commentId
+          )
+          .then(function(response) {
+            console.log(response);
+            self.setState({
+              deleted: true
+            });
+            self.setState({ showResponse: false })
+          })
+          .catch(function(error) {
+            console.log(error);
+          });
+      };
+      openDialog  = () => {
+        var self = this;
+        self.setState({ showResponse: true } );
+     }
+      handleClose = () => this.setState({ showResponse: false })
+
     render(){
         let images
         if(!this.state.imageUrls){
@@ -42,8 +69,10 @@ class Comment extends Component{
             images = this.state.imageUrls
         }
         return(
+       
             <div className="comment-container col-12 row">
-
+             {!this.state.deleted ?(
+                <div>
                 {images === null
                     ? (
                         <div>
@@ -77,7 +106,30 @@ class Comment extends Component{
                             </div>
                         </div>
                     )}
-
+                    <div className="col-3 delete-project">
+                         <button onClick={() => this.openDialog()} className="decline" >
+                          <i className="fas fa-times"></i>
+                    </button>
+                    
+              </div>
+              {this.state.showResponse ?
+                <div className="form-response">
+                 <p className="col-10">
+                            Are you sure you want to delete the comment 
+                        </p>
+                         <button className="submit-small col-2" onClick={() => this.handleDelete()}>
+                            Yes
+                        </button>
+                        <button className="submit-small col-2" onClick={() => this.handleClose()}>
+                            No
+                        </button>
+                        
+                    
+                     
+              
+                </div>:null}
+                </div>
+                ) :null}
             </div>
 
         );

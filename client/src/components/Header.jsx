@@ -48,9 +48,6 @@ class Header extends Component {
     }
 
 
-
-
-
     //* BACK BUTTON*//
 
     //Different root depths for Admins/Employees and regular users
@@ -96,6 +93,20 @@ class Header extends Component {
       );
     }
 
+
+    //* USER SETTINGS BUTTON *//
+
+    let userSettingsButton = "";
+
+    if(isAdmin && pathname == "/"){
+      userSettingsButton = (
+          <Link to={"/adminrights"}>
+            <button className="user-settings-button fas fa-users-cog" title="Link to Admin Rights Page"></button>
+          </Link>
+      );
+    }
+
+
     return (
         <div className="row col-12 header">
           <div className="header-container">
@@ -107,6 +118,7 @@ class Header extends Component {
             {backButton}
             { this.props.location.pathname !== '/login' && loginButton}
             {commentReviewButton}
+            {userSettingsButton}
           </div>
         </div>
     );

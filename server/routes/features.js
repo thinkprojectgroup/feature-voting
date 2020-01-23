@@ -5,6 +5,7 @@ const { Project } = require("../models/project")
 const { validateFeature, validateSearch, cleanFeatures } = require("../models/feature")
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
 const { User } = require("../models/user")
+const checkAuth = require("../middleware/checkAuth")
 
 // Post new feature to given projectId. Request can include base64 imageData to save images.
 router.post("/:projectName", async (req, res) => {
@@ -36,7 +37,7 @@ router.post("/:projectName", async (req, res) => {
 })
 
 // Patch request to set acceptedStatus=true for given featureId
-router.patch("/accept/:featureId", async (req, res) => {
+router.patch("/accept/:featureId", checkAuth, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")
 
     const result = await Project
@@ -125,8 +126,7 @@ router.get("/search/", async (req, res) => {
 });
 
 // Delete specific feature for project & feature id
-router.delete("/:projectName/:featureId", async (req, res) => {
-    //TODO: admin auth
+router.delete("/:projectName/:featureId", checkAuth, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.featureId)) return res.status(400).send("FeatureId doesn't fit id schema")
 
     // Using find & save instead of update for featureSchema.pre method to work properly
