@@ -142,7 +142,7 @@ class FeaturePDV extends Component {
 
         </div>
 
-        {image === null
+        {image === null || image === undefined
 
             ?(
             <div className="col-8 feature-text">
@@ -157,7 +157,7 @@ class FeaturePDV extends Component {
                 <ReadMoreAndLess
                     ref={this.ReadMore}
                     className="read-more-content"
-                    charLimit={151}
+                    charLimit={200}
                     readMoreText="Read more"
                     readLessText="Read less"
                 >
@@ -183,7 +183,7 @@ class FeaturePDV extends Component {
                     <ReadMoreAndLess
                         ref={this.ReadMore}
                         className="read-more-content"
-                        charLimit={151}
+                        charLimit={200}
                         readMoreText="Read more"
                         readLessText="Read less"
                     >
