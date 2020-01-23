@@ -40,11 +40,11 @@ class AdminRights extends Component {
 
 
           <div className="row col-12">
-            <h1>Admin Rights</h1>
+            <h1>User Settings</h1>
           </div>
 
 
-        <div>
+
 
           {this.state.employees.map(employee => (
 
@@ -54,10 +54,11 @@ class AdminRights extends Component {
               reRender={this.reRender.bind(this)}
             />
           ))}
-        </div>
 
-        <div className="container">
-          <h3>{"Admins"}</h3>
+
+          <div className="row col-12">
+            <h2>Admin Rights</h2>
+          </div>
 
           {this.state.admins.map(admin => (
             <User
@@ -66,7 +67,7 @@ class AdminRights extends Component {
               reRender={this.reRender.bind(this)}
             />
           ))}
-        </div>
+
       </div>
     );
   }

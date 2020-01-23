@@ -42,11 +42,11 @@ class User extends Component {
 
     render() {
         return (
-            <div>
+            <div className="user-item row">
                 {!this.state.clicked ? (
                     <div>
                         {this.props.newRole == "admin" ? (
-                            <div className="row">
+                            <div>
                                 <div className="col-1 add-button">
                                     <button className="accept" onClick={() => this.handlePromote()} title="Promote to admin"><i className="fas fa-plus"></i></button>
                                 </div>
@@ -55,7 +55,7 @@ class User extends Component {
                                 </div>
                             </div>
                         ) : (
-                            <div className="row">
+                            <div>
                                 <div className="col-1 decline-admin-button">
                                     <button className="decline" onClick={() => this.handlePromote()} title="Downgrade to regular user"><i className="fas fa-times"></i></button>
                                 </div>
