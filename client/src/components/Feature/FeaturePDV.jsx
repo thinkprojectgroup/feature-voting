@@ -164,9 +164,11 @@ class FeaturePDV extends Component {
                   {description}
                 </ReadMoreAndLess>
               </div>
-              <div className="comment-count">
-                <p>{this.state.commentCount} comments</p>
-              </div>
+              <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                <div className="comment-count">
+                  <p>{this.state.commentCount} comments</p>
+                </div>
+              </Link>
             </div>)
 
             :(
