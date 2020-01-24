@@ -37,6 +37,8 @@ class ProjectForm extends Component {
                 console.log(error);
                 this.setState({ errorMessage: error.value }, { error: true });
             });
+
+        document.getElementById("form-button").classList.remove("cross");
     };
 
     render() {

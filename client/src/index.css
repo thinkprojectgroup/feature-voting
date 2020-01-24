@@ -172,7 +172,10 @@ button{
 
 button.decline i, button.accept i, button.add i{
   color: white;
+  transition: 0.3s;
 }
+
+
 
 button.decline, button.accept, button.add{
   border-radius: 25px;
