@@ -149,36 +149,33 @@ class FeaturePDV extends Component {
 
         </div>
 
-        {image === null
+        {image === null || image === undefined
 
             ?(
-            <div className="col-10 feature-text">
+            <div className="col-8 feature-text">
               <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
                 <div className="title">
 
                   <h3>{this.state.title}</h3>{" "}
                 </div>
               </Link>
-              <div className="col-3 delete-project">
-                <button onClick={() => this.openDialog()} className="decline" >
-                  <i className="fas fa-times"></i>
-                </button>
-              </div>
               <div className="description">
 
                 <ReadMoreAndLess
                     ref={this.ReadMore}
                     className="read-more-content"
-                    charLimit={151}
+                    charLimit={160}
                     readMoreText="Read more"
                     readLessText="Read less"
                 >
                   {description}
                 </ReadMoreAndLess>
               </div>
-              <div className="comment-count">
-                <p>{this.state.commentCount} comments</p>
-              </div>
+              <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                <div className="comment-count">
+                  <p>{this.state.commentCount} comments</p>
+                </div>
+              </Link>
             </div>)
 
             :(
@@ -190,17 +187,12 @@ class FeaturePDV extends Component {
                         <h3>{this.state.title}</h3>{" "}
                     </div>
                   </Link>
-                  <div className="col-3 delete-project">
-                <button onClick={() => this.openDialog()} className="decline" >
-                  <i className="fas fa-times"></i>
-                </button>
-              </div>
                   <div className="description">
 
                     <ReadMoreAndLess
                         ref={this.ReadMore}
                         className="read-more-content"
-                        charLimit={151}
+                        charLimit={160}
                         readMoreText="Read more"
                         readLessText="Read less"
                     >
@@ -223,6 +215,12 @@ class FeaturePDV extends Component {
               
             </div>
           )}
+
+        <div className="delete">
+          <button onClick={() => this.openDialog()} >
+            <i className="fas fa-times"></i>
+          </button>
+        </div>
           {this.state.showResponse ?
                 <div className="form-response-delete">
                  <p className="col-10">

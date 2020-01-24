@@ -204,16 +204,39 @@ button.add{
 }
 
 .project-list-item{
+  padding: 0;
+  position: relative;
+}
+
+.comment-container{
+  position: relative;
   padding: 25px 25px;
 }
 
-.delete-project button.decline, .delete-project{
-  float:right;
+.delete{
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 999;
 }
 
-.delete-project{
-  padding: 10px 15px;
+.delete button{
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
 }
+
+.delete button i{
+  float:right;
+  color: #f15a24;
+  font-size: 1.5rem;
+  margin: 0 1px;
+}
+
+.delete button:hover{
+  background-color: rgba(127, 157, 167, 0.2);
+}
+
 
 .project-list-item:hover, .feature-list-item:hover{
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -223,7 +246,12 @@ button.add{
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-  margin-bottom: 5px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.feature-count{
+  padding: 19px 0;
 }
 
 .feature-count, .comment-section-button{
@@ -234,20 +262,30 @@ button.add{
   height: 60px;
 }
 
-.feature-text{padding: 35px;}
+.feature-count p{
+  margin: 25px;
+}
+
+.feature-text{padding: 30px 15px 25px 0;}
 
 .feature-image{
-  height: 210px;
+  height: 230px;
   background-size: cover;
+  background-repeat: no-repeat;
   background-position: center center;
   padding: 0;
 }
 
 /*Display feature count next to feature body on mobile devices*/
 .feature-count, .comment-section-button, .add-button, .delete-project, .decline-admin-button{width: 25%;}
-.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .project-list-item, .user-name{width: 75%;}
+.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .user-name{width: 75%;}
 
 
+
+.feature-text .comment-count p{
+  margin: 0;
+  font-weight: 600;
+}
 
 .comment-section-content{
   padding: 35px 25px;
@@ -382,7 +420,8 @@ select{
 
 .short-text{
   display: block;
-  padding: 15px 0;
+  padding: 15px 0 10px 0;
+  min-height: 110px;
 }
 
 
@@ -468,3 +507,5 @@ select{
     margin-left: 15px;
   }
 }
+
+
