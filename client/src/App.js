@@ -15,13 +15,14 @@ import AdminRights from "./components/User/AdminRights";
 import NotFoundPage from './components/ErrorPages/NotFoundPage'
 import BadRequestPage from './components/ErrorPages/BadRequestPage'
 import InternalServerError from './components/ErrorPages/InternalServerError'
+import UnauthorisedPage from './components/ErrorPages/UnauthorisedPage'
+import GeneralErrorPage from './components/ErrorPages/GeneralErrorPage'
 import {
   Route,
   Switch,
   Redirect,
   withRouter
 } from 'react-router-dom'
-import UnauthorisedPage from './components/ErrorPages/UnauthorisedPage'
 
 class App extends Component {
 
@@ -146,6 +147,7 @@ class App extends Component {
                 <Route exact path={'/401'} component={UnauthorisedPage} />
                 <Route exact path={'/404'} component={NotFoundPage} />
                 <Route exact path={'/500'} component={InternalServerError} />
+                <Route exact path={'/err'} component={GeneralErrorPage} />
 
                 <Route exact path={'/:projectName'}>
                   <ProjectDetailView redirectToErrorPage={this.redirectToErrorPage} />
