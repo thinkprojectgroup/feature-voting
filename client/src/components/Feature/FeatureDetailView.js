@@ -26,7 +26,9 @@ class FeatureDetailView extends Component {
       commentCount: 0,
       showForm: false,
       upvoted: false,
-      role: this.props.role
+      role: this.props.role,
+      employeeVoteCount: 0,
+      userVoteCount: 0
     };
     // console.log(this.state)
   }
@@ -64,7 +66,9 @@ class FeatureDetailView extends Component {
                         featureTitle: feature.headline, 
                         description: feature.description, 
                         upvotes: feature.voteCount,
-                        upvoted: feature.upvoted
+                        upvoted: feature.upvoted,
+                        employeeVoteCount: feature.employeeVoteCount,
+                        userVoteCount: feature.userVoteCount
                       },
                       () => {
                         
@@ -85,6 +89,12 @@ class FeatureDetailView extends Component {
           upvoted: true,
           upvotes: self.state.upvotes + 1
         });
+
+        if(self.state.role === "admin"){
+          self.setState({
+            employeeVoteCount: self.state.employeeVoteCount + 1
+          })
+        }
         //console.log(self.state);
       })
       .catch(function (error) {
@@ -101,6 +111,12 @@ class FeatureDetailView extends Component {
           upvoted: false,
           upvotes: self.state.upvotes - 1
         });
+
+        if(self.state.role === "admin"){
+          self.setState({
+            employeeVoteCount: self.state.employeeVoteCount - 1
+          })
+        }
         // console.log(self.state);
       })
       .catch(function (error) {
@@ -126,6 +142,13 @@ class FeatureDetailView extends Component {
             }
 
             <p>{this.state.upvotes}</p>
+
+            {this.state.role === "admin" ?
+                <div >
+                  <p>Uservotes: {this.state.userVoteCount}</p>
+                  <p>Employeevotes: {this.state.employeeVoteCount}</p>
+                </div>
+            :null}
 
             {this.state.upvoted === true ? (
               <button onClick={this.toggleDivDownVote} title="downvote">
