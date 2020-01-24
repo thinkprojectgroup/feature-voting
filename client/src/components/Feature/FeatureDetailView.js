@@ -107,6 +107,13 @@ class FeatureDetailView extends Component {
   };
 
   render() {
+    var comment;
+    if(this.state.commentCount === 1){
+      comment = "Comment"
+    }
+    else{
+      comment = "Comments"
+    }
     
     return (
       <div className="container row">
@@ -160,7 +167,7 @@ class FeatureDetailView extends Component {
 
             <div className="row">
                 <div className="col-11 FDV-comment-count">
-                    <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
+                    <h4 className="comment-count">{comment}: {this.state.commentCount}</h4>
                 </div>
                 <div className="col-1 add-button">
                     <button onClick={this.toggleShowForm} className="add" id="form-button" title="Add comment">

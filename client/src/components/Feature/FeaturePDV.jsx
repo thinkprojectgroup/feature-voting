@@ -103,6 +103,13 @@ class FeaturePDV extends Component {
       image = this.state.imageUrls[0];
     }
    //  console.log(this.props.projectId);
+   var comment;
+   if(this.state.commentCount === 1){
+     comment = "comment"
+   }
+   else{
+     comment = "comments"
+   }
 
     let description = this.state.description;
 
@@ -203,7 +210,7 @@ class FeaturePDV extends Component {
 
                  <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
                     <div className="comment-count">
-                    <p>{this.state.commentCount} comments</p>
+                    <p>{this.state.commentCount} {comment}</p>
                     </div>
                 </Link>
                 </div>
