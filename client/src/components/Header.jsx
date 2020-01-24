@@ -19,7 +19,6 @@ class Header extends Component {
   }
   
   render() {
-    console.log(this.props);
     //Logo Image on the left side
     const image = require("./img/logo.png");
 
