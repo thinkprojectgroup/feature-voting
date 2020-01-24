@@ -16,10 +16,10 @@ import NotFoundPage from './components/ErrorPages/NotFoundPage'
 import BadRequestPage from './components/ErrorPages/BadRequestPage'
 import InternalServerError from './components/ErrorPages/InternalServerError'
 import {
-  BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
+  withRouter
 } from 'react-router-dom'
 import UnauthorisedPage from './components/ErrorPages/UnauthorisedPage'
 
@@ -90,7 +90,6 @@ class App extends Component {
       >
         {this.state.authIsLoaded && (
           <>
-            <Router>
               <Header 
                 role={this.state.role} 
                 isSignedIn={this.state.isSignedIn}
@@ -148,11 +147,14 @@ class App extends Component {
                 <Route exact path={'/404'} component={NotFoundPage} />
                 <Route exact path={'/500'} component={InternalServerError} />
 
-                <Route exact path={'/:projectName'} component={ProjectDetailView} />
-                <Route path={'/:projectName/:featureId'} component={FeatureDetailView} />
+                <Route exact path={'/:projectName'}>
+                  <ProjectDetailView redirectToErrorPage={this.redirectToErrorPage} />
+                </Route>
+                <Route path={'/:projectName/:featureId'}>
+                  <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} />
+                </Route>
               </Switch>
               <Footer />
-            </Router>
           </>
         )}
       </AppWrapper>
@@ -160,4 +162,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withRouter(App);

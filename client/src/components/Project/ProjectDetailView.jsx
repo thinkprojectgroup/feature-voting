@@ -43,7 +43,7 @@ class ProjectDetailView extends Component {
   }
 
   componentDidMount () {
-    //console.log(this.props.match.params);
+
     axios
       .get(config.url + `/api/projects/name/` + this.props.match.params.projectName.toString().split("-").join(" "))
       .then(response => {
@@ -55,15 +55,7 @@ class ProjectDetailView extends Component {
         });
       })
       .catch(error => {
-        const statusCode = error.response.status;
-        switch(statusCode) {
-          case 400:
-          case 401:
-          case 404:
-          case 500: this.props.history.push("/"+statusCode); break;
-    
-          default: this.props.history.push("/err");
-        }
+        this.props.redirectToErrorPage(error.response.status);
       });
   }
 

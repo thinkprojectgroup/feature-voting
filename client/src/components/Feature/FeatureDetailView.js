@@ -44,15 +44,7 @@ class FeatureDetailView extends Component {
         this.setState({ commentCount: comments.length })
       })
       .catch(error => {
-        const statusCode = error.response.status;
-        switch(statusCode) {
-          case 400:
-          case 401:
-          case 404:
-          case 500: this.props.history.push("/"+statusCode); break;
-    
-          default: this.props.history.push("/err");
-        }
+        this.redirectToErrorPage(error.response.status)
       })
 
     axios
@@ -78,15 +70,7 @@ class FeatureDetailView extends Component {
                       });
                     })
       .catch(error => {
-        const statusCode = error.response.status;
-        switch(statusCode) {
-          case 400:
-          case 401:
-          case 404:
-          case 500: this.props.history.push("/"+statusCode); break;
-    
-          default: this.props.history.push("/err");
-        }
+        this.props.redirectToErrorPage(error.response.status);
       });
 
   }
