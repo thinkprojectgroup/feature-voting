@@ -174,7 +174,7 @@ class FeatureForm extends Component {
                 {!this.state.showResponse ? (
                     <form onSubmit={this.onSubmit} className="feature-form">
 
-                        <h5 className="col-12">Create a new feature:</h5>
+                        <h5 className="col-12">Propose a new feature:</h5>
                         <div className="col-6 name">
                             <label>
                                 Title:
