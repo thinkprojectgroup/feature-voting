@@ -76,7 +76,6 @@ class App extends Component {
 
   render() {
 
-    console.log(this.state.email)
     return (
       <AppWrapper
         isReady={this.isReady}
@@ -139,7 +138,11 @@ class App extends Component {
                 />
                 <Route exact path={'/faq'} component={FAQ} />
                 <Route exact path={'/:projectName'} component={ProjectDetailView} />
-                <Route path={'/:projectName/:featureId'} component={FeatureDetailView} />
+
+                <Route
+                  path={'/:projectName/:featureId'}
+                  render={(props) => <FeatureDetailView {...props} role={this.state.role} email={this.state.email}/>}
+                />
               </Switch>
               <Footer />
             </Router>
