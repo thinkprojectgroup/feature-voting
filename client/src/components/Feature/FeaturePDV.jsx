@@ -67,7 +67,8 @@ class FeaturePDV extends Component {
   openDialog  = () => {
     var self = this;
     self.setState({ showResponse: true } );
- }
+  }
+  
   handleClose = () => this.setState({ showResponse: false })
 
   handleDelete = () => {
@@ -77,13 +78,13 @@ class FeaturePDV extends Component {
       .delete(
         "/api/features/" + this.state.projectName + "/" + this.state.featureId
       )
-      .then(function(response) {
+      .then((response) => {
         console.log(response);
         self.setState({
           deleted: true
         });
       })
-      .catch(function(error) {
+      .catch((error) => {
         console.log(error);
       });
   };

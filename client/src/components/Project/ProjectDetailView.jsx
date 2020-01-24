@@ -55,9 +55,15 @@ class ProjectDetailView extends Component {
         });
       })
       .catch(error => {
-        console.log("error", error.response.status)
-        if (error.response.status == 404)
-          this.props.history.push("/404")
+        const statusCode = error.response.status;
+        switch(statusCode) {
+          case 400:
+          case 401:
+          case 404:
+          case 500: this.props.history.push("/"+statusCode); break;
+    
+          default: this.props.history.push("/err");
+        }
       });
   }
 

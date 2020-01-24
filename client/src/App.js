@@ -13,12 +13,15 @@ import Footer from './components/Footer'
 import FAQ from './components/FAQ'
 import AdminRights from "./components/User/AdminRights";
 import NotFoundPage from './components/ErrorPages/NotFoundPage'
+import BadRequestPage from './components/ErrorPages/BadRequestPage'
+import InternalServerError from './components/ErrorPages/InternalServerError'
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
 } from 'react-router-dom'
+import UnauthorisedPage from './components/ErrorPages/UnauthorisedPage'
 
 class App extends Component {
 
@@ -66,6 +69,17 @@ class App extends Component {
       isSignedIn: isSignedIn,
       idToken: idToken
     })
+  }
+
+  redirectToErrorPage = (statusCode) => {
+    switch(statusCode) {
+      case 400:
+      case 401:
+      case 404:
+      case 500: this.props.history.push("/"+statusCode); break;
+
+      default: this.props.history.push("/err");
+    }
   }
 
   render() {
@@ -126,13 +140,16 @@ class App extends Component {
                       setAuthorisation={this.setAuthorisation} />
                   )}
                 />
-                <Route exact path={'/404'} component={NotFoundPage} />
-
                 <Route exact path={'/faq'} component={FAQ} />
+
+                {/* ErrorPages */}
+                <Route exact path={'/400'} component={BadRequestPage} />
+                <Route exact path={'/401'} component={UnauthorisedPage} />
+                <Route exact path={'/404'} component={NotFoundPage} />
+                <Route exact path={'/500'} component={InternalServerError} />
+
                 <Route exact path={'/:projectName'} component={ProjectDetailView} />
                 <Route path={'/:projectName/:featureId'} component={FeatureDetailView} />
-
-                
               </Switch>
               <Footer />
             </Router>
@@ -143,4 +160,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default App;

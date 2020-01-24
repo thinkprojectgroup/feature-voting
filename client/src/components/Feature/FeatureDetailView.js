@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
+import { withRouter } from 'react-router-dom'
 import axios from "axios";
 import "./css/FeatureDetailView.css";
 import Comment from '../Comment/Comment';
@@ -43,7 +44,15 @@ class FeatureDetailView extends Component {
         this.setState({ commentCount: comments.length })
       })
       .catch(error => {
-        console.log(error);
+        const statusCode = error.response.status;
+        switch(statusCode) {
+          case 400:
+          case 401:
+          case 404:
+          case 500: this.props.history.push("/"+statusCode); break;
+    
+          default: this.props.history.push("/err");
+        }
       })
 
     axios
@@ -69,7 +78,15 @@ class FeatureDetailView extends Component {
                       });
                     })
       .catch(error => {
-        console.log(error);
+        const statusCode = error.response.status;
+        switch(statusCode) {
+          case 400:
+          case 401:
+          case 404:
+          case 500: this.props.history.push("/"+statusCode); break;
+    
+          default: this.props.history.push("/err");
+        }
       });
 
   }
@@ -193,4 +210,4 @@ class FeatureDetailView extends Component {
   }
 }
 
-export default FeatureDetailView;
+export default withRouter(FeatureDetailView);
