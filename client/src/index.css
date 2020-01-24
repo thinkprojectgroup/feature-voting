@@ -70,9 +70,8 @@ body{
 
 .container{
   max-width: 1000px;
-  margin: auto;
-  padding: 60px 0 20vh 0;
-  margin-bottom: 50px;
+  margin: auto auto 50px auto;
+  padding: 60px 10px 20vh 10px;
   min-height: 85vh;
 }
 
@@ -92,10 +91,11 @@ body{
 }
 
 .header{
-  background-color: #eaeaea;
+  background-color: rgba(234, 234, 234, 0.9);
   height: 60px;
   margin: 0 0 0 0;
   padding: 0;
+  position: fixed;
 }
 
 .login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
@@ -387,6 +387,32 @@ select{
 
 
 
+.to-top button{
+  height: 50px;
+}
+
+.to-top button i{
+  font-size: 2.5rem;
+  color: rgba(255, 255, 255, 0.61);
+  margin-bottom: 15px;
+}
+
+.to-top {
+  height: 60px;
+  width: 60px;
+  position: fixed;
+  right: -100px;
+  bottom: 150px;
+  transition: 0.5s;
+  cursor: pointer;
+  background-color: rgba(127, 157, 167, 0.25);
+  font-size: 20px;
+}
+
+.transition {
+  right: 20px;
+}
+
 /* For desktop: */
 @media only screen and (min-width: 700px) {
   *{
@@ -409,9 +435,8 @@ select{
 
   .container{
     max-width: 1000px;
-    margin: auto;
+    margin: auto auto 50px auto;
     padding: 80px 0 20vh 0;
-    margin-bottom: 50px;
     min-height: 85vh;
   }
 
