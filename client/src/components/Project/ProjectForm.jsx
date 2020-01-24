@@ -34,7 +34,7 @@ class ProjectForm extends Component {
                 this.setState({ submited: true });
             })
             .catch(error => {
-                console.log(error);
+                console.log(error.response);
                 this.setState({ errorMessage: error.value }, { error: true });
             });
     };

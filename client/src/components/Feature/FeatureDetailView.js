@@ -43,7 +43,7 @@ class FeatureDetailView extends Component {
         this.setState({ commentCount: comments.length })
       })
       .catch(error => {
-        console.log(error);
+        console.log(error.response);
       })
 
     axios
@@ -69,7 +69,7 @@ class FeatureDetailView extends Component {
                       });
                     })
       .catch(error => {
-        console.log(error);
+        console.log(error.response);
       });
 
   }
@@ -86,7 +86,7 @@ class FeatureDetailView extends Component {
         //console.log(self.state);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.response);
       });
   };
 
@@ -102,7 +102,7 @@ class FeatureDetailView extends Component {
         // console.log(self.state);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.response);
       });
   };
 

@@ -30,7 +30,7 @@ class FeatureFR extends Component {
                 });
             })
             .catch(function(error) {
-                console.log(error);
+                console.log(error.response);
             });
     };
 
@@ -48,7 +48,7 @@ class FeatureFR extends Component {
                 });
             })
             .catch(function(error) {
-                console.log(error);
+                console.log(error.response);
             });
     };
 

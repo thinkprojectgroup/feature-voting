@@ -18,6 +18,8 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom'
+import ScrollToTop from './ScrollToTop'
+
 
 class App extends Component {
 
@@ -76,6 +78,7 @@ class App extends Component {
         {this.state.authIsLoaded && (
           <>
             <Router>
+            <ScrollToTop />
               <Header 
                 role={this.state.role} 
                 isSignedIn={this.state.isSignedIn}

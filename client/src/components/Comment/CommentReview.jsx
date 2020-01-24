@@ -38,7 +38,7 @@ class CommentReview extends Component{
                 })
             })
             .catch(error =>{
-                console.log(error)
+                console.log(error.response)
             });
     }
 

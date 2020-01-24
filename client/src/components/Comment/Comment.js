@@ -51,7 +51,7 @@ class Comment extends Component{
             self.setState({ showResponse: false })
           })
           .catch(function(error) {
-            console.log(error);
+            console.log(error.response);
           });
       };
       openDialog  = () => {
