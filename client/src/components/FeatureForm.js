@@ -186,7 +186,7 @@ class FeatureForm extends Component {
                                 value={headline}
                                 onChange={this.onChange}
                                 required
-                                maxLength="255"
+                                maxLength="50"
                             />
                         </div>
 
