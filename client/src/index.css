@@ -57,6 +57,7 @@
 
 body{
   margin: 0;
+  background-color: #fefefe;
 }
 
 
@@ -203,7 +204,6 @@ button.add{
 }
 
 .project-list-item{
-  border: 1px solid #eaeaea;
   padding: 25px 25px;
 }
 
@@ -216,8 +216,14 @@ button.add{
 }
 
 .project-list-item:hover, .feature-list-item:hover{
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.feature-list-item, .project-list-item, .comment-section-item, .comment-container{
+  background-color: #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: 0.5s;
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  margin-bottom: 5px;
 }
 
 .feature-count, .comment-section-button{
@@ -379,10 +385,7 @@ select{
   padding: 15px 0;
 }
 
-.feature-list-item{
-  margin-bottom: 50px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-}
+
 
 .to-top button{
   height: 50px;
@@ -446,11 +449,6 @@ select{
 
   a{ text-decoration: none; }
 
-
-  .feature-list-item{
-    margin-bottom: 25px;
-    box-shadow: none;
-  }
 
   .header{
     height: 80px;
