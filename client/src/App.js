@@ -25,6 +25,7 @@ class App extends Component {
     super(props)
     this.state = {
       role: 'user',
+      email: null,
       isSignedIn: false,
       idToken: null,
       authIsLoaded: false,
@@ -67,11 +68,20 @@ class App extends Component {
     })
   }
 
+  setEmail = (email) => {
+    this.setState({
+      email: email
+    })
+  }
+
   render() {
+
+    console.log(this.state.email)
     return (
       <AppWrapper
         isReady={this.isReady}
         setAuthorisation={this.setAuthorisation}
+        setEmail={this.setEmail}
       >
         {this.state.authIsLoaded && (
           <>
@@ -122,7 +132,9 @@ class App extends Component {
                     <SignIn 
                       role={this.props.role}
                       isSignedIn={this.state.isSignedIn} 
-                      setAuthorisation={this.setAuthorisation} />
+                      setAuthorisation={this.setAuthorisation} 
+                      setEmail={this.setEmail}
+                    />                      
                   )}
                 />
                 <Route exact path={'/faq'} component={FAQ} />
