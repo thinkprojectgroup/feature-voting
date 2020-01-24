@@ -12,6 +12,7 @@ import AppWrapper from './components/AppWrapper'
 import Footer from './components/Footer'
 import FAQ from './components/FAQ'
 import AdminRights from "./components/User/AdminRights";
+import NotFoundPage from './components/ErrorPages/NotFoundPage'
 import {
   BrowserRouter as Router,
   Route,
@@ -125,9 +126,13 @@ class App extends Component {
                       setAuthorisation={this.setAuthorisation} />
                   )}
                 />
+                <Route exact path={'/404'} component={NotFoundPage} />
+
                 <Route exact path={'/faq'} component={FAQ} />
                 <Route exact path={'/:projectName'} component={ProjectDetailView} />
                 <Route path={'/:projectName/:featureId'} component={FeatureDetailView} />
+
+                
               </Switch>
               <Footer />
             </Router>
