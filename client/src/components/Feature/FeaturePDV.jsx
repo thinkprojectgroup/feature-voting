@@ -165,8 +165,6 @@ class FeaturePDV extends Component {
                         <i className="fas fa-angle-down"></i>
                       </button>
                   }
-
-
                 </div>
 
                 {image === null || image === undefined

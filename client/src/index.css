@@ -70,9 +70,8 @@ body{
 
 .container{
   max-width: 1000px;
-  margin: auto;
-  padding: 60px 0 20vh 0;
-  margin-bottom: 50px;
+  margin: auto auto 50px auto;
+  padding: 60px 10px 20vh 10px;
   min-height: 85vh;
 }
 
@@ -92,10 +91,11 @@ body{
 }
 
 .header{
-  background-color: #eaeaea;
+  background-color: rgba(234, 234, 234, 0.9);
   height: 60px;
   margin: 0 0 0 0;
   padding: 0;
+  position: fixed;
 }
 
 .login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
@@ -172,7 +172,10 @@ button{
 
 button.decline i, button.accept i, button.add i{
   color: white;
+  transition: 0.3s;
 }
+
+
 
 button.decline, button.accept, button.add{
   border-radius: 25px;
@@ -204,16 +207,39 @@ button.add{
 }
 
 .project-list-item{
+  padding: 0;
+  position: relative;
+}
+
+.comment-container{
+  position: relative;
   padding: 25px 25px;
 }
 
-.delete-project button.decline, .delete-project{
-  float:right;
+.delete{
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 999;
 }
 
-.delete-project{
-  padding: 10px 15px;
+.delete button{
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
 }
+
+.delete button i{
+  float:right;
+  color: #f15a24;
+  font-size: 1.5rem;
+  margin: 0 1px;
+}
+
+.delete button:hover{
+  background-color: rgba(127, 157, 167, 0.2);
+}
+
 
 .project-list-item:hover, .feature-list-item:hover{
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -223,7 +249,12 @@ button.add{
   background-color: #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
   transition: all 0.3s cubic-bezier(.25,.8,.25,1);
-  margin-bottom: 5px;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.feature-count{
+  padding: 19px 0;
 }
 
 .feature-count, .comment-section-button{
@@ -234,20 +265,30 @@ button.add{
   height: 60px;
 }
 
-.feature-text{padding: 35px;}
+.feature-count p{
+  margin: 25px;
+}
+
+.feature-text{padding: 30px 15px 25px 0;}
 
 .feature-image{
-  height: 210px;
+  height: 230px;
   background-size: cover;
+  background-repeat: no-repeat;
   background-position: center center;
   padding: 0;
 }
 
 /*Display feature count next to feature body on mobile devices*/
 .feature-count, .comment-section-button, .add-button, .delete-project, .decline-admin-button{width: 25%;}
-.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .project-list-item, .user-name{width: 75%;}
+.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .user-name{width: 75%;}
 
 
+
+.feature-text .comment-count p{
+  margin: 0;
+  font-weight: 600;
+}
 
 .comment-section-content{
   padding: 35px 25px;
@@ -382,10 +423,37 @@ select{
 
 .short-text{
   display: block;
-  padding: 15px 0;
+  padding: 15px 0 10px 0;
+  min-height: 110px;
 }
 
 
+
+.to-top button{
+  height: 50px;
+}
+
+.to-top button i{
+  font-size: 2.5rem;
+  color: rgba(255, 255, 255, 0.61);
+  margin-bottom: 15px;
+}
+
+.to-top {
+  height: 60px;
+  width: 60px;
+  position: fixed;
+  right: -100px;
+  bottom: 150px;
+  transition: 0.5s;
+  cursor: pointer;
+  background-color: rgba(127, 157, 167, 0.25);
+  font-size: 20px;
+}
+
+.transition {
+  right: 20px;
+}
 
 /* For desktop: */
 @media only screen and (min-width: 700px) {
@@ -409,9 +477,8 @@ select{
 
   .container{
     max-width: 1000px;
-    margin: auto;
+    margin: auto auto 50px auto;
     padding: 80px 0 20vh 0;
-    margin-bottom: 50px;
     min-height: 85vh;
   }
 
@@ -443,3 +510,5 @@ select{
     margin-left: 15px;
   }
 }
+
+

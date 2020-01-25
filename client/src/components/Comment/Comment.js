@@ -126,10 +126,6 @@ class Comment extends Component{
                                 <button className="submit-small col-2" onClick={() => this.handleClose()}>
                                     No
                                 </button>
-
-
-
-
                             </div>:null}
                     </div>
                 ) :null}
