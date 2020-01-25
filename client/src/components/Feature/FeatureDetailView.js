@@ -27,6 +27,7 @@ class FeatureDetailView extends Component {
       showForm: false,
       upvoted: false,
       role: this.props.role,
+      email: this.props.email,
       employeeVoteCount: 0,
       userVoteCount: 0
     };
@@ -204,6 +205,8 @@ class FeatureDetailView extends Component {
                 <CommentForm 
                 featureId={this.props.match.params.featureId}
                 toggleShowForm={this.toggleShowForm}
+                role={this.state.role}
+                email={this.state.email}
                 />
             ): null}
 
