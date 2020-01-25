@@ -18,13 +18,13 @@ const schema = new mongoose.Schema({
         default: false,
     }
 })
-schema.index({ name: 1, }, { unique: true })
+schema.index({ name: 1 })
 
 const Project = mongoose.model("Project", schema)
 
 function validateProject(project) {
     const schema = {
-        name: Joi.string().min(1).max(255).required().regex(/^[^-]*$/)
+        name: Joi.string().min(1).max(255).required()
     }
     return Joi.validate(project, schema)
 }
