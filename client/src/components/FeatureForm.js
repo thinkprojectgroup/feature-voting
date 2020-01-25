@@ -132,9 +132,13 @@ class FeatureForm extends Component {
 
     onSubmit = async (e) => {
         e.preventDefault();
-        this.setState({
-            loading: true
-        })
+
+
+        if(this.state.images.length > 0){
+            this.setState({
+                loading: true
+            })
+        }
 
         const config = {
             headers: {
@@ -142,9 +146,7 @@ class FeatureForm extends Component {
             }
         }
 
-
         const imageUrls = await this.uploadImage()
-
 
         let data = JSON.stringify({
             headline: this.state.headline.trim(),
