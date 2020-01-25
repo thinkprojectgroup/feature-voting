@@ -91,9 +91,9 @@ class Comment extends Component{
         }
         return(
        
-            <div className="comment-container col-12 row">
+            <div>
              {!this.state.deleted ?(
-                <div>
+                <div className="comment-container col-12 row">
                 {images === null
                     ? (
                         <div>
