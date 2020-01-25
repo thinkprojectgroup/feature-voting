@@ -103,11 +103,12 @@ body{
 }
 
 .header{
-  background-color: rgba(234, 234, 234, 0.9);
+  background-color: rgba(234, 234, 234, 0.95);
   height: 60px;
   margin: 0 0 0 0;
   padding: 0;
   position: fixed;
+  z-index: 999;
 }
 
 .login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
@@ -232,7 +233,7 @@ button.add{
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 999;
+  z-index: 777;
 }
 
 .delete button{
@@ -456,6 +457,7 @@ select{
 
 
 
+
 .to-top button{
   height: 50px;
 }
@@ -474,7 +476,7 @@ select{
   bottom: 150px;
   transition: 0.5s;
   cursor: pointer;
-  background-color: rgba(127, 157, 167, 0.25);
+  background-color: rgba(234, 234, 234, 0.9);
   font-size: 20px;
 }
 
