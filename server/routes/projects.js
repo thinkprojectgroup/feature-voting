@@ -138,22 +138,24 @@ router.get("/unaccepted/:name", checkAuth, async (req, res) => {
 router.post("/", async (req, res) => {
     const { error } = validateProject(req.body)
     if (error) return res.status(400).send(error.details[0].message)
-    var projectAlredayInUse = false
-
+    
     const projects = await Project.find({deleted: false})
-    console.log(projects.length)
+    
+    var projectAlredayInUse = false
     for(project of projects){
+        
         var newProject = req.body.name.toString().replace(/\s/g, "-").replace(/^\-+|\-+$/g, '');
         var existProject = project.name.toString().replace(/\s/g, "-").replace(/^\-+|\-+$/g, '');
+        
         if(newProject.localeCompare(existProject) == 0){
             projectAlredayInUse = true
-            console.log("same - 1.: " + newProject + " 2.: " + existProject)
         }
     }
 
     if(projectAlredayInUse){
         res.status(400).send("Project name already in use")
-    }else{
+    }
+    else{
         const project = new Project({
             name: req.body.name,
             features: []
