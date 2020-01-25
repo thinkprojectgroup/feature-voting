@@ -67,6 +67,25 @@ body{
   display: table;
 }
 
+.modal{
+  background-color: #fff;
+  border: 3px solid #003c50;
+  padding: 35px;
+}
+
+.not-confirm-delete, .confirm-delete{
+  color: white;
+  float: left;
+  font-size: 1.3rem;
+}
+
+.confirm-delete{
+  background-color: #7fba24;
+}
+
+.not-confirm-delete{
+  background-color: #003c50;
+}
 
 .error{
   color: #f15a24;
@@ -244,7 +263,8 @@ button.add{
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 777;
+  z-index: 7;
+
 }
 
 .delete button{
