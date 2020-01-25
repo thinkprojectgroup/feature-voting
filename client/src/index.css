@@ -39,6 +39,18 @@
 }
 
 
+
+::-moz-selection { /* Code for Firefox */
+  color: #fff;
+  background: #7fba24;
+}
+
+::selection {
+  color: #fff;
+  background: #7fba24;
+}
+
+
 * {
   box-sizing: border-box;
   font-family: "Open Sans", Arial;
@@ -241,6 +253,16 @@ button.add{
 }
 
 
+.user-vote{
+  color: rgba(127, 186, 36, 0.5);
+  font-size: 0.8rem;
+}
+
+.employee-vote{
+  color: rgba(241, 90, 36, 0.5);
+  font-size: 0.8rem;
+}
+
 .project-list-item:hover, .feature-list-item:hover{
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
@@ -267,6 +289,11 @@ button.add{
 
 .feature-count p{
   margin: 25px;
+  font-weight: 600;
+}
+
+.feature-count p.admin-vote{
+  margin: 0 25px;
 }
 
 .feature-text{padding: 30px 15px 25px 0;}

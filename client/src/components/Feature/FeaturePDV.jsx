@@ -147,12 +147,13 @@ class FeaturePDV extends Component {
                       </button>
                   }
 
-                  <p>{this.state.count}</p>
+
                     {this.state.role === "admin" ?
                       <div >
-                        <p>Uservotes: {this.state.userVoteCount}</p>
-                        <p>Employeevotes: {this.state.employeeVoteCount}</p>
-                      </div> : null}
+                        <span class="user-vote" title="User Votes">{this.state.userVoteCount}</span>
+                        <p class="admin-vote">{this.state.count}</p>
+                        <span class="employee-vote" title="Employee Votes">{this.state.employeeVoteCount}</span>
+                      </div> :                         <p>{this.state.count}</p>}
 
                   {this.state.upvoted === true ?
                       <button
