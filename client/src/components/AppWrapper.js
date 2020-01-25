@@ -40,6 +40,9 @@ class AppWrapper extends Component {
         })
         .then(authObject => {
           var user = authObject.currentUser.get()
+          var userProfile = user.getBasicProfile()
+          if (userProfile) this.props.setEmail(userProfile.getEmail())
+          
           var idToken = user.getAuthResponse().id_token
           this.authorise(idToken)
         })

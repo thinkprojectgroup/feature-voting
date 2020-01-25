@@ -79,6 +79,33 @@ body{
   display: table;
 }
 
+.modal{
+  background-color: #fff;
+  border: 3px solid #003c50;
+  padding: 35px;
+}
+
+.not-confirm-delete, .confirm-delete{
+  color: white;
+  float: left;
+  font-size: 1.3rem;
+}
+
+.confirm-delete{
+  background-color: #7fba24;
+}
+
+.not-confirm-delete{
+  background-color: #003c50;
+}
+
+.error{
+  color: #f15a24;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0;
+}
+
 
 .container{
   max-width: 1000px;
@@ -143,6 +170,11 @@ body{
   color: #003c50;
 }
 
+button:disabled,
+button[disabled]{
+  background-color: #7f9da7;
+}
+
 h1{font-size: 2rem; }
 h2{font-size: 1.5rem;}
 h3{font-size: 1.3rem; margin: 0;}
@@ -199,6 +231,16 @@ button.decline, button.accept, button.add{
   text-align: center;
   margin: 10px 0;
 }
+button.propose{
+  border-radius: 25px;
+  background-color: #7fba24;
+  color: white;
+  height: 45px;
+  width: 250px;
+  font-size: 1.0rem;
+  text-align: center;
+  margin: 70px 0px 0px 0px ;
+}
 
 button.decline{
   background-color: #f15a24;
@@ -233,7 +275,8 @@ button.add{
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 777;
+  z-index: 7;
+
 }
 
 .delete button{
@@ -424,6 +467,12 @@ select{
 
 .form-response{
   padding: 25px;
+  border: 3px solid #003c50;
+  min-height: 120px;
+}
+
+.placeholder{
+  padding: 40px;
   border: 3px solid #003c50;
   min-height: 120px;
 }

@@ -83,7 +83,8 @@ class ProjectDetailView extends Component {
               toggleShowForm={this.toggleShowForm}
               />
           ): null}
-
+        {this.state.features.length !=0 ?(
+          <div>
           {this.state.features.sort((a,b) => b.voteCount - a.voteCount)
           .map((feature, index) => (
               <FeaturePDV
@@ -101,6 +102,21 @@ class ProjectDetailView extends Component {
                   userVoteCount = {feature.userVoteCount}
               />
               ))}
+              </div>):(
+                <div>
+                 {!this.state.showForm ?
+                <div className="placeholder">
+                <h3 className="">
+                   This project is still empty
+                </h3>
+
+
+                <button className="propose" onClick={this.toggleShowForm} >
+                    Propose the first feature 
+                </button>
+            </div> :null}
+            </div>
+              )}
 
 
           < hr/>

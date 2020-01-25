@@ -4,34 +4,61 @@ import axios from "axios";
 import config from '../../config';
 //import beispiel from "./img/computer.png";
 import ReadMoreAndLess from 'react-read-more-less';
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 
 class FeaturePDV extends Component {
-    constructor(props){
-        super(props);
 
-        this.state = {
-            featureId: this.props.featureId,
-            count: this.props.count,
-            title: this.props.title,
-            description: this.props.description,
-            commentCount: this.props.commentCount,
-            projectId: this.props.projectId,
-            upvoted: this.props.upvoted,
-            projectName: this.props.projectName,
-            imageUrls: this.props.imageUrls,
-            deleted: false,
-            showResponse: false,
-            role: this.props.role,
-            employeeVoteCount: this.props.employeeVoteCount,
-            userVoteCount: this.props.userVoteCount
+  constructor(props){
+    super(props);
+
+    this.state = {
+      featureId: this.props.featureId,
+      count: this.props.count,
+      title: this.props.title,
+      description: this.props.description,
+      commentCount: this.props.commentCount,
+      projectId: this.props.projectId,
+      upvoted: this.props.upvoted,
+      projectName: this.props.projectName,
+      imageUrls: this.props.imageUrls,
+      deleted: false,      
+      role: this.props.role,
+      employeeVoteCount: this.props.employeeVoteCount,
+      userVoteCount: this.props.userVoteCount
+
 
         };
 
-        this.handleUpVote = this.handleUpVote.bind(this);
-        this.handleDownVote = this.handleDownVote.bind(this);
-    }
 
+    this.handleUpVote = this.handleUpVote.bind(this);
+    this.handleDownVote = this.handleDownVote.bind(this);
+  }
+  
+  submit = () => {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className='modal row'>
+                        <h1>Delete Feature</h1>
+                        <p>Are you sure you want to delete this feature?</p>
+                        <div className="row">
+                            <button onClick={onClose} className="col-6 not-confirm-delete">No</button>
+                            <button className=" col-6 confirm-delete"
+                                    onClick={() => {
+                                        this.handleDelete();
+                                        onClose();
+                                    }}
+                            >
+                                Yes!
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+        });
+    };
 
     handleUpVote = () => {
         var self = this;
@@ -79,34 +106,49 @@ class FeaturePDV extends Component {
 
     };
 
-    openDialog  = () => {
-        var self = this;
-        self.setState({ showResponse: true } );
-    }
-    handleClose = () => this.setState({ showResponse: false })
 
-    handleDelete = () => {
-        var self = this;
-        // console.log(comment._id)
-        axios
-            .delete(
-                "/api/features/" + this.state.projectName + "/" + this.state.featureId
-            )
-            .then(function(response) {
-                console.log(response);
-                self.setState({
-                    deleted: true
-                });
+  handleDownVote = () => {
+    var self = this;
+    axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
+        .then(function (response) {
+          console.log(response);
+          self.setState({
+            upvoted: false,
+            count: self.state.count - 1
+          });
+
+          if(self.state.role === "admin"){
+            self.setState({
+              employeeVoteCount: self.state.employeeVoteCount - 1
             })
-            .catch(function(error) {
-                console.log(error);
-            });
-    };
+          }
+          //  console.log(self.state);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
 
+  };
 
+ 
 
-
-
+  handleDelete = () => {
+    var self = this;
+    // console.log(comment._id)
+    axios
+        .delete(
+            "/api/features/" + this.state.projectName + "/" + this.state.featureId
+        )
+        .then(function(response) {
+          console.log(response);
+          self.setState({
+            deleted: true
+          });
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+  };
 
     render() {
         // TODO: Add real imagadata later
@@ -234,39 +276,16 @@ class FeaturePDV extends Component {
                                     </Link>
 
                                 </div>
-                            )}
-                        {this.state.role === "admin" ?
-                            <div className="delete">
-                                <button onClick={() => this.openDialog()} >
-                                    <i className="fas fa-times"></i>
-                                </button>
-                            </div> : null }
-                        {this.state.showResponse ?
-                            <div className="form-response-delete">
-                                <p className="col-10">
-                                    Are you sure you want to delete the feature
-                                </p>
-                                <button className="submit col-2" onClick={() => this.handleDelete()}>
-                                    Yes
-                                </button>
-                                <button className="submit col-2" onClick={() => this.handleClose()}>
-                                    No
-                                </button>
 
-
-
-
-                            </div>:null
-
-                        }
-                    </div>
-                ):null}
-
-            </div>
-        );
-    }
-
-
+                    )}
+                  {this.state.role === "admin" ?
+                    <div className="delete">
+                      <button onClick={() => this.submit()} title="Delete feature">
+                          <i className="fas fa-times"></i>
+                      </button>
+                   </div> : null }
+              </div>
+          ):null}
 }
 
 export default FeaturePDV;
