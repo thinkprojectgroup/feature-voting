@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Link } from "react-router-dom";
 import axios from "axios";
 import { Button } from "reactstrap";
 import config from "../../config";
+import { Carousel } from 'react-responsive-carousel';
 
 class FeatureFR extends Component {
     constructor(props) {
@@ -23,13 +24,13 @@ class FeatureFR extends Component {
         //this.props.reRender(this.state.title, this.state.description);
         axios
             .patch("/api/features/accept/" + this.state.featureId)
-            .then(function(response) {
+            .then(function (response) {
                 console.log(response);
                 self.setState({
                     clicked: true
                 });
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log(error);
             });
     };
@@ -41,13 +42,13 @@ class FeatureFR extends Component {
             .delete(
                 "/api/features/" + this.state.projectName + "/" + this.state.featureId
             )
-            .then(function(response) {
+            .then(function (response) {
                 console.log(response);
                 self.setState({
                     clicked: true
                 });
             })
-            .catch(function(error) {
+            .catch(function (error) {
                 console.log(error);
             });
     };
@@ -76,8 +77,16 @@ class FeatureFR extends Component {
                         </div>
                         <div
                             className="col-3 feature-image"
-                            style={{ backgroundImage: "url(" + this.state.imageUrls[0] + ")" }}
-                        ></div>
+                        //style={{ backgroundImage: "url(" + this.state.imageUrls[0] + ")" }}
+                        >
+                            <Carousel showThumbs={false}>
+                                {this.state.imageUrls.map(imageUrl => (
+                                    <div>
+                                        <img src={imageUrl} />
+                                    </div>
+                                ))}
+                            </Carousel>
+                        </div>
                     </div>
                 ) : null}
             </div>

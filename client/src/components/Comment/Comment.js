@@ -76,7 +76,7 @@ class Comment extends Component{
                 {images === null
                     ? (
                         <div>
-                            <div className="col-12">
+                            <div className="col-9">
                                 <p className="comment-author">{this.state.author}</p>
                                 <p className="comment-content">{this.state.content}</p>
                                 <p  className="comment-date">
@@ -106,12 +106,14 @@ class Comment extends Component{
                             </div>
                         </div>
                     )}
-                    <div className="col-3 delete-project">
-                         <button onClick={() => this.openDialog()} className="decline" >
-                          <i className="fas fa-times"></i>
-                    </button>
-                    
-              </div>
+
+
+                    <div className="delete">
+                        <button onClick={() => this.openDialog()} >
+                            <i className="fas fa-times"></i>
+                        </button>
+                    </div>
+
               {this.state.showResponse ?
                 <div className="form-response">
                  <p className="col-10">

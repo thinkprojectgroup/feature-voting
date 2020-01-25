@@ -97,28 +97,28 @@ class ProjectOverView extends Component {
             </div>
           </div>
           {this.state.show ? <ProjectForm reRender={this.reRender.bind(this)}/> : null}
-    
-                
-              
+
+
+
     
         {this.state.projects.map(project => (
             <div>
-              <Link to={"/" + project.name.toString().split(" ").join("-")}>
-                <div className="row project-list-item col-11">
-                  <h3>{project.name}</h3>{" "}
-                </div>
-              </Link>
-              <div className="col-1 delete-project">
-                <button onClick={() => this.openDialog(project._id)} className="decline" title="Delete project">
-                  <i className="fas fa-times"></i>
-                </button>
-               
 
-              </div>
+                <div className="row project-list-item col-12">
+                  <Link to={"/" + project.name.toString().split(" ").join("-")}>
+                    <h3 className="col-11">{project.name}</h3>{" "}
+                  </Link>
+                  <div className="delete">
+                    <button onClick={() => this.openDialog(project._id)} title="Delete project">
+                      <i className="fas fa-times"></i>
+                    </button>
+                  </div>
+                </div>
+
               {this.state.showResponse && this.state.featureToDelete == project._id?
                 <div className="form-response-delete">
                  <p className="col-10">
-                            Are you sure you want to delete the project 
+                            Are you sure you want to delete the project
                         </p>
                          <button className="submit col-2" onClick={() => this.handleDelete(this.state.featureToDelete)}>
                             Yes
@@ -126,12 +126,12 @@ class ProjectOverView extends Component {
                         <button className="submit col-2" onClick={() => this.handleClose()}>
                             No
                         </button>
-                        
-                    
-                     
-              
+
+
+
+
                 </div>:null
-                
+
             }
             </div>
         ))}

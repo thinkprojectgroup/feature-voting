@@ -25,7 +25,7 @@ class FeatureForm extends Component {
         })
         this.props.toggleShowForm()
 
-        document.getElementById("form-button").classList.toggle("cross");
+        document.getElementById("form-button").classList.remove("cross");
     }
 
 
@@ -174,7 +174,7 @@ class FeatureForm extends Component {
                 {!this.state.showResponse ? (
                     <form onSubmit={this.onSubmit} className="feature-form">
 
-                        <h5 className="col-12">Create a new feature:</h5>
+                        <h5 className="col-12">Propose a new feature:</h5>
                         <div className="col-6 name">
                             <label>
                                 Title:
@@ -186,7 +186,7 @@ class FeatureForm extends Component {
                                 value={headline}
                                 onChange={this.onChange}
                                 required
-                                maxLength="255"
+                                maxLength="50"
                             />
                         </div>
 
@@ -220,7 +220,7 @@ class FeatureForm extends Component {
 
 
                         {this.state.loading ?
-                            <ClipLoader loading={this.state.loading} />
+                            <div className="col-2"><ClipLoader loading={this.state.loading} /></div>
                             : <button className="submit col-2" type="submit" value="Submit">Submit</button>}
 
                     </form>

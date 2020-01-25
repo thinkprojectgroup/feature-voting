@@ -17,18 +17,20 @@ class AdminRights extends Component {
 
   reRender = (email, role) => {
     if (role == "admin") {
-      var newUser = this.state.employees.filter(
-        employee => employee.email == email
-      );
+      var newState = this.state.employees.filter(employee => employee.email != email);
+      var newUser = this.state.employees.filter(employee => employee.email == email);
       this.setState({
+        employees : newState,
         admins: this.state.admins.concat(newUser)
       });
     }
 
     if (role == "employee") {
+      var newState = this.state.admins.filter(admin => admin.email != email);
       var newUser = this.state.admins.filter(admin => admin.email == email);
       this.setState({
-        employees: this.state.employees.concat(newUser)
+        employees: this.state.employees.concat(newUser),
+        admins : newState
       });
     }
   };
@@ -40,11 +42,11 @@ class AdminRights extends Component {
 
 
           <div className="row col-12">
-            <h1>Admin Rights</h1>
+            <h1>User Settings</h1>
           </div>
 
 
-        <div>
+
 
           {this.state.employees.map(employee => (
 
@@ -54,10 +56,11 @@ class AdminRights extends Component {
               reRender={this.reRender.bind(this)}
             />
           ))}
-        </div>
 
-        <div className="container">
-          <h3>{"Admins"}</h3>
+
+          <div className="row col-12">
+            <h2>Admin Rights</h2>
+          </div>
 
           {this.state.admins.map(admin => (
             <User
@@ -66,7 +69,7 @@ class AdminRights extends Component {
               reRender={this.reRender.bind(this)}
             />
           ))}
-        </div>
+
       </div>
     );
   }
