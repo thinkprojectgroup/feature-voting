@@ -67,6 +67,25 @@ body{
   display: table;
 }
 
+.modal{
+  background-color: #fff;
+  border: 3px solid #003c50;
+  padding: 25px;
+}
+
+.not-confirm-delete, .confirm-delete{
+  color: white;
+  float: left;
+  font-size: 1.3rem;
+}
+
+.confirm-delete{
+  background-color: #003c50;
+}
+
+.not-confirm-delete{
+  background-color: #7f9da7;
+}
 
 .container{
   max-width: 1000px;
