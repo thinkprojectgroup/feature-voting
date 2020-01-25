@@ -70,7 +70,7 @@ body{
 .modal{
   background-color: #fff;
   border: 3px solid #003c50;
-  padding: 25px;
+  padding: 35px;
 }
 
 .not-confirm-delete, .confirm-delete{
@@ -80,11 +80,11 @@ body{
 }
 
 .confirm-delete{
-  background-color: #003c50;
+  background-color: #7fba24;
 }
 
 .not-confirm-delete{
-  background-color: #7f9da7;
+  background-color: #003c50;
 }
 
 .container{

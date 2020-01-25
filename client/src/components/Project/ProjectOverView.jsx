@@ -15,7 +15,6 @@ class ProjectOverView extends Component {
       projects: [],
       idToken: this.props.idToken,
       show: false,
-      showResponse: false,
       featureToDelete :""
     };
     this.toggleShow = this.toggleShow.bind(this);
@@ -30,7 +29,7 @@ class ProjectOverView extends Component {
         return (
             <div className='modal row'>
               <h1>Delete Project</h1>
-              <p>Are You sure you want to delete this project?</p>
+              <p>Are you sure you want to delete this project?</p>
               <div className="row">
                 <button onClick={onClose} className="col-6 not-confirm-delete">No</button>
                 <button className=" col-6 confirm-delete"
@@ -48,14 +47,6 @@ class ProjectOverView extends Component {
     });
   };
 
-  openDialog  = id => {
-     var self = this;
-     self.setState({ showResponse: true } );
-     self.setState({ featureToDelete: id } )
-     console.log(self.state.featureToDelete)
-  }
-
-  handleClose = () => this.setState({ showResponse: false })
 
   toggleShow = () => {
     this.setState({ show: !this.state.show });
@@ -92,7 +83,6 @@ class ProjectOverView extends Component {
   handleDelete = id => {
     var self = this;
     var newState = self.state.projects.filter(project => project._id != id);
-    self.setState({ showResponse: true })
     self.setState({
       projects: newState
     });
@@ -106,7 +96,6 @@ class ProjectOverView extends Component {
         .catch(function(error) {
           console.log(error);
         });
-    this.handleClose();
   };
 
 
@@ -127,9 +116,6 @@ class ProjectOverView extends Component {
           </div>
           {this.state.show ? <ProjectForm reRender={this.reRender.bind(this)}/> : null}
 
-
-
-    
         {this.state.projects.map(project => (
             <div>
 
@@ -143,25 +129,6 @@ class ProjectOverView extends Component {
                     </button>
                   </div>
                 </div>
-
-            {/*  {this.state.showResponse && this.state.featureToDelete == project._id?*/}
-            {/*          <div className="form-response-delete">*/}
-            {/*            <p className="col-10">*/}
-            {/*              Are you sure you want to delete the project*/}
-            {/*            </p>*/}
-            {/*            <button className="submit col-2" onClick={() => this.handleDelete(this.state.featureToDelete)}>*/}
-            {/*              Yes*/}
-            {/*            </button>*/}
-            {/*            <button className="submit col-2" onClick={() => this.handleClose()}>*/}
-            {/*              No*/}
-            {/*            </button>*/}
-
-
-
-
-            {/*    </div>:null*/}
-
-            {/*}*/}
             </div>
         ))}
       </div>

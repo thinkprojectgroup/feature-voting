@@ -4,6 +4,8 @@ import axios from "axios";
 import config from '../../config';
 //import beispiel from "./img/computer.png";
 import ReadMoreAndLess from 'react-read-more-less';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 
 class FeaturePDV extends Component {
@@ -21,13 +23,37 @@ class FeaturePDV extends Component {
       projectName: this.props.projectName,
       imageUrls: this.props.imageUrls,
       deleted: false,
-      showResponse: false,
 
     };
 
     this.handleUpVote = this.handleUpVote.bind(this);
     this.handleDownVote = this.handleDownVote.bind(this);
   }
+
+
+    submit = () => {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className='modal row'>
+                        <h1>Delete Feature</h1>
+                        <p>Are you sure you want to delete this feature?</p>
+                        <div className="row">
+                            <button onClick={onClose} className="col-6 not-confirm-delete">No</button>
+                            <button className=" col-6 confirm-delete"
+                                    onClick={() => {
+                                        this.handleDelete();
+                                        onClose();
+                                    }}
+                            >
+                                Yes!
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+        });
+    };
   
 
   handleUpVote = () => {
@@ -63,12 +89,6 @@ class FeaturePDV extends Component {
       });
 
   };
-
-  openDialog  = () => {
-    var self = this;
-    self.setState({ showResponse: true } );
- }
-  handleClose = () => this.setState({ showResponse: false })
 
   handleDelete = () => {
     var self = this;
@@ -217,28 +237,10 @@ class FeaturePDV extends Component {
           )}
 
         <div className="delete">
-          <button onClick={() => this.openDialog()} >
-            <i className="fas fa-times"></i>
-          </button>
+            <button onClick={() => this.submit()} title="Delete feature">
+                <i className="fas fa-times"></i>
+            </button>
         </div>
-          {this.state.showResponse ?
-                <div className="form-response-delete">
-                 <p className="col-10">
-                            Are you sure you want to delete the feature 
-                        </p>
-                         <button className="submit col-2" onClick={() => this.handleDelete()}>
-                            Yes
-                        </button>
-                        <button className="submit col-2" onClick={() => this.handleClose()}>
-                            No
-                        </button>
-                        
-                    
-                     
-              
-                </div>:null
-                
-            }
       </div>
     ):null}
     
