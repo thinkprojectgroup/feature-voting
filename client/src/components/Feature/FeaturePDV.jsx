@@ -4,8 +4,8 @@ import axios from "axios";
 import config from '../../config';
 //import beispiel from "./img/computer.png";
 import ReadMoreAndLess from 'react-read-more-less';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 
 class FeaturePDV extends Component {
@@ -22,16 +22,18 @@ class FeaturePDV extends Component {
       upvoted: this.props.upvoted,
       projectName: this.props.projectName,
       imageUrls: this.props.imageUrls,
-      deleted: false,
+      deleted: false,      
+      role: this.props.role,
+      employeeVoteCount: this.props.employeeVoteCount,
+      userVoteCount: this.props.userVoteCount
 
     };
 
     this.handleUpVote = this.handleUpVote.bind(this);
     this.handleDownVote = this.handleDownVote.bind(this);
   }
-
-
-    submit = () => {
+  
+  submit = () => {
         confirmAlert({
             customUI: ({ onClose }) => {
                 return (
@@ -54,58 +56,72 @@ class FeaturePDV extends Component {
             }
         });
     };
-  
+
 
   handleUpVote = () => {
     var self = this;
     axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
-    .then(function (response) {
-      console.log(response);
-      self.setState({
-        upvoted: true,
-        count : self.state.count + 1
-      });
-      // console.log(self.state);
-      })
-      .catch(function (error) {
-      console.log(error);
-      });
+        .then(function (response) {
+            console.log(response);
+            self.setState({
+              upvoted: true,
+              count: self.state.count + 1
+            });
 
-  };
+            if(self.state.role === "admin"){
+              self.setState({
+                employeeVoteCount: self.state.employeeVoteCount + 1
+              })
+            }
+            // console.log(self.state);
+          })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+        };
 
   handleDownVote = () => {
     var self = this;
     axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
-    .then(function (response) {
-      console.log(response);
-      self.setState({
-        upvoted: false,
-        count : self.state.count - 1
-      });
-     //  console.log(self.state);
-      })
-      .catch(function (error) {
-      console.log(error);
-      });
+        .then(function (response) {
+          console.log(response);
+          self.setState({
+            upvoted: false,
+            count: self.state.count - 1
+          });
+
+          if(self.state.role === "admin"){
+            self.setState({
+              employeeVoteCount: self.state.employeeVoteCount - 1
+            })
+          }
+          //  console.log(self.state);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
 
   };
+
+ 
 
   handleDelete = () => {
     var self = this;
     // console.log(comment._id)
     axios
-      .delete(
-        "/api/features/" + this.state.projectName + "/" + this.state.featureId
-      )
-      .then(function(response) {
-        console.log(response);
-        self.setState({
-          deleted: true
+        .delete(
+            "/api/features/" + this.state.projectName + "/" + this.state.featureId
+        )
+        .then(function(response) {
+          console.log(response);
+          self.setState({
+            deleted: true
+          });
+        })
+        .catch(function(error) {
+          console.log(error);
         });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
   };
 
 
@@ -117,134 +133,137 @@ class FeaturePDV extends Component {
     // TODO: Add real imagadata later
     let image;
     if(!this.state.imageUrls){
-        image = null;
+      image = null;
     }
     else{
       image = this.state.imageUrls[0];
     }
-   //  console.log(this.props.projectId);
-   var comment;
-   if(this.state.commentCount === 1){
-     comment = "comment"
-   }
-   else{
-     comment = "comments"
-   }
+    //  console.log(this.props.projectId);
+    var comment;
+    if(this.state.commentCount === 1){
+      comment = "comment"
+    }
+    else{
+      comment = "comments"
+    }
 
     let description = this.state.description;
 
     return (
-    <div>
-    {this.state.deleted === false ? (
-      <div className="row feature-list-item">
-        <div className="col-1 feature-count">
-        
-          {this.state.upvoted === false ? 
-          <button 
-            onClick={this.handleUpVote.bind(this)} title="upvote">
+        <div>
+          {this.state.deleted === false ? (
+              <div className="row feature-list-item">
+                <div className="col-1 feature-count">
 
-            <i className="fas fa-angle-up"></i>
+                  {this.state.upvoted === false ?
+                      <button
+                          onClick={this.handleUpVote.bind(this)} title="upvote">
 
-          </button>
-              :
-              <button className="inactive">
-                <i className="fas fa-angle-up"></i>
-              </button>
-          }
+                        <i className="fas fa-angle-up"></i>
 
-          <p>{this.state.count}</p>
+                      </button>
+                      :
+                      <button className="inactive">
+                        <i className="fas fa-angle-up"></i>
+                      </button>
+                  }
 
-          {this.state.upvoted === true ? 
-          <button
-              onClick={this.handleDownVote.bind(this)} title="downvote">
-            
-              <i className="fas fa-angle-down"></i>
-            </button>
-              :
-              <button className="inactive">
-                <i className="fas fa-angle-down"></i>
-              </button>
-          }
+                  <p>{this.state.count}</p>
+                    {this.state.role === "admin" ?
+                      <div >
+                        <p>Uservotes: {this.state.userVoteCount}</p>
+                        <p>Employeevotes: {this.state.employeeVoteCount}</p>
+                      </div> : null}
 
+                  {this.state.upvoted === true ?
+                      <button
+                          onClick={this.handleDownVote.bind(this)} title="downvote">
 
-        </div>
-
-        {image === null || image === undefined
-
-            ?(
-            <div className="col-8 feature-text">
-              <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
-                <div className="title">
-
-                  <h3>{this.state.title}</h3>{" "}
+                        <i className="fas fa-angle-down"></i>
+                      </button>
+                      :
+                      <button className="inactive">
+                        <i className="fas fa-angle-down"></i>
+                      </button>
+                  }
                 </div>
-              </Link>
-              <div className="description">
 
-                <ReadMoreAndLess
-                    ref={this.ReadMore}
-                    className="read-more-content"
-                    charLimit={160}
-                    readMoreText="Read more"
-                    readLessText="Read less"
-                >
-                  {description}
-                </ReadMoreAndLess>
+                {image === null || image === undefined
+
+                    ?(
+                        <div className="col-8 feature-text">
+                          <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                            <div className="title">
+
+                              <h3>{this.state.title}</h3>{" "}
+                            </div>
+                          </Link>
+                          <div className="description">
+
+                            <ReadMoreAndLess
+                                ref={this.ReadMore}
+                                className="read-more-content"
+                                charLimit={160}
+                                readMoreText="Read more"
+                                readLessText="Read less"
+                            >
+                              {description}
+                            </ReadMoreAndLess>
+                          </div>
+                          <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                            <div className="comment-count">
+                              <p>{this.state.commentCount} comments</p>
+                            </div>
+                          </Link>
+                        </div>)
+
+                    :(
+                        <div >
+                          <div className="col-8 feature-text">
+                            <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                              <div className="title">
+
+                                <h3>{this.state.title}</h3>{" "}
+                              </div>
+                            </Link>
+                            <div className="description">
+
+                              <ReadMoreAndLess
+                                  ref={this.ReadMore}
+                                  className="read-more-content"
+                                  charLimit={160}
+                                  readMoreText="Read more"
+                                  readLessText="Read less"
+                              >
+                                {description}
+                              </ReadMoreAndLess>
+                            </div>
+
+                            <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                              <div className="comment-count">
+                                <p>{this.state.commentCount} {comment}</p>
+                              </div>
+                            </Link>
+                          </div>
+                          <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                            <div
+                                className="col-3 feature-image"
+                                style={{backgroundImage: "url(" + image + ")"}} >
+                            </div>
+                          </Link>
+
+                        </div>
+                    )}
+                  {this.state.role === "admin" ?
+                    <div className="delete">
+                      <button onClick={() => this.submit()} title="Delete feature">
+                          <i className="fas fa-times"></i>
+                      </button>
+                   </div> : null }
               </div>
-              <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
-                <div className="comment-count">
-                  <p>{this.state.commentCount} comments</p>
-                </div>
-              </Link>
-            </div>)
+          ):null}
 
-            :(
-             <div >
-                <div className="col-8 feature-text">
-                  <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
-                    <div className="title">
-
-                        <h3>{this.state.title}</h3>{" "}
-                    </div>
-                  </Link>
-                  <div className="description">
-
-                    <ReadMoreAndLess
-                        ref={this.ReadMore}
-                        className="read-more-content"
-                        charLimit={160}
-                        readMoreText="Read more"
-                        readLessText="Read less"
-                    >
-                      {description}
-                    </ReadMoreAndLess>
-                  </div>
-
-                 <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
-                    <div className="comment-count">
-                    <p>{this.state.commentCount} {comment}</p>
-                    </div>
-                </Link>
-                </div>
-              <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
-                <div
-                  className="col-3 feature-image"
-                  style={{backgroundImage: "url(" + image + ")"}} >
-                </div>
-              </Link>
-              
-            </div>
-          )}
-
-        <div className="delete">
-            <button onClick={() => this.submit()} title="Delete feature">
-                <i className="fas fa-times"></i>
-            </button>
         </div>
-      </div>
-    ):null}
-    
-    </div>
     );
   }
 

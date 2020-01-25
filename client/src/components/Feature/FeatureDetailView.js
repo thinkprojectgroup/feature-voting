@@ -26,7 +26,12 @@ class FeatureDetailView extends Component {
       commentCount: 0,
       showForm: false,
       upvoted: false,
+      role: this.props.role,
+      email: this.props.email,
+      employeeVoteCount: 0,
+      userVoteCount: 0
     };
+    // console.log(this.state)
   }
 
   toggleShowForm = () => {
@@ -62,7 +67,9 @@ class FeatureDetailView extends Component {
                         featureTitle: feature.headline, 
                         description: feature.description, 
                         upvotes: feature.voteCount,
-                        upvoted: feature.upvoted
+                        upvoted: feature.upvoted,
+                        employeeVoteCount: feature.employeeVoteCount,
+                        userVoteCount: feature.userVoteCount
                       },
                       () => {
                         
@@ -83,6 +90,12 @@ class FeatureDetailView extends Component {
           upvoted: true,
           upvotes: self.state.upvotes + 1
         });
+
+        if(self.state.role === "admin"){
+          self.setState({
+            employeeVoteCount: self.state.employeeVoteCount + 1
+          })
+        }
         //console.log(self.state);
       })
       .catch(function (error) {
@@ -99,6 +112,12 @@ class FeatureDetailView extends Component {
           upvoted: false,
           upvotes: self.state.upvotes - 1
         });
+
+        if(self.state.role === "admin"){
+          self.setState({
+            employeeVoteCount: self.state.employeeVoteCount - 1
+          })
+        }
         // console.log(self.state);
       })
       .catch(function (error) {
@@ -131,6 +150,13 @@ class FeatureDetailView extends Component {
             }
 
             <p>{this.state.upvotes}</p>
+
+            {this.state.role === "admin" ?
+                <div >
+                  <p>Uservotes: {this.state.userVoteCount}</p>
+                  <p>Employeevotes: {this.state.employeeVoteCount}</p>
+                </div>
+            :null}
 
             {this.state.upvoted === true ? (
               <button onClick={this.toggleDivDownVote} title="downvote">
@@ -179,6 +205,8 @@ class FeatureDetailView extends Component {
                 <CommentForm 
                 featureId={this.props.match.params.featureId}
                 toggleShowForm={this.toggleShowForm}
+                role={this.state.role}
+                email={this.state.email}
                 />
             ): null}
 
@@ -192,6 +220,7 @@ class FeatureDetailView extends Component {
               count={this.state.commentCount}
               imageUrls={comment.imageUrls}
               commentId={comment._id}
+              role={this.state.role}
             />
           ))}
         </div>

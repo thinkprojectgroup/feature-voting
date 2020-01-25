@@ -17,6 +17,8 @@ class Comment extends Component{
         formattedDate: '',
         imageUrls: this.props.imageUrls,
         commentId: this.props.commentId,
+        role: this.props.role
+
     };
     //console.log(this.state.date);
     //console.log(this.state);
@@ -90,45 +92,50 @@ class Comment extends Component{
             images = this.state.imageUrls
         }
         return(
-       
-            <div>
-             {!this.state.deleted ?(
-                <div className="comment-container col-12 row">
-                {images === null
-                    ? (
-                        <div>
-                            <div className="col-9">
-                                <p className="comment-author">{this.state.author}</p>
-                                <p className="comment-content">{this.state.content}</p>
-                                <p  className="comment-date">
-                                    {this.state.formattedDate}
-                                </p>
-                            </div>
-
-                        </div>)
-
-                    :(
-                        <div>
-                            <div className="col-9">
-                                <p className="comment-author">{this.state.author}</p>
-                                <p className="comment-content">{this.state.content}</p>
-                                <p  className="comment-date">
-                                    {this.state.formattedDate}
-                                </p>
-                            </div>
-                            <div className="comment-images col-3">
-                                <Carousel showThumbs={false}>
-                                    {images.map(imageUrl => (
-                                        <div>
-                                            <img src={imageUrl}/>
-                                        </div>
-                                    ))}
-                                </Carousel>
-                            </div>
-                        </div>
-                    )}
 
 
+            <div className="comment-container col-12 row">
+                {!this.state.deleted ?(
+                    <div>
+                        {images === null
+                            ? (
+                                <div>
+                                    <div className="col-9">
+                                        <p className="comment-author">{this.state.author}</p>
+                                        <p className="comment-content">{this.state.content}</p>
+                                        <p  className="comment-date">
+                                            {this.state.formattedDate}
+                                        </p>
+                                    </div>
+                                </div>)
+
+                            :(
+                                <div>
+                                    <div className="col-9">
+                                        <p className="comment-author">{this.state.author}</p>
+                                        <p className="comment-content">{this.state.content}</p>
+                                        <p  className="comment-date">
+                                            {this.state.formattedDate}
+                                        </p>
+                                    </div>
+                                    <div className="comment-images col-3">
+                                        <Carousel showThumbs={false}>
+                                            {images.map(imageUrl => (
+                                                <div>
+                                                    <img src={imageUrl}/>
+                                                </div>
+                                            ))}
+                                        </Carousel>
+                                    </div>
+                                </div>
+                            )}
+
+                        {this.state.role === "admin" ?
+                        <div className="delete">
+                            <button onClick={() => this.openDialog()} >
+                                <i className="fas fa-times"></i>
+                            </button>
+                        </div>: null}
                     <div className="delete">
                         <button onClick={() => this.submit()} title="Delete comment">
                             <i className="fas fa-times"></i>

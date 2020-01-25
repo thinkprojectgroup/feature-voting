@@ -110,11 +110,12 @@ body{
 }
 
 .header{
-  background-color: rgba(234, 234, 234, 0.9);
+  background-color: rgba(234, 234, 234, 0.95);
   height: 60px;
   margin: 0 0 0 0;
   padding: 0;
   position: fixed;
+  z-index: 999;
 }
 
 .login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
@@ -205,6 +206,16 @@ button.decline, button.accept, button.add{
   text-align: center;
   margin: 10px 0;
 }
+button.propose{
+  border-radius: 25px;
+  background-color: #7fba24;
+  color: white;
+  height: 45px;
+  width: 250px;
+  font-size: 1.0rem;
+  text-align: center;
+  margin: 70px 0px 0px 0px ;
+}
 
 button.decline{
   background-color: #f15a24;
@@ -240,6 +251,7 @@ button.add{
   right: 0;
   top: 0;
   z-index: 7;
+
 }
 
 .delete button{
@@ -419,6 +431,12 @@ select{
   min-height: 120px;
 }
 
+.placeholder{
+  padding: 40px;
+  border: 3px solid #003c50;
+  min-height: 120px;
+}
+
 .form-response > p{
   margin: 0;
 }
@@ -448,6 +466,7 @@ select{
 
 
 
+
 .to-top button{
   height: 50px;
 }
@@ -466,7 +485,7 @@ select{
   bottom: 150px;
   transition: 0.5s;
   cursor: pointer;
-  background-color: rgba(127, 157, 167, 0.25);
+  background-color: rgba(234, 234, 234, 0.9);
   font-size: 20px;
 }
 
