@@ -131,6 +131,11 @@ body{
   color: #003c50;
 }
 
+button:disabled,
+button[disabled]{
+  background-color: #7f9da7;
+}
+
 h1{font-size: 2rem; }
 h2{font-size: 1.5rem;}
 h3{font-size: 1.3rem; margin: 0;}
