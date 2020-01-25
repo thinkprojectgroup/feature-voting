@@ -17,7 +17,9 @@ class CommentForm extends Component {
             featureId: this.props.featureId,
             showResponse: false,
             loading: false,
-            fileerror: ""
+            fileerror: "",
+            role: this.props.role,
+            email: this.props.email
         };
     }
 
@@ -144,12 +146,19 @@ class CommentForm extends Component {
             }
         }
 
-
         const imageUrls = await this.uploadImage()
+
+        var name = ""
+        if(this.state.role === "admin" || this.state.role === "employee"){
+            name = this.state.email
+        }
+        else{
+            name = this.state.name.trim()
+        }
 
 
         let data = JSON.stringify({
-            name: this.state.name.trim(),
+            name: name,
             content: this.state.content.trim(),
             imageUrls: imageUrls
         })
@@ -177,10 +186,11 @@ class CommentForm extends Component {
                 {!this.state.showResponse ? (
                     <form onSubmit={this.onSubmit} className="feature-form">
                         <h5 className="col-12">Create a new comment:</h5>
+                        {this.state.role !== "admin" && this.state.role !== "employee" ?
                         <div className="col-6 name">
                             <label>
                                 Name (optional):
-                        </label>
+                            </label>
                             <input
                                 type="text"
                                 name="name"
@@ -190,6 +200,12 @@ class CommentForm extends Component {
                                 maxLength="50"
                             />
                         </div>
+                        :
+                            <div className="col-6 name">
+                            <p>{this.state.email}</p>
+                            </div>
+                        }
+                        
 
                         <div className="col-6 filepicker">
                             <label>Upload Your Images </label>

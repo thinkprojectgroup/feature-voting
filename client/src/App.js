@@ -25,6 +25,7 @@ class App extends Component {
     super(props)
     this.state = {
       role: 'user',
+      email: null,
       isSignedIn: false,
       idToken: null,
       authIsLoaded: false,
@@ -67,11 +68,19 @@ class App extends Component {
     })
   }
 
+  setEmail = (email) => {
+    this.setState({
+      email: email
+    })
+  }
+
   render() {
+
     return (
       <AppWrapper
         isReady={this.isReady}
         setAuthorisation={this.setAuthorisation}
+        setEmail={this.setEmail}
       >
         {this.state.authIsLoaded && (
           <>
@@ -134,7 +143,7 @@ class App extends Component {
 
                 <Route
                   path={'/:projectName/:featureId'}
-                  render={(props) => <FeatureDetailView {...props} role={this.state.role}/>}
+                  render={(props) => <FeatureDetailView {...props} role={this.state.role} email={this.state.email}/>}
                 />
 
               </Switch>
