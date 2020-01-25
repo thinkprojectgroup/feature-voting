@@ -15,6 +15,7 @@ class ProjectDetailView extends Component {
       comments: "",
       projectId: "",
       showForm: false,
+      searchTerm: ""
     };
 
     this.toggleShowForm = this.toggleShowForm.bind(this);
@@ -43,6 +44,28 @@ class ProjectDetailView extends Component {
 
   }
 
+  handleSearch = (e) => {
+    console.log(e.target.value)
+    const searchTerm = e.target.value.trim()
+    const features = this.state.features
+    var searchedFeatures = []
+    if(searchTerm.length >= 3){
+          for(var z = 0; z < features.length; z++){
+            if(features[z].headline.includes(searchTerm)){
+                searchedFeatures.push(features[z])
+            }
+          }
+    }
+    else{
+      return;
+    }
+
+    this.setState({
+        features: []
+    },
+    {features: searchedFeatures})
+  }
+
 
 
   componentDidMount() {
@@ -63,13 +86,22 @@ class ProjectDetailView extends Component {
   }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
         <div className="container row">
           <div className="row">
             <div className="col-11 project-name">
               <h1>{this.state.name}</h1>
             </div>
+
+            <div className="feature-search">
+                <input 
+                  type="text" 
+                  onChange={this.handleSearch}
+                  name="searchField"
+                />
+            </div>
+
             <div className="col-1 add-button" id="form-button" title="Add feature">
               <button onClick={this.toggleShowForm} className="add">
                 <i className="fas fa-plus"></i>
