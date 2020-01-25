@@ -96,6 +96,7 @@ body{
   margin: 0 0 0 0;
   padding: 0;
   position: fixed;
+  z-index: 999;
 }
 
 .login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
@@ -220,7 +221,7 @@ button.add{
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 999;
+  z-index: 777;
 }
 
 .delete button{
