@@ -46,13 +46,13 @@ class ProjectDetailView extends Component {
 
   handleSearch = (e) => {
     console.log(e.target.value)
-    const searchTerm = e.target.value.trim()
+    const searchTerm = e.target.value.trim().toLowerCase()
     const features = this.state.features
     var searchedFeatures = []
     if(searchTerm.length >= 3){
           for(var z = 0; z < features.length; z++){
-            if(features[z].headline.includes(searchTerm)){
-                searchedFeatures.push(features[z])
+            if(features[z].headline.toLowerCase().includes(searchTerm)){
+                searchedFeatures.concat(features[z])
             }
           }
     }
