@@ -15,6 +15,7 @@ class ProjectDetailView extends Component {
       comments: "",
       projectId: "",
       showForm: false,
+      role: this.props.role
     };
 
     this.toggleShowForm = this.toggleShowForm.bind(this);
@@ -39,7 +40,7 @@ class ProjectDetailView extends Component {
         features: sortedFeaturesDsc
     })
 
-    console.log(this.state.features);
+    // console.log(this.state.features);
 
   }
 
@@ -63,7 +64,7 @@ class ProjectDetailView extends Component {
   }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
         <div className="container row">
           <div className="row">
@@ -95,11 +96,15 @@ class ProjectDetailView extends Component {
                   upvoted = {feature.upvoted}
                   projectName = {this.props.match.params.projectName.toString().split("-").join(" ")}
                   imageUrls = {feature.imageUrls}
+                  role = {this.state.role}
+                  employeeVoteCount = {feature.employeeVoteCount}
+                  userVoteCount = {feature.userVoteCount}
               />
               ))}
 
 
           < hr/>
+          {this.state.role === "admin" ? 
           <FeatureReview
               projectName={this.props.match.params.projectName
                   .toString()
@@ -107,6 +112,7 @@ class ProjectDetailView extends Component {
                   .join(" ")}
               projectId={this.state.projectId}
           />
+          :null}
         </div>
     );
   }
