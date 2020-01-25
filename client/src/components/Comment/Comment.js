@@ -15,7 +15,8 @@ class Comment extends Component{
         formattedDate: '',
         imageUrls: this.props.imageUrls,
         commentId: this.props.commentId,
-        showResponse: false
+        showResponse: false,
+        role: this.props.role
     };
     //console.log(this.state.date);
     //console.log(this.state);
@@ -69,68 +70,64 @@ class Comment extends Component{
             images = this.state.imageUrls
         }
         return(
-       
+
             <div className="comment-container col-12 row">
-             {!this.state.deleted ?(
-                <div>
-                {images === null
-                    ? (
-                        <div>
-                            <div className="col-9">
-                                <p className="comment-author">{this.state.author}</p>
-                                <p className="comment-content">{this.state.content}</p>
-                                <p  className="comment-date">
-                                    {this.state.formattedDate}
+                {!this.state.deleted ?(
+                    <div>
+                        {images === null
+                            ? (
+                                <div>
+                                    <div className="col-9">
+                                        <p className="comment-author">{this.state.author}</p>
+                                        <p className="comment-content">{this.state.content}</p>
+                                        <p  className="comment-date">
+                                            {this.state.formattedDate}
+                                        </p>
+                                    </div>
+
+                                </div>)
+
+                            :(
+                                <div>
+                                    <div className="col-9">
+                                        <p className="comment-author">{this.state.author}</p>
+                                        <p className="comment-content">{this.state.content}</p>
+                                        <p  className="comment-date">
+                                            {this.state.formattedDate}
+                                        </p>
+                                    </div>
+                                    <div className="comment-images col-3">
+                                        <Carousel showThumbs={false}>
+                                            {images.map(imageUrl => (
+                                                <div>
+                                                    <img src={imageUrl}/>
+                                                </div>
+                                            ))}
+                                        </Carousel>
+                                    </div>
+                                </div>
+                            )}
+
+                        {this.state.role === "admin" ?
+                        <div className="delete">
+                            <button onClick={() => this.openDialog()} >
+                                <i className="fas fa-times"></i>
+                            </button>
+                        </div>: null}
+
+                        {this.state.showResponse ?
+                            <div className="form-response">
+                                <p className="col-10">
+                                    Are you sure you want to delete the comment
                                 </p>
-                            </div>
-
-                        </div>)
-
-                    :(
-                        <div>
-                            <div className="col-9">
-                                <p className="comment-author">{this.state.author}</p>
-                                <p className="comment-content">{this.state.content}</p>
-                                <p  className="comment-date">
-                                    {this.state.formattedDate}
-                                </p>
-                            </div>
-                            <div className="comment-images col-3">
-                                <Carousel showThumbs={false}>
-                                    {images.map(imageUrl => (
-                                        <div>
-                                            <img src={imageUrl}/>
-                                        </div>
-                                    ))}
-                                </Carousel>
-                            </div>
-                        </div>
-                    )}
-
-
-                    <div className="delete">
-                        <button onClick={() => this.openDialog()} >
-                            <i className="fas fa-times"></i>
-                        </button>
+                                <button className="submit-small col-2" onClick={() => this.handleDelete()}>
+                                    Yes
+                                </button>
+                                <button className="submit-small col-2" onClick={() => this.handleClose()}>
+                                    No
+                                </button>
+                            </div>:null}
                     </div>
-
-              {this.state.showResponse ?
-                <div className="form-response">
-                 <p className="col-10">
-                            Are you sure you want to delete the comment 
-                        </p>
-                         <button className="submit-small col-2" onClick={() => this.handleDelete()}>
-                            Yes
-                        </button>
-                        <button className="submit-small col-2" onClick={() => this.handleClose()}>
-                            No
-                        </button>
-                        
-                    
-                     
-              
-                </div>:null}
-                </div>
                 ) :null}
             </div>
 
