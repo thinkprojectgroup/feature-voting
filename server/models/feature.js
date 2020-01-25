@@ -85,6 +85,8 @@ function cleanFeatures(features, userId) {
         const userIdStrings = feature.userIds.map(obj => util.inspect(obj))
         const employeeIdStrings = feature.employeeIds.map(obj => util.inspect(obj))
         feature.upvoted = (userIdStrings.includes(userId) || employeeIdStrings.includes(userId))
+        feature.userVoteCount = feature.userIds.length
+        feature.employeeVoteCount = feature.employeeIds.length
         delete feature.userIds
         delete feature.employeeIds
         delete feature.creator
