@@ -68,6 +68,14 @@ body{
 }
 
 
+.error{
+  color: #f15a24;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+
 .container{
   max-width: 1000px;
   margin: auto auto 50px auto;

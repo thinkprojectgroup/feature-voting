@@ -192,15 +192,10 @@ class CommentForm extends Component {
                         </div>
 
                         <div className="col-6 filepicker">
-                            <label>Upload Your Images </label>
+                            <label>Upload Your Images <p className="error">{this.state.fileError}</p></label>
                             <input type="file" multiple className="process__upload-btn" onChange={(e) => this.onChangeImage(e)} />
                         </div>
 
-                        <div className="error">
-                            <p>
-                                {this.state.fileError}
-                            </p>
-                        </div>
 
                         <div className="col-12 content">
                             <label>

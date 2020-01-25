@@ -41,7 +41,7 @@ class FeatureForm extends Component {
             // compare file type find doesn't matach
             if (types.every(type => files[x].type !== type)) {
                 // create error message and assign to container   
-                err[x] = files[x].type + ' is not a supported format\n';
+                err[x] = " (" + files[x].type + ' is not a supported format\n)';
             }
         };
         for (var z = 0; z < err.length; z++) {// if message not same old that mean has error 
@@ -49,7 +49,7 @@ class FeatureForm extends Component {
             //alert("Wrong Datatype!");
             //event.target.value = null
             this.setState({
-                fileError: "You can only upload images with the datatype PNG or JPEG."
+                fileError: " (You can only upload images with the datatype PNG or JPEG.)"
             })
             return false;
         }
@@ -58,11 +58,11 @@ class FeatureForm extends Component {
     maxSelectFile = (files) => {
         // let files = files
         if (files.length > 3) {
-            const msg = 'Only 3 images can be uploaded at a time'
+            const msg = ' (Only 3 images can be uploaded at a time)'
             // event.target.value = null
             // alert("Too many files!");
             this.setState({
-                fileError: "You can only upload 3 images."
+                fileError: " (You can only upload 3 images.)"
             })
             return false;
         }
@@ -74,14 +74,14 @@ class FeatureForm extends Component {
         let err = [];
         for (var x = 0; x < files.length; x++) {
             if (files[x].size > size) {
-                err[x] = files[x].type + 'is too large, please pick a smaller file\n';
+                err[x] = " (" + files[x].type + 'is too large, please pick a smaller file\n)';
             }
         };
         for (var z = 0; z < err.length; z++) {// if message not same old that mean has error 
             // discard selected file
             // alert("Your files are too big!");
             this.setState({
-                fileError: "You can only upload images, that are smaller than 2MB."
+                fileError: " (You can only upload images, that are smaller than 2MB.)"
             })
             //event.target.value = null
             return false;
@@ -191,16 +191,13 @@ class FeatureForm extends Component {
                         </div>
 
                         <div className="col-6 filepicker">
-                            <label>Upload Your Images </label>
+                            <label>Upload Your Images <p className="error">{this.state.fileError}</p>
+                            </label>
                             <input
                                 type="file"
                                 multiple className="process__upload-btn"
                                 onChange={(e) => this.onChangeImage(e)}
                             />
-                        </div>
-
-                        <div className="error">
-                            <p>{this.state.fileError}</p>
                         </div>
 
 
