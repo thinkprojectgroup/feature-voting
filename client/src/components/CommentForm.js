@@ -171,11 +171,15 @@ class CommentForm extends Component {
                 console.log(result);
                 this.setState({
                     showResponse: true,
-                    loading: false
                 })
             })
             .catch(error => {
                 console.log(error.response);
+            })
+            .finally(() =>{
+                this.setState({
+                    loading: false
+                })
             });
     }
 

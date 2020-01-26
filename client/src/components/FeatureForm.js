@@ -159,12 +159,16 @@ class FeatureForm extends Component {
             .then((result) => {
                 console.log(result);
                 this.setState({
-                    showResponse: true,
-                    loading: false
+                    showResponse: true
                 })
             })
             .catch(error => {
                 console.log(error.response);
+            })
+            .finally(() =>{
+                this.setState({
+                    loading: false
+                })
             });
     }
 
@@ -216,6 +220,7 @@ class FeatureForm extends Component {
                                 value={description}
                                 onChange={this.onChange}
                                 maxLength="2048"
+                                required
                             />
 
                         </div>
