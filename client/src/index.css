@@ -536,6 +536,7 @@ select{
   cursor: pointer;
   background-color: rgba(234, 234, 234, 0.9);
   font-size: 20px;
+  z-index: 999;
 }
 
 .transition {
