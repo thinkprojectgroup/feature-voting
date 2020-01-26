@@ -286,6 +286,8 @@ class FeaturePDV extends Component {
                    </div> : null }
               </div>
           ):null}
-}
+            </div>
+    );
+                }}
 
 export default FeaturePDV;
