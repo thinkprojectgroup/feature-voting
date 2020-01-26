@@ -307,12 +307,12 @@ button.add{
 
 
 .user-vote{
-  color: rgba(127, 186, 36, 0.5);
+  color: rgba(127, 186, 36, 0.7);
   font-size: 0.8rem;
 }
 
 .employee-vote{
-  color: rgba(241, 90, 36, 0.5);
+  color: rgba(241, 90, 36, 0.7);
   font-size: 0.8rem;
 }
 
