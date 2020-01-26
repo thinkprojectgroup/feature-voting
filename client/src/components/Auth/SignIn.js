@@ -18,7 +18,7 @@ class SignIn extends Component {
 
   onSuccess = googleUser => {
     var idToken = googleUser.tokenId;
-    console.log('Logged In.')
+    
 
     axios
       .post(config.url + '/api/auth/', {
@@ -31,6 +31,8 @@ class SignIn extends Component {
 
           default: this.role = 'user'
         }
+        var userProfile = googleUser.getBasicProfile();
+        if (userProfile) this.props.setEmail(userProfile.getEmail())
         this.props.setAuthorisation(this.role, true, idToken) // set role, signedIn and idToken in App.js
         axios.defaults.headers.common['token'] = idToken // jwt-token send with every request (users have no idtoken - null)
         setTimeout(() => this.props.history.push('/'), 2000)

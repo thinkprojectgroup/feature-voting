@@ -17,18 +17,20 @@ class AdminRights extends Component {
 
   reRender = (email, role) => {
     if (role == "admin") {
-      var newUser = this.state.employees.filter(
-        employee => employee.email == email
-      );
+      var newState = this.state.employees.filter(employee => employee.email != email);
+      var newUser = this.state.employees.filter(employee => employee.email == email);
       this.setState({
+        employees : newState,
         admins: this.state.admins.concat(newUser)
       });
     }
 
     if (role == "employee") {
+      var newState = this.state.admins.filter(admin => admin.email != email);
       var newUser = this.state.admins.filter(admin => admin.email == email);
       this.setState({
-        employees: this.state.employees.concat(newUser)
+        employees: this.state.employees.concat(newUser),
+        admins : newState
       });
     }
   };

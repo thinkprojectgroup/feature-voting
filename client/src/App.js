@@ -30,6 +30,7 @@ class App extends Component {
     super(props)
     this.state = {
       role: 'user',
+      email: null,
       isSignedIn: false,
       idToken: null,
       authIsLoaded: false,
@@ -40,7 +41,7 @@ class App extends Component {
 
   // Helper function to await a timeout
   timeout = (ms) => new Promise(resolve => setTimeout(resolve, ms))
-  
+
   createFingerPrint = () => {
     this.timeout(500).then(
       Fingerprint2.get(function (components) {
@@ -82,12 +83,20 @@ class App extends Component {
       default: this.props.history.push("/err");
     }
   }
+  
+  setEmail = (email) => {
+    this.setState({
+      email: email
+    })
+  }
 
   render() {
+
     return (
       <AppWrapper
         isReady={this.isReady}
         setAuthorisation={this.setAuthorisation}
+        setEmail={this.setEmail}
       >
         {this.state.authIsLoaded && (
           <>
@@ -120,23 +129,23 @@ class App extends Component {
                   }
                 />
                 <Route //Admin - AdminRights
-                    exact
-                    path={"/adminrights"}
-                    render={props =>
-                        this.state.role == "admin" ? (
-                            <AdminRights {...props} />
-                        ) : (
-                            <Redirect to={"/login"} />
-                        )
-                    }
+                  exact
+                  path={"/adminrights"}
+                  render={props =>
+                    this.state.role == "admin" ? (
+                      <AdminRights {...props} />
+                    ) : (
+                        <Redirect to={"/login"} />
+                      )
+                  }
                 />
                 <Route //Login
                   exact
                   path={'/login'}
                   render={props => (
-                    <SignIn 
+                    <SignIn
                       role={this.props.role}
-                      isSignedIn={this.state.isSignedIn} 
+                      isSignedIn={this.state.isSignedIn}
                       setAuthorisation={this.setAuthorisation} />
                   )}
                 />
@@ -155,6 +164,17 @@ class App extends Component {
                 <Route path={'/:projectName/:featureId'}>
                   <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} />
                 </Route>
+                
+                {/* <Route exact 
+                  path={'/:projectName'} 
+                  render={(props) => <ProjectDetailView {...props} role={this.state.role}/>} 
+                />
+
+                <Route
+                  path={'/:projectName/:featureId'}
+                  render={(props) => <FeatureDetailView {...props} role={this.state.role} email={this.state.email}/>}
+                /> */}
+
               </Switch>
               <Footer />
           </>

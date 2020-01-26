@@ -16,6 +16,7 @@ class ProjectDetailView extends Component {
       comments: "",
       projectId: "",
       showForm: false,
+      role: this.props.role
     };
 
     this.toggleShowForm = this.toggleShowForm.bind(this);
@@ -39,7 +40,8 @@ class ProjectDetailView extends Component {
         features: sortedFeaturesDsc
     })
 
-    console.log(this.state.features);
+    // console.log(this.state.features);
+
   }
 
   componentDidMount () {
@@ -60,7 +62,7 @@ class ProjectDetailView extends Component {
   }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
         <div className="container row">
           <div className="row">
@@ -79,7 +81,8 @@ class ProjectDetailView extends Component {
               toggleShowForm={this.toggleShowForm}
               />
           ): null}
-
+        {this.state.features.length !=0 ?(
+          <div>
           {this.state.features.sort((a,b) => b.voteCount - a.voteCount)
           .map((feature, index) => (
               <FeaturePDV
@@ -92,11 +95,30 @@ class ProjectDetailView extends Component {
                   upvoted = {feature.upvoted}
                   projectName = {this.props.match.params.projectName.toString().split("-").join(" ")}
                   imageUrls = {feature.imageUrls}
+                  role = {this.state.role}
+                  employeeVoteCount = {feature.employeeVoteCount}
+                  userVoteCount = {feature.userVoteCount}
               />
               ))}
+              </div>):(
+                <div>
+                 {!this.state.showForm ?
+                <div className="placeholder">
+                <h3 className="">
+                   This project is still empty
+                </h3>
+
+
+                <button className="propose" onClick={this.toggleShowForm} >
+                    Propose the first feature 
+                </button>
+            </div> :null}
+            </div>
+              )}
 
 
           < hr/>
+          {this.state.role === "admin" ? 
           <FeatureReview
               projectName={this.props.match.params.projectName
                   .toString()
@@ -104,6 +126,7 @@ class ProjectDetailView extends Component {
                   .join(" ")}
               projectId={this.state.projectId}
           />
+          :null}
         </div>
     );
   }
