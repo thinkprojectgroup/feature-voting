@@ -111,6 +111,7 @@ class ProjectDetailView extends Component {
               </button>
             </div>
           </div>
+        {!this.state.empty ?(
             <div className="feature-search row">
                 <i className="col-1 fas fa-search"></i>
                 <input
@@ -120,7 +121,7 @@ class ProjectDetailView extends Component {
                     placeholder="Search"
                     className="col-11"
                 ></input>
-            </div>
+            </div>) : null}
 
 
           {this.state.showForm ? (
