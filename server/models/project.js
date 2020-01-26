@@ -24,7 +24,7 @@ const Project = mongoose.model("Project", schema)
 
 function validateProject(project) {
     const schema = {
-        name: Joi.string().min(1).max(255).required()
+        name: Joi.string().min(1).max(255).required().regex(/^[ /\w|\-|\s/]+$/)
     }
     return Joi.validate(project, schema)
 }
