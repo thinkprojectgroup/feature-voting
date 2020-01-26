@@ -18,7 +18,8 @@ class ProjectDetailView extends Component {
       showForm: false,
       searchTerm: "",
       role: this.props.role,
-      outputFeatures: []
+      outputFeatures: [],
+      empty : false
     };
 
     this.toggleShowForm = this.toggleShowForm.bind(this);
@@ -78,6 +79,11 @@ class ProjectDetailView extends Component {
       .get(config.url + `/api/projects/name/` + this.props.match.params.projectName.toString().split("-").join(" "))
       .then(response => {
         console.log(response);
+        if (response.data.features.length == 0) {
+          this.setState({
+            empty: true
+          });
+        }
         this.setState({
           features: response.data.features,
           outputFeatures: response.data.features,
@@ -120,7 +126,7 @@ class ProjectDetailView extends Component {
               toggleShowForm={this.toggleShowForm}
               />
           ): null}
-        {this.state.features.length !=0 ?(
+        {!this.state.empty ?(
           <div>
           {this.state.outputFeatures.sort((a,b) => b.voteCount - a.voteCount)
           .map((feature, index) => (
