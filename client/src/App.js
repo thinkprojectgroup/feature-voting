@@ -159,10 +159,10 @@ class App extends Component {
                 <Route exact path={'/err'} component={GeneralErrorPage} />
 
                 <Route exact path={'/:projectName'}>
-                  <ProjectDetailView redirectToErrorPage={this.redirectToErrorPage} />
+                  <ProjectDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} />
                 </Route>
                 <Route path={'/:projectName/:featureId'}>
-                  <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} />
+                  <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} email={this.state.email} />
                 </Route>
                 
                 {/* <Route exact 
