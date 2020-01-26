@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import config from "../../config";
 import ProjectForm from "./ProjectForm";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 
 
@@ -13,20 +15,38 @@ class ProjectOverView extends Component {
       projects: [],
       idToken: this.props.idToken,
       show: false,
-      showResponse: false,
       featureToDelete :""
     };
     this.toggleShow = this.toggleShow.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
 
   }
-  openDialog  = id => {
-     var self = this;
-     self.setState({ showResponse: true } );
-     self.setState({ featureToDelete: id } )
-     console.log(self.state.featureToDelete)
-  }
-  handleClose = () => this.setState({ showResponse: false })
+
+
+  submit = (id) => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+            <div className='modal row'>
+              <h1>Delete Project</h1>
+              <p>Are you sure you want to delete this project?</p>
+              <div className="row">
+                <button onClick={onClose} className="col-6 not-confirm-delete">No</button>
+                <button className=" col-6 confirm-delete"
+                    onClick={() => {
+                      this.handleDelete(id);
+                      onClose();
+                    }}
+                >
+                  Yes!
+                </button>
+              </div>
+            </div>
+        );
+      }
+    });
+  };
+
 
   toggleShow = () => {
     this.setState({ show: !this.state.show });
@@ -63,7 +83,6 @@ class ProjectOverView extends Component {
   handleDelete = id => {
     var self = this;
     var newState = self.state.projects.filter(project => project._id != id);
-    self.setState({ showResponse: true })
     self.setState({
       projects: newState
     });
@@ -77,7 +96,6 @@ class ProjectOverView extends Component {
         .catch(function(error) {
           console.log(error);
         });
-    this.handleClose();
   };
 
 
@@ -98,9 +116,6 @@ class ProjectOverView extends Component {
           </div>
           {this.state.show ? <ProjectForm reRender={this.reRender.bind(this)}/> : null}
 
-
-
-    
         {this.state.projects.map(project => (
             <div>
 
@@ -109,30 +124,11 @@ class ProjectOverView extends Component {
                     <h3 className="col-11">{project.name}</h3>{" "}
                   </Link>
                   <div className="delete">
-                    <button onClick={() => this.openDialog(project._id)} title="Delete project">
+                    <button onClick={() => this.submit(project._id)} title="Delete project">
                       <i className="fas fa-times"></i>
                     </button>
                   </div>
                 </div>
-
-              {this.state.showResponse && this.state.featureToDelete == project._id?
-                <div className="form-response-delete">
-                 <p className="col-10">
-                            Are you sure you want to delete the project
-                        </p>
-                         <button className="submit col-2" onClick={() => this.handleDelete(this.state.featureToDelete)}>
-                            Yes
-                        </button>
-                        <button className="submit col-2" onClick={() => this.handleClose()}>
-                            No
-                        </button>
-
-
-
-
-                </div>:null
-
-            }
             </div>
         ))}
       </div>

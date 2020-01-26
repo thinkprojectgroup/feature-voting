@@ -39,6 +39,18 @@
 }
 
 
+
+::-moz-selection { /* Code for Firefox */
+  color: #fff;
+  background: #7fba24;
+}
+
+::selection {
+  color: #fff;
+  background: #7fba24;
+}
+
+
 * {
   box-sizing: border-box;
   font-family: "Open Sans", Arial;
@@ -65,6 +77,33 @@ body{
   content: "";
   clear: both;
   display: table;
+}
+
+.modal{
+  background-color: #fff;
+  border: 3px solid #003c50;
+  padding: 35px;
+}
+
+.not-confirm-delete, .confirm-delete{
+  color: white;
+  float: left;
+  font-size: 1.3rem;
+}
+
+.confirm-delete{
+  background-color: #7fba24;
+}
+
+.not-confirm-delete{
+  background-color: #003c50;
+}
+
+.error{
+  color: #f15a24;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0;
 }
 
 
@@ -131,6 +170,11 @@ body{
   color: #003c50;
 }
 
+button:disabled,
+button[disabled]{
+  background-color: #7f9da7;
+}
+
 h1{font-size: 2rem; }
 h2{font-size: 1.5rem;}
 h3{font-size: 1.3rem; margin: 0;}
@@ -187,6 +231,16 @@ button.decline, button.accept, button.add{
   text-align: center;
   margin: 10px 0;
 }
+button.propose{
+  border-radius: 25px;
+  background-color: #7fba24;
+  color: white;
+  height: 45px;
+  width: 250px;
+  font-size: 1.0rem;
+  text-align: center;
+  margin: 70px 0px 0px 0px ;
+}
 
 button.decline{
   background-color: #f15a24;
@@ -221,7 +275,8 @@ button.add{
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 777;
+  z-index: 7;
+
 }
 
 .delete button{
@@ -241,6 +296,16 @@ button.add{
   background-color: rgba(127, 157, 167, 0.2);
 }
 
+
+.user-vote{
+  color: rgba(127, 186, 36, 0.5);
+  font-size: 0.8rem;
+}
+
+.employee-vote{
+  color: rgba(241, 90, 36, 0.5);
+  font-size: 0.8rem;
+}
 
 .project-list-item:hover, .feature-list-item:hover{
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -268,6 +333,11 @@ button.add{
 
 .feature-count p{
   margin: 25px;
+  font-weight: 600;
+}
+
+.feature-count p.admin-vote{
+  margin: 0 25px;
 }
 
 .feature-text{padding: 30px 15px 25px 0;}
@@ -397,6 +467,12 @@ select{
 
 .form-response{
   padding: 25px;
+  border: 3px solid #003c50;
+  min-height: 120px;
+}
+
+.placeholder{
+  padding: 40px;
   border: 3px solid #003c50;
   min-height: 120px;
 }
