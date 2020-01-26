@@ -49,7 +49,7 @@ class FeatureDetailView extends Component {
         this.setState({ commentCount: comments.length })
       })
       .catch(error => {
-        this.redirectToErrorPage(error.response.status)
+        this.props.redirectToErrorPage(error.response.status)
       })
 
     axios
