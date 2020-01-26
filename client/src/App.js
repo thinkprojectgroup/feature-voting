@@ -11,13 +11,17 @@ import SignIn from './components/Auth/SignIn'
 import AppWrapper from './components/AppWrapper'
 import Footer from './components/Footer'
 import FAQ from './components/FAQ'
+import AdminRights from "./components/User/AdminRights";
+import NotFoundPage from './components/ErrorPages/NotFoundPage'
+import BadRequestPage from './components/ErrorPages/BadRequestPage'
+import InternalServerError from './components/ErrorPages/InternalServerError'
+import UnauthorisedPage from './components/ErrorPages/UnauthorisedPage'
+import GeneralErrorPage from './components/ErrorPages/GeneralErrorPage'
 import {
-  BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
-  useHistory,
-  useLocation
+  withRouter
 } from 'react-router-dom'
 
 class App extends Component {
@@ -26,6 +30,7 @@ class App extends Component {
     super(props)
     this.state = {
       role: 'user',
+      email: null,
       isSignedIn: false,
       idToken: null,
       authIsLoaded: false,
@@ -36,7 +41,7 @@ class App extends Component {
 
   // Helper function to await a timeout
   timeout = (ms) => new Promise(resolve => setTimeout(resolve, ms))
-  
+
   createFingerPrint = () => {
     this.timeout(500).then(
       Fingerprint2.get(function (components) {
@@ -68,29 +73,51 @@ class App extends Component {
     })
   }
 
+  redirectToErrorPage = (statusCode) => {
+    switch(statusCode) {
+      case 400:
+      case 401:
+      case 404:
+      case 500: this.props.history.push("/"+statusCode); break;
+
+      default: this.props.history.push("/err");
+    }
+  }
+  
+  setEmail = (email) => {
+    this.setState({
+      email: email
+    })
+  }
+
   render() {
+
     return (
       <AppWrapper
         isReady={this.isReady}
         setAuthorisation={this.setAuthorisation}
+        setEmail={this.setEmail}
       >
         {this.state.authIsLoaded && (
-          <div>
-            <Router>
-              <Header role={this.state.role} />
+          <>
+              <Header 
+                role={this.state.role} 
+                isSignedIn={this.state.isSignedIn}
+                setAuthorisation={this.setAuthorisation}
+              />
               <Switch>
-                <Route
+                <Route //Admin - ProjectOverview
                   exact
                   path={'/'}
                   render={props =>
                     this.state.role == 'admin' ? (
-                      <ProjectOverView {...props} />
+                      <ProjectOverView idToken={this.state.idToken} {...props} />
                     ) : (
                         <Redirect to={'/login'} />
                       )
                   }
                 />
-                <Route
+                <Route //Admin - CommentReview
                   exact
                   path={'/commentreview'}
                   render={props =>
@@ -101,31 +128,62 @@ class App extends Component {
                       )
                   }
                 />
-                <Route
+                <Route //Admin - AdminRights
+                  exact
+                  path={"/adminrights"}
+                  render={props =>
+                    this.state.role == "admin" ? (
+                      <AdminRights {...props} />
+                    ) : (
+                        <Redirect to={"/login"} />
+                      )
+                  }
+                />
+                <Route //Login
                   exact
                   path={'/login'}
                   render={props => (
-                    <SignIn setAuthorisation={this.setAuthorisation} />
+                    <SignIn
+                      role={this.props.role}
+                      isSignedIn={this.state.isSignedIn}
+                      setAuthorisation={this.setAuthorisation} 
+                      setEmail={this.setEmail}  
+                    />
                   )}
                 />
                 <Route exact path={'/faq'} component={FAQ} />
-                <Route
-                  exact
-                  path={'/:projectName'}
-                  render={props => <ProjectDetailView {...props} />}
+
+                {/* ErrorPages */}
+                <Route exact path={'/400'} component={BadRequestPage} />
+                <Route exact path={'/401'} component={UnauthorisedPage} />
+                <Route exact path={'/404'} component={NotFoundPage} />
+                <Route exact path={'/500'} component={InternalServerError} />
+                <Route exact path={'/err'} component={GeneralErrorPage} />
+
+                <Route exact path={'/:projectName'}>
+                  <ProjectDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} />
+                </Route>
+                <Route path={'/:projectName/:featureId'}>
+                  <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} email={this.state.email} />
+                </Route>
+                
+                {/* <Route exact 
+                  path={'/:projectName'} 
+                  render={(props) => <ProjectDetailView {...props} role={this.state.role}/>} 
                 />
+
                 <Route
                   path={'/:projectName/:featureId'}
-                  component={FeatureDetailView}
-                />
+                  render={(props) => <FeatureDetailView {...props} role={this.state.role} email={this.state.email}/>}
+                /> */}
+
               </Switch>
               <Footer />
-            </Router>
-          </div>
+          </>
         )}
       </AppWrapper>
     )
   }
 }
 
-export default App
+export default withRouter(App);

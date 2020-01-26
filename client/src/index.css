@@ -39,6 +39,18 @@
 }
 
 
+
+::-moz-selection { /* Code for Firefox */
+  color: #fff;
+  background: #7fba24;
+}
+
+::selection {
+  color: #fff;
+  background: #7fba24;
+}
+
+
 * {
   box-sizing: border-box;
   font-family: "Open Sans", Arial;
@@ -55,6 +67,11 @@
   padding: 15px;
 }
 
+body{
+  margin: 0;
+  background-color: #fefefe;
+}
+
 
 .row::after {
   content: "";
@@ -62,12 +79,38 @@
   display: table;
 }
 
+.modal{
+  background-color: #fff;
+  border: 3px solid #003c50;
+  padding: 35px;
+}
+
+.not-confirm-delete, .confirm-delete{
+  color: white;
+  float: left;
+  font-size: 1.3rem;
+}
+
+.confirm-delete{
+  background-color: #7fba24;
+}
+
+.not-confirm-delete{
+  background-color: #003c50;
+}
+
+.error{
+  color: #f15a24;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0;
+}
+
 
 .container{
   max-width: 1000px;
-  margin: auto;
-  padding: 25px 0 20vh 0;
-  margin-bottom: 50px;
+  margin: auto auto 50px auto;
+  padding: 60px 10px 20vh 10px;
   min-height: 85vh;
 }
 
@@ -82,32 +125,61 @@
 
 .logo img{
   padding: 0;
-  height: 80px;
+  height: 60px;
   width: auto;
 }
 
 .header{
-  background-color: #eaeaea;
-  height: 80px;
-  margin: 0 0 50px 0;
+  background-color: rgba(234, 234, 234, 0.95);
+  height: 60px;
+  margin: 0 0 0 0;
   padding: 0;
+  position: fixed;
+  z-index: 999;
+}
+
+.login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
+  color: white;
+  float: right;
+  text-align: center;
+  font-size: 2rem;
+  width: 60px;
+  height: 60px;
+  padding: 15px 0;
 }
 
 .back-button{
-  color: white;
-  float: right;
   background-color: #7fba24;
-  text-align: center;
-  font-size: 2rem;
-  width: 80px;
-  height: 80px;
-  padding: 25px 0;
+}
+
+.comment-review-button{
+  background-color: #f15a24;
+}
+
+.login-button{
+  background-color: #003c50;
+}
+
+.logout-button{
+  background-color: #7f9da7;
+}
+
+
+.user-settings-button{
+  background-color: #fff;
+  color: #003c50;
+}
+
+button:disabled,
+button[disabled]{
+  background-color: #7f9da7;
 }
 
 h1{font-size: 2rem; }
 h2{font-size: 1.5rem;}
 h3{font-size: 1.3rem; margin: 0;}
 h4{font-size: 1.1rem}
+h5{font-size: 1.0rem; margin: 0;}
 p{font-size: 1rem;}
 a{ text-decoration: none; }
 
@@ -132,11 +204,7 @@ img {
   height: auto;
 }
 
-.feature-image{
-  height: 200px;
-  background-size: cover;
-  padding: 0;
-}
+
 
 button{
   background: none;
@@ -149,7 +217,10 @@ button{
 
 button.decline i, button.accept i, button.add i{
   color: white;
+  transition: 0.3s;
 }
+
+
 
 button.decline, button.accept, button.add{
   border-radius: 25px;
@@ -159,6 +230,16 @@ button.decline, button.accept, button.add{
   font-size: 1.5rem;
   text-align: center;
   margin: 10px 0;
+}
+button.propose{
+  border-radius: 25px;
+  background-color: #7fba24;
+  color: white;
+  height: 45px;
+  width: 250px;
+  font-size: 1.0rem;
+  text-align: center;
+  margin: 70px 0px 0px 0px ;
 }
 
 button.decline{
@@ -171,21 +252,75 @@ button.accept{
 
 button.add{
   background-color: #003c50;
-    float: right;
-  margin-block-start: 0.67em;
-  margin-block-end: 0.67em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
+  float: right;
+  transition: 0.4s;
+}
+
+.cross i{
+  transform: rotate(45deg);
+  transition: 0.3s;
 }
 
 .project-list-item{
-  border: 1px solid #eaeaea;
+  padding: 0;
+  position: relative;
+}
+
+.comment-container{
+  position: relative;
   padding: 25px 25px;
 }
 
+.delete{
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 7;
+
+}
+
+.delete button{
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+}
+
+.delete button i{
+  float:right;
+  color: #f15a24;
+  font-size: 1.5rem;
+  margin: 0 1px;
+}
+
+.delete button:hover{
+  background-color: rgba(127, 157, 167, 0.2);
+}
+
+
+.user-vote{
+  color: rgba(127, 186, 36, 0.5);
+  font-size: 0.8rem;
+}
+
+.employee-vote{
+  color: rgba(241, 90, 36, 0.5);
+  font-size: 0.8rem;
+}
+
 .project-list-item:hover, .feature-list-item:hover{
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+.feature-list-item, .project-list-item, .comment-section-item, .comment-container{
+  background-color: #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  transition: 0.5s;
+  transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.feature-count{
+  padding: 19px 0;
 }
 
 .feature-count, .comment-section-button{
@@ -196,25 +331,65 @@ button.add{
   height: 60px;
 }
 
-.feature-text{padding: 35px;}
-
-/*Display feature count next to feature body on mobile devices*/
-.feature-count, .comment-section-button, .add-button{width: 25%;}
-.feature-text, .comment-section-content, .project-name{width: 75%;}
-
-
-
-.comment-container{
-  margin: 0 20px;
+.feature-count p{
+  margin: 25px;
+  font-weight: 600;
 }
 
-.comment-author, .comment-date{
+.feature-count p.admin-vote{
+  margin: 0 25px;
+}
+
+.feature-text{padding: 30px 15px 25px 0;}
+
+.feature-image{
+  height: 230px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  padding: 0;
+}
+
+/*Display feature count next to feature body on mobile devices*/
+.feature-count, .comment-section-button, .add-button, .delete-project, .decline-admin-button{width: 25%;}
+.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .user-name{width: 75%;}
+
+
+
+.feature-text .comment-count p{
+  margin: 0;
+  font-weight: 600;
+}
+
+.comment-section-content{
+  padding: 35px 25px;
+}
+
+
+.comment-section-content .comment-author, .comment-section-content .comment-date, .comment-project-link, .comment-feature-link{
+  font-weight: 600;
+  font-size: 0.8rem;
+  margin: 0 0 0 0;
+  padding: 0 15px 0 0;
+  float: left;
+}
+
+.comment-project-link a, .comment-feature-link a{
+  text-decoration: underline;
+}
+
+.comment-author{
+  color: #7fba24;
+  font-weight: 600;
+  font-size: 0.8rem;}
+
+.comment-date{
+  color: #7f9da7;
   font-weight: 600;
   font-size: 0.8rem;
 }
 
-.comment-author{color: #7fba24;}
-.comment-date{color: #7f9da7;}
+
 
 footer{
   background-color: #003c50;
@@ -242,33 +417,79 @@ footer div{
 .answers div{
   margin: 50px 0;
 }
-
-.feature-form-container{
-    margin-bottom: 50px;
+.form{
+  margin-bottom: 50px;
 }
 
 label{
-    font-size: 1rem;
+  font-size: 1rem;
+
 }
 
 input, textarea{
-    margin-bottom: 25px;
+  margin-bottom: 5px;
+  padding: 15px;
 }
 
 label, input{
-    display: block;
+  display: block;
+  width: 100%;
+
 }
 
 .submit{
-    color: white;
-    background-color: #003c50;
-    float: left;
-    font-size: 1.3rem;
+  color: white;
+  background-color: #003c50;
+  float: left;
+  font-size: 1.3rem;
+}
+.submit-small{
+  color: white;
+  background-color: #003c50;
+  float: left;
+  font-size: 1.0rem;
+  margin: 10px;
 }
 
+
 textarea[name="description"]{
-    height: 200px;
+  height: 150px;
+  width: 100%;
 }
+
+select{
+  padding: 10px;
+  margin: 22px 0;
+  border: 2px solid #003c50;
+  float: right;
+  width:100%;
+}
+
+.form-response{
+  padding: 25px;
+  border: 3px solid #003c50;
+  min-height: 120px;
+}
+
+.placeholder{
+  padding: 40px;
+  border: 3px solid #003c50;
+  min-height: 120px;
+}
+
+.form-response > p{
+  margin: 0;
+}
+
+.form-response-delete{
+  padding: 25px;
+  min-height: 120px;
+}
+
+.form-response-delete > p{
+  margin: 0;
+}
+
 
 .readMoreText{
   color: #7fba24 !important;
@@ -279,12 +500,37 @@ textarea[name="description"]{
 
 .short-text{
   display: block;
-  padding: 15px 0;
+  padding: 15px 0 10px 0;
+  min-height: 110px;
 }
 
-.feature-list-item{
-  margin-bottom: 50px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+
+
+.to-top button{
+  height: 50px;
+}
+
+.to-top button i{
+  font-size: 2.5rem;
+  color: rgba(255, 255, 255, 0.61);
+  margin-bottom: 15px;
+}
+
+.to-top {
+  height: 60px;
+  width: 60px;
+  position: fixed;
+  right: -100px;
+  bottom: 150px;
+  transition: 0.5s;
+  cursor: pointer;
+  background-color: rgba(234, 234, 234, 0.9);
+  font-size: 20px;
+}
+
+.transition {
+  right: 20px;
 }
 
 /* For desktop: */
@@ -306,6 +552,15 @@ textarea[name="description"]{
   .col-11 {width: 91.66%;}
   .col-12 {width: 100%;}
 
+
+  .container{
+    max-width: 1000px;
+    margin: auto auto 50px auto;
+    padding: 80px 0 20vh 0;
+    min-height: 85vh;
+  }
+
+
   h1{font-size: 2rem;}
   h2{font-size: 1.5rem;}
   h3{font-size: 1.5rem;}
@@ -315,20 +570,23 @@ textarea[name="description"]{
   a{ text-decoration: none; }
 
 
-  .feature-detail-image{
-    transition: transform 0.25s ease;
-    cursor: zoom-in;
+  .header{
+    height: 80px;
   }
 
-  .feature-detail-image img:active, .feature-detail-image img:focus{
-    -webkit-transform: scale(2);
-    transform: scale(2);
-    cursor: zoom-out;
+  .logo img{
+    height: 80px;
   }
 
+  .login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
+    width: 80px;
+    height: 80px;
+    padding: 25px 0;
+  }
 
-  .feature-list-item{
-    margin-bottom: 0;
-    box-shadow: none;
+  .submit{
+    margin-left: 15px;
   }
 }
+
+

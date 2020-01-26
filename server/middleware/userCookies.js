@@ -18,13 +18,13 @@ module.exports = async (req, res, next) => {
             const newUser = new User({ deviceHash: deviceHash })
             await newUser.save()
 
-            req.userId = newUser.userId
+            req.userId = newUser._id
             res.cookie('userId', newUser._id, cookieOptions);
 
             return next()
         } else {
             // User found by deviceHash
-            req.userId = user.userId
+            req.userId = user._id
             res.cookie('userId', user._id, cookieOptions);
 
             return next()

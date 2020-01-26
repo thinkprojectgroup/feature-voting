@@ -4,14 +4,11 @@ const router = express.Router();
 const { Project, validateProject } = require("../models/project")
 const { validateToken, userCheck } = require('../services/AuthService')
 const { cleanFeatures } = require("../models/feature")
+const checkAuth = require('../middleware/checkAuth')
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
 
-
 // Get all projects
-router.get("/", async (req, res) => {
-    const idToken = req.body.idToken;
-
-    const loginTicket = validateToken(idToken);
+router.get("/", checkAuth, async (req, res) => {
 
     const projects = await Project.aggregate([
         { $match: { deleted: false } },
@@ -109,9 +106,7 @@ router.get("/name/:name", async (req, res) => {
 
 // Get Project with all unaccepted features by name
 // NOTE: name is case sensitive
-router.get("/unaccepted/:name", async (req, res) => {
-    //TODO: authentication, only for admin
-
+router.get("/unaccepted/:name", checkAuth, async (req, res) => {
     var project = await Project.aggregate([
         { $match: { name: req.params.name, deleted: false } },
         {
@@ -162,8 +157,7 @@ router.post("/", async (req, res) => {
 })
 
 // Delete project by id
-router.delete("/:id", async (req, res) => {
-    //TODO: authentication, only for admin
+router.delete("/:id", checkAuth, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("projectId doesn't fit id schema")
 
     var project = await Project.findOneAndUpdate(

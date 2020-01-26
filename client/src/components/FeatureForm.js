@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import FileBase from "react-file-base64"
 import { storage } from '../firebase-config';
+import { ClipLoader } from "react-spinners";
 
 class FeatureForm extends Component {
     constructor(props) {
@@ -11,8 +12,20 @@ class FeatureForm extends Component {
             description: "",
             firebaseUrls: [],
             currentImageName: [],
-            images: []
+            images: [],
+            showResponse: false,
+            loading: false,
+            fileError: ""
         };
+    }
+
+    handleResponseButton = () => {
+        this.setState({
+            showResponse: false
+        })
+        this.props.toggleShowForm()
+
+        document.getElementById("form-button").classList.remove("cross");
     }
 
 
@@ -28,13 +41,16 @@ class FeatureForm extends Component {
             // compare file type find doesn't matach
             if (types.every(type => files[x].type !== type)) {
                 // create error message and assign to container   
-                err[x] = files[x].type + ' is not a supported format\n';
+                err[x] = " (" + files[x].type + ' is not a supported format\n)';
             }
         };
         for (var z = 0; z < err.length; z++) {// if message not same old that mean has error 
             // discard selected file
-            alert("Wrong Datatype!");
+            //alert("Wrong Datatype!");
             //event.target.value = null
+            this.setState({
+                fileError: " (You can only upload images with the datatype PNG or JPEG.)"
+            })
             return false;
         }
         return true;
@@ -42,9 +58,12 @@ class FeatureForm extends Component {
     maxSelectFile = (files) => {
         // let files = files
         if (files.length > 3) {
-            const msg = 'Only 3 images can be uploaded at a time'
+            const msg = ' (Only 3 images can be uploaded at a time)'
             // event.target.value = null
-            alert("Too many files!");
+            // alert("Too many files!");
+            this.setState({
+                fileError: " (You can only upload 3 images.)"
+            })
             return false;
         }
         return true;
@@ -55,12 +74,15 @@ class FeatureForm extends Component {
         let err = [];
         for (var x = 0; x < files.length; x++) {
             if (files[x].size > size) {
-                err[x] = files[x].type + 'is too large, please pick a smaller file\n';
+                err[x] = " (" + files[x].type + 'is too large, please pick a smaller file\n)';
             }
         };
         for (var z = 0; z < err.length; z++) {// if message not same old that mean has error 
             // discard selected file
-            alert("Your files are too big!");
+            // alert("Your files are too big!");
+            this.setState({
+                fileError: " (You can only upload images, that are smaller than 2MB.)"
+            })
             //event.target.value = null
             return false;
         }
@@ -73,10 +95,14 @@ class FeatureForm extends Component {
 
     onChangeImage = (e) => {
         const files = e.target.files
-        if(this.checkFileSize(files) && this.checkMimeType(files) && this.maxSelectFile(files)){
+        if (this.checkFileSize(files) && this.checkMimeType(files) && this.maxSelectFile(files)) {
             this.setState({
-                images: files
+                images: files,
+                fileError: ""
             })
+        }
+        else {
+            e.target.value = null
         }
     }
 
@@ -107,19 +133,24 @@ class FeatureForm extends Component {
     onSubmit = async (e) => {
         e.preventDefault();
 
+
+        if(this.state.images.length > 0){
+            this.setState({
+                loading: true
+            })
+        }
+
         const config = {
             headers: {
                 'Content-Type': 'application/json'
             }
         }
 
-
         const imageUrls = await this.uploadImage()
 
-
         let data = JSON.stringify({
-            headline: this.state.headline,
-            description: this.state.description,
+            headline: this.state.headline.trim(),
+            description: this.state.description.trim(),
             imageUrls: imageUrls
         })
 
@@ -127,9 +158,17 @@ class FeatureForm extends Component {
         axios.post('/api/features/' + this.props.projectName, data, config)
             .then((result) => {
                 console.log(result);
+                this.setState({
+                    showResponse: true
+                })
             })
             .catch(error => {
                 console.log(error.response);
+            })
+            .finally(() =>{
+                this.setState({
+                    loading: false
+                })
             });
     }
 
@@ -137,38 +176,69 @@ class FeatureForm extends Component {
         const { headline, description } = this.state;
 
         return (
+            <div className="row form">
+                {!this.state.showResponse ? (
+                    <form onSubmit={this.onSubmit} className="feature-form">
 
-            <div className="feature-form-container row col-12">
-                <form onSubmit={this.onSubmit} className="feature-form">
-                    <label>
-                        Title:
-                    </label>
-                    <input type="text"
-                        name="headline"
-                        id="headline"
-                        className="headline col-12"
-                        value={headline}
-                        onChange={this.onChange}
-                        required
-                    />
+                        <h5 className="col-12">Propose a new feature:</h5>
+                        <div className="col-6 name">
+                            <label>
+                                Title:
+                        </label>
+                            <input type="text"
+                                name="headline"
+                                id="headline"
+                                className="headline"
+                                value={headline}
+                                onChange={this.onChange}
+                                required
+                                maxLength="50"
+                            />
+                        </div>
 
-                    <label>
-                        Description:
-                    </label>
-                    <textarea
-                        name="description"
-                        id="description"
-                        className="description col-12"
-                        value={description}
-                        onChange={this.onChange}
-                        required
-                    />
+                        <div className="col-6 filepicker">
+                            <label>Upload Your Images <p className="error">{this.state.fileError}</p>
+                            </label>
+                            <input
+                                type="file"
+                                multiple className="process__upload-btn"
+                                onChange={(e) => this.onChangeImage(e)}
+                            />
+                        </div>
 
-                    <label>Upload Your Images </label>
-                    <input type="file" multiple className="process__upload-btn" onChange={(e) => this.onChangeImage(e)} />
 
-                    <button className="submit col-2" type="submit" value="Submit">Submit</button>
-                </form>
+                        <div className="col-12 content">
+                            <label>
+                                Description:
+                        </label>
+                            <textarea type="text"
+                                name="description"
+                                className="description"
+                                value={description}
+                                onChange={this.onChange}
+                                maxLength="2048"
+                                required
+                            />
+
+                        </div>
+
+
+                        {this.state.loading ?
+                            <div className="col-2"><ClipLoader loading={this.state.loading} /></div>
+                            : <button className="submit col-2" type="submit" value="Submit">Submit</button>}
+
+                    </form>
+
+                ) :
+                    <div className="form-response row">
+                        <p className="col-10">
+                            Thank you for submitting a feature! <br />Your feature will be reviewed by an admin before you can see it here.
+                        </p>
+                        <button className="submit col-2" onClick={this.handleResponseButton.bind(this)}>
+                            Ok, great!
+                        </button>
+                    </div>
+                }
             </div>
         );
     }
