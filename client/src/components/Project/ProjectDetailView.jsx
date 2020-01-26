@@ -154,7 +154,7 @@ class ProjectDetailView extends Component {
                 </h3>
 
 
-                <button className="propose" onClick={this.toggleShowForm} >
+                <button className="propose-feature" onClick={this.toggleShowForm} >
                     Propose the first feature 
                 </button>
             </div> :null}

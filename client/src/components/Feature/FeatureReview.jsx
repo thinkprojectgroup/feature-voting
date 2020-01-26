@@ -15,20 +15,22 @@ class FeatureReview extends Component {
 
     render() {
         return (
-
-            <div classname="container">
-                <h2>{"Feature Review:"}</h2>
-                {this.state.features.map(feature =>
-                    !feature.deleted ? (
-                        <FeatureFR
-                            featureId={feature._id}
-                            title={feature.headline}
-                            description={feature.description}
-                            projectName={this.props.projectName}
-                            imageUrls={feature.imageUrls}
-                        />
-                    ) : null
-                )}
+            <div>
+                {this.state.features[0] != null || this.state.features[0] != undefined ?
+                <div classname="container">
+                    <h2>{"Feature Review:"}</h2>
+                    {this.state.features.map(feature =>
+                        !feature.deleted ? (
+                            <FeatureFR
+                                featureId={feature._id}
+                                title={feature.headline}
+                                description={feature.description}
+                                projectName={this.props.projectName}
+                                imageUrls={feature.imageUrls}
+                            />
+                        ) : null
+                    )}
+                </div>: null}
             </div>
         );
     }
