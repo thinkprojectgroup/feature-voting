@@ -245,11 +245,10 @@ button.propose{
 button.propose-feature{
   background-color: #7fba24;
   color: white;
-  height: 45px;
-  width: 250px;
-  font-size: 1.0rem;
   text-align: center;
-  margin: 30px 0px 0px 0px ;
+  margin: 30px 0px 0px 0px;
+  font-size: 1.3rem;
+  padding: 15px;
 }
 
 button.decline{
