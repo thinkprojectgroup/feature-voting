@@ -560,6 +560,16 @@ select{
   .submit{
     margin-left: 15px;
   }
+
+  .login-field {
+    text-align: center;
+    margin: 5% 30% 5% 30%;
+  }
+
+  .google-login-btn {
+    width: 200px;
+    padding-left: 40px !important;
+  }
 }
 
 
