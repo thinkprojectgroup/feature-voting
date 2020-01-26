@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import axios from 'axios';
 import config from '../../config';
 import CommentCR from './CommentCR';
+import ReactGA from 'react-ga';
 
 
 class CommentReview extends Component{
@@ -16,6 +17,7 @@ class CommentReview extends Component{
             filteredFeatureNames: [],
             outputComments: []
         };
+        ReactGA.pageview(window.location.pathname + window.location.search );
     }
 
     componentDidMount(){
