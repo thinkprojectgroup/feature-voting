@@ -136,6 +136,12 @@ router.delete("/:projectName/:featureId", checkAuth, async (req, res) => {
     var feature = project.features.id(req.params.featureId);
     if (!feature || feature.deleted) return res.status(404).send("featureId not found");
 
+    var tempComments = await Comment.find({ featureId: feature.id, deleted: false})
+    for(var comment of tempComments){
+        comment.deleted = true
+        await comment.save()
+    }
+    
     feature.deleted = true;
     await project.save();
 
