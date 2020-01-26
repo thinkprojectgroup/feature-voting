@@ -20,8 +20,6 @@ ReactDOM.render(
         document.getElementById('root')
 );
 
-const trackingId = "UA-156449230-1";
-ReactGA.initialize(trackingId);
 
 
 // If you want your app to work offline and load faster, you can change
