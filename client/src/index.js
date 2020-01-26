@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import ReactGA from 'react-ga';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-import ReactGA from 'react-ga';
-
 import './index.css';
 
 import './components/css/carousel.css';
@@ -25,9 +23,6 @@ ReactDOM.render(
 const trackingId = "UA-156449230-1";
 ReactGA.initialize(trackingId);
 
-
-const trackingId = "UA-156449230-1";
-ReactGA.initialize(trackingId);
 
 
 // If you want your app to work offline and load faster, you can change

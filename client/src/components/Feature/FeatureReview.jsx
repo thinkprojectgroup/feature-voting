@@ -17,7 +17,9 @@ class FeatureReview extends Component {
         return (
             <div>
                 {this.state.features[0] != null || this.state.features[0] != undefined ?
+
                 <div classname="container">
+                    <hr />
                     <h2>{"Feature Review:"}</h2>
                     {this.state.features.map(feature =>
                         !feature.deleted ? (

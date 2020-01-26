@@ -162,7 +162,6 @@ class ProjectDetailView extends Component {
               )}
 
 
-          < hr/>
           {this.state.role === "admin" ? 
           <FeatureReview
               projectName={this.props.match.params.projectName
