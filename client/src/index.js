@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactGA from 'react-ga';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import './index.css';
