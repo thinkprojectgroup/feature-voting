@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
 import ReactGA from 'react-ga';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import './index.css';
 
@@ -13,7 +13,12 @@ import './components/css/fontawesome-free-5.11.2-web/css/all.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(
+        <Router>
+            <App />
+        </Router>, 
+        document.getElementById('root')
+);
 
 const trackingId = "UA-156449230-1";
 ReactGA.initialize(trackingId);
