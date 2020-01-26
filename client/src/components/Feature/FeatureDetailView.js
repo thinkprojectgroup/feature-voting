@@ -150,14 +150,14 @@ class FeatureDetailView extends Component {
                 </button>
             }
 
-            <p>{this.state.upvotes}</p>
-
-            {this.state.role === "admin" ?
-                <div >
-                  <p>Uservotes: {this.state.userVoteCount}</p>
-                  <p>Employeevotes: {this.state.employeeVoteCount}</p>
-                </div>
-            :null}
+              {this.state.role === "admin" ?
+                  <div >
+                      <span class="user-vote" title="User Votes">{this.state.userVoteCount}</span>
+                      <p class="admin-vote">{this.state.upvotes}</p>
+                      <span class="employee-vote" title="Employee Votes">{this.state.employeeVoteCount}</span>
+                  </div> :
+                  <p>{this.state.upvotes}</p>
+              }
 
             {this.state.upvoted === true ? (
               <button onClick={this.toggleDivDownVote} title="downvote">
