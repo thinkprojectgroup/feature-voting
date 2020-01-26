@@ -131,7 +131,9 @@ class App extends Component {
                     <SignIn
                       role={this.props.role}
                       isSignedIn={this.state.isSignedIn}
-                      setAuthorisation={this.setAuthorisation} />
+                      setAuthorisation={this.setAuthorisation} 
+                      setEmail={this.setEmail}  
+                    />
                   )}
                 />
                 <Route exact path={'/faq'} component={FAQ} />
