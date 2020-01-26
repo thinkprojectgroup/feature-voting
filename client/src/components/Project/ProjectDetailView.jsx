@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router-dom'
 import FeaturePDV from "../Feature/FeaturePDV";
 import FeatureForm from "../FeatureForm";
 import axios from "axios";
@@ -29,8 +30,7 @@ class ProjectDetailView extends Component {
     // console.log(this.state.showForm);
   }
 
-  sortByVoteDsc=()=>{
-
+  sortByVoteDsc = () => {
     let sortedFeaturesDsc;
     sortedFeaturesDsc = this.state.features.sort((a,b)=>{
        return parseInt(b.voteCount) - parseInt(a.voteCount);
@@ -44,10 +44,8 @@ class ProjectDetailView extends Component {
 
   }
 
+  componentDidMount () {
 
-
-  componentDidMount() {
-    //console.log(this.props.match.params);
     axios
       .get(config.url + `/api/projects/name/` + this.props.match.params.projectName.toString().split("-").join(" "))
       .then(response => {
@@ -59,7 +57,7 @@ class ProjectDetailView extends Component {
         });
       })
       .catch(error => {
-        console.log(error);
+        this.props.redirectToErrorPage(error.response.status);
       });
   }
 
@@ -134,4 +132,4 @@ class ProjectDetailView extends Component {
   }
 
 }
-export default ProjectDetailView;
+export default withRouter(ProjectDetailView);
