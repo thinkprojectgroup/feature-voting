@@ -6,7 +6,10 @@ import config from "../config";
 class Header extends Component {
 
   redirectToLogin = () => {
-    this.props.history.push("/login");
+    this.props.history.push({
+      pathname: '/login',
+      state: { previousPath: this.props.location.pathname }
+    });
   }
 
   logout = () => {
@@ -14,7 +17,7 @@ class Header extends Component {
     auth2.signOut().then(() => {
       this.props.setAuthorisation(null, false, null)
       auth2.disconnect()
-      this.props.history.push('/login')
+      this.redirectToLogin();
     })
   }
   
