@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import axios from "axios";
+import {confirmAlert} from "react-confirm-alert";
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 
 class Comment extends Component{
     constructor(props){
@@ -15,11 +17,38 @@ class Comment extends Component{
         formattedDate: '',
         imageUrls: this.props.imageUrls,
         commentId: this.props.commentId,
-        showResponse: false
+        role: this.props.role
+
     };
     //console.log(this.state.date);
     //console.log(this.state);
 }
+
+
+
+    submit = () => {
+        confirmAlert({
+            customUI: ({ onClose }) => {
+                return (
+                    <div className='modal row'>
+                        <h1>Delete Comment</h1>
+                        <p>Are you sure you want to delete this comment?</p>
+                        <div className="row">
+                            <button onClick={onClose} className="col-6 not-confirm-delete">No</button>
+                            <button className=" col-6 confirm-delete"
+                                    onClick={() => {
+                                        this.handleDelete();
+                                        onClose();
+                                    }}
+                            >
+                                Yes!
+                            </button>
+                        </div>
+                    </div>
+                );
+            }
+        });
+    };
 
     componentDidMount = () => {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -48,17 +77,11 @@ class Comment extends Component{
             self.setState({
               deleted: true
             });
-            self.setState({ showResponse: false })
           })
           .catch(function(error) {
-            console.log(error);
+            console.log(error.response);
           });
       };
-      openDialog  = () => {
-        var self = this;
-        self.setState({ showResponse: true } );
-     }
-      handleClose = () => this.setState({ showResponse: false })
 
     render(){
         let images
@@ -69,67 +92,56 @@ class Comment extends Component{
             images = this.state.imageUrls
         }
         return(
-       
-            <div className="comment-container col-12 row">
-             {!this.state.deleted ?(
-                <div>
-                {images === null
-                    ? (
-                        <div>
-                            <div className="col-9">
-                                <p className="comment-author">{this.state.author}</p>
-                                <p className="comment-content">{this.state.content}</p>
-                                <p  className="comment-date">
-                                    {this.state.formattedDate}
-                                </p>
-                            </div>
-
-                        </div>)
-
-                    :(
-                        <div>
-                            <div className="col-9">
-                                <p className="comment-author">{this.state.author}</p>
-                                <p className="comment-content">{this.state.content}</p>
-                                <p  className="comment-date">
-                                    {this.state.formattedDate}
-                                </p>
-                            </div>
-                            <div className="comment-images col-3">
-                                <Carousel showThumbs={false}>
-                                    {images.map(imageUrl => (
-                                        <div>
-                                            <img src={imageUrl}/>
-                                        </div>
-                                    ))}
-                                </Carousel>
-                            </div>
-                        </div>
-                    )}
 
 
+            <div >
+                {!this.state.deleted ?(
+                    <div className="comment-container col-12 row">
+                        {images === null
+                            ? (
+                                <div>
+                                    <div className="col-9">
+                                        <p className="comment-author">{this.state.author}</p>
+                                        <p className="comment-content">{this.state.content}</p>
+                                        <p  className="comment-date">
+                                            {this.state.formattedDate}
+                                        </p>
+                                    </div>
+                                </div>)
+
+                            :(
+                                <div>
+                                    <div className="col-9">
+                                        <p className="comment-author">{this.state.author}</p>
+                                        <p className="comment-content">{this.state.content}</p>
+                                        <p  className="comment-date">
+                                            {this.state.formattedDate}
+                                        </p>
+                                    </div>
+                                    <div className="comment-images col-3">
+                                        <Carousel showThumbs={false}>
+                                            {images.map(imageUrl => (
+                                                <div>
+                                                    <img src={imageUrl}/>
+                                                </div>
+                                            ))}
+                                        </Carousel>
+                                    </div>
+                                </div>
+                            )}
+
+                        {this.state.role === "admin" ?
+                        <div className="delete">
+                            <button onClick={() => this.openDialog()} >
+                                <i className="fas fa-times"></i>
+                            </button>
+                        </div>: null}
                     <div className="delete">
-                        <button onClick={() => this.openDialog()} >
+                        <button onClick={() => this.submit()} title="Delete comment">
                             <i className="fas fa-times"></i>
                         </button>
                     </div>
 
-              {this.state.showResponse ?
-                <div className="form-response">
-                 <p className="col-10">
-                            Are you sure you want to delete the comment 
-                        </p>
-                         <button className="submit-small col-2" onClick={() => this.handleDelete()}>
-                            Yes
-                        </button>
-                        <button className="submit-small col-2" onClick={() => this.handleClose()}>
-                            No
-                        </button>
-                        
-                    
-                     
-              
-                </div>:null}
                 </div>
                 ) :null}
             </div>

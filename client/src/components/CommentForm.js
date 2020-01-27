@@ -17,7 +17,11 @@ class CommentForm extends Component {
             featureId: this.props.featureId,
             showResponse: false,
             loading: false,
-            fileerror: ""
+            fileerror: "",
+            role: this.props.role,
+            email: this.props.email,
+            empty : true,
+            error : false
         };
     }
 
@@ -91,6 +95,23 @@ class CommentForm extends Component {
     }
 
     onChange = (e) => {
+        if (e.target.name == "name"){
+        var test = /[^@]+$/.test(e.target.value )
+        
+        console.log(test)
+        if(!test) {
+            this.setState({ error: true })
+        }else{
+            this.setState({ error: false })
+           
+        }
+        }
+        if(e.target.value != "" ){
+            this.setState({ empty: false })
+        }else{
+            this.setState({ empty: true })
+            this.setState({ error: false })
+        }
         this.setState({ [e.target.name]: e.target.value });
     }
 
@@ -134,9 +155,11 @@ class CommentForm extends Component {
     onSubmit = async (e) => {
         e.preventDefault();
 
-        this.setState({
-            loading: true
-        })
+        if(this.state.images.length > 0){
+            this.setState({
+                loading: true
+            })
+        }
 
         const config = {
             headers: {
@@ -144,12 +167,19 @@ class CommentForm extends Component {
             }
         }
 
-
         const imageUrls = await this.uploadImage()
+
+        var name = ""
+        if(this.state.role === "admin" || this.state.role === "employee"){
+            name = this.state.email
+        }
+        else{
+            name = this.state.name.trim()
+        }
 
 
         let data = JSON.stringify({
-            name: this.state.name.trim(),
+            name: name,
             content: this.state.content.trim(),
             imageUrls: imageUrls
         })
@@ -160,11 +190,15 @@ class CommentForm extends Component {
                 console.log(result);
                 this.setState({
                     showResponse: true,
-                    loading: false
                 })
             })
             .catch(error => {
                 console.log(error.response);
+            })
+            .finally(() =>{
+                this.setState({
+                    loading: false
+                })
             });
     }
 
@@ -177,10 +211,11 @@ class CommentForm extends Component {
                 {!this.state.showResponse ? (
                     <form onSubmit={this.onSubmit} className="feature-form">
                         <h5 className="col-12">Create a new comment:</h5>
+                        {this.state.role !== "admin" && this.state.role !== "employee" ?
                         <div className="col-6 name">
                             <label>
                                 Name (optional):
-                        </label>
+                            </label>
                             <input
                                 type="text"
                                 name="name"
@@ -190,17 +225,18 @@ class CommentForm extends Component {
                                 maxLength="50"
                             />
                         </div>
+                        :
+                            <div className="col-6 name">
+                            <p>{this.state.email}</p>
+                            </div>
+                        }
+                        
 
                         <div className="col-6 filepicker">
-                            <label>Upload Your Images </label>
+                            <label>Upload Your Images <p className="error">{this.state.fileError}</p></label>
                             <input type="file" multiple className="process__upload-btn" onChange={(e) => this.onChangeImage(e)} />
                         </div>
 
-                        <div className="error">
-                            <p>
-                                {this.state.fileError}
-                            </p>
-                        </div>
 
                         <div className="col-12 content">
                             <label>
@@ -214,11 +250,12 @@ class CommentForm extends Component {
                                 maxLength="2048"
                                 required
                                 />
+                                {this.state.error ? <p className="error">*Choose a name without "@"</p> : null}
                         </div>
 
                         {this.state.loading ?
                             <div className="col-2"><ClipLoader loading={this.state.loading} /></div>
-                            : <button className="submit col-2" type="submit" value="Submit">Submit</button>}
+                            : <button className="submit col-2" disabled={this.state.error||this.state.empty} type="submit" value="Submit">Submit</button>}
 
                     </form>
                 ) :

@@ -1,12 +1,28 @@
 import React, { Component } from "react";
 import {withRouter, Link } from "react-router-dom";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import axios from "axios";
 import config from "../config";
 
 class Header extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+
+      counter : 0,
+
+    };
+  }
+
+
+
   redirectToLogin = () => {
-    this.props.history.push("/login");
+    this.props.history.push({
+      pathname: '/login',
+      state: { previousPath: this.props.location.pathname }
+    });
   }
 
   logout = () => {
@@ -14,10 +30,37 @@ class Header extends Component {
     auth2.signOut().then(() => {
       this.props.setAuthorisation(null, false, null)
       auth2.disconnect()
-      this.props.history.push('/login')
     })
   }
+
+  submit = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+            <div className='modal row'>
+              <h1>Logout</h1>
+              <p>Are you sure you want to logout?</p>
+              <div className="row">
+                <button onClick={onClose} className="col-6 not-confirm-delete">No</button>
+                <button className=" col-6 confirm-delete"
+                    onClick={() => {
+                      this.logout();
+                      onClose();
+                    }}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+        );
+      }
+    });
+  };
   
+  countUp = () =>{
+    this.state.counter++;
+  }
+
   render() {
 
     //Logo Image on the left side
@@ -38,7 +81,7 @@ class Header extends Component {
     if (loggedIn) {
       loginButton = (
           //TODO: Add Functionality
-          <button className="logout-button fas fa-sign-out-alt" onClick={this.logout} title="Logout"></button>
+          <button className="logout-button fas fa-sign-out-alt" onClick={this.submit} title="Logout"></button>
       );
     } else if(!loggedIn){
       loginButton = (
@@ -111,10 +154,13 @@ class Header extends Component {
         <div className="row col-12 header">
           <div className="header-container">
             <Link to={rootPath}>
-              <div className="logo" title="Home">
+              <div className="logo" title="Home" onClick={this.countUp}>
                 <img alt="" src={image} />
               </div>
             </Link>
+
+            {this.state.counter > 15 ? <i className="fas fa-angle-up easter-egg"></i>
+                : null}
             {backButton}
             { this.props.location.pathname !== '/login' && loginButton}
             {commentReviewButton}

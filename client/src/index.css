@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
@@ -39,6 +38,18 @@
 }
 
 
+
+::-moz-selection { /* Code for Firefox */
+  color: #fff;
+  background: #7fba24;
+}
+
+::selection {
+  color: #fff;
+  background: #7fba24;
+}
+
+
 * {
   box-sizing: border-box;
   font-family: "Open Sans", Arial;
@@ -67,6 +78,33 @@ body{
   display: table;
 }
 
+.modal{
+  background-color: #fff;
+  border: 3px solid #003c50;
+  padding: 35px;
+}
+
+.not-confirm-delete, .confirm-delete{
+  color: white;
+  float: left;
+  font-size: 1.3rem;
+}
+
+.confirm-delete{
+  background-color: #7fba24;
+}
+
+.not-confirm-delete{
+  background-color: #003c50;
+}
+
+.error{
+  color: #f15a24;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0;
+}
+
 
 .container{
   max-width: 1000px;
@@ -91,11 +129,12 @@ body{
 }
 
 .header{
-  background-color: rgba(234, 234, 234, 0.9);
+  background-color: rgba(234, 234, 234, 0.95);
   height: 60px;
   margin: 0 0 0 0;
   padding: 0;
   position: fixed;
+  z-index: 999;
 }
 
 .login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
@@ -130,6 +169,11 @@ body{
   color: #003c50;
 }
 
+button:disabled,
+button[disabled]{
+  background-color: #7f9da7;
+}
+
 h1{font-size: 2rem; }
 h2{font-size: 1.5rem;}
 h3{font-size: 1.3rem; margin: 0;}
@@ -159,7 +203,18 @@ img {
   height: auto;
 }
 
+.feature-search input{
+  border: none;
+  border-bottom: 2px solid #003c50;
+  background: none;
+}
 
+.feature-search{
+  background-color: rgba(234, 234, 234, 0.95);
+  font-size: 1.5rem;
+  padding: 0 15px 0 0;
+  margin-bottom: 15px;
+}
 
 button{
   background: none;
@@ -185,6 +240,16 @@ button.decline, button.accept, button.add{
   font-size: 1.5rem;
   text-align: center;
   margin: 10px 0;
+}
+button.propose{
+  border-radius: 25px;
+  background-color: #7fba24;
+  color: white;
+  height: 45px;
+  width: 250px;
+  font-size: 1.0rem;
+  text-align: center;
+  margin: 70px 0px 0px 0px ;
 }
 
 button.decline{
@@ -220,7 +285,8 @@ button.add{
   position: absolute;
   right: 0;
   top: 0;
-  z-index: 999;
+  z-index: 7;
+
 }
 
 .delete button{
@@ -240,6 +306,16 @@ button.add{
   background-color: rgba(127, 157, 167, 0.2);
 }
 
+
+.user-vote{
+  color: rgba(127, 186, 36, 0.5);
+  font-size: 0.8rem;
+}
+
+.employee-vote{
+  color: rgba(241, 90, 36, 0.5);
+  font-size: 0.8rem;
+}
 
 .project-list-item:hover, .feature-list-item:hover{
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
@@ -267,6 +343,11 @@ button.add{
 
 .feature-count p{
   margin: 25px;
+  font-weight: 600;
+}
+
+.feature-count p.admin-vote{
+  margin: 0 25px;
 }
 
 .feature-text{padding: 30px 15px 25px 0;}
@@ -279,10 +360,16 @@ button.add{
   padding: 0;
 }
 
-/*Display feature count next to feature body on mobile devices*/
-.feature-count, .comment-section-button, .add-button, .delete-project, .decline-admin-button{width: 25%;}
-.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .user-name{width: 75%;}
+@media only screen and (max-width: 699px) {
+  /*Display feature count next to feature body on mobile devices*/
+  .feature-count, .comment-section-button, .add-button, .delete-project, .decline-admin-button, .feature-search i {
+    width: 25%;
+  }
 
+  .feature-text, .comment-section-content, .project-name, .FDV-comment-count, .user-name, .feature-search input {
+    width: 75%;
+  }
+}
 
 
 .feature-text .comment-count p{
@@ -292,6 +379,33 @@ button.add{
 
 .comment-section-content{
   padding: 35px 25px;
+}
+
+.easter-egg{
+  font-size: 20rem;
+  color: #7fba24;
+  position: absolute;
+  z-index: 999;
+  top: 30vh;
+  left: 40vw;
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: 3;
+  animation-timing-function: linear;
+
+  /* Move into place */
+  transform: translateY(-2000px);
+
+}
+
+
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
 }
 
 
@@ -381,6 +495,10 @@ label, input{
 }
 
 
+.login{
+  margin: 15px 0;
+  background-color: rgba(234, 234, 234, 0.95);
+}
 textarea[name="description"]{
   height: 150px;
   width: 100%;
@@ -396,6 +514,12 @@ select{
 
 .form-response{
   padding: 25px;
+  border: 3px solid #003c50;
+  min-height: 120px;
+}
+
+.placeholder{
+  padding: 40px;
   border: 3px solid #003c50;
   min-height: 120px;
 }
@@ -429,6 +553,7 @@ select{
 
 
 
+
 .to-top button{
   height: 50px;
 }
@@ -447,7 +572,7 @@ select{
   bottom: 150px;
   transition: 0.5s;
   cursor: pointer;
-  background-color: rgba(127, 157, 167, 0.25);
+  background-color: rgba(234, 234, 234, 0.9);
   font-size: 20px;
 }
 
@@ -510,5 +635,3 @@ select{
     margin-left: 15px;
   }
 }
-
-
