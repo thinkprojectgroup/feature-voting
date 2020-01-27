@@ -273,6 +273,7 @@ button.add{
   background-color: #003c50;
   float: right;
   transition: 0.4s;
+  margin: 0.7em 0;
 }
 
 .cross i{
