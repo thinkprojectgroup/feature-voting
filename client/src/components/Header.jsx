@@ -133,7 +133,7 @@ class Header extends Component {
               </div>
             </Link>
 
-            {this.state.counter > 5 ? <i className="fas fa-angle-up easter-egg"></i>
+            {this.state.counter > 15 ? <i className="fas fa-angle-up easter-egg"></i>
                 : null}
             {backButton}
             { this.props.location.pathname !== '/login' && loginButton}
