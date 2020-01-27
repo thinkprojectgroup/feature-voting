@@ -136,9 +136,11 @@ class CommentForm extends Component {
     onSubmit = async (e) => {
         e.preventDefault();
 
-        this.setState({
-            loading: true
-        })
+        if(this.state.images.length > 0){
+            this.setState({
+                loading: true
+            })
+        }
 
         const config = {
             headers: {
@@ -169,11 +171,15 @@ class CommentForm extends Component {
                 console.log(result);
                 this.setState({
                     showResponse: true,
-                    loading: false
                 })
             })
             .catch(error => {
                 console.log(error.response);
+            })
+            .finally(() =>{
+                this.setState({
+                    loading: false
+                })
             });
     }
 
