@@ -16,6 +16,7 @@ class ProjectDetailView extends Component {
       comments: "",
       projectId: "",
       showForm: false,
+      showSearch: false,
       searchTerm: "",
       role: this.props.role,
       outputFeatures: [],
@@ -31,6 +32,10 @@ class ProjectDetailView extends Component {
     this.setState({showForm: !this.state.showForm});
     document.getElementById("form-button").classList.toggle("cross");
     // console.log(this.state.showForm);
+  }
+
+  toggleShowSearch = () => {
+    this.setState({showSearch: !this.state.showSearch});
   }
 
   sortByVoteDsc = () => {
@@ -102,8 +107,28 @@ class ProjectDetailView extends Component {
     return (
         <div className="container row">
           <div className="row">
-            <div className="col-11 project-name">
-              <h1>{this.state.name}</h1>
+            {this.state.showSearch?
+                <div className="col-6 project-name" id="project-name">
+                  <h1>{this.state.name}</h1>
+                </div>
+                :
+                <div className="col-10 project-name" id="project-name">
+                  <h1>{this.state.name}</h1>
+                </div>}
+            {!this.state.empty && this.state.showSearch?(
+                <div className="feature-search">
+                  <input
+                      type="text"
+                      onChange={this.handleSearch}
+                      name="searchField"
+                      placeholder="Search"
+                      className="col-4"
+                  ></input>
+                </div>) : null}
+            <div className="col-1 search-button">
+              <button onClick={this.toggleShowSearch} className="search">
+                <i className="fas fa-search"></i>
+              </button>
             </div>
 
             <div className="col-1 add-button" id="form-button" title="Propose new feature">
@@ -112,17 +137,7 @@ class ProjectDetailView extends Component {
               </button>
             </div>
           </div>
-        {!this.state.empty ?(
-            <div className="feature-search row">
-                <i className="col-1 fas fa-search"></i>
-                <input
-                    type="text"
-                    onChange={this.handleSearch}
-                    name="searchField"
-                    placeholder="Search"
-                    className="col-11"
-                ></input>
-            </div>) : null}
+
 
 
           {this.state.showForm ? (

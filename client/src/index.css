@@ -203,18 +203,16 @@ img {
   height: auto;
 }
 
+
 .feature-search input{
   border: none;
   border-bottom: 2px solid #003c50;
   background: none;
+  padding: 15px;
+  margin: 20px 0 0 0;
+  transition: 0.3s;
 }
 
-.feature-search{
-  background-color: rgba(234, 234, 234, 0.95);
-  font-size: 1.5rem;
-  padding: 0 15px 0 0;
-  margin-bottom: 15px;
-}
 
 button{
   background: none;
@@ -230,9 +228,12 @@ button.decline i, button.accept i, button.add i{
   transition: 0.3s;
 }
 
+button.search i{
+  color: #003c50;
+}
 
 
-button.decline, button.accept, button.add{
+button.decline, button.accept, button.add, button.search{
   border-radius: 25px;
   color: white;
   height: 45px;
@@ -262,6 +263,12 @@ button.accept{
 
 button.add{
   background-color: #003c50;
+  float: right;
+  transition: 0.4s;
+}
+
+button.search{
+  background-color: rgba(234, 234, 234, 0.95);
   float: right;
   transition: 0.4s;
 }
