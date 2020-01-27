@@ -65,6 +65,21 @@ class CommentCR extends Component{
 
 
     render(){
+
+        let loginName="";
+
+        if(this.state.commentName.includes('@')){
+            var emailAddress = this.state.commentName;
+
+
+
+            var loginNameArray = (emailAddress.substring(0, emailAddress.indexOf("@"))).split(".");
+
+            for(var i = 0; i < loginNameArray.length; i++){
+                loginName += loginNameArray[i].charAt(0).toUpperCase() + loginNameArray[i].slice(1)+" ";
+            }
+        }
+
         var images
         if(!this.state.imageUrls){
             images = null;
@@ -83,10 +98,10 @@ class CommentCR extends Component{
                             <Button className="accept" onClick={() => this.handleAccept()} title="Accept"><i className="fas fa-check"></i></Button>
                             <Button className="decline" onClick={() => this.handleDelete()} title="Decline"><i className="fas fa-times"></i></Button>
                         </div>
-                        {images === null ?(
+                        {images === null || images === undefined ?(
                                 <div className="comment-section-content col-11">
                                     <div className="row">
-                                        <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
+                                        <p className="comment-author">{loginName != ""? loginName : !this.state.commentName ? "Anonymous" : this.state.commentName}</p>
                                         <p className="comment-project-link" title="Show project">Project: {" "}
                                             <Link to={"/" + this.state.projectName.split(" ").join("-")} >
                                                 {" " + this.state.projectName}
@@ -106,7 +121,7 @@ class CommentCR extends Component{
                                 <div  className="row">
                                     <div className="comment-section-content col-8">
                                         <div className="row">
-                                            <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
+                                            <p className="comment-author">{loginName != ""? loginName : !this.state.commentName ? "Anonymous" : this.state.commentName}</p>
                                             <p className="comment-project-link">Project: {" "}
                                                 <Link to={"/" + this.state.projectName.split(" ").join("-")} >
                                                     {" " + this.state.projectName}

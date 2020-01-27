@@ -63,28 +63,35 @@ class ProjectForm extends Component {
         return (
             <div>
                 {!this.state.submited ? (
-                    <div className="feature-form-container row col-11">
-                        <form onSubmit={this.onSubmit} className="feature-form">
+                    <div className="project-form-container col-12">
+                        <form onSubmit={this.onSubmit} className="form">
                             <h5 className="col-12">Create new a Project:</h5>
-                            <div className="col-10">
-                                <label>Title:</label>
-                                <input
-                                    type="text"
-                                    name="headline"
-                                    id="headline"
-                                    className="headline col-12"
-                                    value={headline}
-                                    onChange={this.onChange}
-                                    required
-                                />
-                                {this.state.error ? <p>*You are only allowed to use letters and dashes in the title!</p> : null}
-                                {this.state.errorMessage != "" ? <p>{this.state.errorMessage}. Please choose a different one!</p> : null}
-                            </div>
+                            <div className="row">
 
-                            <button className="submit col-2" disabled={this.state.error||this.state.empty} type="submit" value="Submit">
-                                Submit
-                            </button>
-                            
+                                <div className="name col-10">
+                                    <label>Title:</label>
+                                    <input
+                                        type="text"
+                                        name="headline"
+                                        id="headline"
+                                        className="headline"
+                                        value={headline}
+                                        onChange={this.onChange}
+                                        required
+                                    />
+                                    {this.state.error ?
+                                        <p className="error">*You are only allowed to use letters and dashes in the
+                                            title!</p> : null}
+                                    {this.state.errorMessage != "" ?
+                                        <p className="error">{this.state.errorMessage}. Please choose a different
+                                            one!</p> : null}
+                                </div>
+
+                                <button className="submit col-2" disabled={this.state.error || this.state.empty}
+                                        type="submit" value="Submit">
+                                    Submit
+                                </button>
+                            </div>
                           
                         </form>
                         

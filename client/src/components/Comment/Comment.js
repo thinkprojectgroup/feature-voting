@@ -84,6 +84,22 @@ class Comment extends Component{
       };
 
     render(){
+
+        let loginName="";
+
+        if(this.state.author.includes('@')){
+            var emailAddress = this.state.author;
+
+
+
+            var loginNameArray = (emailAddress.substring(0, emailAddress.indexOf("@"))).split(".");
+
+            for(var i = 0; i < loginNameArray.length; i++){
+                loginName += loginNameArray[i].charAt(0).toUpperCase() + loginNameArray[i].slice(1)+" ";
+            }
+        }
+
+
         let images
         if(!this.state.imageUrls){
             images = null;
@@ -97,11 +113,11 @@ class Comment extends Component{
             <div className="comment-container col-12 row">
                 {!this.state.deleted ?(
                     <div>
-                        {images === null
+                        {images === null || images === undefined
                             ? (
                                 <div>
                                     <div className="col-9">
-                                        <p className="comment-author">{this.state.author}</p>
+                                        <p className="comment-author">{loginName != ""? loginName : this.state.author}</p>
                                         <p className="comment-content">{this.state.content}</p>
                                         <p  className="comment-date">
                                             {this.state.formattedDate}
@@ -112,7 +128,7 @@ class Comment extends Component{
                             :(
                                 <div>
                                     <div className="col-9">
-                                        <p className="comment-author">{this.state.author}</p>
+                                        <p className="comment-author">{loginName != ""? loginName : this.state.author}</p>
                                         <p className="comment-content">{this.state.content}</p>
                                         <p  className="comment-date">
                                             {this.state.formattedDate}

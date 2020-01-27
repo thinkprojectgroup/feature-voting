@@ -186,11 +186,24 @@ class CommentForm extends Component {
     render() {
         const { name, content } = this.state;
 
+
+        let loginName="";
+
+        if(this.state.email){
+            var loginNameArray = (this.state.email.substring(0, this.state.email.indexOf("@"))).split(".");
+
+            for (var i = 0; i < loginNameArray.length; i++) {
+                loginName += loginNameArray[i].charAt(0).toUpperCase() + loginNameArray[i].slice(1) + " ";
+            }
+        }
+
+
+
         return (
 
-            <div className="feature-form-container row col-12">
+            <div className="comemnt-form-container col-12">
                 {!this.state.showResponse ? (
-                    <form onSubmit={this.onSubmit} className="feature-form">
+                    <form onSubmit={this.onSubmit} className="form">
                         <h5 className="col-12">Create a new comment:</h5>
                         {this.state.role !== "admin" && this.state.role !== "employee" ?
                         <div className="col-6 name">
@@ -207,7 +220,10 @@ class CommentForm extends Component {
                             />
                         </div>
                         :
-                            <div className="col-6 name">
+                            <div className="col-6 login-name">
+                            <label>
+                                Name:
+                            </label>
                             <p>{this.state.email}</p>
                             </div>
                         }

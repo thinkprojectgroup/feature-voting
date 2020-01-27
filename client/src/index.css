@@ -441,14 +441,23 @@ label, input{
   color: white;
   background-color: #003c50;
   float: left;
-  font-size: 1.3rem;
-}
-.submit-small{
-  color: white;
-  background-color: #003c50;
-  float: left;
   font-size: 1.0rem;
-  margin: 10px;
+}
+/*.submit-small{*/
+/*  color: white;*/
+/*  background-color: #003c50;*/
+/*  float: left;*/
+/*  font-size: 1.0rem;*/
+/*  margin: 10px;*/
+/*}*/
+
+.project-form-container .submit{
+  margin: 35px 0;
+}
+
+.form .login-name p{
+
+  color: rgba(127, 157, 167, 0.50);
 }
 
 
