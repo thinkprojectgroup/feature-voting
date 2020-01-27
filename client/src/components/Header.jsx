@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import {withRouter, Link } from "react-router-dom";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import axios from "axios";
 import config from "../config";
 
@@ -29,6 +31,30 @@ class Header extends Component {
     })
   }
 
+  submit = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+            <div className='modal row'>
+              <h1>Logout</h1>
+              <p>Are you sure you want to logout?</p>
+              <div className="row">
+                <button onClick={onClose} className="col-6 not-confirm-delete">No</button>
+                <button className=" col-6 confirm-delete"
+                    onClick={() => {
+                      this.logout();
+                      onClose();
+                    }}
+                >
+                  Yes
+                </button>
+              </div>
+            </div>
+        );
+      }
+    });
+  };
+  
   countUp = () =>{
     this.state.counter++;
   }
@@ -53,7 +79,7 @@ class Header extends Component {
     if (loggedIn) {
       loginButton = (
           //TODO: Add Functionality
-          <button className="logout-button fas fa-sign-out-alt" onClick={this.logout} title="Logout"></button>
+          <button className="logout-button fas fa-sign-out-alt" onClick={this.submit} title="Logout"></button>
       );
     } else if(!loggedIn){
       loginButton = (
