@@ -77,6 +77,7 @@ class FeatureDetailView extends Component {
                       });
                     })
       .catch(error => {
+        console.log(error.response);
         this.props.redirectToErrorPage(error.response.status);
       });
 
@@ -100,7 +101,7 @@ class FeatureDetailView extends Component {
         //console.log(self.state);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.response);
       });
   };
 
@@ -122,7 +123,7 @@ class FeatureDetailView extends Component {
         // console.log(self.state);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.response);
       });
   };
 

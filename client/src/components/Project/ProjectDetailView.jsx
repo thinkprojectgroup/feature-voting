@@ -92,6 +92,7 @@ class ProjectDetailView extends Component {
         });
       })
       .catch(error => {
+        console.log(error.response);
         this.props.redirectToErrorPage(error.response.status);
       });
   }
