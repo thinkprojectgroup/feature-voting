@@ -5,6 +5,7 @@ import './App.css'
 import FeatureDetailView from './components/Feature/FeatureDetailView'
 import ProjectDetailView from './components/Project/ProjectDetailView'
 import Header from './components/Header'
+import Breadcrumb from './components/Breadcrumb'
 import ProjectOverView from './components/Project/ProjectOverView'
 import CommentReview from './components/Comment/CommentReview'
 import SignIn from './components/Auth/SignIn'
@@ -107,6 +108,7 @@ class App extends Component {
                     isSignedIn={this.state.isSignedIn}
                     setAuthorisation={this.setAuthorisation}
                 />
+                <Breadcrumb role={this.state.role} />
                 <Switch>
                   <Route //Admin - ProjectOverview
                       exact
