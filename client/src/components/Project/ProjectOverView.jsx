@@ -63,7 +63,7 @@ class ProjectOverView extends Component {
         })
       })
       .catch(error => {
-        console.log(error)
+        console.log(error.response)
       })
   }
   reRender = (name) => {
@@ -94,7 +94,7 @@ class ProjectOverView extends Component {
           console.log(response);
         })
         .catch(function(error) {
-          console.log(error);
+          console.log(error.response);
         });
   };
 

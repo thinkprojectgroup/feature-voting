@@ -77,8 +77,8 @@ class ProjectForm extends Component {
                                     onChange={this.onChange}
                                     required
                                 />
-                                {this.state.error ? <p>*You are only allowed to use letters and dashes in the title!</p> : null}
-                                {this.state.errorMessage != "" ? <p>{this.state.errorMessage}. Please choose a different one!</p> : null}
+                                {this.state.error ? <p className="error">*You are only allowed to use letters and dashes in the title!</p> : null}
+                                {this.state.errorMessage != "" ? <p className="error">{this.state.errorMessage}. Please choose a different one!</p> : null}
                             </div>
 
                             <button className="submit col-2" disabled={this.state.error||this.state.empty} type="submit" value="Submit">

@@ -79,7 +79,7 @@ class Comment extends Component{
             });
           })
           .catch(function(error) {
-            console.log(error);
+            console.log(error.response);
           });
       };
 
@@ -94,9 +94,9 @@ class Comment extends Component{
         return(
 
 
-            <div className="comment-container col-12 row">
+            <div >
                 {!this.state.deleted ?(
-                    <div>
+                    <div className="comment-container col-12 row">
                         {images === null
                             ? (
                                 <div>

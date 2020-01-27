@@ -58,53 +58,25 @@ class FeaturePDV extends Component {
                 );
             }
         });
-    };
+    }
 
-    handleUpVote = () => {
-        var self = this;
-        axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
-            .then(function (response) {
-                console.log(response);
-                self.setState({
-                    upvoted: true,
-                    count: self.state.count + 1
-                });
 
-                if(self.state.role === "admin"){
-                    self.setState({
-                        employeeVoteCount: self.state.employeeVoteCount + 1
-                    })
-                }
-                // console.log(self.state);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+  handleUpVote = () => {
+    var self = this;
+    axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
+    .then(function (response) {
+      console.log(response);
+      self.setState({
+        upvoted: true,
+        count : self.state.count + 1
+      });
+      // console.log(self.state);
+      })
+      .catch(function (error) {
+      console.log(error.response);
+      });
+  }
 
-    };
-
-    handleDownVote = () => {
-        var self = this;
-        axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
-            .then(function (response) {
-                console.log(response);
-                self.setState({
-                    upvoted: false,
-                    count: self.state.count - 1
-                });
-
-                if(self.state.role === "admin"){
-                    self.setState({
-                        employeeVoteCount: self.state.employeeVoteCount - 1
-                    })
-                }
-                //  console.log(self.state);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-
-    };
 
 
   handleDownVote = () => {
@@ -146,7 +118,7 @@ class FeaturePDV extends Component {
           });
         })
         .catch(function(error) {
-          console.log(error);
+          console.log(error.response);
         });
   };
 

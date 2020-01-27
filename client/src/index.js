@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ReactGA from 'react-ga';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 import './index.css';
@@ -20,8 +19,6 @@ ReactDOM.render(
         document.getElementById('root')
 );
 
-const trackingId = "UA-156449230-1";
-ReactGA.initialize(trackingId);
 
 
 
