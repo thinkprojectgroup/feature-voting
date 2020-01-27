@@ -10,32 +10,43 @@ class SignIn extends Component {
   constructor (props) {
     super(props)
 
-    this.role = this.props.role ? this.props.role : null
+    const role = this.props.role ? this.props.role : null
+    const locationState = this.props.history.location.state
+
     this.state = {
-      signInSucesss: false
+      role: role,
+      previousPath: locationState ? locationState.previousPath : '/',
+      signInSucesss: false,
     }
+  }
+
+  redirectAfterLogin = () => {
+      this.props.history.push(this.state.previousPath)
   }
 
   onSuccess = googleUser => {
     var idToken = googleUser.tokenId;
     
-
     axios
       .post(config.url + '/api/auth/', {
         idToken: idToken
       })
       .then(res => {
+        var userProfile = googleUser.getBasicProfile();
+
         switch (res.status) {
           case 200: this.role = 'admin'; break
           case 211: this.role = 'employee'; break
 
           default: this.role = 'user'
         }
-        var userProfile = googleUser.getBasicProfile();
-        if (userProfile) this.props.setEmail(userProfile.getEmail())
+        
+        if (userProfile)
+          this.props.setEmail(userProfile.getEmail())
+        // set auth and redirect
         this.props.setAuthorisation(this.role, true, idToken) // set role, signedIn and idToken in App.js
         axios.defaults.headers.common['token'] = idToken // jwt-token send with every request (users have no idtoken - null)
-        setTimeout(() => this.props.history.push('/'), 2000)
+        setTimeout(() => this.redirectAfterLogin(), 200)
       })
       .catch(error => {
         this.props.setAuthorisation(null, false, null)

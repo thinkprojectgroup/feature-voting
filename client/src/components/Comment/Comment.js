@@ -110,10 +110,12 @@ class Comment extends Component{
         return(
 
 
-            <div className="comment-container col-12 row">
+            <div >
                 {!this.state.deleted ?(
+
                     <div>
                         {images === null || images === undefined
+
                             ? (
                                 <div>
                                     <div className="col-9">
