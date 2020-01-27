@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
@@ -204,7 +203,18 @@ img {
   height: auto;
 }
 
+.feature-search input{
+  border: none;
+  border-bottom: 2px solid #003c50;
+  background: none;
+}
 
+.feature-search{
+  background-color: rgba(234, 234, 234, 0.95);
+  font-size: 1.5rem;
+  padding: 0 15px 0 0;
+  margin-bottom: 15px;
+}
 
 button{
   background: none;
@@ -350,10 +360,16 @@ button.add{
   padding: 0;
 }
 
-/*Display feature count next to feature body on mobile devices*/
-.feature-count, .comment-section-button, .add-button, .delete-project, .decline-admin-button{width: 25%;}
-.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .user-name{width: 75%;}
+@media only screen and (max-width: 699px) {
+  /*Display feature count next to feature body on mobile devices*/
+  .feature-count, .comment-section-button, .add-button, .delete-project, .decline-admin-button, .feature-search i {
+    width: 25%;
+  }
 
+  .feature-text, .comment-section-content, .project-name, .FDV-comment-count, .user-name, .feature-search input {
+    width: 75%;
+  }
+}
 
 
 .feature-text .comment-count p{
@@ -363,6 +379,33 @@ button.add{
 
 .comment-section-content{
   padding: 35px 25px;
+}
+
+.easter-egg{
+  font-size: 20rem;
+  color: #7fba24;
+  position: absolute;
+  z-index: 999;
+  top: 30vh;
+  left: 40vw;
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: 3;
+  animation-timing-function: linear;
+
+  /* Move into place */
+  transform: translateY(-2000px);
+
+}
+
+
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
 }
 
 
@@ -588,5 +631,3 @@ select{
     margin-left: 15px;
   }
 }
-
-
