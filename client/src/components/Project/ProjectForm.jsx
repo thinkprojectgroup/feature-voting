@@ -12,6 +12,7 @@ class ProjectForm extends Component {
 
     onChange = e => {
         this.setState({ errorMessage: "" })
+        //TODO: maybe adjust regex & check for max length (255)
         var test = /^[ /\w|\-|\s/]+$/.test(e.target.value )
         
         console.log(test)
