@@ -136,12 +136,14 @@ class Comment extends Component{
                                 <i className="fas fa-times"></i>
                             </button>
                         </div>: null}
-                    <div className="delete">
+                        
+                        {this.state.role === "admin" ?  
+                        <div className="delete">
                         <button onClick={() => this.submit()} title="Delete comment">
                             <i className="fas fa-times"></i>
                         </button>
-                    </div>
-
+                        </div>
+                        :null}
                 </div>
                 ) :null}
             </div>
