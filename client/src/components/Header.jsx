@@ -126,7 +126,7 @@ class Header extends Component {
         <div className="row col-12 header">
           <div className="header-container">
             <Link to={rootPath}>
-              <div className="logo" title="Home" onClick={this.countUp()}>
+              <div className="logo" title="Home" onClick={this.countUp}>
                 <img alt="" src={image} />
               </div>
             </Link>
