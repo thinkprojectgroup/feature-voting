@@ -129,13 +129,6 @@ class Comment extends Component{
                                     </div>
                                 </div>
                             )}
-
-                        {this.state.role === "admin" ?
-                        <div className="delete">
-                            <button onClick={() => this.openDialog()} >
-                                <i className="fas fa-times"></i>
-                            </button>
-                        </div>: null}
                         
                         {this.state.role === "admin" ?  
                         <div className="delete">
