@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
@@ -382,6 +381,33 @@ button.add{
   padding: 35px 25px;
 }
 
+.easter-egg{
+  font-size: 20rem;
+  color: #7fba24;
+  position: absolute;
+  z-index: 999;
+  top: 30vh;
+  left: 40vw;
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: 3;
+  animation-timing-function: linear;
+
+  /* Move into place */
+  transform: translateY(-2000px);
+
+}
+
+
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
+}
+
 
 .comment-section-content .comment-author, .comment-section-content .comment-date, .comment-project-link, .comment-feature-link{
   font-weight: 600;
@@ -605,5 +631,3 @@ select{
     margin-left: 15px;
   }
 }
-
-
