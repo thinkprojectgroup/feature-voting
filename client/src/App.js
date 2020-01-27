@@ -12,11 +12,16 @@ import AppWrapper from './components/AppWrapper'
 import Footer from './components/Footer'
 import FAQ from './components/FAQ'
 import AdminRights from "./components/User/AdminRights";
+import NotFoundPage from './components/ErrorPages/NotFoundPage'
+import BadRequestPage from './components/ErrorPages/BadRequestPage'
+import InternalServerError from './components/ErrorPages/InternalServerError'
+import UnauthorisedPage from './components/ErrorPages/UnauthorisedPage'
+import GeneralErrorPage from './components/ErrorPages/GeneralErrorPage'
 import {
-  BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
+  withRouter
 } from 'react-router-dom'
 import ScrollToTop from './ScrollToTop'
 
@@ -70,6 +75,17 @@ class App extends Component {
     })
   }
 
+  redirectToErrorPage = (statusCode) => {
+    switch(statusCode) {
+      case 400:
+      case 401:
+      case 404:
+      case 500: this.props.history.push("/"+statusCode); break;
+
+      default: this.props.history.push("/err");
+    }
+  }
+  
   setEmail = (email) => {
     this.setState({
       email: email
@@ -134,12 +150,28 @@ class App extends Component {
                     <SignIn
                       role={this.props.role}
                       isSignedIn={this.state.isSignedIn}
-                      setAuthorisation={this.setAuthorisation} />
+                      setAuthorisation={this.setAuthorisation} 
+                      setEmail={this.setEmail}  
+                    />
                   )}
                 />
                 <Route exact path={'/faq'} component={FAQ} />
+
+                {/* ErrorPages */}
+                <Route exact path={'/400'} component={BadRequestPage} />
+                <Route exact path={'/401'} component={UnauthorisedPage} />
+                <Route exact path={'/404'} component={NotFoundPage} />
+                <Route exact path={'/500'} component={InternalServerError} />
+                <Route exact path={'/err'} component={GeneralErrorPage} />
+
+                <Route exact path={'/:projectName'}>
+                  <ProjectDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} />
+                </Route>
+                <Route path={'/:projectName/:featureId'}>
+                  <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} email={this.state.email} />
+                </Route>
                 
-                <Route exact 
+                {/* <Route exact 
                   path={'/:projectName'} 
                   render={(props) => <ProjectDetailView {...props} role={this.state.role}/>} 
                 />
@@ -147,11 +179,10 @@ class App extends Component {
                 <Route
                   path={'/:projectName/:featureId'}
                   render={(props) => <FeatureDetailView {...props} role={this.state.role} email={this.state.email}/>}
-                />
+                /> */}
 
               </Switch>
               <Footer />
-            </Router>
           </>
         )}
       </AppWrapper>
@@ -159,4 +190,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default withRouter(App);

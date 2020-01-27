@@ -5,6 +5,17 @@ import config from "../config";
 
 class Header extends Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+
+      counter : 0,
+
+    };
+  }
+
+
+
   redirectToLogin = () => {
     this.props.history.push("/login");
   }
@@ -17,7 +28,11 @@ class Header extends Component {
       this.props.history.push('/login')
     })
   }
-  
+
+  countUp = () =>{
+    this.state.counter++;
+  }
+
   render() {
 
     //Logo Image on the left side
@@ -111,10 +126,13 @@ class Header extends Component {
         <div className="row col-12 header">
           <div className="header-container">
             <Link to={rootPath}>
-              <div className="logo" title="Home">
+              <div className="logo" title="Home" onClick={this.countUp()}>
                 <img alt="" src={image} />
               </div>
             </Link>
+
+            {this.state.counter > 5 ? <i className="fas fa-angle-up easter-egg"></i>
+                : null}
             {backButton}
             { this.props.location.pathname !== '/login' && loginButton}
             {commentReviewButton}

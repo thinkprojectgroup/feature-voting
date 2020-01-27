@@ -35,15 +35,21 @@ router.post("/", async (req, res) => {
       }
     } else { // User not found via email, update current one or create new
       user = await User.findById(req.userId)
+      var userRole = "employee"
+
+      const admins = await User.find({ role: "admin" })
+      // If nobody is an admin, the next log-in will become an admin
+      if (admins.length === 0) { userRole = "admin" } 
+
       if (user) {
-        user.role = "admin"
+        user.role = userRole
         user.email = payload.email
         user.name = payload.email
         user.deviceHash = deviceHash
         await user.save()
       } else {
         user = new User({
-          role: "admin",
+          role: userRole,
           email: payload.email,
           name: payload.email,
           deviceHash: deviceHash
