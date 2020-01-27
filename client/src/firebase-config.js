@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/storage';
+import 'firebase/analytics';
 
 const apiKey = process.env.REACT_APP_APIKEY || require("../src/firebase-keys").apiKey
 const appId = process.env.REACT_APP_APPID || require("../src/firebase-keys").appId
