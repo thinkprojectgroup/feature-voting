@@ -58,7 +58,7 @@ class FeaturePDV extends Component {
                 );
             }
         });
-    };
+    }
 
 
   handleUpVote = () => {
@@ -75,6 +75,7 @@ class FeaturePDV extends Component {
       .catch(function (error) {
       console.log(error.response);
       });
+  }
 
 
 
