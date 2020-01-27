@@ -35,19 +35,6 @@ function validateProject(project) {
     return Joi.validate(project, schema)
 }
 
-function generateUrlName(name) {
-    // Remove unwanted characters, only accept alphanumeric and space
-    var urlName = name.replace(/[^A-Za-z0-9- ]/g, '')
-
-    //TODO: maybe turn multiple dashes in a row into just one?
-    
-    // Trim and remove multi spaces
-    urlName = urlName.trim().replace(/\s{2,}/g, ' ')
-
-    // Replace space with a '-' symbol and return
-    return urlName.replace(/\s/g, "-")
-}
-
 exports.Project = Project
 exports.validateProject = validateProject
 exports.generateUrlName = generateUrlName

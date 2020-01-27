@@ -6,6 +6,7 @@ const { validateToken, userCheck } = require('../services/AuthService')
 const { cleanFeatures } = require("../models/feature")
 const checkAuth = require('../middleware/checkAuth')
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
+const generateUrl = require("speakingurl")
 
 // Get all projects
 router.get("/", checkAuth, async (req, res) => {
@@ -138,10 +139,10 @@ router.get("/unaccepted/:name", checkAuth, async (req, res) => {
 router.post("/", async (req, res) => {
     const { error } = validateProject(req.body)
     if (error) return res.status(400).send(error.details[0].message)
-    
+
     try {
         const project = new Project({
-            name: generateUrlName(req.body.name),
+            name:  generateUrl(req.body.name),
             displayName: req.body.name,
             features: []
         })
