@@ -250,7 +250,7 @@ class CommentForm extends Component {
                                 maxLength="2048"
                                 required
                                 />
-                                {this.state.error ? <p>*Choose a name without "@"</p> : null}
+                                {this.state.error ? <p className="error">*Choose a name without "@"</p> : null}
                         </div>
 
                         {this.state.loading ?
