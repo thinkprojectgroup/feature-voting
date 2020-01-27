@@ -75,18 +75,14 @@ class SignIn extends Component {
       <div className='container'>
 
         {!this.props.isSignedIn ? (
-          <div className="login-field">
             <GoogleLogin
               clientId="596132698210-554c0ihpr0kp9vg13v7irajr55v8m4eq.apps.googleusercontent.com"
               buttonText="Login"
               scope="openid email"
-              className="google-login-btn"
               onSuccess={this.onSuccess}
               onFailure={this.onFailure}
               cookiePolicy={'single_host_origin'}
-            />
-          </div>
-          
+            />          
         ) : (
           <GoogleLogout 
             clientId="596132698210-554c0ihpr0kp9vg13v7irajr55v8m4eq.apps.googleusercontent.com"
