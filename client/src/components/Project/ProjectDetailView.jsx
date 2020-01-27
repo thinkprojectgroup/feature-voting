@@ -105,21 +105,25 @@ class ProjectDetailView extends Component {
               <h1>{this.state.name}</h1>
             </div>
 
-            <div className="feature-search">
-                <input 
-                  type="text" 
-                  onChange={this.handleSearch}
-                  name="searchField"
-                  placeholder="Search"
-                />
-            </div>
-
             <div className="col-1 add-button" id="form-button" title="Add feature">
               <button onClick={this.toggleShowForm} className="add">
                 <i className="fas fa-plus"></i>
               </button>
             </div>
           </div>
+        {!this.state.empty ?(
+            <div className="feature-search row">
+                <i className="col-1 fas fa-search"></i>
+                <input
+                    type="text"
+                    onChange={this.handleSearch}
+                    name="searchField"
+                    placeholder="Search"
+                    className="col-11"
+                ></input>
+            </div>) : null}
+
+
           {this.state.showForm ? (
               <FeatureForm 
               projectName={this.props.match.params.projectName.toString().split("-").join(" ")} 
