@@ -30,7 +30,7 @@ class FeatureReview extends Component {
                             />
                         ) : null
                     )}
-                </div>: null}
+                </div>
             </div>
         );
     }
