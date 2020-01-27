@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require("mongoose")
 const router = express.Router();
-const { Project, validateProject } = require("../models/project")
+const { Project, validateProject, generateUrlName } = require("../models/project")
 const { validateToken, userCheck } = require('../services/AuthService')
 const { cleanFeatures } = require("../models/feature")
 const checkAuth = require('../middleware/checkAuth')
@@ -139,29 +139,20 @@ router.post("/", async (req, res) => {
     const { error } = validateProject(req.body)
     if (error) return res.status(400).send(error.details[0].message)
     
-    const projects = await Project.find({deleted: false})
-    
-    var projectAlredayInUse = false
-    for(project of projects){
-        
-        var newProject = req.body.name.toString().replace(/\s/g, "-").replace(/^\-+|\-+$/g, '');
-        var existProject = project.name.toString().replace(/\s/g, "-").replace(/^\-+|\-+$/g, '');
-        
-        if(newProject.localeCompare(existProject) == 0){
-            projectAlredayInUse = true
-        }
-    }
-
-    if(projectAlredayInUse){
-        res.status(400).send("Project name already in use")
-    }
-    else{
+    try {
         const project = new Project({
-            name: req.body.name,
+            name: generateUrlName(req.body.name),
+            displayName: req.body.name,
             features: []
         })
         await project.save()
         res.status(201).send(project)
+    } catch (err) {
+        if(err.code === 11000) {
+            res.status(400).send("Project name already in use")
+        } else {
+            throw err
+        }
     }
 })
 
