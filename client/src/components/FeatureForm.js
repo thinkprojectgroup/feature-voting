@@ -16,7 +16,8 @@ class FeatureForm extends Component {
             showResponse: false,
             loading: false,
             fileError: "",
-            empty : true
+            emptyHead : true,
+            emptyDesc : true
         };
     }
 
@@ -91,11 +92,16 @@ class FeatureForm extends Component {
     }
 
     onChange = (e) => {
-        if(e.target.value != "" ){
-            this.setState({ empty: false })
-        }else{
-            this.setState({ empty: true })
+        if(e.target.name == "headline" &&  e.target.value != "" ){
+            this.setState({ emptyHead: false })
+        }else if(e.target.name == "headline" &&  e.target.value == "" ){
+            this.setState({ emptyHead: true })
+        }else if(e.target.name == "description" &&  e.target.value != "" ){
+            this.setState({ emptyDesc: false })
+        }else if(e.target.name == "description" &&  e.target.value == "" ){
+            this.setState({ emptyDesc: true })
         }
+        
         this.setState({ [e.target.name]: e.target.value });
     }
 
@@ -231,7 +237,7 @@ class FeatureForm extends Component {
 
                         {this.state.loading ?
                             <div className="col-2"><ClipLoader loading={this.state.loading} /></div>
-                            : <button className="submit col-2" disabled={this.state.empty} type="submit" value="Submit">Submit</button>}
+                            : <button className="submit col-2" disabled={this.state.emptyHead || this.state.emptyDesc} type="submit" value="Submit">Submit</button>}
 
                     </form>
 
