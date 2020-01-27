@@ -20,7 +20,8 @@ class CommentForm extends Component {
             fileerror: "",
             role: this.props.role,
             email: this.props.email,
-            empty : true
+            empty : true,
+            error : false
         };
     }
 
@@ -94,10 +95,22 @@ class CommentForm extends Component {
     }
 
     onChange = (e) => {
+        if (e.target.name == "name"){
+        var test = /[^@]+$/.test(e.target.value )
+        
+        console.log(test)
+        if(!test) {
+            this.setState({ error: true })
+        }else{
+            this.setState({ error: false })
+           
+        }
+        }
         if(e.target.value != "" ){
             this.setState({ empty: false })
         }else{
             this.setState({ empty: true })
+            this.setState({ error: false })
         }
         this.setState({ [e.target.name]: e.target.value });
     }
@@ -237,11 +250,12 @@ class CommentForm extends Component {
                                 maxLength="2048"
                                 required
                                 />
+                                {this.state.error ? <p>*Choose a name without "@"</p> : null}
                         </div>
 
                         {this.state.loading ?
                             <div className="col-2"><ClipLoader loading={this.state.loading} /></div>
-                            : <button className="submit col-2" disabled={this.state.empty} type="submit" value="Submit">Submit</button>}
+                            : <button className="submit col-2" disabled={this.state.error||this.state.empty} type="submit" value="Submit">Submit</button>}
 
                     </form>
                 ) :
