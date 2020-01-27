@@ -15,7 +15,8 @@ class FeatureForm extends Component {
             images: [],
             showResponse: false,
             loading: false,
-            fileError: ""
+            fileError: "",
+            empty : true
         };
     }
 
@@ -90,6 +91,11 @@ class FeatureForm extends Component {
     }
 
     onChange = (e) => {
+        if(e.target.value != "" ){
+            this.setState({ empty: false })
+        }else{
+            this.setState({ empty: true })
+        }
         this.setState({ [e.target.name]: e.target.value });
     }
 
@@ -225,7 +231,7 @@ class FeatureForm extends Component {
 
                         {this.state.loading ?
                             <div className="col-2"><ClipLoader loading={this.state.loading} /></div>
-                            : <button className="submit col-2" type="submit" value="Submit">Submit</button>}
+                            : <button className="submit col-2" disabled={this.state.empty} type="submit" value="Submit">Submit</button>}
 
                     </form>
 

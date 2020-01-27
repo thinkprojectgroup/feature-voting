@@ -19,7 +19,8 @@ class CommentForm extends Component {
             loading: false,
             fileerror: "",
             role: this.props.role,
-            email: this.props.email
+            email: this.props.email,
+            empty : true
         };
     }
 
@@ -93,6 +94,11 @@ class CommentForm extends Component {
     }
 
     onChange = (e) => {
+        if(e.target.value != "" ){
+            this.setState({ empty: false })
+        }else{
+            this.setState({ empty: true })
+        }
         this.setState({ [e.target.name]: e.target.value });
     }
 
@@ -235,7 +241,7 @@ class CommentForm extends Component {
 
                         {this.state.loading ?
                             <div className="col-2"><ClipLoader loading={this.state.loading} /></div>
-                            : <button className="submit col-2" type="submit" value="Submit">Submit</button>}
+                            : <button className="submit col-2" disabled={this.state.empty} type="submit" value="Submit">Submit</button>}
 
                     </form>
                 ) :
