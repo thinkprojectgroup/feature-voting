@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 //import '../../App.css'
 import axios from 'axios'
 import config from '../../config'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { Button } from 'reactstrap'
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
@@ -68,13 +68,16 @@ class SignIn extends Component {
             <p className="">Feature voting is a login-less web-application that makes it possible for customers and employees of <b><a href="thinkproject.com">thinkproject</a></b> to vote for new features and modifications for their software-
               solutions. This way, customers‘ wishes and desires can be determined and implemented.
             </p>
+            <p>
+              For questions visit our <Link to={"/faq"}><b>FAQ-Page</b></Link>
+            </p>
           </div>
 
           <div className="col-4 login">
 
             <h2>Login</h2>
             <p>
-              If you're an <b>employee</b> of thinkproject you can login with your thinkproject-email:
+              If you're an employee of thinkproject you can login with your thinkproject-email:
             </p>
 
 
