@@ -46,7 +46,7 @@ class ProjectForm extends Component {
         axios
             .post("/api/projects/", data, config)
             .then(result => {
-                this.props.reRender(this.state.headline);
+                this.props.addProject(result.data);
                 console.log(result);
                 this.setState({ submited: true });
             })

@@ -66,20 +66,13 @@ class ProjectOverView extends Component {
         console.log(error.response)
       })
   }
-  reRender = (name) => {
-    var self = this;
-    var duplicate = this.state.projects.pop()
-    var back = JSON.parse(JSON.stringify((duplicate)))
-    this.state.projects.push(back)
-    duplicate.name = name
-    duplicate._id = ""
-    self.setState({
-      projects: this.state.projects.concat(duplicate)
-    });
-    console.log(self.state.projects.length);
-    console.log(duplicate);
-     
+
+  addProject = (project) => {
+    this.setState({
+      projects: this.state.projects.concat([project])
+    })
   };
+
   handleDelete = id => {
     var self = this;
     var newState = self.state.projects.filter(project => project._id != id);
@@ -98,9 +91,7 @@ class ProjectOverView extends Component {
         });
   };
 
-
-
-
+  
   render () {
     return (
         <div className="container row">
@@ -114,7 +105,7 @@ class ProjectOverView extends Component {
               </button>
             </div>
           </div>
-          {this.state.show ? <ProjectForm reRender={this.reRender.bind(this)}/> : null}
+          {this.state.show ? <ProjectForm addProject={this.addProject.bind(this)}/> : null}
 
         {this.state.projects.map(project => (
             <div>
