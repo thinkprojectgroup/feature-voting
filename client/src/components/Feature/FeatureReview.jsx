@@ -16,7 +16,7 @@ class FeatureReview extends Component {
     render() {
         return (
 
-            <div classname="container">
+            <div classname="feature-review container">
                 <h2>{"Feature Review:"}</h2>
                 {this.state.features.map(feature =>
                     !feature.deleted ? (
