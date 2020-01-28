@@ -65,6 +65,8 @@ class Breadcrumb extends Component {
                projectName = "Comment Review";
            } else if(projectName === "adminrights"){
                projectName = "Admin Rights"
+           }else if(projectName === "login"){
+               projectName = "Login"
            }
         }
 
@@ -76,17 +78,16 @@ class Breadcrumb extends Component {
 
         return(
             <div className="breadcrumb">
+                <i className="fas fa-list"></i>
                 {isAdmin ?
                     <span>
                     {projectName != ""
                         ?
                         <Link to={"/"}>
-                            <i className="fas fa-bars"></i>
                             <span className="overview-text"> Project Overview </span>
                         </Link>
                         :
                         <span>
-                             <i className="fas fa-bars"></i>
                              <span className="overview-text"> Project Overview </span>
                         </span>
                         }
