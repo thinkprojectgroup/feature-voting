@@ -13,15 +13,14 @@ class ProjectForm extends Component {
     onChange = e => {
         this.setState({ errorMessage: "" })
         //TODO: maybe adjust regex & check for max length (255)
-        var test = /^[ /\w|\-|\s/]+$/.test(e.target.value )
+        var allowed = /^[ /\w|\-|\s/]+$/.test(e.target.value )
         
-        console.log(test)
-        if(!test) {
+        if(!allowed) {
             this.setState({ error: true })
-        }else{
+        } else {
             this.setState({ error: false })
-           
         }
+
         if(e.target.value != "" ){
             this.setState({ empty: false })
         }else{
@@ -30,6 +29,7 @@ class ProjectForm extends Component {
         }
         this.setState({ [e.target.name]: e.target.value })        
     };
+    
     onSubmit = e => {
         e.preventDefault();
 
@@ -76,9 +76,10 @@ class ProjectForm extends Component {
                                     className="headline col-12"
                                     value={headline}
                                     onChange={this.onChange}
+                                    maxLength="50"
                                     required
                                 />
-                                {this.state.error ? <p className="error">*You are only allowed to use letters and dashes in the title!</p> : null}
+                                {this.state.error ? <p className="error">*You are only allowed to use letters, numbers, and dashes in the title!</p> : null}
                                 {this.state.errorMessage != "" ? <p className="error">{this.state.errorMessage}. Please choose a different one!</p> : null}
                             </div>
 
