@@ -50,7 +50,7 @@ router.post("/:id", async (req, res) => {
     })
     if (error) return res.status(400).send(error.details[0].message)
 
-    const project = await Project.findOne({ "features._id": req.params.id }, {"features.$." : 1, name: 1 })
+    const project = await Project.findOne({ "features._id": req.params.id }, {"features.$." : 1, name: 1, displayName: 1})
     if (!project || project.features[0].deleted) return res.status(404).send("featureId not found")
 
     const comment = new Comment({
@@ -60,7 +60,8 @@ router.post("/:id", async (req, res) => {
         name: req.body.name,
         imageUrls: req.body.imageUrls,
         projectName: project.name,
-        featureName: project.features[0].headline
+        featureName: project.features[0].headline,
+        projectDisplayName: project.displayName
     })
     await comment.save()
 

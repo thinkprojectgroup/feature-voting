@@ -55,7 +55,7 @@ class FeatureDetailView extends Component {
     axios
       .get(
         config.url + "/api/features/" +
-        this.props.match.params.projectName.toString().split("-").join(" ") +
+        this.props.match.params.projectName +
         "/" +
         this.props.match.params.featureId
       )

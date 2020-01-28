@@ -28,6 +28,7 @@ router.get("/", checkAuth, async (req, res) => {
                     }
                 },
                 name: true,
+                displayName: true,
                 __v: true
             }
         }
@@ -61,6 +62,7 @@ router.get("/:id", async (req, res) => {
                     }
                 },
                 name: true,
+                displayName: true,
                 __v: true
             }
         }
@@ -93,6 +95,7 @@ router.get("/name/:name", async (req, res) => {
                     }
                 },
                 name: true,
+                displayName: true,
                 __v: true
             }
         }
@@ -125,6 +128,7 @@ router.get("/unaccepted/:name", checkAuth, async (req, res) => {
                     }
                 },
                 name: true,
+                displayName: true,
                 __v: true
             }
         }

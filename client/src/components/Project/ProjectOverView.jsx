@@ -120,8 +120,8 @@ class ProjectOverView extends Component {
             <div>
 
                 <div className="row project-list-item col-12">
-                  <Link to={"/" + project.name.toString().split(" ").join("-")}>
-                    <h3 className="col-11">{project.name}</h3>{" "}
+                  <Link to={"/" + project.name}>
+                    <h3 className="col-11">{project.displayName}</h3>{" "}
                   </Link>
                   <div className="delete">
                     <button onClick={() => this.submit(project._id)} title="Delete project">
