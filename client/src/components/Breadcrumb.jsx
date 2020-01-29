@@ -15,7 +15,7 @@ class Breadcrumb extends Component {
     render(){
 
         var featureName = ""
-        featureName = this.props.getFeatureName()
+        featureName = this.props.getFeatureName();
 
         const pathnameArray = this.props.location.pathname.split('/');
 
@@ -45,16 +45,18 @@ class Breadcrumb extends Component {
 
         return(
             <div className="breadcrumb">
-                <i className="fas fa-list"></i>
+
                 {isAdmin ?
                     <span>
                     {projectName != ""
                         ?
                         <Link to={"/"}>
+                            <i className="fas fa-list"></i>
                             <span className="overview-text"> Project Overview </span>
                         </Link>
                         :
                         <span>
+                            <i className="fas fa-list"></i>
                              <span className="overview-text"> Project Overview </span>
                         </span>
                         }
@@ -98,10 +100,12 @@ class Breadcrumb extends Component {
                                 {featureId != ""
                                     ?
                                     <Link to={"/" + projectName}>
+                                        <i className="fas fa-list"></i>
                                         {projectName}
                                     </Link>
                                     :
                                     <span>
+                                        <i className="fas fa-list"></i>
                                         {projectName}
                                     </span>
                                 }
