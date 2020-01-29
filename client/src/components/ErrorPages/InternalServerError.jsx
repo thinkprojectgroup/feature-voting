@@ -12,13 +12,6 @@ const InternalServerError = () => {
               <p>Something went wrong on our end.</p>
               <p>Please try again later or </p>
             </div>
-
-            <div class='error-actions'>
-              <a href='/contact' class='btn btn-default btn-lg'>
-                <span class='glyphicon glyphicon-envelope'></span>
-                Contact Us{' '}
-              </a>
-            </div>
           </div>
         </div>
       </div>

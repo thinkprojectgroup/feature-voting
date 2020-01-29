@@ -5,6 +5,7 @@ import './App.css'
 import FeatureDetailView from './components/Feature/FeatureDetailView'
 import ProjectDetailView from './components/Project/ProjectDetailView'
 import Header from './components/Header'
+import Breadcrumb from './components/Breadcrumb'
 import ProjectOverView from './components/Project/ProjectOverView'
 import CommentReview from './components/Comment/CommentReview'
 import SignIn from './components/Auth/SignIn'
@@ -34,7 +35,8 @@ class App extends Component {
       email: null,
       isSignedIn: false,
       idToken: null,
-      authIsLoaded: false
+      authIsLoaded: false,
+      featureName: ""
     }
 
     this.createFingerPrint()
@@ -62,6 +64,20 @@ class App extends Component {
     this.setState({
       authIsLoaded: isReady
     })
+  }
+
+  setFeatureName = (featureName) => {
+      this.setState({
+        featureName: ""
+      }, () => this.setState({
+              featureName: featureName
+              })
+      )
+  }
+
+  getFeatureName = () => {
+    // console.log(this.setFeatureName())
+    return this.state.featureName
   }
 
   // executed in <AppWrapper> and <SignIn>
@@ -107,6 +123,12 @@ class App extends Component {
                     isSignedIn={this.state.isSignedIn}
                     setAuthorisation={this.setAuthorisation}
                 />
+
+                <Breadcrumb 
+                  role={this.state.role} 
+                  getFeatureName={this.getFeatureName}
+                />
+
                 <Switch>
                   <AdminRoute exact path='/' role={this.state.role}>
                     <ProjectOverView idToken={this.state.idToken} />
@@ -142,7 +164,11 @@ class App extends Component {
                     <ProjectDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} />
                   </Route>
                   <Route path={'/:projectName/:featureId'}>
-                    <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} email={this.state.email} />
+                    <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} 
+                    role={this.state.role} 
+                    email={this.state.email} 
+                    setFeatureName={this.setFeatureName}
+                    />
                   </Route>
 
                   {/* <Route exact

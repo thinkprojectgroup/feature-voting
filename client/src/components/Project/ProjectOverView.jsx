@@ -31,14 +31,14 @@ class ProjectOverView extends Component {
               <h1>Delete Project</h1>
               <p>Are you sure you want to delete this project?</p>
               <div className="row">
-                <button onClick={onClose} className="col-6 not-confirm-delete">No</button>
+                <button onClick={onClose} className="col-6 not-confirm-delete">Cancel</button>
                 <button className=" col-6 confirm-delete"
                     onClick={() => {
                       this.handleDelete(id);
                       onClose();
                     }}
                 >
-                  Yes!
+                  Delete
                 </button>
               </div>
             </div>
@@ -66,20 +66,13 @@ class ProjectOverView extends Component {
         console.log(error.response)
       })
   }
-  reRender = (name) => {
-    var self = this;
-    var duplicate = this.state.projects.pop()
-    var back = JSON.parse(JSON.stringify((duplicate)))
-    this.state.projects.push(back)
-    duplicate.name = name
-    duplicate._id = ""
-    self.setState({
-      projects: this.state.projects.concat(duplicate)
-    });
-    console.log(self.state.projects.length);
-    console.log(duplicate);
-     
+
+  addProject = (project) => {
+    this.setState({
+      projects: this.state.projects.concat([project])
+    })
   };
+
   handleDelete = id => {
     var self = this;
     var newState = self.state.projects.filter(project => project._id != id);
@@ -98,9 +91,7 @@ class ProjectOverView extends Component {
         });
   };
 
-
-
-
+  
   render () {
     return (
         <div className="container row">
@@ -114,14 +105,14 @@ class ProjectOverView extends Component {
               </button>
             </div>
           </div>
-          {this.state.show ? <ProjectForm reRender={this.reRender.bind(this)}/> : null}
+          {this.state.show ? <ProjectForm addProject={this.addProject.bind(this)}/> : null}
 
         {this.state.projects.map(project => (
             <div>
 
                 <div className="row project-list-item col-12">
-                  <Link to={"/" + project.name.toString().split(" ").join("-")}>
-                    <h3 className="col-11">{project.name}</h3>{" "}
+                  <Link to={"/" + project.name}>
+                    <h3 className="col-11">{project.displayName}</h3>{" "}
                   </Link>
                   <div className="delete">
                     <button onClick={() => this.submit(project._id)} title="Delete project">

@@ -12,6 +12,7 @@ const NotFoundPage = () => {
                         <div class="error-details">
                             <p>We can't find the Page you're looking for.</p>
                             <p>The link might be incorrect or the page has been removed</p>
+                            <p>If you tried to access a Project, please access it directly via URL</p>
                         </div>
 
                         <div class="error-actions">

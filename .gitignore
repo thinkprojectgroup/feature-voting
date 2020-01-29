@@ -8,3 +8,4 @@ server/public
 client/src/firebase-keys.js
 server/config
 client/Design
+client/src/config.js

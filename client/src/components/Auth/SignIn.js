@@ -80,7 +80,7 @@ class SignIn extends Component {
         <div className="row welcome">
           <div className="col-8">
             <h1>Welcome to Feature Voting</h1>
-            <p className="">Feature voting is a login-less web-application that makes it possible for customers and employees of <b><a href="thinkproject.com">thinkproject</a></b> to vote for new features and modifications for their software-
+            <p className="">Feature voting is a login-less web-application that makes it possible for customers and employees of <b><a href="https://thinkproject.com">thinkproject</a></b> to vote for new features and modifications for their software-
               solutions. This way, customers‘ wishes and desires can be determined and implemented.
             </p>
             <p>
