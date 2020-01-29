@@ -5,7 +5,6 @@ const winston = require("winston")
 module.exports = function () {
     mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, })
         .then(() => {
-            winston.info(mongoURI);
             winston.info("connected to db..");
         })
         
