@@ -50,6 +50,7 @@
     "react-spinners": "^0.8.0",
     "react-toastify": "^5.5.0",
     "reactstrap": "^8.1.1",
+    "speakingurl": "^14.0.1",
     "winston": "^3.2.1"
   }
 }

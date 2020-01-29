@@ -91,7 +91,7 @@ body{
 }
 
 .confirm-delete{
-  background-color: #7fba24;
+  background-color: #f15a24;
 }
 
 .not-confirm-delete{
@@ -158,6 +158,15 @@ body{
   z-index: 999;
 }
 
+button:hover{
+  filter: brightness(93%);
+  transition: 0.3s;
+}
+
+button{
+  transition: 0.3s;
+}
+
 .login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
   color: white;
   float: right;
@@ -210,7 +219,10 @@ hr{
 
 .active{display: block;}
 
-button.inactive{cursor: default;}
+button.inactive{
+  cursor: default;
+  filter: none;
+}
 
 button.inactive i{
   color:#eaeaea;
@@ -224,17 +236,23 @@ img {
   height: auto;
 }
 
+
 .feature-search input{
   border: none;
   border-bottom: 2px solid #003c50;
   background: none;
+  padding: 15px;
+  margin: 20px 0 0 0;
+  transition: 0.3s;
 }
 
-.feature-search{
-  background-color: rgba(234, 234, 234, 0.95);
-  font-size: 1.5rem;
-  padding: 0 15px 0 0;
-  margin-bottom: 15px;
+.mobile-feature-search input{
+    border: none;
+    border-bottom: 2px solid #003c50;
+    background: none;
+    padding: 15px;
+    transition: 0.3s;
+    margin-bottom: 15px;
 }
 
 button{
@@ -251,9 +269,12 @@ button.decline i, button.accept i, button.add i{
   transition: 0.3s;
 }
 
+button.search i{
+  color: #003c50;
+}
 
 
-button.decline, button.accept, button.add{
+button.decline, button.accept, button.add, button.search{
   border-radius: 25px;
   color: white;
   height: 45px;
@@ -273,6 +294,15 @@ button.propose{
   margin: 70px 0px 0px 0px ;
 }
 
+button.propose-feature{
+  background-color: #7fba24;
+  color: white;
+  text-align: center;
+  margin: 30px 0px 0px 0px;
+  font-size: 1.3rem;
+  padding: 15px;
+}
+
 button.decline{
   background-color: #f15a24;
 }
@@ -285,6 +315,18 @@ button.add{
   background-color: #003c50;
   float: right;
   transition: 0.4s;
+  margin: 0.7em 0;
+}
+
+button.search{
+  background-color: rgba(234, 234, 234, 0.95);
+  float: right;
+  transition: 0.4s;
+  margin: 0.7em 0;
+}
+
+button.search:hover, button.search:active{
+    background-color: rgb(203, 203, 203);
 }
 
 .cross i{
@@ -299,7 +341,7 @@ button.add{
 
 .comment-container{
   position: relative;
-  padding: 25px 25px;
+    padding: 0;
 }
 
 .delete{
@@ -314,27 +356,34 @@ button.add{
   width: 30px;
   height: 30px;
   border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .delete button i{
   float:right;
-  color: #f15a24;
+  color: rgba(205, 205, 205, 0.5);
   font-size: 1.5rem;
   margin: 0 1px;
+  transition: 0.3s;
+}
+
+.delete button i:hover{
+  color: #f15a24;
+  transition: 0.3s;
 }
 
 .delete button:hover{
-  background-color: rgba(127, 157, 167, 0.2);
+  filter: none;
 }
 
 
 .user-vote{
-  color: rgba(127, 186, 36, 0.5);
+  color: rgba(127, 186, 36, 0.7);
   font-size: 0.8rem;
 }
 
 .employee-vote{
-  color: rgba(241, 90, 36, 0.5);
+  color: rgba(241, 90, 36, 0.7);
   font-size: 0.8rem;
 }
 
@@ -368,7 +417,7 @@ button.add{
 }
 
 .feature-count p.admin-vote{
-  margin: 0 25px;
+  margin: 0 auto;
 }
 
 .feature-text{padding: 30px 15px 25px 0;}
@@ -381,15 +430,30 @@ button.add{
   padding: 0;
 }
 
+
+.comment-images{
+  padding: 0;
+}
+
 @media only screen and (max-width: 699px) {
   /*Display feature count next to feature body on mobile devices*/
-  .feature-count, .comment-section-button, .add-button, .delete-project, .decline-admin-button, .feature-search i {
-    width: 25%;
+  .feature-count , .add-button, .delete-project, .decline-admin-button{
+    width: 16.66%;
   }
 
-  .feature-text, .comment-section-content, .project-name, .FDV-comment-count, .user-name, .feature-search input {
-    width: 75%;
+  .feature-text, .project-name, .FDV-comment-count, .user-name {
+    width: 83.33%;
   }
+
+    .comment-section-button, .feature-section-button{ width: 25%;}
+    .comment-section-content, .feature-review-text{width: 75%;}
+
+
+    .project .search-button, .project .add-button{width: 16.66%}
+
+    .project .project-name{width: 66.66%;}
+
+
 }
 
 
@@ -581,7 +645,7 @@ select{
 
 .to-top button i{
   font-size: 2.5rem;
-  color: rgba(255, 255, 255, 0.61);
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 15px;
 }
 
@@ -593,8 +657,9 @@ select{
   bottom: 150px;
   transition: 0.5s;
   cursor: pointer;
-  background-color: rgba(234, 234, 234, 0.9);
+  background-color: rgba(234, 234, 234, 0.5);
   font-size: 20px;
+  z-index: 999;
 }
 
 .transition {
