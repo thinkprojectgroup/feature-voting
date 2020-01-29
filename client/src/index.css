@@ -215,6 +215,13 @@ img {
   height: auto;
 }
 
+.help-img {
+  padding : 0px;
+}
+.h2-help{
+  color: #7fba24;
+}
+
 
 .feature-search input{
   border: none;
@@ -517,12 +524,12 @@ footer div{
   margin: auto;
 }
 
-.questions, .answers{
-  margin: 80px 0;
+.answers{
+  margin: 100px 0;
 }
 
 .answers div{
-  margin: 50px 0;
+  margin: 80px 0;
 }
 .form{
   margin-bottom: 50px;
