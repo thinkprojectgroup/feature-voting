@@ -36,7 +36,7 @@ router.post("/ban/:id", checkAuth, async (req, res) => {
     const user = await User.findByIdAndUpdate({ _id: req.params.id }, {
         $set: {
             banned: req.body.banned
-        } 
+        }
     }, { new: true, useFindAndModify: false })
     if (!user) return res.status(404).send("Invalid id")
 

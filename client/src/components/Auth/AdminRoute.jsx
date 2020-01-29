@@ -8,7 +8,7 @@ const AdminRoute = props => {
   if (props.role === 'employee')
     return <Redirect to={'/401'} />
 
-  return <Redirect to={'/login'} />
+  return <Redirect to={'/404'} />
 }
 
 export default AdminRoute

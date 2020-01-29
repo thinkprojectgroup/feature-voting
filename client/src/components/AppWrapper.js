@@ -20,10 +20,6 @@ class AppWrapper extends Component {
     //TODO add error handling/logging service
   }
 
-  redirectToErrorPage(errorCode) {
-    
-  }
-
   isAuthInitalized = () => {
     const ready = setInterval(() => {
       if (window.gapi) {
