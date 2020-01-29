@@ -346,9 +346,13 @@ button.search:hover, button.search:active{
   transition: 0.3s;
 }
 
-.delete button i:hover, .delete button:hover{
+.delete button i:hover{
   color: #f15a24;
   transition: 0.3s;
+}
+
+.delete button:hover{
+  filter: none;
 }
 
 
