@@ -16,10 +16,12 @@ class ProjectDetailView extends Component {
       comments: "",
       projectId: "",
       showForm: false,
+      showSearch: false,
       searchTerm: "",
       role: this.props.role,
       outputFeatures: [],
-      empty : false
+      empty : false,
+      mobile: window.innerWidth < 700
     };
 
     this.toggleShowForm = this.toggleShowForm.bind(this);
@@ -31,6 +33,10 @@ class ProjectDetailView extends Component {
     this.setState({showForm: !this.state.showForm});
     document.getElementById("form-button").classList.toggle("cross");
     // console.log(this.state.showForm);
+  }
+
+  toggleShowSearch = () => {
+    this.setState({showSearch: !this.state.showSearch});
   }
 
   sortByVoteDsc = () => {
@@ -73,7 +79,14 @@ class ProjectDetailView extends Component {
       )
   }
 
+  resize() {
+    this.setState({mobile: window.innerWidth < 700});
+  }
+
   componentDidMount () {
+
+    window.addEventListener("resize", this.resize.bind(this));
+    this.resize();
 
     axios
       .get(config.url + `/api/projects/name/` + this.props.match.params.projectName)
@@ -97,13 +110,36 @@ class ProjectDetailView extends Component {
       });
   }
 
+
+
+
   render() {
     // console.log(this.state.outputFeatures);
     return (
-        <div className="container row">
+        <div className="container row project">
           <div className="row">
-            <div className="col-11 project-name">
-              <h1>{this.state.name}</h1>
+            {this.state.showSearch?
+                <div className="col-6 project-name" id="project-name">
+                  <h1>{this.state.name}</h1>
+                </div>
+                :
+                <div className="col-10 project-name" id="project-name">
+                  <h1>{this.state.name}</h1>
+                </div>}
+            {!this.state.empty && this.state.showSearch && !this.state.mobile?(
+                <div className="feature-search">
+                  <input
+                      type="text"
+                      onChange={this.handleSearch}
+                      name="searchField"
+                      placeholder="Search"
+                      className="col-4"
+                  ></input>
+                </div>) : null}
+            <div className="col-1 search-button">
+              <button onClick={this.toggleShowSearch} className="search">
+                <i className="fas fa-search"></i>
+              </button>
             </div>
 
             <div className="col-1 add-button" id="form-button" title="Propose new feature">
@@ -112,18 +148,17 @@ class ProjectDetailView extends Component {
               </button>
             </div>
           </div>
-        {!this.state.empty ?(
-            <div className="feature-search row">
-                <i className="col-1 fas fa-search"></i>
+
+          {!this.state.empty && this.state.showSearch && this.state.mobile?(
+              <div className="mobile-feature-search row">
                 <input
                     type="text"
                     onChange={this.handleSearch}
                     name="searchField"
                     placeholder="Search"
-                    className="col-11"
+                    className="col-12"
                 ></input>
-            </div>) : null}
-
+              </div>) : null}
 
           {this.state.showForm ? (
               <FeatureForm 

@@ -59,7 +59,7 @@ class FeatureFR extends Component {
             <div>
                 {!this.state.clicked ? (
                     <div className="row feature-list-item">
-                        <div className="comment-section-button col-1">
+                        <div className="feature-section-button col-1">
                             <Button className="accept" onClick={() => this.handleAccept()}><i className="fas fa-check"></i></Button>
                             <Button className="decline" onClick={() => this.handleDelete()}><i className="fas fa-times"></i></Button>
                         </div>
@@ -67,7 +67,7 @@ class FeatureFR extends Component {
                         {this.state.imageUrls[0] != null || this.state.imageUrls[0] != undefined
                         ?
                             <div>
-                                <div className="col-8 feature-text">
+                                <div className="col-8 feature-review-text">
                                 <div className="title">
                                     <h3>{this.state.title}</h3>{" "}
                                 </div>
@@ -88,7 +88,7 @@ class FeatureFR extends Component {
                                     </Carousel>
                                 </div>
                             </div>
-                        :    <div className="col-8 feature-text">
+                        :    <div className="col-8 feature-review-text">
                                 <div className="title">
                                 <h3>{this.state.title}</h3>{" "}
                                 </div>
