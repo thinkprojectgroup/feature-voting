@@ -187,7 +187,7 @@ class FeaturePDV extends Component {
 
                             ?(
                                 <div className="col-8 feature-text">
-                                    <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                                    <Link to={"/" + this.state.projectName + "/" + this.state.featureId}>
                                         <div className="title">
 
                                             <h3>{this.state.title}</h3>{" "}
@@ -205,7 +205,7 @@ class FeaturePDV extends Component {
                                             {description}
                                         </ReadMoreAndLess>
                                     </div>
-                                    <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                                    <Link to={"/" + this.state.projectName + "/" + this.state.featureId}>
                                         <div className="comment-count">
                                             <p>{this.state.commentCount} comments</p>
                                         </div>
@@ -215,7 +215,7 @@ class FeaturePDV extends Component {
                             :(
                                 <div >
                                     <div className="col-8 feature-text">
-                                        <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                                        <Link to={"/" + this.state.projectName + "/" + this.state.featureId}>
                                             <div className="title">
 
                                                 <h3>{this.state.title}</h3>{" "}
@@ -234,13 +234,13 @@ class FeaturePDV extends Component {
                                             </ReadMoreAndLess>
                                         </div>
 
-                                        <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                                        <Link to={"/" + this.state.projectName + "/" + this.state.featureId}>
                                             <div className="comment-count">
                                                 <p>{this.state.commentCount} {comment}</p>
                                             </div>
                                         </Link>
                                     </div>
-                                    <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId}>
+                                    <Link to={"/" + this.state.projectName + "/" + this.state.featureId}>
                                         <div
                                             className="col-3 feature-image"
                                             style={{backgroundImage: "url(" + image + ")"}} >

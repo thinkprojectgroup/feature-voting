@@ -76,7 +76,7 @@ class ProjectDetailView extends Component {
   componentDidMount () {
 
     axios
-      .get(config.url + `/api/projects/name/` + this.props.match.params.projectName.toString().split("-").join(" "))
+      .get(config.url + `/api/projects/name/` + this.props.match.params.projectName)
       .then(response => {
         console.log(response);
         if (response.data.features.length == 0) {
@@ -87,7 +87,7 @@ class ProjectDetailView extends Component {
         this.setState({
           features: response.data.features,
           outputFeatures: response.data.features,
-          name: response.data.name,
+          name: response.data.displayName,
           projectId: response.data._id,
         });
       })
@@ -127,7 +127,7 @@ class ProjectDetailView extends Component {
 
           {this.state.showForm ? (
               <FeatureForm 
-              projectName={this.props.match.params.projectName.toString().split("-").join(" ")} 
+              projectName={this.props.match.params.projectName} 
               toggleShowForm={this.toggleShowForm}
               />
           ): null}
@@ -143,7 +143,7 @@ class ProjectDetailView extends Component {
                   commentCount={feature.commentCount}
                   projectId={this.state.projectId}
                   upvoted = {feature.upvoted}
-                  projectName = {this.props.match.params.projectName.toString().split("-").join(" ")}
+                  projectName = {this.props.match.params.projectName}
                   imageUrls = {feature.imageUrls}
                   role = {this.state.role}
                   employeeVoteCount = {feature.employeeVoteCount}
@@ -170,10 +170,7 @@ class ProjectDetailView extends Component {
           < hr/>
           {this.state.role === "admin" ? 
           <FeatureReview
-              projectName={this.props.match.params.projectName
-                  .toString()
-                  .split("-")
-                  .join(" ")}
+              projectName={this.props.match.params.projectName}
               projectId={this.state.projectId}
           />
           :null}

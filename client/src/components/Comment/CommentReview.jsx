@@ -119,6 +119,7 @@ class CommentReview extends Component{
                                 featureId={comment.featureId}
                                 imageUrls={comment.imageUrls}
                                 removeComment={this.removeComment}
+                                projectDisplayName={comment.projectDisplayName}
                             />
                         )
                     })}
