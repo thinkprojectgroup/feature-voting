@@ -391,7 +391,7 @@ button.search:hover, button.search:active{
 }
 
 .feature-count p{
-  margin: 25px;
+  margin: 25px auto;
   font-weight: 600;
 }
 
