@@ -10,7 +10,7 @@ class Footer extends Component {
         return (
             <footer>
                 <div>
-                    <Link to={"/faq"}>FAQ</Link>
+                    <Link to={"/help"}>Help</Link>
                 </div>
                 <div>
                     <ScrollUpButton

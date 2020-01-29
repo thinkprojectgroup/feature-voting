@@ -175,7 +175,7 @@ class App extends Component {
                           />
                       )}
                   />
-                  <Route exact path={'/faq'} component={FAQ} />
+                  <Route exact path={'/help'} component={FAQ} />
 
                   {/* ErrorPages */}
                   <Route exact path={'/400'} component={BadRequestPage} />
