@@ -323,17 +323,18 @@ button.search:hover, button.search:active{
   width: 30px;
   height: 30px;
   border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .delete button i{
   float:right;
-  color: #f15a24;
+  color: rgba(127, 157, 167, 0.5);
   font-size: 1.5rem;
   margin: 0 1px;
 }
 
-.delete button:hover{
-  background-color: rgba(127, 157, 167, 0.2);
+.delete button i:hover{
+  color: #f15a24;
 }
 
 
