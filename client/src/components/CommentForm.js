@@ -207,7 +207,7 @@ class CommentForm extends Component {
 
         return (
 
-            <div className="feature-form-container row col-12">
+            <div className="form row col-12">
                 {!this.state.showResponse ? (
                     <form onSubmit={this.onSubmit} className="feature-form">
                         <h5 className="col-12">Create a new comment:</h5>
