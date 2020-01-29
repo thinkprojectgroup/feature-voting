@@ -36,6 +36,7 @@ class App extends Component {
       isSignedIn: false,
       idToken: null,
       authIsLoaded: false,
+      featureName: ""
     }
 
     this.createFingerPrint()
@@ -63,6 +64,20 @@ class App extends Component {
     this.setState({
       authIsLoaded: isReady
     })
+  }
+
+  setFeatureName = (featureName) => {
+      this.setState({
+        featureName: ""
+      }, () => this.setState({
+              featureName: featureName
+              })
+      )
+  }
+
+  getFeatureName = () => {
+    // console.log(this.setFeatureName())
+    return this.state.featureName
   }
 
   // executed in <AppWrapper> and <SignIn>
@@ -108,7 +123,12 @@ class App extends Component {
                     isSignedIn={this.state.isSignedIn}
                     setAuthorisation={this.setAuthorisation}
                 />
-                <Breadcrumb role={this.state.role} />
+
+                <Breadcrumb 
+                  role={this.state.role} 
+                  getFeatureName={this.getFeatureName}
+                />
+
                 <Switch>
                   <Route //Admin - ProjectOverview
                       exact
@@ -168,7 +188,11 @@ class App extends Component {
                     <ProjectDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} />
                   </Route>
                   <Route path={'/:projectName/:featureId'}>
-                    <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} email={this.state.email} />
+                    <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} 
+                    role={this.state.role} 
+                    email={this.state.email} 
+                    setFeatureName={this.setFeatureName}
+                    />
                   </Route>
 
                   {/* <Route exact

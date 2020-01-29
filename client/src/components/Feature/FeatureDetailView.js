@@ -73,7 +73,7 @@ class FeatureDetailView extends Component {
                         userVoteCount: feature.userVoteCount
                       },
                       () => {
-                        
+                        this.props.setFeatureName(this.state.featureTitle)
                       });
                     })
       .catch(error => {

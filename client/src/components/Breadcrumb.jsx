@@ -7,48 +7,15 @@ class Breadcrumb extends Component {
     constructor(props) {
         super(props)
         this.state = {
-
-            featureName : "",
-
+           featureName: ""
         };
     }
 
-    componentDidMount() {
-
-        const pathnameArray = this.props.location.pathname.split('/');
-
-        let projectName ="";
-        let featureId="";
-
-        if(pathnameArray.length > 1) {
-            projectName = pathnameArray[1];
-        }
-
-        if(pathnameArray.length > 2) {
-
-            featureId = pathnameArray[2];
-        }
-
-        axios
-            .get(config.url + "/api/features/" +
-                projectName.toString().split("-").join(" ") +
-                "/" +
-                featureId
-            )
-            .then(res => {
-                const feature = res.data;
-                this.setState({
-                        featureName: feature.headline,
-                    },
-                    () => {
-
-                    });
-            })
-
-    }
 
     render(){
 
+        var featureName = ""
+        featureName = this.props.getFeatureName()
 
         const pathnameArray = this.props.location.pathname.split('/');
 
@@ -110,7 +77,7 @@ class Breadcrumb extends Component {
                             <span>
                                 <i className="fa fa-angle-right"></i>
 
-                                 {this.state.featureName}
+                                 {featureName}
                             </span>
                             : null}
                         </span>
@@ -144,7 +111,7 @@ class Breadcrumb extends Component {
                                     <span>
                                 <i className="fa fa-angle-right"></i>
 
-                                        {this.state.featureName}
+                                        {featureName}
                             </span>
                                     : null}
                         </span>
