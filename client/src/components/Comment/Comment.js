@@ -62,18 +62,6 @@ class Comment extends Component{
             author: "Anonymous"
         })
     };
-
-    if(this.state.author.includes("@")){
-        var loginName="";
-        var loginNameArray = (this.state.author.substring(0, this.state.author.indexOf("@"))).split(".");
-
-        for (var i = 0; i < loginNameArray.length; i++) {
-            loginName += loginNameArray[i].charAt(0).toUpperCase() + loginNameArray[i].slice(1) + " ";
-        }
-        this.setState({
-            author: loginName
-        } );
-    }
     // console.log(this.state);
     }
 
