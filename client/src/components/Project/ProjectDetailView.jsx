@@ -28,7 +28,6 @@ class ProjectDetailView extends Component {
     this.sortByVoteDsc = this.sortByVoteDsc.bind(this);
   }
 
-
   toggleShowForm = () => {
     this.setState({showForm: !this.state.showForm});
     document.getElementById("form-button").classList.toggle("cross");
@@ -50,7 +49,6 @@ class ProjectDetailView extends Component {
     })
 
     // console.log(this.state.features);
-
   }
 
   handleSearch = (e) => {
@@ -103,9 +101,14 @@ class ProjectDetailView extends Component {
           name: response.data.displayName,
           projectId: response.data._id,
         });
+        console.log("set last path")
+        this.props.setLastPath(this.props.location.pathname);
       })
       .catch(error => {
         console.log(error.response);
+        // if (this.props.history.action === 'POP')
+        //   this.props.history.goBack();
+        // else
         this.props.redirectToErrorPage(error.response.status);
       });
   }

@@ -1,6 +1,8 @@
 import React from 'react';
 
-const NotFoundPage = () => {
+const NotFoundPage = (props) => {
+
+    console.log("not found ", props)
     
     return (
             <div class="container">
@@ -15,9 +17,9 @@ const NotFoundPage = () => {
                         </div>
 
                         <div class="error-actions">
-                            <a href="/" class="btn btn-primary btn-lg">
+                            <a href="/" class="btn btn-primary btn-lg" >
                                 <span class="glyphicon glyphicon-home"></span>
-                                Go To Previous Page{" "}
+                                Go To Previous Page
                                 {/* TODO add Link to previous page */}
                             </a>
                         </div>

@@ -47,9 +47,13 @@ class FeatureDetailView extends Component {
         const comments = res.data;
         this.setState({ comments: comments });
         this.setState({ commentCount: comments.length })
+        this.props.setLastPath(this.props.location.pathname);
       })
       .catch(error => {
-        this.props.redirectToErrorPage(error.response.status)
+        if (this.props.history.action === 'POP')
+          this.props.history.goBack();
+        else
+          this.props.redirectToErrorPage(error.response.status);
       })
 
     axios
@@ -62,7 +66,8 @@ class FeatureDetailView extends Component {
       .then(res => {
         const feature = res.data;
         console.log(res);
-        
+        console.log("set last path")
+        this.props.setLastPath(this.props.location.pathname);
         this.setState({ 
                         imageUrls: feature.imageUrls,
                         featureTitle: feature.headline, 
@@ -78,7 +83,11 @@ class FeatureDetailView extends Component {
                     })
       .catch(error => {
         console.log(error.response);
-        this.props.redirectToErrorPage(error.response.status);
+
+        // if (this.props.history.action === 'POP')
+        //   this.props.history.goBack();
+        // else
+          this.props.redirectToErrorPage(error.response.status);
       });
 
   }

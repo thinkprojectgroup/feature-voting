@@ -35,6 +35,7 @@ class App extends Component {
       isSignedIn: false,
       idToken: null,
       authIsLoaded: false,
+      lastWorkingPath: '/',
     }
 
     this.createFingerPrint()
@@ -75,11 +76,16 @@ class App extends Component {
   }
 
   redirectToErrorPage = (statusCode) => {
-    switch(statusCode) {
+    switch (statusCode) {
       case 400:
       case 401:
       case 404:
-      case 500: this.props.history.push("/"+statusCode); break;
+      case 500: this.props.history.push({
+        pathname: '/404',
+        state: {
+          lastWorkingPath: this.state.lastWorkingPath
+        }
+      }); break
 
       default: this.props.history.push("/err");
     }
@@ -88,6 +94,12 @@ class App extends Component {
   setEmail = (email) => {
     this.setState({
       email: email
+    })
+  }
+
+  setLastPath = (path) => {
+    this.setState({
+      lastWorkingPath: path
     })
   }
 
@@ -163,10 +175,19 @@ class App extends Component {
                   <Route exact path={'/err'} component={GeneralErrorPage} />
 
                   <Route exact path={'/:projectName'}>
-                    <ProjectDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} />
+                    <ProjectDetailView 
+                      redirectToErrorPage={this.redirectToErrorPage} 
+                      role={this.state.role}
+                      setLastPath={this.setLastPath}
+                    />
                   </Route>
                   <Route path={'/:projectName/:featureId'}>
-                    <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} email={this.state.email} />
+                    <FeatureDetailView 
+                      redirectToErrorPage={this.redirectToErrorPage}
+                      role={this.state.role} 
+                      email={this.state.email}
+                      setLastPath={this.setLastPath}
+                    />
                   </Route>
 
                   {/* <Route exact
