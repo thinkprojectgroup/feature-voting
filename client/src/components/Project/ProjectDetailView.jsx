@@ -21,7 +21,8 @@ class ProjectDetailView extends Component {
       role: this.props.role,
       outputFeatures: [],
       empty : false,
-      mobile: window.innerWidth < 700
+      mobile: window.innerWidth < 700,
+      failedSearch: false
     };
 
     this.toggleShowForm = this.toggleShowForm.bind(this);
@@ -58,21 +59,37 @@ class ProjectDetailView extends Component {
     const searchTerm = e.target.value.split(" ").join("").trim().toLowerCase()
     const features = this.state.features
     var searchedFeatures = []
+    console.log(searchTerm.length)
     if(searchTerm.length >= 3){
           for(var z = 0; z < features.length; z++){
             if(features[z].headline.split(" ").join("").toLowerCase().includes(searchTerm)){
                 searchedFeatures.push(features[z])
+                this.setState({
+                  failedSearch: false,
+                  isEmpty: false
+                })
             }
           }
     }
     else{
       this.setState({
         outputFeatures: []},
-        () => this.setState({outputFeatures: features})
+        () => this.setState({
+          outputFeatures: features,
+          failedSearch: false,
+          isEmpty: false
+        })
         )
       return;
     }
-    
+
+    if(searchedFeatures.length === 0){
+      this.setState({
+        failedSearch: true
+      })
+      return;
+    }
+
     this.setState({
       outputFeatures: []},
       () => this.setState({outputFeatures: searchedFeatures})
@@ -129,7 +146,7 @@ class ProjectDetailView extends Component {
             {!this.state.empty && this.state.showSearch && !this.state.mobile?(
                 <div className="feature-search">
                   <input
-                      type="text"
+                      type="search"
                       onChange={this.handleSearch}
                       name="searchField"
                       placeholder="Search"
@@ -152,7 +169,7 @@ class ProjectDetailView extends Component {
           {!this.state.empty && this.state.showSearch && this.state.mobile?(
               <div className="mobile-feature-search row">
                 <input
-                    type="text"
+                    type="search"
                     onChange={this.handleSearch}
                     name="searchField"
                     placeholder="Search"
@@ -166,6 +183,13 @@ class ProjectDetailView extends Component {
               toggleShowForm={this.toggleShowForm}
               />
           ): null}
+        
+        {this.state.failedSearch ? (
+        <div className="placeholder row">
+          <h3>It looks like this project has no features, that match your search.</h3>
+        </div>
+        ):
+        <div>
         {!this.state.empty ?(
           <div>
           {this.state.outputFeatures.sort((a,b) => b.voteCount - a.voteCount)
@@ -200,6 +224,8 @@ class ProjectDetailView extends Component {
             </div> :null}
             </div>
               )}
+              </div>
+              }
 
 
           {this.state.role === "admin" ? 
