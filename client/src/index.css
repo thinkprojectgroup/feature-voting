@@ -530,7 +530,10 @@ footer div{
 
 label{
   font-size: 1rem;
+}
 
+.login-name{
+  color: #7f9da7;
 }
 
 input, textarea{
