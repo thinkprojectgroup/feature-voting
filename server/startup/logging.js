@@ -2,21 +2,17 @@ const winston = require("winston")
 
 require("express-async-errors") // Automatically catches express async errors and passes control to error middleware function
 
-const consoleFormat = winston.format.combine(
-    winston.format.colorize(),
-    winston.format.timestamp(),
-    winston.format.align(),
-    winston.format.printf(({ level, message, label, timestamp }) => {
-        return `${timestamp} ${level}: ${message}`;
-    })
-)
-
 const format = winston.format.combine(
     winston.format.timestamp(),
     winston.format.align(),
-    winston.format.printf(({ level, message, label, timestamp }) => {
-        return `${timestamp} ${level}: ${message}`;
+    winston.format.printf(({ timestamp, level, message, label, reason }) => {
+        return `${timestamp} ${level}: ${message} ${label || ""} ${reason || ""}`
     })
+)
+
+const consoleFormat = winston.format.combine(
+    winston.format.colorize(),
+    format
 )
 
 module.exports = function () {
