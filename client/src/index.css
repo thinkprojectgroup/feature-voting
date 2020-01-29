@@ -261,6 +261,15 @@ button.propose{
   margin: 70px 0px 0px 0px ;
 }
 
+button.propose-feature{
+  background-color: #7fba24;
+  color: white;
+  text-align: center;
+  margin: 30px 0px 0px 0px;
+  font-size: 1.3rem;
+  padding: 15px;
+}
+
 button.decline{
   background-color: #f15a24;
 }
@@ -273,6 +282,7 @@ button.add{
   background-color: #003c50;
   float: right;
   transition: 0.4s;
+  margin: 0.7em 0;
 }
 
 button.search{
@@ -327,12 +337,12 @@ button.search:hover, button.search:active{
 
 
 .user-vote{
-  color: rgba(127, 186, 36, 0.5);
+  color: rgba(127, 186, 36, 0.7);
   font-size: 0.8rem;
 }
 
 .employee-vote{
-  color: rgba(241, 90, 36, 0.5);
+  color: rgba(241, 90, 36, 0.7);
   font-size: 0.8rem;
 }
 
@@ -603,6 +613,7 @@ select{
   cursor: pointer;
   background-color: rgba(234, 234, 234, 0.9);
   font-size: 20px;
+  z-index: 999;
 }
 
 .transition {
