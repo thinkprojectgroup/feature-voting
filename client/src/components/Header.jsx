@@ -41,14 +41,14 @@ class Header extends Component {
               <h1>Logout</h1>
               <p>Are you sure you want to logout?</p>
               <div className="row">
-                <button onClick={onClose} className="col-6 not-confirm-delete">No</button>
+                <button onClick={onClose} className="col-6 not-confirm-delete">Cancel</button>
                 <button className=" col-6 confirm-delete"
                     onClick={() => {
                       this.logout();
                       onClose();
                     }}
                 >
-                  Yes
+                  Logout
                 </button>
               </div>
             </div>

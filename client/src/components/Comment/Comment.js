@@ -34,14 +34,14 @@ class Comment extends Component{
                         <h1>Delete Comment</h1>
                         <p>Are you sure you want to delete this comment?</p>
                         <div className="row">
-                            <button onClick={onClose} className="col-6 not-confirm-delete">No</button>
+                            <button onClick={onClose} className="col-6 not-confirm-delete">Cancel</button>
                             <button className=" col-6 confirm-delete"
                                     onClick={() => {
                                         this.handleDelete();
                                         onClose();
                                     }}
                             >
-                                Yes!
+                                Delete
                             </button>
                         </div>
                     </div>
