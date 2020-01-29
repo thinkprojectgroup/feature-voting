@@ -119,7 +119,7 @@ class Comment extends Component{
                                         </p>
                                     </div>
                                     <div className="comment-images col-3">
-                                        <Carousel showThumbs={false}>
+                                        <Carousel showThumbs={false} dynamicHeight={true}>
                                             {images.map(imageUrl => (
                                                 <div>
                                                     <img src={imageUrl}/>
