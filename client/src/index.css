@@ -138,7 +138,7 @@ body{
 }
 
 button:hover{
-  filter: brightness(90%);
+  filter: brightness(93%);
   transition: 0.3s;
 }
 
@@ -346,7 +346,7 @@ button.search:hover, button.search:active{
   transition: 0.3s;
 }
 
-.delete button i:hover{
+.delete button i:hover, .delete button:hover{
   color: #f15a24;
   transition: 0.3s;
 }
@@ -402,6 +402,11 @@ button.search:hover, button.search:active{
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  padding: 0;
+}
+
+
+.comment-images{
   padding: 0;
 }
 
@@ -615,7 +620,7 @@ select{
 
 .to-top button i{
   font-size: 2.5rem;
-  color: rgba(255, 255, 255, 0.61);
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 15px;
 }
 
@@ -627,7 +632,7 @@ select{
   bottom: 150px;
   transition: 0.5s;
   cursor: pointer;
-  background-color: rgba(234, 234, 234, 0.9);
+  background-color: rgba(234, 234, 234, 0.5);
   font-size: 20px;
   z-index: 999;
 }
