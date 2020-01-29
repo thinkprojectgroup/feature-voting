@@ -378,6 +378,8 @@ button.search:hover, button.search:active{
   position: relative;
 }
 
+
+
 .feature-count{
   padding: 19px 0;
 }
@@ -406,6 +408,10 @@ button.search:hover, button.search:active{
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  padding: 0;
+}
+
+.feature-review-image, .cr-image{
   padding: 0;
 }
 
@@ -442,7 +448,11 @@ button.search:hover, button.search:active{
 }
 
 .comment-section-content{
-  padding: 35px 25px;
+  padding: 25px 15px 25px 0;
+}
+
+.comment-section-item{
+  padding: 0;
 }
 
 .easter-egg{

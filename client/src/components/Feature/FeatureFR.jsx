@@ -76,10 +76,10 @@ class FeatureFR extends Component {
                                 </div>
                             </div>
                                 <div
-                                    className="col-3 feature-image"
+                                    className="col-3 feature-review-image"
                                     //style={{ backgroundImage: "url(" + this.state.imageUrls[0] + ")" }}
                                 >
-                                    <Carousel showThumbs={false}>
+                                    <Carousel showThumbs={false} dynamicHeight={true}>
                                         {this.state.imageUrls.map(imageUrl => (
                                             <div>
                                                 <img src={imageUrl} />

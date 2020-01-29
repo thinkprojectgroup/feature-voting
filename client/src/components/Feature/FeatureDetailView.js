@@ -177,7 +177,7 @@ class FeatureDetailView extends Component {
           </div>
             {this.state.imageUrls.length > 0 ?
                     <div className="col-4 feature-detail-image">
-                      <Carousel>
+                      <Carousel dynamicHeight={true}>
                         {this.state.imageUrls.map(imageUrl => (
                           <div>
                           <img src={imageUrl}/>
