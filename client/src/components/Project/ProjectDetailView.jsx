@@ -153,21 +153,20 @@ class ProjectDetailView extends Component {
               </div>):(
                 <div>
                  {!this.state.showForm ?
-                <div className="placeholder">
-                <h3 className="">
-                   This project is still empty
-                </h3>
+                <div className="placeholder row">
+                  <h3>
+                     This project is still empty
+                  </h3>
 
 
-                <button className="propose" onClick={this.toggleShowForm} >
-                    Propose the first feature 
-                </button>
+                  <button className="col-4 propose-feature" onClick={this.toggleShowForm} >
+                      Propose the first feature
+                  </button>
             </div> :null}
             </div>
               )}
 
 
-          < hr/>
           {this.state.role === "admin" ? 
           <FeatureReview
               projectName={this.props.match.params.projectName}
