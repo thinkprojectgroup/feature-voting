@@ -1,11 +1,16 @@
 const express = require('express');
 const mongoose = require("mongoose")
 const router = express.Router();
-const { Project, validateProject } = require("../models/project")
+const { Project, validateProject, generateUrlName } = require("../models/project")
+const { validateToken, userCheck } = require('../services/AuthService')
 const { cleanFeatures } = require("../models/feature")
+const checkAuth = require('../middleware/checkAuth')
+const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
+const generateUrl = require("speakingurl")
 
 // Get all projects
-router.get("/", async (req, res) => {
+router.get("/", checkAuth, async (req, res) => {
+
     const projects = await Project.aggregate([
         { $match: { deleted: false } },
         {
@@ -15,16 +20,23 @@ router.get("/", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true],
-                            $cmp: ['$$feature.acceptedStatus', false]
-                        }
+                        $and: [
+                            { $eq: ['$$feature.deleted', false] },
+                            { $eq: ['$$feature.acceptedStatus', true] }
+                        ]
+                    }
                     }
                 },
                 name: true,
+                displayName: true,
                 __v: true
             }
         }
     ])
+
+    projects.forEach(project => {
+        cleanFeatures(project.features, req.userId)
+    })
 
     res.send(projects);
 });
@@ -42,12 +54,15 @@ router.get("/:id", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true],
-                            $cmp: ['$$feature.acceptedStatus', false]
+                            $and: [
+                                { $eq: ['$$feature.deleted', false] },
+                                { $eq: ['$$feature.acceptedStatus', true] }
+                            ]
                         }
                     }
                 },
                 name: true,
+                displayName: true,
                 __v: true
             }
         }
@@ -72,12 +87,15 @@ router.get("/name/:name", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true],
-                            $cmp: ['$$feature.acceptedStatus', false]
+                            $and: [
+                                { $eq: ['$$feature.deleted', false] },
+                                { $eq: ['$$feature.acceptedStatus', true] }
+                            ]
                         }
                     }
                 },
                 name: true,
+                displayName: true,
                 __v: true
             }
         }
@@ -92,9 +110,7 @@ router.get("/name/:name", async (req, res) => {
 
 // Get Project with all unaccepted features by name
 // NOTE: name is case sensitive
-router.get("/unaccepted/:name", async (req, res) => {
-    //TODO: authentication, only for admin
-
+router.get("/unaccepted/:name", checkAuth, async (req, res) => {
     var project = await Project.aggregate([
         { $match: { name: req.params.name, deleted: false } },
         {
@@ -104,20 +120,21 @@ router.get("/unaccepted/:name", async (req, res) => {
                         input: '$features',
                         as: 'feature',
                         cond: {
-                            $cmp: ['$$feature.deleted', true],
-                            $cmp: ['$$feature.acceptedStatus', true]
+                            $and: [
+                                { $eq: ['$$feature.deleted', false] },
+                                { $eq: ['$$feature.acceptedStatus', false] }
+                            ]
                         }
                     }
                 },
                 name: true,
+                displayName: true,
                 __v: true
             }
         }
     ])
     if (project.length == 0) return res.status(404).send("Invalid project name")
     project = project[0]
-
-    cleanFeatures(project.features, req.userId)
 
     res.send(project);
 });
@@ -129,14 +146,14 @@ router.post("/", async (req, res) => {
 
     try {
         const project = new Project({
-            name: req.body.name,
+            name:  generateUrl(req.body.name),
+            displayName: req.body.name,
             features: []
         })
         await project.save()
-
         res.status(201).send(project)
     } catch (err) {
-        if (err.code == 11000) {
+        if(err.code === 11000) {
             res.status(400).send("Project name already in use")
         } else {
             throw err
@@ -145,11 +162,26 @@ router.post("/", async (req, res) => {
 })
 
 // Delete project by id
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", checkAuth, async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) return res.status(400).send("projectId doesn't fit id schema")
 
-    var project = await Project.findOneAndUpdate({ _id: req.params.id, deleted: false }, { "$set": { "deleted": true } }, { useFindAndModify: false })
+    var project = await Project.findOneAndUpdate(
+        { _id: req.params.id, deleted: false },
+        { "$set": { "deleted": true } },
+        { useFindAndModify: false, new: true }
+    )
+
     if (!project) return res.status(404).send("projectId not found")
+
+    for(var feature of project.features){
+        feature.deleted = true
+        var tempComments = await Comment.find({ featureId: feature.id, deleted: false})
+        for(var comment of tempComments){
+            comment.deleted = true
+            await comment.save()
+        }
+    }
+    await project.save()
 
     res.status(202).send(project)
 })

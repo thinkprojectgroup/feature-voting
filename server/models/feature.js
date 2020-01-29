@@ -41,13 +41,19 @@ const featureSchema = new mongoose.Schema({
         required: true,
         default: Date.now
     },
-    imageIds: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Image"
+    imageUrls: [{
+        type: String,
+        minlength: 0,
+        maxlength: 1024
     }],
     deleted: {
         type: Boolean,
         default: false,
+    },
+    commentCount: {
+        type: Number,
+        min: 0,
+        default: 0
     }
 })
 featureSchema.index({ headline: "text", description: "text" })
@@ -75,9 +81,12 @@ function validateSearch(body) {
 // Remove sensitive information from features before returning them to client
 function cleanFeatures(features, userId) {
     return features.map(feature => {
-         //UserIds is type [object], turn them into [string] 
+        //UserIds is type [object], turn them into [string] 
         const userIdStrings = feature.userIds.map(obj => util.inspect(obj))
-        feature.upvoted = userIdStrings.includes(userId)
+        const employeeIdStrings = feature.employeeIds.map(obj => util.inspect(obj))
+        feature.upvoted = (userIdStrings.includes(userId) || employeeIdStrings.includes(userId))
+        feature.userVoteCount = feature.userIds.length
+        feature.employeeVoteCount = feature.employeeIds.length
         delete feature.userIds
         delete feature.employeeIds
         delete feature.creator
