@@ -23,14 +23,15 @@ class FeatureFR extends Component {
         var self = this;
         //this.props.reRender(this.state.title, this.state.description);
         axios
-            .patch("/api/features/accept/" + this.state.featureId)
-            .then(function (response) {
+            .patch(config.url + "/api/features/accept/" + this.state.featureId)
+            .then((response) => {
                 console.log(response);
                 self.setState({
                     clicked: true
-                });
+                })
+                self.props.handleInteraction(this.state.featureId)
             })
-            .catch(function(error) {
+            .catch((error) => {
                 console.log(error.response);
             });
     };
@@ -40,15 +41,16 @@ class FeatureFR extends Component {
         // console.log(comment._id)
         axios
             .delete(
-                "/api/features/" + this.state.projectName + "/" + this.state.featureId
+                config.url + "/api/features/" + this.state.projectName + "/" + this.state.featureId
             )
-            .then(function (response) {
+            .then((response) => {
                 console.log(response);
                 self.setState({
                     clicked: true
-                });
+                })
+                self.props.handleInteraction(this.state.featureId)
             })
-            .catch(function(error) {
+            .catch((error) =>  {
                 console.log(error.response);
             });
     };
