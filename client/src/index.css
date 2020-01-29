@@ -435,6 +435,9 @@ button.search:hover, button.search:active{
 
 }
 
+.user-name{
+  padding: 20px 30px;
+}
 
 .feature-text .comment-count p{
   margin: 0;
@@ -701,5 +704,9 @@ select{
 
   .submit{
     margin-left: 15px;
+  }
+
+  .user-name{
+    padding: 20px 0;
   }
 }
