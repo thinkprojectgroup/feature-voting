@@ -1,11 +1,12 @@
 const express = require('express');
 const mongoose = require("mongoose")
 const router = express.Router();
-const { Project, validateProject } = require("../models/project")
+const { Project, validateProject, generateUrlName } = require("../models/project")
 const { validateToken, userCheck } = require('../services/AuthService')
 const { cleanFeatures } = require("../models/feature")
 const checkAuth = require('../middleware/checkAuth')
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
+const generateUrl = require("speakingurl")
 
 // Get all projects
 router.get("/", checkAuth, async (req, res) => {
@@ -27,6 +28,7 @@ router.get("/", checkAuth, async (req, res) => {
                     }
                 },
                 name: true,
+                displayName: true,
                 __v: true
             }
         }
@@ -60,6 +62,7 @@ router.get("/:id", async (req, res) => {
                     }
                 },
                 name: true,
+                displayName: true,
                 __v: true
             }
         }
@@ -92,6 +95,7 @@ router.get("/name/:name", async (req, res) => {
                     }
                 },
                 name: true,
+                displayName: true,
                 __v: true
             }
         }
@@ -124,6 +128,7 @@ router.get("/unaccepted/:name", checkAuth, async (req, res) => {
                     }
                 },
                 name: true,
+                displayName: true,
                 __v: true
             }
         }
@@ -141,14 +146,14 @@ router.post("/", async (req, res) => {
 
     try {
         const project = new Project({
-            name: req.body.name,
+            name:  generateUrl(req.body.name),
+            displayName: req.body.name,
             features: []
         })
         await project.save()
-
         res.status(201).send(project)
     } catch (err) {
-        if (err.code == 11000) {
+        if(err.code === 11000) {
             res.status(400).send("Project name already in use")
         } else {
             throw err
