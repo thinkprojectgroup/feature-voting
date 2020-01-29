@@ -70,6 +70,11 @@ class FeaturePDV extends Component {
         upvoted: true,
         count : self.state.count + 1
       });
+      if(self.state.role === "admin"){
+        self.setState({
+          employeeVoteCount: self.state.employeeVoteCount + 1
+        })
+      }
       // console.log(self.state);
       })
       .catch(function (error) {
