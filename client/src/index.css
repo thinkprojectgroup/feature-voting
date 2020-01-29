@@ -109,7 +109,7 @@ body{
 .container{
   max-width: 1000px;
   margin: auto auto 50px auto;
-  padding: 60px 10px 20vh 10px;
+  padding: 0 10px 20vh 10px;
   min-height: 85vh;
 }
 
@@ -117,6 +117,27 @@ body{
   max-width: 1000px;
   margin: auto;
 }
+
+.breadcrumb{
+  padding: 80px 10px 10px 10px;
+  max-width: 1000px;
+  margin: auto;
+  font-size: 0.8rem;
+}
+
+
+.breadcrumb i{
+  margin: 0 8px
+}
+
+.breadcrumb a span, .breadcrumb a{
+  font-weight: 600;
+}
+
+.breadcrumb .overview-text{
+  display: none;
+}
+
 
 .logo{
   display: inline;
@@ -683,10 +704,17 @@ select{
 
 
   .container{
-    max-width: 1000px;
     margin: auto auto 50px auto;
-    padding: 80px 0 20vh 0;
-    min-height: 85vh;
+    padding: 0 0 20vh 0;
+  }
+
+  .breadcrumb{
+    padding: 100px 10px 10px 10px;
+  }
+
+
+  .breadcrumb .overview-text{
+    display: inline;
   }
 
 
