@@ -64,7 +64,7 @@ class ProjectForm extends Component {
         return (
             <div>
                 {!this.state.submited ? (
-                    <div className="feature-form-container row col-11">
+                    <div className="form row col-11">
                         <form onSubmit={this.onSubmit} className="feature-form">
                             <h5 className="col-12">Create new a Project:</h5>
                             <div className="col-10">
