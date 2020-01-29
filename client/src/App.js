@@ -11,20 +11,27 @@ import SignIn from './components/Auth/SignIn'
 import AppWrapper from './components/AppWrapper'
 import Footer from './components/Footer'
 import FAQ from './components/FAQ'
-import AdminRights from './components/User/AdminRights'
+import AdminRights from "./components/User/AdminRights";
+import NotFoundPage from './components/ErrorPages/NotFoundPage'
+import BadRequestPage from './components/ErrorPages/BadRequestPage'
+import InternalServerError from './components/ErrorPages/InternalServerError'
+import UnauthorisedPage from './components/ErrorPages/UnauthorisedPage'
+import GeneralErrorPage from './components/ErrorPages/GeneralErrorPage'
+import AdminRoute from './components/Auth/AdminRoute'
 import {
-  BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
+  withRouter
 } from 'react-router-dom'
-import AdminRoute from './components/Auth/AdminRoute'
+import ScrollToTop from './ScrollToTop'
 
 class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
       role: 'user',
+      email: null,
       isSignedIn: false,
       idToken: null,
       authIsLoaded: false
@@ -34,18 +41,18 @@ class App extends Component {
   }
 
   // Helper function to await a timeout
-  timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+  timeout = (ms) => new Promise(resolve => setTimeout(resolve, ms))
 
   createFingerPrint = () => {
     this.timeout(500).then(
-      Fingerprint2.get(function (components) {
-        // an array of: {key: ..., value: ...} pairs
-        // only keep the values
-        const values = components.map(component => component.value)
-        // hash the values
-        const hashedFingerprint = Fingerprint2.x64hash128(values.join(''), 31)
-        axios.defaults.headers.common['Hash'] = hashedFingerprint
-      })
+        Fingerprint2.get(function (components) {
+          // an array of: {key: ..., value: ...} pairs
+          // only keep the values
+          const values = components.map(component => component.value)
+          // hash the values
+          const hashedFingerprint = Fingerprint2.x64hash128(values.join(''), 31)
+          axios.defaults.headers.common['Hash'] = hashedFingerprint
+        })
     )
   }
 
@@ -67,57 +74,93 @@ class App extends Component {
     })
   }
 
-  render () {
+  redirectToErrorPage = (statusCode) => {
+    switch(statusCode) {
+      case 400:
+      case 401:
+      case 404:
+      case 500: this.props.history.push("/"+statusCode); break;
+
+      default: this.props.history.push("/err");
+    }
+  }
+
+  setEmail = (email) => {
+    this.setState({
+      email: email
+    })
+  }
+
+  render() {
+
     return (
-      <AppWrapper
-        isReady={this.isReady}
-        setAuthorisation={this.setAuthorisation}
-      >
-        {this.state.authIsLoaded && (
-          <>
-            <Router>
-              <Header
-                role={this.state.role}
-                isSignedIn={this.state.isSignedIn}
-                setAuthorisation={this.setAuthorisation}
-              />
-              <Switch>
-                <Route exact path={'/login'}>
-                  <SignIn
-                    role={this.props.role}
+        <AppWrapper
+            isReady={this.isReady}
+            setAuthorisation={this.setAuthorisation}
+            setEmail={this.setEmail}
+        >
+          {this.state.authIsLoaded && (
+              <>
+                <ScrollToTop />
+                <Header
+                    role={this.state.role}
                     isSignedIn={this.state.isSignedIn}
                     setAuthorisation={this.setAuthorisation}
+                />
+                <Switch>
+                  <AdminRoute exact path='/' role={this.state.role}>
+                    <ProjectOverView idToken={this.state.idToken} />
+                  </AdminRoute>
+                  <AdminRoute exact path='/commentreview' role={this.state.role}>
+                    <CommentReview />
+                  </AdminRoute>
+                  <AdminRoute exact path='/adminrights' role={this.state.role}>
+                    <AdminRights />
+                  </AdminRoute>
+                  <Route //Login
+                      exact
+                      path={'/login'}
+                      render={props => (
+                          <SignIn
+                              role={this.props.role}
+                              isSignedIn={this.state.isSignedIn}
+                              setAuthorisation={this.setAuthorisation}
+                              setEmail={this.setEmail}
+                          />
+                      )}
                   />
-                </Route>
+                  <Route exact path={'/faq'} component={FAQ} />
 
-                <Route exact path={'/faq'} component={FAQ} />
-                <AdminRoute exact path='/' role={this.state.role}>
-                  <ProjectOverView idToken={this.state.idToken} />
-                </AdminRoute>
-                <AdminRoute exact path='/commentreview' role={this.state.role}>
-                  <CommentReview />
-                </AdminRoute>
-                <AdminRoute exact path='/adminrights' role={this.state.role}>
-                  <AdminRights />
-                </AdminRoute>
+                  {/* ErrorPages */}
+                  <Route exact path={'/400'} component={BadRequestPage} />
+                  <Route exact path={'/401'} component={UnauthorisedPage} />
+                  <Route exact path={'/404'} component={NotFoundPage} />
+                  <Route exact path={'/500'} component={InternalServerError} />
+                  <Route exact path={'/err'} component={GeneralErrorPage} />
 
-                <Route
-                  exact
+                  <Route exact path={'/:projectName'}>
+                    <ProjectDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} />
+                  </Route>
+                  <Route path={'/:projectName/:featureId'}>
+                    <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} email={this.state.email} />
+                  </Route>
+
+                  {/* <Route exact
                   path={'/:projectName'}
-                  component={ProjectDetailView}
+                  render={(props) => <ProjectDetailView {...props} role={this.state.role}/>}
                 />
                 <Route
                   path={'/:projectName/:featureId'}
-                  component={FeatureDetailView}
-                />
-              </Switch>
-              <Footer />
-            </Router>
-          </>
-        )}
-      </AppWrapper>
+                  render={(props) => <FeatureDetailView {...props} role={this.state.role} email={this.state.email}/>}
+                /> */}
+
+                </Switch>
+                <Footer />
+              </>
+          )}
+        </AppWrapper>
     )
   }
 }
 
-export default App
+export default withRouter(App);

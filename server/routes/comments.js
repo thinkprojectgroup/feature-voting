@@ -4,10 +4,9 @@ const router = express.Router();
 const { Comment, validateComment, validateFlaggedComment } = require("../models/comment")
 const { Project, validateProject } = require("../models/project")
 const { validateSearch } = require("../models/feature")
-const checkAuth = require('../middleware/checkAuth')
+const checkAuth = require("../middleware/checkAuth")
 
 // Get all unaccepted comments
-// TODO add authorisation
 router.get("/", checkAuth, async (req, res) => {
     var comments = await Comment.find({ accepted: false, deleted: false }).sort("dateCreated")
 

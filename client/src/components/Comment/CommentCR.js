@@ -40,9 +40,10 @@ class CommentCR extends Component{
                 self.setState({
                     clicked: true
                 })
+                self.props.removeComment(self.state.commentId)
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error.response);
             });
     }
 
@@ -55,9 +56,10 @@ class CommentCR extends Component{
                 self.setState({
                     clicked: true
                 })
+                self.props.removeComment(self.state.commentId)
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error.response);
             });
     }
 

@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import FileBase from "react-file-base64"
 import { storage } from '../firebase-config';
-import config from '../config'
+import config from '../config';
+import { ClipLoader } from "react-spinners";
 
 class CommentForm extends Component {
     constructor(props) {
@@ -14,16 +15,22 @@ class CommentForm extends Component {
             currentImageName: [],
             images: [],
             featureId: this.props.featureId,
-            showResponse: false
+            showResponse: false,
+            loading: false,
+            fileerror: "",
+            role: this.props.role,
+            email: this.props.email,
+            empty : true,
+            error : false
         };
     }
 
     handleResponseButton = () => {
-            this.setState({
-                showResponse: false
-            })
-            this.props.toggleShowForm()
-        document.getElementById("form-button").classList.toggle("cross");
+        this.setState({
+            showResponse: false
+        })
+        this.props.toggleShowForm()
+        document.getElementById("form-button").classList.remove("cross");
     }
 
 
@@ -44,8 +51,11 @@ class CommentForm extends Component {
         };
         for (var z = 0; z < err.length; z++) {// if message not same old that mean has error 
             // discard selected file
-            alert("Wrong Datatype!");
+            //alert("Wrong Datatype!");
             //event.target.value = null
+            this.setState({
+                fileError: "You can only upload images with the datatype PNG or JPEG."
+            })
             return false;
         }
         return true;
@@ -55,7 +65,10 @@ class CommentForm extends Component {
         if (files.length > 3) {
             const msg = 'Only 3 images can be uploaded at a time'
             // event.target.value = null
-            alert("Too many files!");
+            // alert("Too many files!");
+            this.setState({
+                fileError: "You can only upload 3 images."
+            })
             return false;
         }
         return true;
@@ -71,7 +84,10 @@ class CommentForm extends Component {
         };
         for (var z = 0; z < err.length; z++) {// if message not same old that mean has error 
             // discard selected file
-            alert("Your files are too big!");
+            // alert("Your files are too big!");
+            this.setState({
+                fileError: "You can only upload images, that are smaller than 2MB."
+            })
             //event.target.value = null
             return false;
         }
@@ -79,15 +95,36 @@ class CommentForm extends Component {
     }
 
     onChange = (e) => {
+        if (e.target.name == "name"){
+        var test = /[^@]+$/.test(e.target.value )
+        
+        console.log(test)
+        if(!test) {
+            this.setState({ error: true })
+        }else{
+            this.setState({ error: false })
+           
+        }
+        }
+        if(e.target.value != "" ){
+            this.setState({ empty: false })
+        }else{
+            this.setState({ empty: true })
+            this.setState({ error: false })
+        }
         this.setState({ [e.target.name]: e.target.value });
     }
 
     onChangeImage = (e) => {
         const files = e.target.files
-        if(this.checkFileSize(files) && this.checkMimeType(files) && this.maxSelectFile(files)){
+        if (this.checkFileSize(files) && this.checkMimeType(files) && this.maxSelectFile(files)) {
             this.setState({
-                images: files
+                images: files,
+                fileError: ""
             })
+        }
+        else {
+            e.target.value = null
         }
     }
 
@@ -118,19 +155,32 @@ class CommentForm extends Component {
     onSubmit = async (e) => {
         e.preventDefault();
 
+        if(this.state.images.length > 0){
+            this.setState({
+                loading: true
+            })
+        }
+
         const config = {
             headers: {
                 'Content-Type': 'application/json'
             }
         }
 
-
         const imageUrls = await this.uploadImage()
+
+        var name = ""
+        if(this.state.role === "admin" || this.state.role === "employee"){
+            name = this.state.email
+        }
+        else{
+            name = this.state.name.trim()
+        }
 
 
         let data = JSON.stringify({
-            name: this.state.name,
-            content: this.state.content,
+            name: name,
+            content: this.state.content.trim(),
             imageUrls: imageUrls
         })
 
@@ -139,11 +189,16 @@ class CommentForm extends Component {
             .then((result) => {
                 console.log(result);
                 this.setState({
-                    showResponse: true
+                    showResponse: true,
                 })
             })
             .catch(error => {
                 console.log(error.response);
+            })
+            .finally(() =>{
+                this.setState({
+                    loading: false
+                })
             });
     }
 
@@ -154,39 +209,55 @@ class CommentForm extends Component {
 
             <div className="feature-form-container row col-12">
                 {!this.state.showResponse ? (
-                <form onSubmit={this.onSubmit} className="feature-form">
-                    <h5 className="col-12">Create a new comment:</h5>
-                    <div className="col-6 name">
-                        <label>
-                            Name (optional):
+                    <form onSubmit={this.onSubmit} className="feature-form">
+                        <h5 className="col-12">Create a new comment:</h5>
+                        {this.state.role !== "admin" && this.state.role !== "employee" ?
+                        <div className="col-6 name">
+                            <label>
+                                Name (optional):
+                            </label>
+                            <input
+                                type="text"
+                                name="name"
+                                className="headline"
+                                value={name}
+                                onChange={this.onChange}
+                                maxLength="50"
+                            />
+                        </div>
+                        :
+                            <div className="col-6 name">
+                            <p>{this.state.email}</p>
+                            </div>
+                        }
+                        
+
+                        <div className="col-6 filepicker">
+                            <label>Upload Your Images <p className="error">{this.state.fileError}</p></label>
+                            <input type="file" multiple className="process__upload-btn" onChange={(e) => this.onChangeImage(e)} />
+                        </div>
+
+
+                        <div className="col-12 content">
+                            <label>
+                                Content:
                         </label>
-                        <input type="text"
-                               name="name"
-                               className="headline"
-                               value={name}
-                               onChange={this.onChange}/>
-                    </div>
+                            <input type="text"
+                                name="content"
+                                className="description"
+                                value={content}
+                                onChange={this.onChange} 
+                                maxLength="2048"
+                                required
+                                />
+                                {this.state.error ? <p className="error">*Choose a name without "@"</p> : null}
+                        </div>
 
-                    <div className="col-6 filepicker">
-                        <label>Upload Your Images </label>
-                        <input type="file" multiple className="process__upload-btn" onChange={(e) => this.onChangeImage(e)} />
-                    </div>
+                        {this.state.loading ?
+                            <div className="col-2"><ClipLoader loading={this.state.loading} /></div>
+                            : <button className="submit col-2" disabled={this.state.error||this.state.empty} type="submit" value="Submit">Submit</button>}
 
-                    <div className="col-12 content">
-                        <label>
-                            Content:
-                        </label>
-                        <input type="text"
-                               name="content"
-                               className="description"
-                               value={content}
-                               onChange={this.onChange}/>
-                    </div>
-
-
-
-                    <button className="submit col-2" type="submit" value="Submit">Submit</button>
-                </form>
+                    </form>
                 ) :
                     <div className="form-response row">
                         <p className="col-10">

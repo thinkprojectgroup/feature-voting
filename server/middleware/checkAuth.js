@@ -2,7 +2,6 @@ const { validateToken, isAdmin } = require('../services/AuthService')
 
 module.exports = async (req, res, next) => {
   const idToken = req.get('token');
-  console.log("idToken: ", idToken);
   if (!idToken) return res.status(302).send('Login Required.')
 
   const loginTicket = await validateToken(idToken)

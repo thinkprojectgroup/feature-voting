@@ -38,7 +38,7 @@ class CommentReview extends Component{
                 })
             })
             .catch(error =>{
-                console.log(error)
+                console.log(error.response)
             });
     }
 
@@ -51,6 +51,16 @@ class CommentReview extends Component{
         });
 
         return outputArray;
+    }
+
+    removeComment = (id) => {
+        let interactedComment = this.state.comments.filter(comment => {
+            return comment._id !== id
+        })
+
+        this.setState({
+            comments: interactedComment
+        })
     }
 
     handleProject = (e) => {
@@ -66,14 +76,12 @@ class CommentReview extends Component{
             return comment.projectName === selectedName
         })
 
-        // console.log(selectedComments)
+        // console.log(selectedComments
 
         this.setState({
             outputComments: []
         }, () => this.setState({ outputComments: selectedComments }))
     }
-
-
 
     render(){
         // console.log(this.state.outputComments)
@@ -110,6 +118,7 @@ class CommentReview extends Component{
                                 projectName={comment.projectName}
                                 featureId={comment.featureId}
                                 imageUrls={comment.imageUrls}
+                                removeComment={this.removeComment}
                             />
                         )
                     })}

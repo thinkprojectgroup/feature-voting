@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "reactstrap";
+import { withRouter } from 'react-router-dom'
 import axios from "axios";
 import "./css/FeatureDetailView.css";
 import Comment from '../Comment/Comment';
@@ -26,7 +27,12 @@ class FeatureDetailView extends Component {
       commentCount: 0,
       showForm: false,
       upvoted: false,
+      role: this.props.role,
+      email: this.props.email,
+      employeeVoteCount: 0,
+      userVoteCount: 0
     };
+    // console.log(this.state)
   }
 
   toggleShowForm = () => {
@@ -43,7 +49,7 @@ class FeatureDetailView extends Component {
         this.setState({ commentCount: comments.length })
       })
       .catch(error => {
-        console.log(error);
+        this.props.redirectToErrorPage(error.response.status)
       })
 
     axios
@@ -62,14 +68,17 @@ class FeatureDetailView extends Component {
                         featureTitle: feature.headline, 
                         description: feature.description, 
                         upvotes: feature.voteCount,
-                        upvoted: feature.upvoted
+                        upvoted: feature.upvoted,
+                        employeeVoteCount: feature.employeeVoteCount,
+                        userVoteCount: feature.userVoteCount
                       },
                       () => {
                         
                       });
                     })
       .catch(error => {
-        console.log(error);
+        console.log(error.response);
+        this.props.redirectToErrorPage(error.response.status);
       });
 
   }
@@ -83,10 +92,16 @@ class FeatureDetailView extends Component {
           upvoted: true,
           upvotes: self.state.upvotes + 1
         });
+
+        if(self.state.role === "admin"){
+          self.setState({
+            employeeVoteCount: self.state.employeeVoteCount + 1
+          })
+        }
         //console.log(self.state);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.response);
       });
   };
 
@@ -99,14 +114,27 @@ class FeatureDetailView extends Component {
           upvoted: false,
           upvotes: self.state.upvotes - 1
         });
+
+        if(self.state.role === "admin"){
+          self.setState({
+            employeeVoteCount: self.state.employeeVoteCount - 1
+          })
+        }
         // console.log(self.state);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.response);
       });
   };
 
   render() {
+    var comment;
+    if(this.state.commentCount === 1){
+      comment = "Comment"
+    }
+    else{
+      comment = "Comments"
+    }
     
     return (
       <div className="container row">
@@ -123,7 +151,14 @@ class FeatureDetailView extends Component {
                 </button>
             }
 
-            <p>{this.state.upvotes}</p>
+              {this.state.role === "admin" ?
+                  <div >
+                      <span class="user-vote" title="User Votes">{this.state.userVoteCount}</span>
+                      <p class="admin-vote">{this.state.upvotes}</p>
+                      <span class="employee-vote" title="Employee Votes">{this.state.employeeVoteCount}</span>
+                  </div> :
+                  <p>{this.state.upvotes}</p>
+              }
 
             {this.state.upvoted === true ? (
               <button onClick={this.toggleDivDownVote} title="downvote">
@@ -160,16 +195,20 @@ class FeatureDetailView extends Component {
 
             <div className="row">
                 <div className="col-11 FDV-comment-count">
-                    <h4 className="comment-count">Comments: {this.state.commentCount}</h4>
+                    <h4 className="comment-count">{comment}: {this.state.commentCount}</h4>
                 </div>
-                <div className="col-1 add-button">
-                    <button onClick={this.toggleShowForm} className="add" id="form-button" title="Add comment">
+                <div className="col-1 add-button"  id="form-button" >
+                    <button onClick={this.toggleShowForm} className="add"title="Add comment">
                         <i className="fas fa-plus"></i>
                     </button>
                 </div>
             </div>
             {this.state.showForm ? (
-                <CommentForm featureId={this.props.match.params.featureId}
+                <CommentForm 
+                featureId={this.props.match.params.featureId}
+                toggleShowForm={this.toggleShowForm}
+                role={this.state.role}
+                email={this.state.email}
                 />
             ): null}
 
@@ -182,6 +221,8 @@ class FeatureDetailView extends Component {
               date={comment.dateCreated}
               count={this.state.commentCount}
               imageUrls={comment.imageUrls}
+              commentId={comment._id}
+              role={this.state.role}
             />
           ))}
         </div>
@@ -190,4 +231,4 @@ class FeatureDetailView extends Component {
   }
 }
 
-export default FeatureDetailView;
+export default withRouter(FeatureDetailView);
