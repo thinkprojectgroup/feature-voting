@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import {Link } from "react-router-dom";
 
 class FAQ extends Component {
+
+    
     render() {
 
 

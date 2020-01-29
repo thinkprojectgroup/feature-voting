@@ -34,14 +34,14 @@ class Comment extends Component{
                         <h1>Delete Comment</h1>
                         <p>Are you sure you want to delete this comment?</p>
                         <div className="row">
-                            <button onClick={onClose} className="col-6 not-confirm-delete">No</button>
+                            <button onClick={onClose} className="col-6 not-confirm-delete">Cancel</button>
                             <button className=" col-6 confirm-delete"
                                     onClick={() => {
                                         this.handleDelete();
                                         onClose();
                                     }}
                             >
-                                Yes!
+                                Delete
                             </button>
                         </div>
                     </div>
@@ -79,7 +79,7 @@ class Comment extends Component{
             });
           })
           .catch(function(error) {
-            console.log(error);
+            console.log(error.response);
           });
       };
 
@@ -94,9 +94,9 @@ class Comment extends Component{
         return(
 
 
-            <div className="comment-container col-12 row">
+            <div >
                 {!this.state.deleted ?(
-                    <div>
+                    <div className="comment-container col-12 row">
                         {images === null
                             ? (
                                 <div>
@@ -119,7 +119,7 @@ class Comment extends Component{
                                         </p>
                                     </div>
                                     <div className="comment-images col-3">
-                                        <Carousel showThumbs={false}>
+                                        <Carousel showThumbs={false} dynamicHeight={true}>
                                             {images.map(imageUrl => (
                                                 <div>
                                                     <img src={imageUrl}/>
@@ -129,19 +129,14 @@ class Comment extends Component{
                                     </div>
                                 </div>
                             )}
-
-                        {this.state.role === "admin" ?
+                        
+                        {this.state.role === "admin" ?  
                         <div className="delete">
-                            <button onClick={() => this.openDialog()} >
-                                <i className="fas fa-times"></i>
-                            </button>
-                        </div>: null}
-                    <div className="delete">
                         <button onClick={() => this.submit()} title="Delete comment">
                             <i className="fas fa-times"></i>
                         </button>
-                    </div>
-
+                        </div>
+                        :null}
                 </div>
                 ) :null}
             </div>

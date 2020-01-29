@@ -55,7 +55,7 @@ class FeatureDetailView extends Component {
     axios
       .get(
         config.url + "/api/features/" +
-        this.props.match.params.projectName.toString().split("-").join(" ") +
+        this.props.match.params.projectName +
         "/" +
         this.props.match.params.featureId
       )
@@ -73,10 +73,11 @@ class FeatureDetailView extends Component {
                         userVoteCount: feature.userVoteCount
                       },
                       () => {
-                        
+                        this.props.setFeatureName(this.state.featureTitle)
                       });
                     })
       .catch(error => {
+        console.log(error.response);
         this.props.redirectToErrorPage(error.response.status);
       });
 
@@ -100,7 +101,7 @@ class FeatureDetailView extends Component {
         //console.log(self.state);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.response);
       });
   };
 
@@ -122,7 +123,7 @@ class FeatureDetailView extends Component {
         // console.log(self.state);
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error.response);
       });
   };
 
@@ -150,14 +151,14 @@ class FeatureDetailView extends Component {
                 </button>
             }
 
-            <p>{this.state.upvotes}</p>
-
-            {this.state.role === "admin" ?
-                <div >
-                  <p>Uservotes: {this.state.userVoteCount}</p>
-                  <p>Employeevotes: {this.state.employeeVoteCount}</p>
-                </div>
-            :null}
+              {this.state.role === "admin" ?
+                  <div >
+                      <span class="user-vote" title="User Votes">{this.state.userVoteCount}</span>
+                      <p class="admin-vote">{this.state.upvotes}</p>
+                      <span class="employee-vote" title="Employee Votes">{this.state.employeeVoteCount}</span>
+                  </div> :
+                  <p>{this.state.upvotes}</p>
+              }
 
             {this.state.upvoted === true ? (
               <button onClick={this.toggleDivDownVote} title="downvote">
@@ -176,7 +177,7 @@ class FeatureDetailView extends Component {
           </div>
             {this.state.imageUrls.length > 0 ?
                     <div className="col-4 feature-detail-image">
-                      <Carousel>
+                      <Carousel dynamicHeight={true}>
                         {this.state.imageUrls.map(imageUrl => (
                           <div>
                           <img src={imageUrl}/>

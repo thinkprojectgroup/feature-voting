@@ -1,4 +1,3 @@
-
 @font-face {
   font-family: 'Open Sans';
   font-style: normal;
@@ -92,7 +91,7 @@ body{
 }
 
 .confirm-delete{
-  background-color: #7fba24;
+  background-color: #f15a24;
 }
 
 .not-confirm-delete{
@@ -110,7 +109,7 @@ body{
 .container{
   max-width: 1000px;
   margin: auto auto 50px auto;
-  padding: 60px 10px 20vh 10px;
+  padding: 0 10px 20vh 10px;
   min-height: 85vh;
 }
 
@@ -118,6 +117,27 @@ body{
   max-width: 1000px;
   margin: auto;
 }
+
+.breadcrumb{
+  padding: 80px 10px 10px 10px;
+  max-width: 1000px;
+  margin: auto;
+  font-size: 0.8rem;
+}
+
+
+.breadcrumb i{
+  margin: 0 8px
+}
+
+.breadcrumb a span, .breadcrumb a{
+  font-weight: 600;
+}
+
+.breadcrumb .overview-text{
+  display: none;
+}
+
 
 .logo{
   display: inline;
@@ -136,6 +156,15 @@ body{
   padding: 0;
   position: fixed;
   z-index: 999;
+}
+
+button:hover{
+  filter: brightness(93%);
+  transition: 0.3s;
+}
+
+button{
+  transition: 0.3s;
 }
 
 .login-button, .logout-button, .comment-review-button, .back-button, .user-settings-button{
@@ -190,7 +219,10 @@ hr{
 
 .active{display: block;}
 
-button.inactive{cursor: default;}
+button.inactive{
+  cursor: default;
+  filter: none;
+}
 
 button.inactive i{
   color:#eaeaea;
@@ -205,6 +237,23 @@ img {
 }
 
 
+.feature-search input{
+  border: none;
+  border-bottom: 2px solid #003c50;
+  background: none;
+  padding: 15px;
+  margin: 20px 0 0 0;
+  transition: 0.3s;
+}
+
+.mobile-feature-search input{
+    border: none;
+    border-bottom: 2px solid #003c50;
+    background: none;
+    padding: 15px;
+    transition: 0.3s;
+    margin-bottom: 15px;
+}
 
 button{
   background: none;
@@ -220,9 +269,12 @@ button.decline i, button.accept i, button.add i{
   transition: 0.3s;
 }
 
+button.search i{
+  color: #003c50;
+}
 
 
-button.decline, button.accept, button.add{
+button.decline, button.accept, button.add, button.search{
   border-radius: 25px;
   color: white;
   height: 45px;
@@ -242,6 +294,15 @@ button.propose{
   margin: 70px 0px 0px 0px ;
 }
 
+button.propose-feature{
+  background-color: #7fba24;
+  color: white;
+  text-align: center;
+  margin: 30px 0px 0px 0px;
+  font-size: 1.3rem;
+  padding: 15px;
+}
+
 button.decline{
   background-color: #f15a24;
 }
@@ -254,6 +315,18 @@ button.add{
   background-color: #003c50;
   float: right;
   transition: 0.4s;
+  margin: 0.7em 0;
+}
+
+button.search{
+  background-color: rgba(234, 234, 234, 0.95);
+  float: right;
+  transition: 0.4s;
+  margin: 0.7em 0;
+}
+
+button.search:hover, button.search:active{
+    background-color: rgb(203, 203, 203);
 }
 
 .cross i{
@@ -268,7 +341,7 @@ button.add{
 
 .comment-container{
   position: relative;
-  padding: 25px 25px;
+    padding: 0;
 }
 
 .delete{
@@ -283,27 +356,34 @@ button.add{
   width: 30px;
   height: 30px;
   border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .delete button i{
   float:right;
-  color: #f15a24;
+  color: rgba(205, 205, 205, 0.5);
   font-size: 1.5rem;
   margin: 0 1px;
+  transition: 0.3s;
+}
+
+.delete button i:hover{
+  color: #f15a24;
+  transition: 0.3s;
 }
 
 .delete button:hover{
-  background-color: rgba(127, 157, 167, 0.2);
+  filter: none;
 }
 
 
 .user-vote{
-  color: rgba(127, 186, 36, 0.5);
+  color: rgba(127, 186, 36, 0.7);
   font-size: 0.8rem;
 }
 
 .employee-vote{
-  color: rgba(241, 90, 36, 0.5);
+  color: rgba(241, 90, 36, 0.7);
   font-size: 0.8rem;
 }
 
@@ -319,6 +399,8 @@ button.add{
   position: relative;
 }
 
+
+
 .feature-count{
   padding: 19px 0;
 }
@@ -332,12 +414,12 @@ button.add{
 }
 
 .feature-count p{
-  margin: 25px;
+  margin: 25px auto;
   font-weight: 600;
 }
 
 .feature-count p.admin-vote{
-  margin: 0 25px;
+  margin: 0 auto;
 }
 
 .feature-text{padding: 30px 15px 25px 0;}
@@ -350,11 +432,39 @@ button.add{
   padding: 0;
 }
 
-/*Display feature count next to feature body on mobile devices*/
-.feature-count, .comment-section-button, .add-button, .delete-project, .decline-admin-button{width: 25%;}
-.feature-text, .comment-section-content, .project-name,  .FDV-comment-count, .user-name{width: 75%;}
+.feature-review-image, .cr-image{
+  padding: 0;
+}
 
 
+.comment-images{
+  padding: 0;
+}
+
+@media only screen and (max-width: 699px) {
+  /*Display feature count next to feature body on mobile devices*/
+  .feature-count , .add-button, .delete-project, .decline-admin-button{
+    width: 16.66%;
+  }
+
+  .feature-text, .project-name, .FDV-comment-count, .user-name {
+    width: 83.33%;
+  }
+
+    .comment-section-button, .feature-section-button{ width: 25%;}
+    .comment-section-content, .feature-review-text{width: 75%;}
+
+
+    .project .search-button, .project .add-button{width: 16.66%}
+
+    .project .project-name{width: 66.66%;}
+
+
+}
+
+.user-name{
+  padding: 20px 30px;
+}
 
 .feature-text .comment-count p{
   margin: 0;
@@ -362,7 +472,38 @@ button.add{
 }
 
 .comment-section-content{
-  padding: 35px 25px;
+  padding: 25px 15px 25px 0;
+}
+
+.comment-section-item{
+  padding: 0;
+}
+
+.easter-egg{
+  font-size: 20rem;
+  color: #7fba24;
+  position: absolute;
+  z-index: 999;
+  top: 30vh;
+  left: 40vw;
+  animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: 3;
+  animation-timing-function: linear;
+
+  /* Move into place */
+  transform: translateY(-2000px);
+
+}
+
+
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
 }
 
 
@@ -423,7 +564,11 @@ footer div{
 
 label{
   font-size: 1rem;
+  margin-bottom: 5px;
+}
 
+.login-name{
+  color: #7f9da7;
 }
 
 input, textarea{
@@ -452,6 +597,10 @@ label, input{
 }
 
 
+.login{
+  margin: 15px 0;
+  background-color: rgba(234, 234, 234, 0.95);
+}
 textarea[name="description"]{
   height: 150px;
   width: 100%;
@@ -513,7 +662,7 @@ select{
 
 .to-top button i{
   font-size: 2.5rem;
-  color: rgba(255, 255, 255, 0.61);
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 15px;
 }
 
@@ -525,8 +674,9 @@ select{
   bottom: 150px;
   transition: 0.5s;
   cursor: pointer;
-  background-color: rgba(234, 234, 234, 0.9);
+  background-color: rgba(234, 234, 234, 0.5);
   font-size: 20px;
+  z-index: 999;
 }
 
 .transition {
@@ -554,10 +704,17 @@ select{
 
 
   .container{
-    max-width: 1000px;
     margin: auto auto 50px auto;
-    padding: 80px 0 20vh 0;
-    min-height: 85vh;
+    padding: 0 0 20vh 0;
+  }
+
+  .breadcrumb{
+    padding: 100px 10px 10px 10px;
+  }
+
+
+  .breadcrumb .overview-text{
+    display: inline;
   }
 
 
@@ -587,6 +744,8 @@ select{
   .submit{
     margin-left: 15px;
   }
+
+  .user-name{
+    padding: 20px 0;
+  }
 }
-
-

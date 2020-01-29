@@ -19,8 +19,26 @@ class CommentForm extends Component {
             loading: false,
             fileerror: "",
             role: this.props.role,
-            email: this.props.email
+            email: this.props.email,
+            empty : true,
+            error : false,
         };
+    }
+
+
+
+    componentDidMount () {
+        if(this.state.role === "admin" || this.state.role === "employee"){
+            var loginName="";
+            var loginNameArray = (this.state.email.substring(0, this.state.email.indexOf("@"))).split(".");
+
+            for (var i = 0; i < loginNameArray.length; i++) {
+                loginName += loginNameArray[i].charAt(0).toUpperCase() + loginNameArray[i].slice(1) + " ";
+            }
+            this.setState({
+                name: loginName
+            } );
+        }
     }
 
     handleResponseButton = () => {
@@ -93,6 +111,23 @@ class CommentForm extends Component {
     }
 
     onChange = (e) => {
+        if (e.target.name == "name"){
+        var test = /[^@]+$/.test(e.target.value )
+        
+        console.log(test)
+        if(!test) {
+            this.setState({ error: true })
+        }else{
+            this.setState({ error: false })
+           
+        }
+        }
+        if(e.target.value != "" ){
+            this.setState({ empty: false })
+        }else{
+            this.setState({ empty: true })
+            this.setState({ error: false })
+        }
         this.setState({ [e.target.name]: e.target.value });
     }
 
@@ -150,13 +185,10 @@ class CommentForm extends Component {
 
         const imageUrls = await this.uploadImage()
 
-        var name = ""
-        if(this.state.role === "admin" || this.state.role === "employee"){
-            name = this.state.email
-        }
-        else{
-            name = this.state.name.trim()
-        }
+        var name = "";
+
+        name = this.state.name.trim();
+
 
 
         let data = JSON.stringify({
@@ -186,9 +218,10 @@ class CommentForm extends Component {
     render() {
         const { name, content } = this.state;
 
+
         return (
 
-            <div className="feature-form-container row col-12">
+            <div className="form row col-12">
                 {!this.state.showResponse ? (
                     <form onSubmit={this.onSubmit} className="feature-form">
                         <h5 className="col-12">Create a new comment:</h5>
@@ -208,7 +241,8 @@ class CommentForm extends Component {
                         </div>
                         :
                             <div className="col-6 name">
-                            <p>{this.state.email}</p>
+                                <label>Name: </label>
+                                <p class="login-name">{this.state.name}</p>
                             </div>
                         }
                         
@@ -231,11 +265,12 @@ class CommentForm extends Component {
                                 maxLength="2048"
                                 required
                                 />
+                                {this.state.error ? <p className="error">*Choose a name without "@"</p> : null}
                         </div>
 
                         {this.state.loading ?
                             <div className="col-2"><ClipLoader loading={this.state.loading} /></div>
-                            : <button className="submit col-2" type="submit" value="Submit">Submit</button>}
+                            : <button className="submit col-2" disabled={this.state.error||this.state.empty} type="submit" value="Submit">Submit</button>}
 
                     </form>
                 ) :

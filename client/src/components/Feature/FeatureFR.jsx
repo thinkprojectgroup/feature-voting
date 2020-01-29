@@ -23,15 +23,16 @@ class FeatureFR extends Component {
         var self = this;
         //this.props.reRender(this.state.title, this.state.description);
         axios
-            .patch("/api/features/accept/" + this.state.featureId)
-            .then(function (response) {
+            .patch(config.url + "/api/features/accept/" + this.state.featureId)
+            .then((response) => {
                 console.log(response);
                 self.setState({
                     clicked: true
-                });
+                })
+                self.props.handleInteraction(this.state.featureId)
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) => {
+                console.log(error.response);
             });
     };
 
@@ -40,53 +41,64 @@ class FeatureFR extends Component {
         // console.log(comment._id)
         axios
             .delete(
-                "/api/features/" + this.state.projectName + "/" + this.state.featureId
+                config.url + "/api/features/" + this.state.projectName + "/" + this.state.featureId
             )
-            .then(function (response) {
+            .then((response) => {
                 console.log(response);
                 self.setState({
                     clicked: true
-                });
+                })
+                self.props.handleInteraction(this.state.featureId)
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((error) =>  {
+                console.log(error.response);
             });
     };
 
     render() {
-        // TODO: Add real imagadata later
-        var image = require("../img/computer.png");
 
         return (
             <div>
                 {!this.state.clicked ? (
                     <div className="row feature-list-item">
-                        <div className="comment-section-button col-1">
+                        <div className="feature-section-button col-1">
                             <Button className="accept" onClick={() => this.handleAccept()}><i className="fas fa-check"></i></Button>
                             <Button className="decline" onClick={() => this.handleDelete()}><i className="fas fa-times"></i></Button>
                         </div>
 
-
-                        <div className="col-8 feature-text">
-                            <div className="title">
+                        {this.state.imageUrls[0] != null || this.state.imageUrls[0] != undefined
+                        ?
+                            <div>
+                                <div className="col-8 feature-review-text">
+                                <div className="title">
+                                    <h3>{this.state.title}</h3>{" "}
+                                </div>
+                                <div className="description">
+                                    <p>{this.state.description}</p>
+                                </div>
+                            </div>
+                                <div
+                                    className="col-3 feature-review-image"
+                                    //style={{ backgroundImage: "url(" + this.state.imageUrls[0] + ")" }}
+                                >
+                                    <Carousel showThumbs={false} dynamicHeight={true}>
+                                        {this.state.imageUrls.map(imageUrl => (
+                                            <div>
+                                                <img src={imageUrl} />
+                                            </div>
+                                        ))}
+                                    </Carousel>
+                                </div>
+                            </div>
+                        :    <div className="col-8 feature-review-text">
+                                <div className="title">
                                 <h3>{this.state.title}</h3>{" "}
-                            </div>
-                            <div className="description">
+                                </div>
+                                <div className="description">
                                 <p>{this.state.description}</p>
+                                </div>
                             </div>
-                        </div>
-                        <div
-                            className="col-3 feature-image"
-                        //style={{ backgroundImage: "url(" + this.state.imageUrls[0] + ")" }}
-                        >
-                            <Carousel showThumbs={false}>
-                                {this.state.imageUrls.map(imageUrl => (
-                                    <div>
-                                        <img src={imageUrl} />
-                                    </div>
-                                ))}
-                            </Carousel>
-                        </div>
+                        }
                     </div>
                 ) : null}
             </div>

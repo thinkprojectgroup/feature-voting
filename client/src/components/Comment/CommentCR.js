@@ -20,7 +20,8 @@ class CommentCR extends Component{
             featureId: this.props.featureId,
             projectName: this.props.projectName,
             featureName: this.props.featureName,
-            imageUrls: this.props.imageUrls
+            imageUrls: this.props.imageUrls,
+            projectDisplayName: this.props.projectDisplayName
         };
     }
 
@@ -43,7 +44,7 @@ class CommentCR extends Component{
                 self.props.removeComment(self.state.commentId)
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error.response);
             });
     }
 
@@ -59,7 +60,7 @@ class CommentCR extends Component{
                 self.props.removeComment(self.state.commentId)
             })
             .catch(function (error) {
-                console.log(error);
+                console.log(error.response);
             });
     }
 
@@ -88,12 +89,12 @@ class CommentCR extends Component{
                                     <div className="row">
                                         <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
                                         <p className="comment-project-link" title="Show project">Project: {" "}
-                                            <Link to={"/" + this.state.projectName.split(" ").join("-")} >
-                                                {" " + this.state.projectName}
+                                            <Link to={"/" + this.state.projectName} >
+                                                {" " + this.state.projectDisplayName}
                                             </Link>
                                         </p>
                                         <p className="comment-feature-link" title="Show feature"> Feature: {" "}
-                                            <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId} >
+                                            <Link to={"/" + this.state.projectName + "/" + this.state.featureId} >
                                                 {this.state.featureName}
                                             </Link>
                                         </p>
@@ -108,12 +109,12 @@ class CommentCR extends Component{
                                         <div className="row">
                                             <p className="comment-author">{!this.state.commentName ? "Anonymous" : this.state.commentName}</p>
                                             <p className="comment-project-link">Project: {" "}
-                                                <Link to={"/" + this.state.projectName.split(" ").join("-")} >
-                                                    {" " + this.state.projectName}
+                                                <Link to={"/" + this.state.projectName} >
+                                                    {" " + this.state.projectDisplayName}
                                                 </Link>
                                             </p>
                                             <p className="comment-feature-link"> Feature: {" "}
-                                                <Link to={"/" + this.state.projectName.split(" ").join("-") + "/" + this.state.featureId} >
+                                                <Link to={"/" + this.state.projectName + "/" + this.state.featureId} >
                                                     {this.state.featureName}
                                                 </Link>
                                             </p>
@@ -121,8 +122,8 @@ class CommentCR extends Component{
                                         <p className="comment-content">{this.state.commentContent}</p>
                                         <p className="comment-date">{this.state.formattedDate}</p>
                                     </div>
-                                    <div className="col-3">
-                                        <Carousel showThumbs={false}>
+                                    <div className="col-3 cr-image">
+                                        <Carousel showThumbs={false} dynamicHeight={true}>
                                             {images.map(imageUrl => (
                                                 <div>
                                                     <img src={imageUrl}/>
