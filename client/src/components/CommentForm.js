@@ -21,8 +21,24 @@ class CommentForm extends Component {
             role: this.props.role,
             email: this.props.email,
             empty : true,
-            error : false
+            error : false,
         };
+    }
+
+
+
+    componentDidMount () {
+        if(this.state.role === "admin" || this.state.role === "employee"){
+            var loginName="";
+            var loginNameArray = (this.state.email.substring(0, this.state.email.indexOf("@"))).split(".");
+
+            for (var i = 0; i < loginNameArray.length; i++) {
+                loginName += loginNameArray[i].charAt(0).toUpperCase() + loginNameArray[i].slice(1) + " ";
+            }
+            this.setState({
+                name: loginName
+            } );
+        }
     }
 
     handleResponseButton = () => {
@@ -169,13 +185,10 @@ class CommentForm extends Component {
 
         const imageUrls = await this.uploadImage()
 
-        var name = ""
-        if(this.state.role === "admin" || this.state.role === "employee"){
-            name = this.state.email
-        }
-        else{
-            name = this.state.name.trim()
-        }
+        var name = "";
+
+        name = this.state.name.trim();
+
 
 
         let data = JSON.stringify({
@@ -205,6 +218,7 @@ class CommentForm extends Component {
     render() {
         const { name, content } = this.state;
 
+
         return (
 
             <div className="form row col-12">
@@ -227,7 +241,8 @@ class CommentForm extends Component {
                         </div>
                         :
                             <div className="col-6 name">
-                            <p>{this.state.email}</p>
+                                <label>Name: </label>
+                                <p class="login-name">{this.state.name}</p>
                             </div>
                         }
                         

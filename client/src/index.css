@@ -441,6 +441,9 @@ button.search:hover, button.search:active{
 
 }
 
+.user-name{
+  padding: 20px 30px;
+}
 
 .feature-text .comment-count p{
   margin: 0;
@@ -541,7 +544,10 @@ footer div{
 label{
   font-size: 1rem;
   margin-bottom: 5px;
+}
 
+.login-name{
+  color: #7f9da7;
 }
 
 input, textarea{
@@ -709,5 +715,9 @@ select{
 
   .submit{
     margin-left: 15px;
+  }
+
+  .user-name{
+    padding: 20px 0;
   }
 }
