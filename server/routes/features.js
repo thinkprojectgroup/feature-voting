@@ -109,7 +109,7 @@ router.get("/search/", async (req, res) => {
     const { error } = validateSearch(req.body)
     if (error) return res.status(400).send(error.details[0].message)
 
-    const projects = await Project.find(
+    const projects = await Project.find (
         { $text: { $search: req.body.searchString } },
         { score: { $meta: "textScore" } }
     ).sort({ score: { $meta: "textScore" } })

@@ -21,7 +21,11 @@ class SignIn extends Component {
   }
 
   redirectAfterLogin = () => {
+
+    if(this.state.role !== 'admin' && this.state.previousPath !== '/')
       this.props.history.push(this.state.previousPath)
+
+    this.props.history.push(this.state.previousPath)
   }
 
   onSuccess = googleUser => {
