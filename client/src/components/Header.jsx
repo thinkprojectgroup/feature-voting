@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import {withRouter, Link } from "react-router-dom";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import axios from "axios";
-import config from "../config";
 
 class Header extends Component {
 
@@ -31,6 +29,7 @@ class Header extends Component {
       this.props.setAuthorisation(null, false, null)
       auth2.disconnect()
       this.forceUpdate()
+      // window.location.reload();
     })
   }
 
@@ -59,7 +58,9 @@ class Header extends Component {
   };
   
   countUp = () =>{
-    this.state.counter++;
+    this.setState({
+      counter: this.state.counter + 1
+    })
   }
 
   render() {
