@@ -143,7 +143,7 @@ class ProjectDetailView extends Component {
                 <div className="col-10 project-name" id="project-name">
                   <h1>{this.state.name}</h1>
                 </div>}
-            {!this.state.empty && this.state.showSearch && !this.state.mobile?(
+            {this.state.showSearch && !this.state.mobile?(
                 <div className="feature-search">
                   <input
                       type="search"
@@ -166,7 +166,7 @@ class ProjectDetailView extends Component {
             </div>
           </div>
 
-          {!this.state.empty && this.state.showSearch && this.state.mobile?(
+          {this.state.showSearch && this.state.mobile?(
               <div className="mobile-feature-search row">
                 <input
                     type="search"
