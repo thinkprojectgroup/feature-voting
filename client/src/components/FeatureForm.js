@@ -169,14 +169,11 @@ class FeatureForm extends Component {
 
         axios.post('/api/features/' + this.props.projectName, data, config)
             .then((result) => {
-                console.log(result);
                 this.setState({
                     showResponse: true
                 })
             })
-            .catch(error => {
-                console.log(error.response);
-            })
+            .catch(error => {})
             .finally(() =>{
                 this.setState({
                     loading: false

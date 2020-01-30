@@ -45,14 +45,11 @@ class User extends Component {
         axios
             .post("/api/users/" + this.state.email, data, config)
             .then(function(response) {
-                console.log(response);
                 self.setState({
                     clicked: true
                 });
             })
-            .catch(function(error) {
-                console.log(error.response);
-            });
+            .catch(function(error) {});
     };
 
     render() {

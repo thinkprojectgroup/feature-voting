@@ -76,7 +76,6 @@ class App extends Component {
   }
 
   getFeatureName = () => {
-    // console.log(this.setFeatureName())
     return this.state.featureName
   }
 

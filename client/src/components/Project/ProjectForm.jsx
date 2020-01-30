@@ -47,11 +47,9 @@ class ProjectForm extends Component {
             .post("/api/projects/", data, config)
             .then(result => {
                 this.props.addProject(result.data);
-                console.log(result);
                 this.setState({ submited: true });
             })
             .catch(error => {
-                console.log(error.response.data);
                 this.setState({ errorMessage: error.response.data });
             });
 

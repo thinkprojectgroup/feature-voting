@@ -25,34 +25,27 @@ class FeatureFR extends Component {
         axios
             .patch(config.url + "/api/features/accept/" + this.state.featureId)
             .then((response) => {
-                console.log(response);
                 self.setState({
                     clicked: true
                 })
                 self.props.handleInteraction(this.state.featureId)
             })
-            .catch((error) => {
-                console.log(error.response);
-            });
+            .catch((error) => {});
     };
 
     handleDelete = () => {
         var self = this;
-        // console.log(comment._id)
         axios
             .delete(
                 config.url + "/api/features/" + this.state.projectName + "/" + this.state.featureId
             )
             .then((response) => {
-                console.log(response);
                 self.setState({
                     clicked: true
                 })
                 self.props.handleInteraction(this.state.featureId)
             })
-            .catch((error) =>  {
-                console.log(error.response);
-            });
+            .catch((error) =>  {});
     };
 
     render() {

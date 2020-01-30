@@ -33,7 +33,6 @@ class ProjectDetailView extends Component {
   toggleShowForm = () => {
     this.setState({showForm: !this.state.showForm});
     document.getElementById("form-button").classList.toggle("cross");
-    // console.log(this.state.showForm);
   }
 
   toggleShowSearch = () => {
@@ -50,16 +49,12 @@ class ProjectDetailView extends Component {
         features: sortedFeaturesDsc
     })
 
-    // console.log(this.state.features);
-
   }
 
   handleSearch = (e) => {
-    // console.log(e.target.value)
     const searchTerm = e.target.value.split(" ").join("").trim().toLowerCase()
     const features = this.state.features
     var searchedFeatures = []
-    console.log(searchTerm.length)
     if(searchTerm.length >= 3){
           for(var z = 0; z < features.length; z++){
             if(features[z].headline.split(" ").join("").toLowerCase().includes(searchTerm)){
@@ -108,7 +103,6 @@ class ProjectDetailView extends Component {
     axios
       .get(config.url + `/api/projects/name/` + this.props.match.params.projectName)
       .then(response => {
-        console.log(response);
         if (response.data.features.length == 0) {
           this.setState({
             empty: true
@@ -122,7 +116,6 @@ class ProjectDetailView extends Component {
         });
       })
       .catch(error => {
-        console.log(error.response);
         this.props.redirectToErrorPage(error.response.status);
       });
   }
@@ -131,7 +124,6 @@ class ProjectDetailView extends Component {
 
 
   render() {
-    // console.log(this.state.outputFeatures);
     return (
         <div className="container row project">
           <div className="row">
