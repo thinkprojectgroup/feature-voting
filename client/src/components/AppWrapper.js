@@ -1,9 +1,8 @@
 import React, { Fragment, Component } from 'react'
 import axios from 'axios'
 import config from '../config'
-import CLIENT_ID from '../../../server/services/AuthService'
 
-const CLIENT_ID_1 = CLIENT_ID
+const CLIENT_ID_1 = '596132698210-7a6fk2fshm6pifa01hpsqogovcng4sc4.apps.googleusercontent.com'
 
 class AppWrapper extends Component {
   constructor (props) {
