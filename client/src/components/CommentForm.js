@@ -114,7 +114,6 @@ class CommentForm extends Component {
         if (e.target.name == "name"){
         var test = /[^@]+$/.test(e.target.value )
         
-        console.log(test)
         if(!test) {
             this.setState({ error: true })
         }else{
@@ -200,14 +199,11 @@ class CommentForm extends Component {
 
         axios.post('/api/comments/' + this.state.featureId, data, config)
             .then((result) => {
-                console.log(result);
                 this.setState({
                     showResponse: true,
                 })
             })
-            .catch(error => {
-                console.log(error.response);
-            })
+            .catch(error => {})
             .finally(() =>{
                 this.setState({
                     loading: false

@@ -32,13 +32,11 @@ class FeatureDetailView extends Component {
       employeeVoteCount: 0,
       userVoteCount: 0
     };
-    // console.log(this.state)
   }
 
   toggleShowForm = () => {
     this.setState({ showForm: !this.state.showForm });
       document.getElementById("form-button").classList.toggle("cross");
-    //console.log(this.state.showForm);
   }
 
   componentDidMount() {
@@ -61,7 +59,6 @@ class FeatureDetailView extends Component {
       )
       .then(res => {
         const feature = res.data;
-        console.log(res);
         
         this.setState({ 
                         imageUrls: feature.imageUrls,
@@ -77,7 +74,6 @@ class FeatureDetailView extends Component {
                       });
                     })
       .catch(error => {
-        console.log(error.response);
         this.props.redirectToErrorPage(error.response.status);
       });
 
@@ -87,7 +83,6 @@ class FeatureDetailView extends Component {
     var self = this;
     axios.patch(config.url + "/api/features/vote/" + self.props.match.params.featureId)
       .then(function (response) {
-        console.log(response);
         self.setState({
           upvoted: true,
           upvotes: self.state.upvotes + 1
@@ -98,18 +93,14 @@ class FeatureDetailView extends Component {
             employeeVoteCount: self.state.employeeVoteCount + 1
           })
         }
-        //console.log(self.state);
       })
-      .catch(function (error) {
-        console.log(error.response);
-      });
+      .catch(function (error) {});
   };
 
   toggleDivDownVote = () => {
     var self = this;
     axios.patch(config.url + "/api/features/vote/" + self.props.match.params.featureId)
       .then(function (response) {
-        console.log(response);
         self.setState({
           upvoted: false,
           upvotes: self.state.upvotes - 1
@@ -120,11 +111,8 @@ class FeatureDetailView extends Component {
             employeeVoteCount: self.state.employeeVoteCount - 1
           })
         }
-        // console.log(self.state);
       })
-      .catch(function (error) {
-        console.log(error.response);
-      });
+      .catch(function (error) {});
   };
 
   render() {

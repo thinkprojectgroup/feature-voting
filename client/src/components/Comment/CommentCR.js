@@ -37,31 +37,24 @@ class CommentCR extends Component{
         var self = this;
         axios.patch("/api/comments/" + this.state.commentId)
             .then(function (response) {
-                console.log(response);
                 self.setState({
                     clicked: true
                 })
                 self.props.removeComment(self.state.commentId)
             })
-            .catch(function (error) {
-                console.log(error.response);
-            });
+            .catch(function (error) {});
     }
 
     handleDelete = () => {
         var self = this;
-        // console.log(comment._id)
         axios.delete("/api/comments/" + this.state.commentId)
             .then(function (response) {
-                console.log(response);
                 self.setState({
                     clicked: true
                 })
                 self.props.removeComment(self.state.commentId)
             })
-            .catch(function (error) {
-                console.log(error.response);
-            });
+            .catch(function (error) {});
     }
 
 

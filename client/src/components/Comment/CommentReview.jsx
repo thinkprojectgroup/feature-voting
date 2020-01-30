@@ -43,9 +43,7 @@ class CommentReview extends Component{
                     filteredFeatureNames: this.removewithfilter(this.state.featureNames)
                 })
             })
-            .catch(error =>{
-                console.log(error.response)
-            });
+            .catch(error =>{});
     }
 
     removewithfilter = (arr) => {
@@ -90,15 +88,12 @@ class CommentReview extends Component{
             return comment.projectName === selectedName
         })
 
-        // console.log(selectedComments
-
         this.setState({
             outputComments: []
         }, () => this.setState({ outputComments: selectedComments }))
     }
 
     render(){
-        // console.log(this.state.outputComments)
         return(
             <div className="comment-section container row">
                 <div className="row">

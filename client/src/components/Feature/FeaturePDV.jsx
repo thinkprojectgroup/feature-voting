@@ -65,7 +65,6 @@ class FeaturePDV extends Component {
     var self = this;
     axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
     .then(function (response) {
-      console.log(response);
       self.setState({
         upvoted: true,
         count : self.state.count + 1
@@ -75,11 +74,8 @@ class FeaturePDV extends Component {
           employeeVoteCount: self.state.employeeVoteCount + 1
         })
       }
-      // console.log(self.state);
       })
-      .catch(function (error) {
-      console.log(error.response);
-      });
+      .catch(function (error) {});
   }
 
 
@@ -88,7 +84,6 @@ class FeaturePDV extends Component {
     var self = this;
     axios.patch(config.url + "/api/features/vote/" + this.state.featureId)
         .then(function (response) {
-          console.log(response);
           self.setState({
             upvoted: false,
             count: self.state.count - 1
@@ -99,32 +94,24 @@ class FeaturePDV extends Component {
               employeeVoteCount: self.state.employeeVoteCount - 1
             })
           }
-          //  console.log(self.state);
         })
-        .catch(function (error) {
-          console.log(error);
-        });
-
+        .catch(function (error) {});
   };
 
  
 
   handleDelete = () => {
     var self = this;
-    // console.log(comment._id)
     axios
         .delete(
             "/api/features/" + this.state.projectName + "/" + this.state.featureId
         )
         .then(function(response) {
-          console.log(response);
           self.setState({
             deleted: true
           });
         })
-        .catch(function(error) {
-          console.log(error.response);
-        });
+        .catch(function(error) {});
   };
 
     render() {
@@ -136,7 +123,6 @@ class FeaturePDV extends Component {
         else{
             image = this.state.imageUrls[0];
         }
-        //  console.log(this.props.projectId);
         var comment;
         if(this.state.commentCount === 1){
             comment = "comment"
