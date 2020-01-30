@@ -551,12 +551,20 @@ footer div{
   margin: auto;
 }
 
+ul{
+  margin-left: 25px;
+}
+
 .questions, .answers{
-  margin: 80px 0;
+  margin: 50px 0;
+}
+
+.questions a h2{
+  margin: 20px 0;
 }
 
 .answers div{
-  margin: 50px 0;
+  margin: 60px 0;
 }
 .form{
   margin-bottom: 50px;
