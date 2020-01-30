@@ -46,6 +46,7 @@ class AppWrapper extends Component {
           this.authorise(idToken)
         })
         .catch(error => {
+          console.log(CLIENT_ID)
           console.log(error.response)
         })
     })
