@@ -13,7 +13,10 @@ const UnauthorisedPage = () => {
 
             <div class="error-actions">
               If you have permission, please login again with an authorised account
-              <Link to="/login">Logout and Sign In again</Link>
+              <p>If you tried to access a Project, please access it directly via URL</p>
+              <p>
+                <Link to="/login">Logout and Sign In again</Link>
+              </p>
             </div>
           </div>
         </div>
