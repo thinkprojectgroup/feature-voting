@@ -28,8 +28,7 @@ class Header extends Component {
     auth2.signOut().then(() => {
       this.props.setAuthorisation(null, false, null)
       auth2.disconnect()
-      this.forceUpdate()
-      // window.location.reload();
+      window.location.reload();
     })
   }
 
