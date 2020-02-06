@@ -21,8 +21,24 @@ class CommentForm extends Component {
             role: this.props.role,
             email: this.props.email,
             empty : true,
-            error : false
+            error : false,
         };
+    }
+
+
+
+    componentDidMount () {
+        if(this.state.role === "admin" || this.state.role === "employee"){
+            var loginName="";
+            var loginNameArray = (this.state.email.substring(0, this.state.email.indexOf("@"))).split(".");
+
+            for (var i = 0; i < loginNameArray.length; i++) {
+                loginName += loginNameArray[i].charAt(0).toUpperCase() + loginNameArray[i].slice(1) + " ";
+            }
+            this.setState({
+                name: loginName
+            } );
+        }
     }
 
     handleResponseButton = () => {
@@ -98,7 +114,6 @@ class CommentForm extends Component {
         if (e.target.name == "name"){
         var test = /[^@]+$/.test(e.target.value )
         
-        console.log(test)
         if(!test) {
             this.setState({ error: true })
         }else{
@@ -169,13 +184,10 @@ class CommentForm extends Component {
 
         const imageUrls = await this.uploadImage()
 
-        var name = ""
-        if(this.state.role === "admin" || this.state.role === "employee"){
-            name = this.state.email
-        }
-        else{
-            name = this.state.name.trim()
-        }
+        var name = "";
+
+        name = this.state.name.trim();
+
 
 
         let data = JSON.stringify({
@@ -187,14 +199,11 @@ class CommentForm extends Component {
 
         axios.post('/api/comments/' + this.state.featureId, data, config)
             .then((result) => {
-                console.log(result);
                 this.setState({
                     showResponse: true,
                 })
             })
-            .catch(error => {
-                console.log(error.response);
-            })
+            .catch(error => {})
             .finally(() =>{
                 this.setState({
                     loading: false
@@ -205,9 +214,10 @@ class CommentForm extends Component {
     render() {
         const { name, content } = this.state;
 
+
         return (
 
-            <div className="feature-form-container row col-12">
+            <div className="form row col-12">
                 {!this.state.showResponse ? (
                     <form onSubmit={this.onSubmit} className="feature-form">
                         <h5 className="col-12">Create a new comment:</h5>
@@ -227,7 +237,8 @@ class CommentForm extends Component {
                         </div>
                         :
                             <div className="col-6 name">
-                            <p>{this.state.email}</p>
+                                <label>Name: </label>
+                                <p class="login-name">{this.state.name}</p>
                             </div>
                         }
                         

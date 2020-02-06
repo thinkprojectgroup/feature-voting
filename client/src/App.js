@@ -5,6 +5,7 @@ import './App.css'
 import FeatureDetailView from './components/Feature/FeatureDetailView'
 import ProjectDetailView from './components/Project/ProjectDetailView'
 import Header from './components/Header'
+import Breadcrumb from './components/Breadcrumb'
 import ProjectOverView from './components/Project/ProjectOverView'
 import CommentReview from './components/Comment/CommentReview'
 import SignIn from './components/Auth/SignIn'
@@ -17,6 +18,7 @@ import BadRequestPage from './components/ErrorPages/BadRequestPage'
 import InternalServerError from './components/ErrorPages/InternalServerError'
 import UnauthorisedPage from './components/ErrorPages/UnauthorisedPage'
 import GeneralErrorPage from './components/ErrorPages/GeneralErrorPage'
+import AdminRoute from './components/Auth/AdminRoute'
 import {
   Route,
   Switch,
@@ -26,8 +28,7 @@ import {
 import ScrollToTop from './ScrollToTop'
 
 class App extends Component {
-
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       role: 'user',
@@ -35,6 +36,7 @@ class App extends Component {
       isSignedIn: false,
       idToken: null,
       authIsLoaded: false,
+      featureName: ""
     }
 
     this.createFingerPrint()
@@ -62,6 +64,19 @@ class App extends Component {
     this.setState({
       authIsLoaded: isReady
     })
+  }
+
+  setFeatureName = (featureName) => {
+      this.setState({
+        featureName: ""
+      }, () => this.setState({
+              featureName: featureName
+              })
+      )
+  }
+
+  getFeatureName = () => {
+    return this.state.featureName
   }
 
   // executed in <AppWrapper> and <SignIn>
@@ -107,40 +122,22 @@ class App extends Component {
                     isSignedIn={this.state.isSignedIn}
                     setAuthorisation={this.setAuthorisation}
                 />
+
+                <Breadcrumb 
+                  role={this.state.role} 
+                  getFeatureName={this.getFeatureName}
+                />
+
                 <Switch>
-                  <Route //Admin - ProjectOverview
-                      exact
-                      path={'/'}
-                      render={props =>
-                          this.state.role == 'admin' ? (
-                              <ProjectOverView idToken={this.state.idToken} {...props} />
-                          ) : (
-                              <Redirect to={'/login'} />
-                          )
-                      }
-                  />
-                  <Route //Admin - CommentReview
-                      exact
-                      path={'/commentreview'}
-                      render={props =>
-                          this.state.role == 'admin' ? (
-                              <CommentReview {...props} />
-                          ) : (
-                              <Redirect to={'/login'} />
-                          )
-                      }
-                  />
-                  <Route //Admin - AdminRights
-                      exact
-                      path={"/adminrights"}
-                      render={props =>
-                          this.state.role == "admin" ? (
-                              <AdminRights {...props} />
-                          ) : (
-                              <Redirect to={"/login"} />
-                          )
-                      }
-                  />
+                  <AdminRoute exact path='/' role={this.state.role}>
+                    <ProjectOverView idToken={this.state.idToken} />
+                  </AdminRoute>
+                  <AdminRoute exact path='/commentreview' role={this.state.role}>
+                    <CommentReview />
+                  </AdminRoute>
+                  <AdminRoute exact path='/adminrights' role={this.state.role}>
+                    <AdminRights />
+                  </AdminRoute>
                   <Route //Login
                       exact
                       path={'/login'}
@@ -166,7 +163,11 @@ class App extends Component {
                     <ProjectDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} />
                   </Route>
                   <Route path={'/:projectName/:featureId'}>
-                    <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} role={this.state.role} email={this.state.email} />
+                    <FeatureDetailView redirectToErrorPage={this.redirectToErrorPage} 
+                    role={this.state.role} 
+                    email={this.state.email} 
+                    setFeatureName={this.setFeatureName}
+                    />
                   </Route>
 
                   {/* <Route exact

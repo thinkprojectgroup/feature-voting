@@ -14,7 +14,8 @@ class CommentReview extends Component{
             filteredProjectNames: [],
             featureNames: [],
             filteredFeatureNames: [],
-            outputComments: []
+            outputComments: [],
+            isEmpty: false 
         };
     }
 
@@ -22,6 +23,11 @@ class CommentReview extends Component{
         axios.get(config.url + "/api/comments/")
             .then(res => {
                 const comments = res.data;
+                if(comments.length === 0) {
+                    this.setState({
+                        isEmpty: true
+                    })
+                }
                 this.setState({
                     comments: comments,
                     outputComments: comments
@@ -37,9 +43,7 @@ class CommentReview extends Component{
                     filteredFeatureNames: this.removewithfilter(this.state.featureNames)
                 })
             })
-            .catch(error =>{
-                console.log(error.response)
-            });
+            .catch(error =>{});
     }
 
     removewithfilter = (arr) => {
@@ -60,7 +64,15 @@ class CommentReview extends Component{
 
         this.setState({
             comments: interactedComment
-        })
+        },
+        () => {
+            if(this.state.comments.length === 0){
+                this.setState({isEmpty: true})
+            }
+        }
+        )
+        
+
     }
 
     handleProject = (e) => {
@@ -76,15 +88,12 @@ class CommentReview extends Component{
             return comment.projectName === selectedName
         })
 
-        // console.log(selectedComments
-
         this.setState({
             outputComments: []
         }, () => this.setState({ outputComments: selectedComments }))
     }
 
     render(){
-        // console.log(this.state.outputComments)
         return(
             <div className="comment-section container row">
                 <div className="row">
@@ -107,7 +116,8 @@ class CommentReview extends Component{
                     </div>
 
                 </div>
-
+                {!this.state.isEmpty ? (
+                    <div> 
                     {this.state.outputComments.map(comment => {
                         return ( <CommentCR
                                 commentId={comment._id}
@@ -123,6 +133,12 @@ class CommentReview extends Component{
                             />
                         )
                     })}
+                </div>
+                ): 
+                <div className="placeholder row">
+                    <h3>Great Job! There are no comments to review.</h3>
+                </div> 
+                }
             </div>
         );
     }

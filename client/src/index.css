@@ -109,7 +109,7 @@ body{
 .container{
   max-width: 1000px;
   margin: auto auto 50px auto;
-  padding: 60px 10px 20vh 10px;
+  padding: 0 10px 20vh 10px;
   min-height: 85vh;
 }
 
@@ -117,6 +117,27 @@ body{
   max-width: 1000px;
   margin: auto;
 }
+
+.breadcrumb{
+  padding: 80px 10px 10px 10px;
+  max-width: 1000px;
+  margin: auto;
+  font-size: 0.8rem;
+}
+
+
+.breadcrumb i{
+  margin: 0 8px
+}
+
+.breadcrumb a span, .breadcrumb a{
+  font-weight: 600;
+}
+
+.breadcrumb .overview-text{
+  display: none;
+}
+
 
 .logo{
   display: inline;
@@ -378,6 +399,8 @@ button.search:hover, button.search:active{
   position: relative;
 }
 
+
+
 .feature-count{
   padding: 19px 0;
 }
@@ -391,7 +414,7 @@ button.search:hover, button.search:active{
 }
 
 .feature-count p{
-  margin: 25px;
+  margin: 25px auto;
   font-weight: 600;
 }
 
@@ -406,6 +429,10 @@ button.search:hover, button.search:active{
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  padding: 0;
+}
+
+.feature-review-image, .cr-image{
   padding: 0;
 }
 
@@ -435,6 +462,9 @@ button.search:hover, button.search:active{
 
 }
 
+.user-name{
+  padding: 20px 30px;
+}
 
 .feature-text .comment-count p{
   margin: 0;
@@ -442,7 +472,11 @@ button.search:hover, button.search:active{
 }
 
 .comment-section-content{
-  padding: 35px 25px;
+  padding: 25px 15px 25px 0;
+}
+
+.comment-section-item{
+  padding: 0;
 }
 
 .easter-egg{
@@ -517,12 +551,20 @@ footer div{
   margin: auto;
 }
 
+ul{
+  margin-left: 25px;
+}
+
 .questions, .answers{
-  margin: 80px 0;
+  margin: 50px 0;
+}
+
+.questions a h2{
+  margin: 20px 0;
 }
 
 .answers div{
-  margin: 50px 0;
+  margin: 60px 0;
 }
 .form{
   margin-bottom: 50px;
@@ -530,7 +572,11 @@ footer div{
 
 label{
   font-size: 1rem;
+  margin-bottom: 5px;
+}
 
+.login-name{
+  color: #7f9da7;
 }
 
 input, textarea{
@@ -666,10 +712,17 @@ select{
 
 
   .container{
-    max-width: 1000px;
     margin: auto auto 50px auto;
-    padding: 80px 0 20vh 0;
-    min-height: 85vh;
+    padding: 0 0 20vh 0;
+  }
+
+  .breadcrumb{
+    padding: 100px 10px 10px 10px;
+  }
+
+
+  .breadcrumb .overview-text{
+    display: inline;
   }
 
 
@@ -698,5 +751,9 @@ select{
 
   .submit{
     margin-left: 15px;
+  }
+
+  .user-name{
+    padding: 20px 0;
   }
 }

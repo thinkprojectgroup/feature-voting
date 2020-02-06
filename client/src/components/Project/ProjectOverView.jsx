@@ -51,7 +51,6 @@ class ProjectOverView extends Component {
   toggleShow = () => {
     this.setState({ show: !this.state.show });
     document.getElementById("form-button").classList.toggle("cross");
-    // console.log(this.state.show);
   };
 
   componentDidMount () {
@@ -62,9 +61,7 @@ class ProjectOverView extends Component {
           projects: response.data
         })
       })
-      .catch(error => {
-        console.log(error.response)
-      })
+      .catch(error => {})
   }
 
   addProject = (project) => {
@@ -80,15 +77,10 @@ class ProjectOverView extends Component {
       projects: newState
     });
     
-    // console.log(comment._id)
     axios
         .delete("/api/projects/" + id)
-        .then(function(response) {
-          console.log(response);
-        })
-        .catch(function(error) {
-          console.log(error.response);
-        });
+        .then(function(response) {})
+        .catch(function(error) {});
   };
 
   

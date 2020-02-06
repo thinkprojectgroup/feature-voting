@@ -20,8 +20,6 @@ class Comment extends Component{
         role: this.props.role
 
     };
-    //console.log(this.state.date);
-    //console.log(this.state);
 }
 
 
@@ -62,25 +60,20 @@ class Comment extends Component{
             author: "Anonymous"
         })
     };
-    // console.log(this.state);
     }
 
     handleDelete = () => {
         var self = this;
-        // console.log(comment._id)
         axios
           .delete(
             "/api/comments/" + this.state.commentId
           )
           .then(function(response) {
-            console.log(response);
             self.setState({
               deleted: true
             });
           })
-          .catch(function(error) {
-            console.log(error.response);
-          });
+          .catch(function(error) {});
       };
 
     render(){
@@ -119,7 +112,7 @@ class Comment extends Component{
                                         </p>
                                     </div>
                                     <div className="comment-images col-3">
-                                        <Carousel showThumbs={false}>
+                                        <Carousel showThumbs={false} dynamicHeight={true}>
                                             {images.map(imageUrl => (
                                                 <div>
                                                     <img src={imageUrl}/>

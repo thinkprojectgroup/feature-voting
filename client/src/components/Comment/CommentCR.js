@@ -37,31 +37,24 @@ class CommentCR extends Component{
         var self = this;
         axios.patch("/api/comments/" + this.state.commentId)
             .then(function (response) {
-                console.log(response);
                 self.setState({
                     clicked: true
                 })
                 self.props.removeComment(self.state.commentId)
             })
-            .catch(function (error) {
-                console.log(error.response);
-            });
+            .catch(function (error) {});
     }
 
     handleDelete = () => {
         var self = this;
-        // console.log(comment._id)
         axios.delete("/api/comments/" + this.state.commentId)
             .then(function (response) {
-                console.log(response);
                 self.setState({
                     clicked: true
                 })
                 self.props.removeComment(self.state.commentId)
             })
-            .catch(function (error) {
-                console.log(error.response);
-            });
+            .catch(function (error) {});
     }
 
 
@@ -122,8 +115,8 @@ class CommentCR extends Component{
                                         <p className="comment-content">{this.state.commentContent}</p>
                                         <p className="comment-date">{this.state.formattedDate}</p>
                                     </div>
-                                    <div className="col-3">
-                                        <Carousel showThumbs={false}>
+                                    <div className="col-3 cr-image">
+                                        <Carousel showThumbs={false} dynamicHeight={true}>
                                             {images.map(imageUrl => (
                                                 <div>
                                                     <img src={imageUrl}/>

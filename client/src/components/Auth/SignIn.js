@@ -21,7 +21,11 @@ class SignIn extends Component {
   }
 
   redirectAfterLogin = () => {
+
+    if(this.state.role !== 'admin' && this.state.previousPath !== '/')
       this.props.history.push(this.state.previousPath)
+
+    this.props.history.push(this.state.previousPath)
   }
 
   onSuccess = googleUser => {
@@ -56,7 +60,6 @@ class SignIn extends Component {
   onFailure = error => {
     // TODO: Create "Login Failed" Dialog
     this.props.setAuthorisation(null, false, null)
-    console.log('Login Failed.')
   }
 
   logout = () => {
@@ -70,7 +73,6 @@ class SignIn extends Component {
 
   render () {
 
-    console.log(this.props.isSignedIn);
     return (      
       <div className='container'>
         <div className="row welcome">

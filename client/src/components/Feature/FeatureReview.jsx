@@ -9,8 +9,25 @@ class FeatureReview extends Component {
         this.state = {
             features: [],
             projectId: this.props.projectId,
-            projectName: this.props.projectName
+            projectName: this.props.projectName,
+            isEmpty: false
         };
+    }
+
+    handleInteraction = (id) => {
+        let restFeatures = this.state.features.filter(feature => {
+            return feature._id !== id
+        })
+
+        this.setState({
+            features: restFeatures
+        },() => {
+            if(this.state.features.length === 0){
+                this.setState({
+                    isEmpty: true
+                })
+            }
+        })
     }
 
     render() {
@@ -19,17 +36,24 @@ class FeatureReview extends Component {
                <div classname="container">
                     <hr />
                     <h2>{"Feature Review:"}</h2>
-                    {this.state.features.map(feature =>
-                        !feature.deleted ? (
-                            <FeatureFR
-                                featureId={feature._id}
-                                title={feature.headline}
-                                description={feature.description}
-                                projectName={this.props.projectName}
-                                imageUrls={feature.imageUrls}
-                            />
-                        ) : null
-                    )}
+                    {!this.state.isEmpty ? (
+                    <div>
+                        {this.state.features.map(feature =>
+                                <FeatureFR
+                                    featureId={feature._id}
+                                    title={feature.headline}
+                                    description={feature.description}
+                                    projectName={this.props.projectName}
+                                    imageUrls={feature.imageUrls}
+                                    handleInteraction={this.handleInteraction}
+                                />
+                        )}
+                    </div>
+                    ): 
+                    <div className="placeholder row">
+                        <h3>Great Job! This project has no features, that need to be reviewed.</h3>
+                    </div>
+                    }
                 </div>
             </div>
         );
@@ -39,6 +63,11 @@ class FeatureReview extends Component {
         axios
             .get(config.url + `/api/projects/unaccepted/` + this.state.projectName)
             .then(response => {
+                if(response.data.features.length === 0){
+                    this.setState({
+                        isEmpty: true
+                    })
+                }
                 this.setState({
                     features: response.data.features
                 });
